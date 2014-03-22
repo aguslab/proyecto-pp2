@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Alumno {
 	private String nombre;
-	private Set<Materia> materiasAprob;
+	private Set<Materia> materiasAprob; //TODO: cambiar! no es el alumno quien almacena las materias aprobadas!
 	
 	public Alumno(String nombre) {
 		this.nombre = nombre;

@@ -13,7 +13,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
         //String act = "PP1 PP2 PP3 Mate Ingles";
         
         //CREO MATERIAS NUEVAS
@@ -29,24 +28,26 @@ public class App
         Turno tar = new Turno("T");
         Turno noc = new Turno("N");
         
-        //CREO CURSOS
+        //CREO CURSOS (materia q se dicta y en que turno)
         Curso c1 = new Curso(pp1, man);
         Curso c2 = new Curso(pp2, man);
         Curso c3 = new Curso(pp3, tar);
         
         //ALGUNAS MATERIAS
-        HashSet<Materia> Sinmaterias = new HashSet<Materia>();
-        HashSet<Materia> aprobMaterias = new HashSet<Materia>();
-        aprobMaterias.add(pp1);
-        aprobMaterias.add(mate1);
         
+        //se usaria para las materias que no tienen correlativas
+        HashSet<Materia> Sinmaterias = new HashSet<Materia>();
+        
+        //vendrian a ser la materias correlativas de pp2
         HashSet<Materia> correlMaterias = new HashSet<Materia>();
         correlMaterias.add(pp1);
         
+        //vendrian a ser la materias correlativas de pp3
         HashSet<Materia> correlMaterias2 = new HashSet<Materia>();
         correlMaterias2.add(pp1);
         correlMaterias2.add(pp2);
         
+        //vendrian a ser la materias correlativas de mate2
         HashSet<Materia> correlMaterias3 = new HashSet<Materia>();
         correlMaterias3.add(mate1);
         
@@ -62,10 +63,15 @@ public class App
         PlanEstudios pe = new PlanEstudios(m);
         
         
-        //CREO UN ALUMNO Y SUS MATERIAS APROBADAS
+        //materias aprobadas por el alumno
+        HashSet<Materia> aprobMaterias = new HashSet<Materia>();
+        aprobMaterias.add(pp1);
+        aprobMaterias.add(mate1);
+        
+        //CREO UN ALUMNO Y CARGO SUS MATERIAS APROBADAS
         Alumno alu = new Alumno("Javi", aprobMaterias);
         
-        //LISTA DE MATERIAS
+        //LISTA DE MATERIAS A DICTARSE
         ArrayList<Materia> mat = new ArrayList<Materia>();
         mat.add(pp1);
         mat.add(pp2);
@@ -74,7 +80,7 @@ public class App
         mat.add(mate2);
         mat.add(ingles);
 
-        //temporal... materias a las que puede inscribirse
+        //temporal... materias a las que puede inscribirse, serian las materias sobre las cuales habria que hacer la combinatoria
         String act = filtrarMaterias(mat, alu, m);
         
 		String[] elem = act.split(" ");
@@ -92,11 +98,12 @@ public class App
     //mat son todas las materias que estan disponibles a dar (en realidad tiene que ser cursos, no materias)
     private static String filtrarMaterias(ArrayList<Materia> mat, Alumno alu, HashMap<Materia, Set<Materia>> corr) {
 		String materiasAinscribirse = "";
-		System.out.println(mat.size());
+		//de las materias a dictarse, saco las materias que ya tiene aprobadas el alumno
 		mat.removeAll(alu.getMateriasAprob());
-    	System.out.println("mat a : "+mat.size());
     	for(Materia m : mat){
-    		if(!faltaCorrelativa(alu, m, corr)){
+    		//de las materias que no tiene aprobadas el alumno, me fijo si tiene las correlativas para poder cursarla
+    		//y las agrego a las posibles materias a inscribirse
+    		if(!tieneCorrelativas(alu, m, corr)){
     			materiasAinscribirse = materiasAinscribirse.isEmpty() ? m.getNombre() : materiasAinscribirse + " " + m.getNombre();
     		}
     	}
@@ -106,15 +113,10 @@ public class App
     
     
     
-    private static boolean faltaCorrelativa(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
+    private static boolean tieneCorrelativas(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
+    	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
     	if(corr.containsKey(m)){
-    		if(alu.getMateriasAprob().containsAll(corr.get(m))){
-    			return false;
-//    			System.out.println("contiene todas!!!");
-    		}else{
-    			return true;
-//    			System.out.println("NO contiene!");
-    		}
+    		return alu.getMateriasAprob().containsAll(corr.get(m));
     	}
     	
     	return false;
