@@ -20,6 +20,9 @@ public class App
         Materia pp1 = new Materia("pp1");
         Materia pp2 = new Materia("pp2");
         Materia pp3 = new Materia("pp3");
+        Materia mate1 = new Materia("mate1");
+        Materia mate2 = new Materia("mate2");
+        Materia ingles = new Materia("ingles");
         
         //CREO TURNOS DISPONIBLES
         Turno man = new Turno("M");
@@ -32,53 +35,69 @@ public class App
         Curso c3 = new Curso(pp3, tar);
         
         //ALGUNAS MATERIAS
-        HashSet<Materia> materias = new HashSet<Materia>();
-        materias.add(pp1);
-        HashSet<Materia> materias2 = new HashSet<Materia>();
-        materias2.add(pp2);
+        HashSet<Materia> Sinmaterias = new HashSet<Materia>();
+        HashSet<Materia> aprobMaterias = new HashSet<Materia>();
+        aprobMaterias.add(pp1);
+        aprobMaterias.add(mate1);
+        
+        HashSet<Materia> correlMaterias = new HashSet<Materia>();
+        correlMaterias.add(pp1);
+        
+        HashSet<Materia> correlMaterias2 = new HashSet<Materia>();
+        correlMaterias2.add(pp1);
+        correlMaterias2.add(pp2);
+        
+        HashSet<Materia> correlMaterias3 = new HashSet<Materia>();
+        correlMaterias3.add(mate1);
         
         //MATERIA (CLAVE) Y SUS CORRELATIVAS (SET)
         HashMap<Materia,Set<Materia>> m =new HashMap<Materia, Set<Materia>>();
-        m.put(pp1, null);
-        m.put(pp2, materias);
-        m.put(pp3, materias2);
-        
+        m.put(pp1, Sinmaterias);
+        m.put(pp2, correlMaterias);
+        m.put(pp3, correlMaterias2);
+        m.put(mate1, Sinmaterias);
+        m.put(mate2, correlMaterias3);
         
         //CREO UN PLAN DE ESTUDIOS
         PlanEstudios pe = new PlanEstudios(m);
         
         
         //CREO UN ALUMNO Y SUS MATERIAS APROBADAS
-        Alumno alu = new Alumno("Javi", materias);
+        Alumno alu = new Alumno("Javi", aprobMaterias);
         
         //LISTA DE MATERIAS
         ArrayList<Materia> mat = new ArrayList<Materia>();
         mat.add(pp1);
         mat.add(pp2);
         mat.add(pp3);
-        
-        
+        mat.add(mate1);
+        mat.add(mate2);
+        mat.add(ingles);
+
         //temporal... materias a las que puede inscribirse
         String act = filtrarMaterias(mat, alu, m);
         
 		String[] elem = act.split(" ");
+		System.out.println("sasdas"+elem[0]);
 		ArrayList<String> permutaciones = new ArrayList<String>(); 
 		permutacionesSinRepeticiones(elem, "", elem.length, permutaciones);
 		System.out.println(permutaciones.size());
+		System.out.println("POSIBLES MATERIAS A ANOTARSE SIN TENER EN CUENTA EL HORARIO");
 		for (int i = 0; i < permutaciones.size(); i++) {
 			System.out.println(permutaciones.get(i).trim());
 		}
     }
     
     //devuelve materias a las que puede anotarse el alumno (sin tener en cuenta el horario)
+    //mat son todas las materias que estan disponibles a dar (en realidad tiene que ser cursos, no materias)
     private static String filtrarMaterias(ArrayList<Materia> mat, Alumno alu, HashMap<Materia, Set<Materia>> corr) {
 		String materiasAinscribirse = "";
 		System.out.println(mat.size());
 		mat.removeAll(alu.getMateriasAprob());
-    	mat.size();
+    	System.out.println("mat a : "+mat.size());
     	for(Materia m : mat){
     		if(!faltaCorrelativa(alu, m, corr)){
-    			materiasAinscribirse = materiasAinscribirse + " " + m.getNombre();
+    			materiasAinscribirse = materiasAinscribirse.isEmpty() ? m.getNombre() : materiasAinscribirse + " " + m.getNombre();
     		}
     	}
     	
@@ -90,9 +109,11 @@ public class App
     private static boolean faltaCorrelativa(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
     	if(corr.containsKey(m)){
     		if(alu.getMateriasAprob().containsAll(corr.get(m))){
-    			System.out.println("contiene todas!!!");
+    			return false;
+//    			System.out.println("contiene todas!!!");
     		}else{
-    			System.out.println("NO contiene!");
+    			return true;
+//    			System.out.println("NO contiene!");
     		}
     	}
     	
