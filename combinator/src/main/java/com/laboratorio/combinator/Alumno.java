@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Alumno {
+	private int id;
 	private String nombre;
 	private Set<Materia> materiasAprob; //TODO: cambiar! no es el alumno quien almacena las materias aprobadas!
 	
