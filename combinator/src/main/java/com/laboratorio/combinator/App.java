@@ -58,6 +58,7 @@ public class App
         m.put(pp3, correlMaterias2);
         m.put(mate1, Sinmaterias);
         m.put(mate2, correlMaterias3);
+        m.put(ingles, Sinmaterias);
         
         //CREO UN PLAN DE ESTUDIOS
         PlanEstudios pe = new PlanEstudios(m);
@@ -103,7 +104,7 @@ public class App
     	for(Materia m : mat){
     		//de las materias que no tiene aprobadas el alumno, me fijo si tiene las correlativas para poder cursarla
     		//y las agrego a las posibles materias a inscribirse
-    		if(!tieneCorrelativas(alu, m, corr)){
+    		if(tieneCorrelativas(alu, m, corr)){
     			materiasAinscribirse = materiasAinscribirse.isEmpty() ? m.getNombre() : materiasAinscribirse + " " + m.getNombre();
     		}
     	}
@@ -116,6 +117,7 @@ public class App
     private static boolean tieneCorrelativas(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
     	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
     	if(corr.containsKey(m)){
+    		System.out.println(m.getNombre());
     		return alu.getMateriasAprob().containsAll(corr.get(m));
     	}
     	
