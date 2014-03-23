@@ -1,13 +1,26 @@
 package com.laboratorio.combinator;
 
-public class Curso {
-	private Materia materia;
-	private Turno horario;
-	//TODO: falta el horario o cambiar turno por el verdadero horario que se dicta la meteria!!!
+import java.util.HashMap;
 
-	public Curso(Materia materia, Turno horario) {
+public class Curso {
+	private int id;
+	private Carrera carrera;
+	private Materia materia;
+	private HashMap<String, Turno> dia_Hor;
+
+	
+	public Curso(Materia materia, HashMap<String, Turno> dia_Hor) {
+		super();
 		this.materia = materia;
-		this.horario = horario;
+		this.dia_Hor = dia_Hor;
+	}
+
+	public HashMap<String, Turno> getDia_Hor() {
+		return dia_Hor;
+	}
+
+	public void setDia_Hor(HashMap<String, Turno> dia_Hor) {
+		this.dia_Hor = dia_Hor;
 	}
 
 	public Materia getMateria() {
@@ -18,13 +31,6 @@ public class Curso {
 		this.materia = materia;
 	}
 
-	public Turno getHorario() {
-		return horario;
-	}
-
-	public void setHorario(Turno horario) {
-		this.horario = horario;
-	}
 	
 	
 	
