@@ -28,10 +28,12 @@ public class App
         Turno tar = new Turno("T");
         Turno noc = new Turno("N");
         
-        //CREO CURSOS (materia q se dicta y en que turno)
-        Curso c1 = new Curso(pp1, man);
-        Curso c2 = new Curso(pp2, man);
-        Curso c3 = new Curso(pp3, tar);
+//        Map dias = new HashMap<String, Turno>();
+//        
+//        //CREO CURSOS (materia q se dicta y en que turno)
+//        Curso c1 = new Curso(pp1, man);
+//        Curso c2 = new Curso(pp2, man);
+//        Curso c3 = new Curso(pp3, tar);
         
         //ALGUNAS MATERIAS
         
@@ -117,7 +119,6 @@ public class App
     private static boolean tieneCorrelativas(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
     	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
     	if(corr.containsKey(m)){
-    		System.out.println(m.getNombre());
     		return alu.getMateriasAprob().containsAll(corr.get(m));
     	}
     	
