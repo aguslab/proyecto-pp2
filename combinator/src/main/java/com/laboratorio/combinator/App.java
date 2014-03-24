@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.laboratorio.dao.MateriaDAO;
+
 /**
  * Hello world!
  *
@@ -23,6 +25,17 @@ public class App
         Materia mate2 = new Materia("mate2");
         Materia ingles = new Materia("ingles");
         
+        
+        try {
+			MateriaDAO.getInstancia().alta(mate2);
+			MateriaDAO.getInstancia().alta(mate1);
+			MateriaDAO.getInstancia().alta(pp1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if(true)
+        	return;
         //CREO TURNOS DISPONIBLES
         Turno man = new Turno("M");
         Turno tar = new Turno("T");
