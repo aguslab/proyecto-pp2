@@ -3,6 +3,7 @@ package com.laboratorio.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.laboratorio.combinator.Materia;
@@ -10,13 +11,14 @@ import com.laboratorio.combinator.Materia;
 public class MateriaDAO {
 	private static MateriaDAO instancia = null;
 
+	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
 
 	public static MateriaDAO getInstancia() throws Exception {
 		if (instancia == null) {
 			instancia = new MateriaDAO();
 		}
-		em = com.laboratorio.dao.EntityManagerUtil.getRunningEM();
+		em = com.laboratorio.dao.EntityManagerUtil.getNewEM();
 		return instancia;
 	}
 	

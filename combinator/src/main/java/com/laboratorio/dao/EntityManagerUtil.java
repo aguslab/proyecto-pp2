@@ -30,14 +30,15 @@ public class EntityManagerUtil {
 
 	public static EntityManager getRunningEM() throws Exception {
 		if (emf == null) {
+			System.out.println("no null");
 			emf = getEntityManagerMFactory();
+			System.out.println(emf);
 		}
 		return getEntityManager();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static EntityManagerFactory getEntityManagerMFactory() throws Exception {
-
 		Map configOverrides = new HashMap();
 		configOverrides.put("hibernate.connection.username",
 				"javi");
@@ -47,7 +48,7 @@ public class EntityManagerUtil {
 				"true");
 		configOverrides.put("hibernate.connection.url",
 				"jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
-		configOverrides.put("hibernate.hbm2ddl.auto", "create");
+//		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
 		return Persistence.createEntityManagerFactory("PU", configOverrides);
 	}
