@@ -6,44 +6,54 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.laboratorio.modelo.Materia;
+import com.laboratorio.modelo.Curso;
 
-public class MateriaDAO {
-	private static MateriaDAO instancia = null;
+public class CursoDAO 
+{
+	private static CursoDAO instancia = null;
 
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
 
-	public static MateriaDAO getInstancia() throws Exception {
-		if (instancia == null) {
-			instancia = new MateriaDAO();
+	public static CursoDAO getInstancia() throws Exception 
+	{
+		if (instancia == null) 
+		{
+			instancia = new CursoDAO();
 		}
 		em = com.laboratorio.dao.EntityManagerUtil.getNewEM();
 		return instancia;
 	}
-
-	public void alta(Materia M) throws Exception {
-		try {
+	
+	
+	public void alta(Curso C) throws Exception 
+	{
+		try 
+		{
 			em.getTransaction().begin();
-			em.merge(M);
+			em.merge(C);
 			em.flush();
 			em.getTransaction().commit();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			em.getTransaction().rollback();
 			throw e;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Materia> obtenerTodo() {
-		List<Materia> a = null;
-		Query query = em.createQuery("from Materias");
+	public List<Curso> obtenerTodo() 
+	{
+		List<Curso> a = null;
+		Query query = em.createQuery("from Cursos");
 		a = query.getResultList();
 		return a;
 	}
 
-	public Materia getMateria(int id) {
-		Materia S = em.find(Materia.class, id);
+	public Curso getCurso(int id) 
+	{
+		Curso S = em.find(Curso.class, id);
 		return S;
 	}
 }

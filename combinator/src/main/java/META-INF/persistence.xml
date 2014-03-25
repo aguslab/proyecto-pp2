@@ -5,13 +5,18 @@
     version="1.0">
     <persistence-unit name="PU">     
         <provider>org.hibernate.ejb.HibernatePersistence</provider>     
-        <class>com.laboratorio.combinator.Materia</class> 
+        <class>com.laboratorio.modelo.Materia</class> 
+        <class>com.laboratorio.combinator.MateriaAprobada</class> 
+        <class>com.laboratorio.combinator.Curso</class> 
+        <class>com.laboratorio.combinator.PlanEstudio</class> 
+        <class>com.laboratorio.combinator.Turno</class> 
         <properties>            
+<!--             <property name="hibernate.hbm2ddl.auto" value="create" />            -->
             <property name="hibernate.show_sql" value="true" />         
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />         
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />         
-            <property name="hibernate.connection.username" value="javi" />          
-            <property name="hibernate.connection.password" value="123456" />          
+            <property name="hibernate.connection.username" value="root" />          
+            <property name="hibernate.connection.password" value="1234" />          
 
         </properties>
     </persistence-unit>

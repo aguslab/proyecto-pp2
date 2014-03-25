@@ -8,29 +8,35 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /** Provides access to the entity manager. */
-public class EntityManagerUtil {
+public class EntityManagerUtil 
+{
 	private static final ThreadLocal<EntityManager> ENTITY_MANAGERS = new ThreadLocal<EntityManager>();
 	private static EntityManagerFactory emf = null;
 
 	/** Returns a fresh EntityManager */
-	public static EntityManager getEntityManager() {
+	public static EntityManager getEntityManager() 
+	{
 		return ENTITY_MANAGERS.get();
 	}
 
-	public static ThreadLocal<EntityManager> getEntityManagers() {
+	public static ThreadLocal<EntityManager> getEntityManagers() 
+	{
 		return ENTITY_MANAGERS;
 	}
 
-	public static EntityManager getNewEM() throws Exception {
-		if (emf == null) {
+	public static EntityManager getNewEM() throws Exception 
+	{
+		if (emf == null) 
+		{
 			emf = getEntityManagerMFactory();
 		}
 		return emf.createEntityManager();
 	}
 
-	public static EntityManager getRunningEM() throws Exception {
-		if (emf == null) {
-			System.out.println("no null");
+	public static EntityManager getRunningEM() throws Exception 
+	{
+		if (emf == null) 
+		{
 			emf = getEntityManagerMFactory();
 			System.out.println(emf);
 		}
@@ -38,17 +44,18 @@ public class EntityManagerUtil {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static EntityManagerFactory getEntityManagerMFactory() throws Exception {
+	private static EntityManagerFactory getEntityManagerMFactory() throws Exception 
+	{
 		Map configOverrides = new HashMap();
 		configOverrides.put("hibernate.connection.username",
-				"javi");
+				"root");
 		configOverrides.put("hibernate.connection.password",
-				"123456");
+				"1234");
 		configOverrides.put("hibernate.show_sql",
 				"true");
 		configOverrides.put("hibernate.connection.url",
 				"jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
-//		configOverrides.put("hibernate.hbm2ddl.auto", "create");
+		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
 		return Persistence.createEntityManagerFactory("PU", configOverrides);
 	}
