@@ -29,21 +29,32 @@ public class App
         Materia mate2 = new Materia("mate2");
         Materia ingles = new Materia("ingles");
         
-      //CREO TURNOS DISPONIBLES
-        Turno man = new Turno("M");
-        Turno tar = new Turno("T");
-        Turno noc = new Turno("N");
+      
         
       //CREO DÍAS CON SUS TURNOS
-        HashMap<String, Turno> dias = new HashMap<String, Turno>();
-        dias.put("Lunes", man);
-        dias.put("Martes", tar);//TODO cambiar string como clave! puede haber dos dias iguales con distinto horario!!!
-        dias.put("Miercoles", noc);
+//        HashMap<String, Turno> dias = new HashMap<String, Turno>();
+//        dias.put("Lunes", man);
+//        dias.put("Martes", tar);//TODO cambiar string como clave! puede haber dos dias iguales con distinto horario!!!
+//        dias.put("Miercoles", noc);
         
-      //CREO CURSOS (materia q se dicta y en que turno)
-        Curso c1 = new Curso(pp1, dias);      
-        Curso c2 = new Curso(pp2, dias);
-        Curso c3 = new Curso(pp3, dias);
+
+        //CREO HORARIOS DISPONIBLES
+        Horario man = new Horario("Lunes", "M");
+        Horario tar = new Horario("Martes", "T");
+        Horario noc = new Horario("Miercoles", "N");
+        ArrayList<Horario> horar = new ArrayList<Horario>();
+        horar.add(man);
+        horar.add(tar);
+        ArrayList<Horario> horar2 = new ArrayList<Horario>();
+        horar2.add(man);
+        horar2.add(tar);
+        ArrayList<Horario> horar3 = new ArrayList<Horario>();
+        horar3.add(tar);
+        horar3.add(noc);
+        //CREO CURSOS (materia q se dicta y en que turno)
+        Curso c1 = new Curso(pp1, horar);
+        Curso c2 = new Curso(pp2, horar2);
+        Curso c3 = new Curso(mate1, horar3);
       
       //CREO MATERIA APROBADA
         MateriaAprobada matAprob1 = new MateriaAprobada(mate1,10.0);
@@ -57,8 +68,28 @@ public class App
 		//	MateriaDAO.getInstancia().alta(pp1);
 			//MateriaAprobadaDAO.getInstancia().alta(matAprob1);
 			CursoDAO.getInstancia().alta(c1);
-        	Turno t  = CursoDAO.getInstancia().getCurso(1).getDia_Hor().get("Lunes");
-			System.out.println("Hora turno unes es "+t.getHoraInicio() + " y hora fin es "+ t.getHoraFin());
+			CursoDAO.getInstancia().alta(c2);
+			CursoDAO.getInstancia().alta(c3);
+			
+			System.out.println("cant cursos: "+CursoDAO.getInstancia().getCursosPorTurno(18).size());
+			
+			mate1.setId(1);
+        	pp2.setId(2);
+        	mate2.setId(3);
+        	System.out.println("el id de mate 1 es: " + mate1.getId());
+        	System.out.println("el id de pp1 es: " + pp2.getId());
+        	System.out.println("el id de mate2 es: " + mate2.getId());
+
+
+			ArrayList<Curso> cursos = new ArrayList<Curso>();
+			cursos.add(c1);
+			cursos.add(c2);
+			cursos.add(c3);
+			CursoDAO.getInstancia().quitarAprobadas(cursos);
+			for(int i = 0; i <cursos.size(); i++)
+			{
+				System.out.println("CURSOS sin aprobar= " + cursos.get(i).getMateria().getNombre());
+			}
 			
 		} 
         catch (Exception e) 
@@ -116,9 +147,15 @@ public class App
         mat.add(mate1);
         mat.add(mate2);
         mat.add(ingles);
+        
+        //Lista de cursos a dictarse
+        ArrayList<Curso> cursosADictarse = new ArrayList<Curso>();
+        cursosADictarse.add(c1);
+        cursosADictarse.add(c2);
+        cursosADictarse.add(c3);
 
-        //temporal... materias a las que puede inscribirse, serian las materias sobre las cuales habria que hacer la combinatoria
-       String act = filtrarMaterias(mat, alu, m);
+        //temporal... cursos a los que puede inscribirse, serian las materias sobre las cuales habria que hacer la combinatoria
+       String act = filtrarMaterias(cursosADictarse, alu, m);
         
 		String[] elem = act.split(" ");
 		System.out.println("sasdas"+elem[0]);
@@ -133,17 +170,17 @@ public class App
     
     //devuelve materias a las que puede anotarse el alumno (sin tener en cuenta el horario)
     //mat son todas las materias que estan disponibles a dar (en realidad tiene que ser cursos, no materias)
-    private static String filtrarMaterias(ArrayList<Materia> mat, Alumno alu, HashMap<Materia, Set<Materia>> corr) {
+    private static String filtrarMaterias(ArrayList<Curso> cursosADictarse, Alumno alu, HashMap<Materia, Set<Materia>> corr) {
 		String materiasAinscribirse = "";
 		//de las materias a dictarse, saco las materias que ya tiene aprobadas el alumno
-		mat.removeAll(alu.getMateriasAprob());
-    	for(Materia m : mat){
-    		//de las materias que no tiene aprobadas el alumno, me fijo si tiene las correlativas para poder cursarla
-    		//y las agrego a las posibles materias a inscribirse
-    		if(tieneCorrelativas(alu, m, corr)){
-    			materiasAinscribirse = materiasAinscribirse.isEmpty() ? m.getNombre() : materiasAinscribirse + " " + m.getNombre();
-    		}
-    	}
+		cursosADictarse.removeAll(alu.getMateriasAprob());
+//    	for(Materia m : cursosADictarse){
+//    		//de las materias que no tiene aprobadas el alumno, me fijo si tiene las correlativas para poder cursarla
+//    		//y las agrego a las posibles materias a inscribirse
+//    		if(tieneCorrelativas(alu, m, corr)){
+//    			materiasAinscribirse = materiasAinscribirse.isEmpty() ? m.getNombre() : materiasAinscribirse + " " + m.getNombre();
+//    		}
+//    	}
     	
 		return materiasAinscribirse;
 	}
