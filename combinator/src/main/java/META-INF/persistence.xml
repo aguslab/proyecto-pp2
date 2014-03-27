@@ -8,8 +8,6 @@
         <class>com.laboratorio.modelo.Materia</class> 
         <class>com.laboratorio.combinator.MateriaAprobada</class> 
         <class>com.laboratorio.combinator.Curso</class> 
-        <class>com.laboratorio.combinator.PlanEstudio</class> 
-        <class>com.laboratorio.combinator.Turno</class> 
         <properties>            
 <!--             <property name="hibernate.hbm2ddl.auto" value="create" />            -->
             <property name="hibernate.show_sql" value="true" />         
