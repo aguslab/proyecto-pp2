@@ -48,9 +48,9 @@ public class EntityManagerUtil
 	{
 		Map configOverrides = new HashMap();
 		configOverrides.put("hibernate.connection.username",
-				"root");
+				"pp2");
 		configOverrides.put("hibernate.connection.password",
-				"1234");
+				"labo");
 		configOverrides.put("hibernate.show_sql",
 				"true");
 		configOverrides.put("hibernate.connection.url",
