@@ -1,41 +1,37 @@
 package com.laboratorio.modelo;
 
-import java.util.HashMap;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Cursos")
 public class Curso 
 {
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE}) // Sirve para borrar, se puede sacar creo
+	@OneToOne(cascade={CascadeType.ALL}) //TODO: cambiar a manyToOne cuando hayas mas carreras?
 	private Materia materia;
-//	@ElementCollection
-//    @MapKeyColumn(name="name")
-//    @Column(name="value")
-//    @CollectionTable(name="Cursos", joinColumns=@JoinColumn(name="dia_horario"))
-	private HashMap<String, Turno> dia_horario;
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Horario> horario;
 
 	public Curso() {
 
 	}
 	
-	public Curso(Materia materia, HashMap<String, Turno> dia_Hor) 
+	public Curso(Materia materia, List<Horario> horario) 
 	{
 		super();
 		this.materia = materia;
-		this.dia_horario = dia_Hor;
+		this.horario = horario;
 	}
 
 	public int getId() 
@@ -48,16 +44,6 @@ public class Curso
 		this.id = id;
 	}
 	
-	public HashMap<String, Turno> getDia_Hor() 
-	{
-		return dia_horario;
-	}
-
-	public void setDia_Hor(HashMap<String, Turno> dia_Hor) 
-	{
-		this.dia_horario = dia_Hor;
-	}
-
 	public Materia getMateria() 
 	{
 		return materia;
@@ -68,6 +54,17 @@ public class Curso
 		this.materia = materia;
 	}
 
+	public List<Horario> getHorario()
+	{
+		return horario;
+	}
+
+	public void setHorario(List<Horario> horario)
+	{
+		this.horario = horario;
+	}
+
+	
 	
 	
 	
