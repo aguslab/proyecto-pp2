@@ -21,7 +21,7 @@ public class MateriaAprobada
 	<set name="id_materia" table="Materias_Aprobadas"> 
 	<key column="fk_mat_aprobada"/>
 	<one-to-one name="matAprobada" class="mx.model.Materia" /></class>*/
-	private Materia matAprobada;
+	private Materia materia;
 	private double nota;
 
 	public MateriaAprobada()
@@ -31,7 +31,7 @@ public class MateriaAprobada
 	
 	public MateriaAprobada(Materia materia, double nota) 
 	{
-		this.matAprobada = materia;
+		this.materia = materia;
 		this.nota= nota;
 	}
 	
@@ -62,11 +62,11 @@ public class MateriaAprobada
 
 	public Materia getMateriaAprobada() 
 	{
-		return matAprobada;
+		return materia;
 	}
 
 	public void setNota(Materia matAprobada)
 	{
-		this.matAprobada = matAprobada;
+		this.materia = matAprobada;
 	}
 }
