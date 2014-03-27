@@ -1,39 +1,39 @@
 package com.laboratorio.modelo;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
-@Table(name="turnos")
-public class Turno implements Serializable
+@Table(name="horario")
+public class Horario
 {
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id_horario;
+	
 	private int horaInicio;
 	private int horaFin;
+	private String dia;
 	
-	public Turno(){
+	
+	public Horario(){
 		
 	}
-	public Turno(String turno)
+	public Horario(String dia, String turno)
 	{
+		this.dia = dia;
 		 if(turno.equals("M"))
 		 {
 			 this.horaInicio = 8;
-			 this.horaFin = 13;
+			 this.horaFin = 12;
 		 }
 		 else if(turno.equals("T"))
 		 {
 			 this.horaInicio = 13;
-			 this.horaFin = 18;
+			 this.horaFin = 17;
 		 }
 		 else
 		 {
@@ -45,12 +45,12 @@ public class Turno implements Serializable
 
 	public int getId() 
 	{
-		return id;
+		return id_horario;
 	}
 
 	public void setId(int id) 
 	{
-		this.id = id;
+		this.id_horario = id;
 	}
 	
 	public int getHoraInicio() 
@@ -72,6 +72,18 @@ public class Turno implements Serializable
 	{
 		this.horaFin = horaFin;
 	}
+	
+	public String getDia()
+	{
+		return dia;
+	}
+	
+	public void setDia(String dia)
+	{
+		this.dia = dia;
+	}
+	
+	
 	
 	
 }
