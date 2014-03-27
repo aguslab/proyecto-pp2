@@ -6,33 +6,33 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.laboratorio.modelo.Turno;
+import com.laboratorio.modelo.Horario;
 
 
-public class TurnoDAO 
+public class HorarioDAO 
 {
-	private static TurnoDAO instancia = null;
+	private static HorarioDAO instancia = null;
 
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
 
-	public static TurnoDAO getInstancia() throws Exception 
+	public static HorarioDAO getInstancia() throws Exception 
 	{
 		if (instancia == null)
 		{
-			instancia = new TurnoDAO();
+			instancia = new HorarioDAO();
 		}
 		em = com.laboratorio.dao.EntityManagerUtil.getNewEM();
 		return instancia;
 	}
 	
 	
-	public void alta(Turno T) throws Exception 
+	public void alta(Horario H) throws Exception 
 	{
 		try 
 		{
 			em.getTransaction().begin();
-			em.merge(T);
+			em.merge(H);
 			em.flush();
 			em.getTransaction().commit();
 		} 
@@ -44,17 +44,17 @@ public class TurnoDAO
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Turno> obtenerTodo() 
+	public List<Horario> obtenerTodo() 
 	{
-		List<Turno> a = null;
+		List<Horario> a = null;
 		Query query = em.createQuery("from Turnos");
 		a = query.getResultList();
 		return a;
 	}
 
-	public Turno getTurno(int id)
+	public Horario getTurno(int id)
 	{
-		Turno S = em.find(Turno.class, id);
+		Horario S = em.find(Horario.class, id);
 		return S;
 	}
 }
