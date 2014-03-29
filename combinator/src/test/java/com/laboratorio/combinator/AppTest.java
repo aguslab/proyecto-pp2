@@ -1,5 +1,7 @@
 package com.laboratorio.combinator;
 
+import com.laboratorio.modelo.Curso;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,6 +35,8 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        Curso c = new Curso();
+        int a = c.getId();
+    	assertEquals(0, a);
     }
 }
