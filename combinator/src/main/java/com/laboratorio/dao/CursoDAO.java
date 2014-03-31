@@ -16,7 +16,6 @@ import javax.persistence.criteria.Root;
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
 import com.laboratorio.modelo.Materia;
-import com.laboratorio.modelo.PlanEstudio;
 import com.laboratorio.modelo.Recomendacion;
 
 public class CursoDAO 
@@ -72,6 +71,7 @@ public class CursoDAO
 		return S;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Curso> getCursosPorTurno(Integer horaInicio)
 	{
 		CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -97,7 +97,7 @@ public class CursoDAO
 	
 	//Cuenta la cantidad de veces que aparece cada materia en la tabla de
 		//materias_aprobadas. cantAprobada = 0 no está aprobada, cantAprobada>0 esta aprobada
-		public ArrayList<Curso> quitarMateriasAprobadas(ArrayList<Curso> cursos) 
+		public List<Curso> quitarMateriasAprobadas(List<Curso> cursos) 
 		{
 			Integer materia_id;
 			for(int i= 0; i < cursos.size(); i++)
