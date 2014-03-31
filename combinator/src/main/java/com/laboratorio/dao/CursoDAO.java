@@ -61,7 +61,7 @@ public class CursoDAO
 	public List<Curso> obtenerTodo() 
 	{
 		List<Curso> a = null;
-		Query query = em.createQuery("from Cursos");
+		Query query = em.createQuery("from Curso");
 		a = query.getResultList();
 		return a;
 	}
@@ -72,24 +72,27 @@ public class CursoDAO
 		return S;
 	}
 	
-	public ArrayList<Curso> getCursosPorTurno(Integer horaInicio)
+	public List<Curso> getCursosPorTurno(Integer horaInicio)
 	{
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
 		Root<Curso> cur = cq.from(Curso.class);
 		cq.select(cur);
-		
-		Join<Curso,Horario> jo = cur.join("horario");
+
+		Join<Curso, Horario> jo = cur.join("horario");
 		Predicate conjuncion = builder.conjunction();
-		
-		conjuncion.getExpressions().add(builder.greaterThanOrEqualTo(jo.get("horaInicio").as(Integer.class), horaInicio));
-		
-		Join<Curso,Materia> joMat = cur.join("materia");
-		
+
+		conjuncion.getExpressions().add(
+				builder.greaterThanOrEqualTo(
+						jo.get("horaInicio").as(Integer.class), horaInicio));
+
+		// TODO!! revisar!
+		Join<Curso, Materia> joMat = cur.join("materia");
+
 		cq.where(conjuncion);
 		TypedQuery<?> q = em.createQuery(cq);
-		
-		return (ArrayList<Curso>) q.getResultList();
+
+		return (List<Curso>) q.getResultList();
 	}
 	
 	//Cuenta la cantidad de veces que aparece cada materia en la tabla de
