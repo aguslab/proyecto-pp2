@@ -13,15 +13,16 @@ public class Horario
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_horario;
-	
 	private int horaInicio;
 	private int horaFin;
 	private String dia;
 	
 	
-	public Horario(){
+	public Horario()
+	{
 		
 	}
+	
 	public Horario(String dia, String turno)
 	{
 		this.dia = dia;
