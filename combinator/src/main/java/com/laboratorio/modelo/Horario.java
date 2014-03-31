@@ -18,11 +18,14 @@ public class Horario
 	private String dia;
 	
 	
-	public Horario()
-	{
-		
+	public Horario(){
 	}
 	
+	/**
+	 * 
+	 * @param dia Lunes, mart, etc
+	 * @param turno M (8 a 12),T (13 a 17), N (18 a 22) 
+	 */
 	public Horario(String dia, String turno)
 	{
 		this.dia = dia;
@@ -83,8 +86,6 @@ public class Horario
 	{
 		this.dia = dia;
 	}
-	
-	
 	
 	
 }
