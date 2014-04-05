@@ -43,18 +43,4 @@ public class HorarioDAO
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Horario> obtenerTodo() 
-	{
-		List<Horario> a = null;
-		Query query = em.createQuery("from Turnos");
-		a = query.getResultList();
-		return a;
-	}
-
-	public Horario getTurno(int id)
-	{
-		Horario S = em.find(Horario.class, id);
-		return S;
-	}
 }
