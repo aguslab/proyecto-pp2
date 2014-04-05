@@ -79,12 +79,12 @@ public class App
         horar7.add(n15);
         
         //CREO CURSOS (materia q se dicta y en que turno)
-       /* Curso c1 = new Curso(mate1, horar);
+        Curso c1 = new Curso(mate1, horar);
         Curso c2 = new Curso(pp1, horar2);
         Curso c3 = new Curso(ingles, horar3);
         Curso c4 = new Curso(pp2,horar4);
         Curso c5 = new Curso(pp2,horar5);
-        Curso c6 = new Curso(ip,horar6);*/
+        Curso c6 = new Curso(ip,horar6);
         Curso c7 = new Curso(irm,horar5);
         Curso c8 = new Curso(lecto,horar7);
         
@@ -113,13 +113,13 @@ public class App
 	        MateriaDAO.getInstancia().alta(lecto);
 	        MateriaDAO.getInstancia().alta(logica);
 			//MateriaAprobadaDAO.getInstancia().alta(matAprob1);
-			/*CursoDAO.getInstancia().alta(c1);
+			CursoDAO.getInstancia().alta(c1);
 			CursoDAO.getInstancia().alta(c2);
 			CursoDAO.getInstancia().alta(c3);
 			CursoDAO.getInstancia().alta(c4);
 			CursoDAO.getInstancia().alta(c5);
 			CursoDAO.getInstancia().alta(c6);
-			CursoDAO.getInstancia().alta(c7);*/
+			CursoDAO.getInstancia().alta(c7);
 			CursoDAO.getInstancia().alta(c8);
 			
 			HorarioDAO.getInstancia().alta(n1);
@@ -178,13 +178,13 @@ public class App
         	
 			
         	ArrayList<Curso> cursos = new ArrayList<Curso>();
-			/*cursos.add(c1);
+			cursos.add(c1);
 			cursos.add(c2);
 			cursos.add(c3);
 			cursos.add(c4);
 			cursos.add(c5);
 			cursos.add(c6);
-			cursos.add(c7);*/
+			cursos.add(c7);
 			cursos.add(c8);
 						//Recomendacion r = new Recomendacion();
 			System.out.println("Recomendación 1: ");
@@ -241,7 +241,7 @@ public class App
         Set<Materia> aprobMaterias = null ;
         aprobMaterias.add(mate1);
 		//CREO UN ALUMNO Y CARGO SUS MATERIAS APROBADAS
-        Alumno alu = new Alumno("Javi", aprobMaterias );
+       // Alumno alu = new Alumno("Javi", aprobMaterias );
         
         //LISTA DE MATERIAS A DICTARSE
         ArrayList<Materia> mat = new ArrayList<Materia>();
@@ -259,7 +259,7 @@ public class App
         cursosADictarse.add(c3);*/
 
         //temporal... cursos a los que puede inscribirse, serian las materias sobre las cuales habria que hacer la combinatoria
-       String act = filtrarMaterias(cursosADictarse, alu, m);
+    /*   String act = filtrarMaterias(cursosADictarse, alu, m);
         
 		String[] elem = act.split(" ");
 		System.out.println("sasdas"+elem[0]);
@@ -269,10 +269,10 @@ public class App
 		System.out.println("POSIBLES MATERIAS A ANOTARSE SIN TENER EN CUENTA EL HORARIO");
 		for (int i = 0; i < permutaciones.size(); i++) {
 			System.out.println(permutaciones.get(i).trim());
-		}
+		}*/
     }
     
-    //devuelve materias a las que puede anotarse el alumno (sin tener en cuenta el horario)
+   /* //devuelve materias a las que puede anotarse el alumno (sin tener en cuenta el horario)
     //mat son todas las materias que estan disponibles a dar (en realidad tiene que ser cursos, no materias)
     private static String filtrarMaterias(ArrayList<Curso> cursosADictarse, Alumno alu, HashMap<Materia, Set<Materia>> corr) {
 		String materiasAinscribirse = "";
@@ -286,12 +286,12 @@ public class App
 //    		}
 //    	}
     	
-		return materiasAinscribirse;
+		return materiasAinscribirse;*/
 	}
     
     
     
-    private static boolean tieneCorrelativas(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
+   /* private static boolean tieneCorrelativas(Alumno alu, Materia m, HashMap<Materia, Set<Materia>> corr){
     	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
     	if(corr.containsKey(m)){
     		return alu.getMateriasAprob().containsAll(corr.get(m));
@@ -310,5 +310,5 @@ public class App
 				}
 			}
 		}
-	}
-}
+	}*/
+
