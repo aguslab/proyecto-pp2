@@ -37,7 +37,7 @@ public class MateriaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Materia> obtenerTodo() {
 		List<Materia> a = null;
-		Query query = em.createQuery("from Materias");
+		Query query = em.createQuery("from Materia");
 		a = query.getResultList();
 		return a;
 	}
