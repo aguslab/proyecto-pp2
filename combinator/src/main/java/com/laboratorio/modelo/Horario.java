@@ -22,18 +22,15 @@ public class Horario
 	private String dia;
 	
 	
-	public Horario(){
+	public Horario()
+	{
 	}
-	
-	/**
-	 * 
-	 * @param dia Lunes, mart, etc
-	 * @param turno M (8 a 12),T (13 a 17), N (18 a 22) 
-	 */
-	public Horario(String dia, String turno)
+	public Horario(String dia, int horaInicio, int horaFin)
 	{
 		this.dia = dia;
-		 if(turno.equals("M"))
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+		/* if(turno.equals("M"))
 		 {
 			 this.horaInicio = 8;
 			 this.horaFin = 12;
@@ -47,7 +44,7 @@ public class Horario
 		 {
 			 this.horaInicio = 18;
 			 this.horaFin = 22;
-		 }
+		 }*/
 		 
 	}
 
