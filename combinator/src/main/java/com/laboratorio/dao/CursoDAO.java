@@ -16,15 +16,11 @@ import javax.persistence.criteria.Root;
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
 import com.laboratorio.modelo.Materia;
-import com.laboratorio.modelo.PlanEstudio;
 import com.laboratorio.modelo.Recomendacion;
 
 public class CursoDAO 
 {
 	private static CursoDAO instancia = null;
-
-	String[] dias = new String[12];
-	String[] horariosOcupados = new String[12];
 	int cantidadDeseada = 3; //Cantidad de materias que el alumno quiere cursar. No va declarado aca.
 	
 	@PersistenceContext(unitName = "PU")
@@ -286,133 +282,6 @@ public class CursoDAO
 				cantidadDeseada--;
 			}
 			return recomendacion;
-		}
-		
-		public void revisarHorarioNoche(Horario horario, String nombreMateria)
-		{
-			Boolean materiaUsada = false; //Indicador para saber si la materia logró ubicarse en algún día
-			if(horario.getHoraInicio() == 18 && horario.getHoraFin() == 22)
-			{
-				 if(horario.getDia().equals("Lunes") && dias[0] == null && dias[1] == null) //Si es una materia que se dicta los Lunes 4 horas se guardará en dias[0] siempre que no haya una materia los lunes de 2 horas ocupando dias[0] y/o dias[1] 
-				 {
-					 dias[0] = nombreMateria;
-					 this.horariosOcupados[0] = "18 a 22";
-					 materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Martes") && dias[2] == null && dias[3] == null)
-				 {
-					 dias[2] = nombreMateria;
-					 this.horariosOcupados[2] = "18 a 22";
-					 materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Miercoles") && dias[4] == null && dias[5] == null)
-				 {
-					 dias[4] = nombreMateria;
-					 this.horariosOcupados[4] = "18 a 22";
-					 materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Jueves") && dias[6] == null && dias[7] == null)
-				 {
-					 dias[6] = nombreMateria;
-					 this.horariosOcupados[6] = "18 a 22";
-					 materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Viernes") && dias[8] == null && dias[9] == null)
-				 {
-					 dias[8] = nombreMateria;
-					 this.horariosOcupados[8] = "18 a 22";
-					 materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Sabado") && dias[10] == null && dias[11] == null)
-				 {
-					 dias[10] = nombreMateria;
-					 this.horariosOcupados[10] = "18 a 22";
-					 materiaUsada = true;
-				 }
-			}
-			else if(horario.getHoraInicio() == 18 && horario.getHoraFin() == 20)
-			{
-				if(horario.getDia().equals("Lunes") && dias[0] == null)
-				 {
-					dias[0] = nombreMateria;
-					this.horariosOcupados[0] = "18 a 20";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Martes") && dias[2] == null)
-				 {
-					dias[2] = nombreMateria;
-					this.horariosOcupados[2] = "18 a 20";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Miercoles") && dias[4] == null)
-				 {
-					dias[4] = nombreMateria;
-					this.horariosOcupados[4] = "18 a 20";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Jueves") && dias[6] == null)
-				 {
-					dias[6] = nombreMateria;
-					this.horariosOcupados[6] = "18 a 20";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Viernes") && dias[8] == null)
-				 {
-					dias[8] = nombreMateria;
-					this.horariosOcupados[8] = "18 a 20";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Sabado") && dias[10] == null)
-				 {
-					dias[10] = nombreMateria;
-					this.horariosOcupados[10] = "18 a 20";
-					materiaUsada = true;
-				 }
-			}
-			else
-			{
-				if(horario.getDia().equals("Lunes") && dias[1] == null)
-				 {
-					dias[1] = nombreMateria;
-					this.horariosOcupados[1] = "20 a 22";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Martes") && dias[3] == null)
-				 {
-					dias[3] = nombreMateria;
-					this.horariosOcupados[3] = "20 a 22";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Miercoles") && dias[5] == null)
-				 {
-					dias[5] = nombreMateria;
-					this.horariosOcupados[5] = "20 a 22";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Jueves") && dias[7] == null)
-				 {
-					dias[7] = nombreMateria;
-					this.horariosOcupados[7] = "20 a 22";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Viernes") && dias[9] == null)
-				 {
-					dias[9] = nombreMateria;
-					this.horariosOcupados[9] = "20 a 22";
-					materiaUsada = true;
-				 }
-				 if(horario.getDia().equals("Sabado") && dias[11] == null)
-				 {
-					dias[11] = nombreMateria;
-					this.horariosOcupados[11] = "20 a 22";
-					materiaUsada = true;
-				 }
-			}
-
-			if (materiaUsada) //Si se usó la materia entonces la descontamos de cantidadDeseada
-			{
-				cantidadDeseada--;
-			}
 		}
 		
 }
