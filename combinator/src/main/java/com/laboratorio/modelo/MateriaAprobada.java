@@ -1,28 +1,24 @@
 package com.laboratorio.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Materias_Aprobadas")
 public class MateriaAprobada 
 {
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne
-	/*<class name="MateriaAprobada" table="Materias_Aprobadas">
-	<set name="id_materia" table="Materias_Aprobadas"> 
-	<key column="fk_mat_aprobada"/>
-	<one-to-one name="matAprobada" class="mx.model.Materia" /></class>*/
+	@OneToOne(optional = false, cascade=CascadeType.ALL)
 	private Materia materia;
 	private double nota;
+	//TODO: agregar variable aprobado? A, H, algo de eso?
 
 	public MateriaAprobada()
 	{
