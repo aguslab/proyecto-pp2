@@ -18,7 +18,7 @@ public class Curso
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne(cascade={CascadeType.ALL}) //TODO: cambiar a manyToOne cuando hayas mas carreras?
+	@OneToOne(optional = false, cascade={CascadeType.ALL}) //TODO: cambiar a manyToOne cuando hayas mas carreras?
 	private Materia materia;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Horario> horario;
