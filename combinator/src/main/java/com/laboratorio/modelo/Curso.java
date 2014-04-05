@@ -23,7 +23,8 @@ public class Curso
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Horario> horario;
 
-	public Curso() {
+	public Curso() 
+	{
 
 	}
 	

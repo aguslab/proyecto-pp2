@@ -7,12 +7,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import java.util.*;
-import java.text.*;
-
-import javax.swing.table.TableModel;
 
 @SuppressWarnings("serial")
 public class Prototipo 
@@ -34,21 +31,12 @@ ItemListener
 
 	private JPanel barraDeEstado = new JPanel ();
 
-	private JLabel fechaPie;
-	private JLabel propiedadIntelectual;
-
-	private java.util.Date fechaActual= new java.util.Date ();
-	
-	private SimpleDateFormat fechaFormateada = new SimpleDateFormat ("dd MMMM yyyy", Locale.getDefault());
-	
-	private String fecha = fechaFormateada.format (fechaActual);
-	
+	private JLabel firma;
+	private JLabel materia;
 	private JTable tablaAprobadas;
 	@SuppressWarnings("unused")
 	private Integer tabSeleccionado;
-	private JTable table;
 	
-	@SuppressWarnings("deprecation")
 	public Prototipo() 
 	{
 		super ("Recomendaciones de materias a cursar");
@@ -57,7 +45,7 @@ ItemListener
 		UIManager.addPropertyChangeListener (new UISwitchListener ((JComponent)getRootPane()));
 		barra = new JMenuBar ();
 		setIconImage (getToolkit().getImage ("Imagenes/tabla.png"));
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setSize(new Dimension(740, 508));
 		setJMenuBar (barra);
 		
 		for(UIManager.LookAndFeelInfo laf:UIManager.getInstalledLookAndFeels())
@@ -108,12 +96,6 @@ ItemListener
 		getContentPane().add(tabOpciones);
 		
 		DefaultTableModel modelo = new DefaultTableModel();
-		
-		DefaultTableModel modelo2 = new DefaultTableModel();
-		
-		DefaultTableModel modelo3 = new DefaultTableModel();
-		
-		DefaultTableModel modelo4 = new DefaultTableModel();
 			
 			// Tabla Recomendaciones
 			JPanel panelRecomendaciones = new JPanel();
@@ -127,22 +109,15 @@ ItemListener
 			tabOpciones.addTab("Recomendaciones ",new ImageIcon (""), panelRecomendaciones, null);
 			panelRecomendaciones.setLayout(null);
 			
-				
-			JScrollPane spRecomendacion1 = new JScrollPane();
-			spRecomendacion1.setBounds(10, 89, 533, 179);
-			spRecomendacion1.setEnabled(false);
-			panelRecomendaciones.add(spRecomendacion1);
-			JTable tablaDias = new JTable(modelo);
+			JScrollPane spRecomendacion = new JScrollPane();
+			spRecomendacion.setEnabled(false);
+			spRecomendacion.setBounds(10, 240, 533, 179);
+			panelRecomendaciones.add(spRecomendacion);
+			final JTable tablaDias = new JTable(modelo);
 			tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			spRecomendacion1.setViewportView(tablaDias);
+			spRecomendacion.setViewportView(tablaDias);
 			tablaDias.setModel(new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
 				},
 				new String[] {
 					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
@@ -158,170 +133,77 @@ ItemListener
 			tablaDias.setRowHeight(25);
 			tablaDias.getTableHeader().setReorderingAllowed(false);
 			
-			JScrollPane spRecomendacion2 = new JScrollPane();
-			spRecomendacion2.setEnabled(false);
-			spRecomendacion2.setBounds(10, 304, 533, 179);
-			panelRecomendaciones.add(spRecomendacion2);
-			JTable tablaDias2 = new JTable(modelo2);
-			tablaDias2.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			spRecomendacion2.setViewportView(tablaDias2);
-			tablaDias2.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-				},
-				new String[] {
-					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
-				}
-			) {
-				Class[] columnTypes = new Class[] {
-					String.class, String.class, String.class, String.class, String.class, String.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			});
-			tablaDias2.setRowHeight(25);
-			tablaDias2.getTableHeader().setReorderingAllowed(false);
-			
-			JScrollPane spRecomendacion3 = new JScrollPane();
-			spRecomendacion3.setEnabled(false);
-			spRecomendacion3.setBounds(610, 89, 533, 179);
-			panelRecomendaciones.add(spRecomendacion3);
-			JTable tablaDias3 = new JTable(modelo3);
-			tablaDias3.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			spRecomendacion3.setViewportView(tablaDias3);
-			tablaDias3.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-				},
-				new String[] {
-					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
-				}
-			) {
-				Class[] columnTypes = new Class[] {
-					String.class, String.class, String.class, String.class, String.class, String.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			});
-			tablaDias3.setRowHeight(25);
-			tablaDias3.getTableHeader().setReorderingAllowed(false);
-			
-			JScrollPane spRecomendacion4 = new JScrollPane();
-			spRecomendacion4.setEnabled(false);
-			spRecomendacion4.setBounds(610, 304, 533, 179);
-			panelRecomendaciones.add(spRecomendacion4);
-			JTable tablaDias4 = new JTable(modelo4);
-			tablaDias4.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			spRecomendacion4.setViewportView(tablaDias4);
-			tablaDias4.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-					{null, null, null, null, null, null},
-				},
-				new String[] {
-					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
-				}
-			) {
-				Class[] columnTypes = new Class[] {
-					String.class, String.class, String.class, String.class, String.class, String.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			});
-			tablaDias4.setRowHeight(25);
-			tablaDias4.getTableHeader().setReorderingAllowed(false);
-			
-			JComboBox cbCantidadMaterias = new JComboBox();
-			cbCantidadMaterias.setBounds(144, 11, 49, 20);
-			cbCantidadMaterias.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8"}));
-			panelRecomendaciones.add(cbCantidadMaterias);
-			
-			JLabel lblCantidadDeMaterias = new JLabel("Cantidad de materias:");
-			lblCantidadDeMaterias.setBounds(10, 14, 133, 14);
-			panelRecomendaciones.add(lblCantidadDeMaterias);
-			
 			JLabel lblHorarios = new JLabel("Horarios:");
-			lblHorarios.setBounds(265, 14, 74, 14);
+			lblHorarios.setBounds(10, 11, 74, 14);
 			panelRecomendaciones.add(lblHorarios);
 			
-			JLabel lblMaana = new JLabel("Ma\u00F1ana");
-			lblMaana.setBounds(340, 14, 57, 14);
-			panelRecomendaciones.add(lblMaana);
+			JLabel lblManiana = new JLabel("Ma\u00F1ana");
+			lblManiana.setBounds(85, 11, 57, 14);
+			panelRecomendaciones.add(lblManiana);
 			
 			JCheckBox cbManana = new JCheckBox("");
-			cbManana.setBounds(386, 10, 21, 23);
+			cbManana.setBounds(131, 7, 21, 23);
 			panelRecomendaciones.add(cbManana);
 			
-			JLabel lblMaterias = new JLabel("Recomendaciones:");
-			lblMaterias.setBounds(10, 64, 112, 14);
-			panelRecomendaciones.add(lblMaterias);
+			JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
+			lblRecomendaciones.setBounds(10, 217, 112, 14);
+			panelRecomendaciones.add(lblRecomendaciones);
 			
 			JLabel lblTarde = new JLabel("Tarde");
-			lblTarde.setBounds(427, 14, 49, 14);
+			lblTarde.setBounds(172, 11, 49, 14);
 			panelRecomendaciones.add(lblTarde);
 			
 			JCheckBox checkBox = new JCheckBox("");
-			checkBox.setBounds(463, 10, 21, 23);
+			checkBox.setBounds(208, 7, 21, 23);
 			panelRecomendaciones.add(checkBox);
 			
 			JLabel lblNoche = new JLabel("Noche");
-			lblNoche.setBounds(508, 14, 49, 14);
+			lblNoche.setBounds(253, 11, 49, 14);
 			panelRecomendaciones.add(lblNoche);
 			
 			JCheckBox checkBox_1 = new JCheckBox("");
-			checkBox_1.setBounds(548, 10, 21, 23);
+			checkBox_1.setBounds(293, 7, 21, 23);
 			panelRecomendaciones.add(checkBox_1);
 			
-			JButton btnOk1 = new JButton(new ImageIcon ("Imagenes/ok.png"));
-			btnOk1.setBounds(553, 89, 24, 23);
-			panelRecomendaciones.add(btnOk1);
-			
-			JButton btnNo1 = new JButton(new ImageIcon ("Imagenes/no.png"));
-			btnNo1.setBounds(553, 115, 24, 23);
-			panelRecomendaciones.add(btnNo1);
-			
 			JButton btnOk2 = new JButton(new ImageIcon ("Imagenes/ok.png"));
-			btnOk2.setBounds(553, 304, 24, 23);
+			btnOk2.setBounds(553, 243, 24, 23);
 			panelRecomendaciones.add(btnOk2);
 			
-			JButton btnNo2 = new JButton(new ImageIcon ("Imagenes/no.png"));
-			btnNo2.setBounds(553, 330, 24, 23);
-			panelRecomendaciones.add(btnNo2);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 37, 533, 169);
+			panelRecomendaciones.add(scrollPane);
 			
-			JButton btnOk3 = new JButton(new ImageIcon ("Imagenes/ok.png"));
-			btnOk3.setBounds(1153, 89, 24, 23);
-			panelRecomendaciones.add(btnOk3);
-			
-			JButton btnNo3 = new JButton(new ImageIcon ("Imagenes/no.png"));
-			btnNo3.setBounds(1153, 115, 24, 23);
-			panelRecomendaciones.add(btnNo3);
-			
-			JButton btnOk4 = new JButton(new ImageIcon ("Imagenes/ok.png"));
-			btnOk4.setBounds(1153, 304, 24, 23);
-			panelRecomendaciones.add(btnOk4);
-			
-			JButton btnNo4 = new JButton(new ImageIcon ("Imagenes/no.png"));
-			btnNo4.setBounds(1153, 330, 24, 23);
-			panelRecomendaciones.add(btnNo4);
-			tablaDias.getTableHeader().setReorderingAllowed(false);
-		
+			final JList<String> listaRecomendaciones = new JList<String>();
+			listaRecomendaciones.setModel(new AbstractListModel() {
+				String[] values = new String[] {"1", "2"};
+				public int getSize() {
+					return values.length;
+				}
+				public Object getElementAt(int index) {
+					return values[index];
+				}
+			});
+			listaRecomendaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			scrollPane.setViewportView(listaRecomendaciones);
+			listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
+			  {
+			    public void valueChanged(ListSelectionEvent e)
+			    {
+			      if (e.getValueIsAdjusting() == false)
+			      {
+			    	 /*Prueba para mostrar la recomendacion elegida en la tabla
+			    	  *  String value = listaRecomendaciones.getSelectedValue();
+			        System.out.println(value);
+			        DefaultTableModel tablaTemp = (DefaultTableModel) tablaDias.getModel();
+					tablaTemp.setValueAt(value, 0, 0);
+					tablaTemp.setValueAt("", 0, 1);
+					tablaTemp.setValueAt("", 0, 2);
+					tablaTemp.setValueAt("", 0, 3);
+					tablaTemp.setValueAt("", 0, 4);
+					tablaTemp.setValueAt("", 0, 5);*/
+			      }
+			    }
+			  });
 	
 	// Tabla Materia aprobadas
 			JPanel panelAprobadas = new JPanel();
@@ -337,7 +219,7 @@ ItemListener
 			tabOpciones.addTab("Materias aprobadas ",new ImageIcon (""), panelAprobadas, null);
 				
 			JScrollPane spAprobadas = new JScrollPane();
-			spAprobadas.setBounds(10, 11, 558, 447);
+			spAprobadas.setBounds(10, 11, 558, 407);
 			panelAprobadas.add(spAprobadas);
 			
 			tablaAprobadas = new JTable();
@@ -352,10 +234,11 @@ ItemListener
 					"Materia", "Nota"
 				}
 			) {
+				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
 					String.class, String.class
 				};
-				public Class getColumnClass(int columnIndex) {
+				public Class<?> getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
 				boolean[] columnEditables = new boolean[] {
@@ -395,18 +278,15 @@ ItemListener
 			mnuPrototipo.add (mostrarPrototipo);
 		
 			
-			propiedadIntelectual = new JLabel (" " + "PP2 - Godoy y De Napoli.", Label.LEFT);
-			propiedadIntelectual.setForeground (Color.black);
-			propiedadIntelectual.setToolTipText ("Todos los derechos reservados");
+			materia = new JLabel (" " + "Proyecto Profesional II", Label.LEFT);
+			materia.setForeground (Color.black);
 			
-			fechaPie = new JLabel ("" + fecha + " ", JLabel.RIGHT);
-			
-			fechaPie.setForeground (Color.black);
-			fechaPie.setToolTipText ("Fecha actual del sistema");
+			firma = new JLabel ("" + "GRC - Godoy y De Napoli." + " ", JLabel.RIGHT);
+			firma.setForeground (Color.black);
 			
 			barraDeEstado.setLayout (new BorderLayout());
-			barraDeEstado.add (propiedadIntelectual, BorderLayout.WEST);
-			barraDeEstado.add (fechaPie, BorderLayout.EAST);
+			barraDeEstado.add (materia, BorderLayout.WEST);
+			barraDeEstado.add (firma, BorderLayout.EAST);
 
 			escritorio.putClientProperty ("JDesktopPane.dragMode", "outline");
 
@@ -423,8 +303,8 @@ ItemListener
 		    int reply = JOptionPane.showConfirmDialog 
 		    (
 		    	this,
-		    	"¿Está seguro que desea cerrar\nesta aplicación?",
-		    	fecha, JOptionPane.YES_NO_OPTION, 
+		    	"¿Está seguro que desea cerrar la aplicación?",
+		    	"Cerrando GRC", JOptionPane.YES_NO_OPTION, 
 		    	JOptionPane.WARNING_MESSAGE
 		    );
 

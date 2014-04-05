@@ -3,13 +3,11 @@ package com.laboratorio.modelo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import com.laboratorio.dao.CursoDAO;
-import com.laboratorio.dao.MateriaAprobadaDAO;
+import com.laboratorio.dao.HorarioDAO;
 import com.laboratorio.dao.MateriaDAO;
-import com.laboratorio.dao.PlanEstudioDAO;
 
 /**
  * Hello world!
@@ -17,7 +15,8 @@ import com.laboratorio.dao.PlanEstudioDAO;
  */
 public class App 
 {
-    public static void main( String[] args )
+    @SuppressWarnings("null")
+	public static void main( String[] args )
     {
         //String act = "PP1 PP2 PP3 Mate Ingles";
         
@@ -28,8 +27,12 @@ public class App
         Materia mate1 = new Materia("mate1");
         Materia mate2 = new Materia("mate2");
         Materia ingles = new Materia("ingles");
+        Materia ip = new Materia("IP");
+        Materia irm = new Materia("IRM");
+        Materia lecto = new Materia("Lectoescritura");
+        Materia logica = new Materia("Lógica y teoría de números");
         
-      
+       
         
       //CREO DÍAS CON SUS TURNOS
 //        HashMap<String, Turno> dias = new HashMap<String, Turno>();
@@ -39,49 +42,120 @@ public class App
         
 
         //CREO HORARIOS DISPONIBLES
-        Horario man = new Horario("Lunes", "M");
-        Horario tar = new Horario("Martes", "T");
-        Horario noc = new Horario("Miercoles", "N");
+        Horario n1 = new Horario("Lunes", 18, 22);
+        Horario n2 = new Horario("Martes", 18, 22);
+        Horario n3 = new Horario("Miercoles", 18, 20);
+        Horario n4 = new Horario("Jueves", 18, 22);
+        Horario n5 = new Horario("Miercoles", 20, 22);
+        Horario n6 = new Horario("Viernes", 18, 22);
+        Horario n7 = new Horario("Lunes", 18, 20);
+        Horario n8 = new Horario("Lunes", 20, 22);
+        Horario n9 = new Horario("Martes", 18, 20);
+        Horario n10 = new Horario("Martes", 20, 22);
+        Horario n11 = new Horario("Miercoles", 18, 22);
+        Horario n12 = new Horario("Jueves", 18, 20);
+        Horario n13 = new Horario("Jueves", 20, 22);
+        Horario n14 = new Horario("Viernes", 18, 20);
+        Horario n15 = new Horario("Viernes", 20, 22);
         ArrayList<Horario> horar = new ArrayList<Horario>();
-        horar.add(man);
-        horar.add(tar);
+        horar.add(n1);
+        horar.add(n3);
         ArrayList<Horario> horar2 = new ArrayList<Horario>();
-        horar2.add(man);
-        horar2.add(tar);
+        horar2.add(n2);
+        horar2.add(n4);
         ArrayList<Horario> horar3 = new ArrayList<Horario>();
-        horar3.add(tar);
-        horar3.add(noc);
+        horar3.add(n5);
+        horar3.add(n6);
+        ArrayList<Horario> horar4 = new ArrayList<Horario>();
+        horar4.add(n4);
+        horar4.add(n12);
+        ArrayList<Horario> horar5 = new ArrayList<Horario>();
+        horar5.add(n13);
+        horar5.add(n14);
+        ArrayList<Horario> horar6 = new ArrayList<Horario>();
+        horar6.add(n11);
+        ArrayList<Horario> horar7 = new ArrayList<Horario>();
+        horar7.add(n2);
+        horar7.add(n15);
+        
         //CREO CURSOS (materia q se dicta y en que turno)
-        Curso c1 = new Curso(pp1, horar);
-        Curso c2 = new Curso(pp2, horar2);
-        Curso c3 = new Curso(mate1, horar3);
-      
+       /* Curso c1 = new Curso(mate1, horar);
+        Curso c2 = new Curso(pp1, horar2);
+        Curso c3 = new Curso(ingles, horar3);
+        Curso c4 = new Curso(pp2,horar4);
+        Curso c5 = new Curso(pp2,horar5);
+        Curso c6 = new Curso(ip,horar6);*/
+        Curso c7 = new Curso(irm,horar5);
+        Curso c8 = new Curso(lecto,horar7);
+        
       //CREO MATERIA APROBADA
-        MateriaAprobada matAprob1 = new MateriaAprobada(mate1,10.0);
+      //  MateriaAprobada matAprob1 = new MateriaAprobada(mate1,10.0);
+        
+        //CREO UN PLAN DE ESTUDIOS
+       /* ArrayList<Materia> materias = new ArrayList<Materia>();
+        materias.add(mate1);
+        materias.add(mate2);
+        ArrayList<Materia> correlativas = new ArrayList<Materia>();
+        correlativas.add(mate1);
+        PlanEstudio pe = new PlanEstudio(mate2,mate1);*/
         
         
         try 
         
         {
 			//System.out.println("Materia que trajo: "+MateriaDAO.getInstancia().getMateria(1).getNombre());
-//			MateriaDAO.getInstancia().alta(mate1);
-		//	MateriaDAO.getInstancia().alta(pp1);
+			MateriaDAO.getInstancia().alta(mate1);
+			MateriaDAO.getInstancia().alta(pp1);
+			MateriaDAO.getInstancia().alta(ingles);
+			MateriaDAO.getInstancia().alta(pp2);
+			MateriaDAO.getInstancia().alta(ip);
+	        MateriaDAO.getInstancia().alta(irm);
+	        MateriaDAO.getInstancia().alta(lecto);
+	        MateriaDAO.getInstancia().alta(logica);
 			//MateriaAprobadaDAO.getInstancia().alta(matAprob1);
-			CursoDAO.getInstancia().alta(c1);
+			/*CursoDAO.getInstancia().alta(c1);
 			CursoDAO.getInstancia().alta(c2);
 			CursoDAO.getInstancia().alta(c3);
+			CursoDAO.getInstancia().alta(c4);
+			CursoDAO.getInstancia().alta(c5);
+			CursoDAO.getInstancia().alta(c6);
+			CursoDAO.getInstancia().alta(c7);*/
+			CursoDAO.getInstancia().alta(c8);
 			
-			System.out.println("cant cursos: "+CursoDAO.getInstancia().getCursosPorTurno(18).size());
+			HorarioDAO.getInstancia().alta(n1);
+			HorarioDAO.getInstancia().alta(n2);
+			HorarioDAO.getInstancia().alta(n3);
+			HorarioDAO.getInstancia().alta(n4);
+			HorarioDAO.getInstancia().alta(n5);
+			HorarioDAO.getInstancia().alta(n6);
+			HorarioDAO.getInstancia().alta(n7);
+			HorarioDAO.getInstancia().alta(n8);
+			HorarioDAO.getInstancia().alta(n9);
+			HorarioDAO.getInstancia().alta(n10);
+			HorarioDAO.getInstancia().alta(n11);
+			HorarioDAO.getInstancia().alta(n12);
+			HorarioDAO.getInstancia().alta(n13);
+			HorarioDAO.getInstancia().alta(n14);
+			HorarioDAO.getInstancia().alta(n15);
 			
-			mate1.setId(1);
-        	pp2.setId(2);
-        	mate2.setId(3);
-        	System.out.println("el id de mate 1 es: " + mate1.getId());
-        	System.out.println("el id de pp1 es: " + pp2.getId());
-        	System.out.println("el id de mate2 es: " + mate2.getId());
+			
+			//PlanEstudioDAO.getInstancia().alta(pe);
+        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(8).size());
+        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(0).getMateria().getNombre());
+        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(1).getMateria().getNombre());
+        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(2).getMateria().getNombre());
+        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(3).getMateria().getNombre());
+			
+			/*
+        	pp1.setId(2);
+        	pp2.setId(3);
+        	mate2.setId(4);
+        	System.out.println("el id de pp1 es: " + pp1.getId());
+        	System.out.println("el id de pp2 es: " + pp2.getId());
+        	System.out.println("el id de mate2 es: " + mate2.getId());*/
 
 
-			ArrayList<Curso> cursos = new ArrayList<Curso>();
+			/*ArrayList<Curso> cursos = new ArrayList<Curso>();
 			cursos.add(c1);
 			cursos.add(c2);
 			cursos.add(c3);
@@ -89,8 +163,39 @@ public class App
 			for(int i = 0; i <cursos.size(); i++)
 			{
 				System.out.println("CURSOS sin aprobar= " + cursos.get(i).getMateria().getNombre());
-			}
+			}*/
 			
+        	/*ArrayList<Curso> cursos = new ArrayList<Curso>();
+			cursos.add(c1);
+			cursos.add(c2);
+			cursos.add(c3);
+			CursoDAO.getInstancia().quitarCorrelativasNoCursables(cursos);
+			System.out.println("¡");
+			for(int i = 0; i <cursos.size(); i++)
+			{
+				System.out.println("CURSOS sin aprobar= " + cursos.get(i).getMateria().getNombre());
+			}*/
+        	
+			
+        	ArrayList<Curso> cursos = new ArrayList<Curso>();
+			/*cursos.add(c1);
+			cursos.add(c2);
+			cursos.add(c3);
+			cursos.add(c4);
+			cursos.add(c5);
+			cursos.add(c6);
+			cursos.add(c7);*/
+			cursos.add(c8);
+						//Recomendacion r = new Recomendacion();
+			System.out.println("Recomendación 1: ");
+			Recomendacion r = CursoDAO.getInstancia().combinaciones(cursos);
+			r.mostrarRecomendacion(r);
+			/*r.getLunes()[3] = "Mate1";
+			for (int i = 0; i < 4; i ++)
+			{
+
+				System.out.println(r.getLunes()[i]);
+			}*/
 		} 
         catch (Exception e) 
         {
@@ -127,8 +232,7 @@ public class App
         m.put(mate2, correlMaterias3);
         m.put(ingles, Sinmaterias);
         
-        //CREO UN PLAN DE ESTUDIOS
-        PlanEstudio pe = new PlanEstudio(m);
+        
         
         
         //materias aprobadas por el alumno
@@ -150,9 +254,9 @@ public class App
         
         //Lista de cursos a dictarse
         ArrayList<Curso> cursosADictarse = new ArrayList<Curso>();
-        cursosADictarse.add(c1);
+      /*  cursosADictarse.add(c1);
         cursosADictarse.add(c2);
-        cursosADictarse.add(c3);
+        cursosADictarse.add(c3);*/
 
         //temporal... cursos a los que puede inscribirse, serian las materias sobre las cuales habria que hacer la combinatoria
        String act = filtrarMaterias(cursosADictarse, alu, m);
