@@ -1,21 +1,20 @@
 package com.laboratorio.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "Materias")
 public class Materia 
 {
 	@Id
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name = "increment", strategy = "increment")
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(nullable = false)
 	private String nombre;
 
 	public Materia() 
@@ -24,10 +23,6 @@ public class Materia
 	}
 
 	public Materia(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Materia(int i, String nombre) {
 		this.nombre = nombre;
 	}
 
