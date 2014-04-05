@@ -52,9 +52,4 @@ public class MateriaAprobadaDAO
 		return a;
 	}
 
-	public MateriaAprobada getMateria(int id)
-	{
-		MateriaAprobada S = em.find(MateriaAprobada.class, id);
-		return S;
-	}
 }
