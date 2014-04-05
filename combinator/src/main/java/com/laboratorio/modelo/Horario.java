@@ -1,5 +1,6 @@
 package com.laboratorio.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,8 +14,11 @@ public class Horario
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_horario;
+	@Column(nullable = false)
 	private int horaInicio;
+	@Column(nullable = false)
 	private int horaFin;
+	@Column(nullable = false)
 	private String dia;
 	
 	
