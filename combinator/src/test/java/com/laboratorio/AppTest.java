@@ -65,9 +65,9 @@ public class AppTest
          
          
          //CREO HORARIOS DISPONIBLES
-         Horario man = new Horario("Lunes", "M");
-         Horario tar = new Horario("Martes", "T");
-         Horario noc = new Horario("Miercoles", "N");
+         Horario man = new Horario("Lunes", 8, 12);
+         Horario tar = new Horario("Martes", 13, 17);
+         Horario noc = new Horario("Miercoles", 18, 22);
          ArrayList<Horario> horar = new ArrayList<Horario>();
          horar.add(man);
          horar.add(tar);
