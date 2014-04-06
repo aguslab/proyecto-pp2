@@ -10,10 +10,9 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class Escritorio extends JWindow
 {
-
 	private Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	public Escritorio()
+	public Escritorio() throws Exception
 	{
 
 		JLabel lbImage    = new JLabel ();
@@ -38,10 +37,4 @@ public class Escritorio extends JWindow
 		setVisible (false);
 
 	}
-
-	public static void main (String args[]) 
-	{
-		new Escritorio ();
-	}
-    
 }

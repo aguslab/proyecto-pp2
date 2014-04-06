@@ -11,6 +11,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.laboratorio.controlador.Receptor;
+import com.laboratorio.modelo.Recomendacion;
+
 @SuppressWarnings("serial")
 public class Prototipo 
 extends JFrame 
@@ -36,16 +39,18 @@ ItemListener
 	private JTable tablaAprobadas;
 	@SuppressWarnings("unused")
 	private Integer tabSeleccionado;
-	
-	public Prototipo() 
+	DefaultListModel modelListaRecomendaciones;
+	final JList<String> listaRecomendaciones;
+	DefaultTableModel modeloTablaDias;
+	@SuppressWarnings("unchecked")
+	public Prototipo() throws Exception 
 	{
 		super ("Recomendaciones de materias a cursar");
-		
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener (new UISwitchListener ((JComponent)getRootPane()));
 		barra = new JMenuBar ();
 		setIconImage (getToolkit().getImage ("Imagenes/tabla.png"));
-		setSize(new Dimension(740, 508));
+		setSize(new Dimension(1333, 650));
 		setJMenuBar (barra);
 		
 		for(UIManager.LookAndFeelInfo laf:UIManager.getInstalledLookAndFeels())
@@ -95,7 +100,7 @@ ItemListener
 		tabOpciones.setBounds(10, 11, 772, 474);
 		getContentPane().add(tabOpciones);
 		
-		DefaultTableModel modelo = new DefaultTableModel();
+		modeloTablaDias = new DefaultTableModel();
 			
 			// Tabla Recomendaciones
 			JPanel panelRecomendaciones = new JPanel();
@@ -111,9 +116,9 @@ ItemListener
 			
 			JScrollPane spRecomendacion = new JScrollPane();
 			spRecomendacion.setEnabled(false);
-			spRecomendacion.setBounds(10, 240, 533, 179);
+			spRecomendacion.setBounds(10, 241, 1125, 319);
 			panelRecomendaciones.add(spRecomendacion);
-			final JTable tablaDias = new JTable(modelo);
+			final JTable tablaDias = new JTable(modeloTablaDias);
 			tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			spRecomendacion.setViewportView(tablaDias);
 			tablaDias.setModel(new DefaultTableModel(
@@ -166,16 +171,18 @@ ItemListener
 			panelRecomendaciones.add(checkBox_1);
 			
 			JButton btnOk2 = new JButton(new ImageIcon ("Imagenes/ok.png"));
-			btnOk2.setBounds(553, 243, 24, 23);
+			btnOk2.setBounds(1145, 241, 24, 23);
 			panelRecomendaciones.add(btnOk2);
 			
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 37, 533, 169);
+			scrollPane.setBounds(10, 37, 1125, 169);
 			panelRecomendaciones.add(scrollPane);
 			
-			final JList<String> listaRecomendaciones = new JList<String>();
+			
+			modelListaRecomendaciones = new DefaultListModel();
+			listaRecomendaciones = new JList(modelListaRecomendaciones);
 			listaRecomendaciones.setModel(new AbstractListModel() {
-				String[] values = new String[] {"1", "2"};
+				String[] values = new String[] {};
 				public int getSize() {
 					return values.length;
 				}
@@ -191,110 +198,116 @@ ItemListener
 			    {
 			      if (e.getValueIsAdjusting() == false)
 			      {
-			    	 /*Prueba para mostrar la recomendacion elegida en la tabla
-			    	  *  String value = listaRecomendaciones.getSelectedValue();
-			        System.out.println(value);
-			        DefaultTableModel tablaTemp = (DefaultTableModel) tablaDias.getModel();
-					tablaTemp.setValueAt(value, 0, 0);
-					tablaTemp.setValueAt("", 0, 1);
-					tablaTemp.setValueAt("", 0, 2);
-					tablaTemp.setValueAt("", 0, 3);
-					tablaTemp.setValueAt("", 0, 4);
-					tablaTemp.setValueAt("", 0, 5);*/
+			    	  DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
+			    	 //Prueba para mostrar la recomendacion elegida en la tabla
+			    	    String value = listaRecomendaciones.getSelectedValue();
+			    	    tablaTempDias = Receptor.cambiarTablaDias(tablaTempDias,value);
+			    	 /* String delimiter = "/";
+			  		String[] temp;
+			  		temp = value.split(delimiter);
+			  		for(int i = 0; i < temp.length ; i++)
+			  			System.out.println(temp[i]);
+			  		Object nuevaFilaDatos[]= {temp[1],"","","","",""};
+			  		tablaTempDias.addRow(nuevaFilaDatos);
+			  		tablaDias.setValueAt(temp[0], 0, 1);*/
 			      }
 			    }
 			  });
 	
 	// Tabla Materia aprobadas
-			JPanel panelAprobadas = new JPanel();
-			panelAprobadas.setBorder
+		JPanel panelAprobadas = new JPanel();
+		panelAprobadas.setBorder
+		(
+			new LineBorder
 			(
-				new LineBorder
-				(
-					new Color(0, 0, 0)
-				)
-			);
-			panelAprobadas.setLayout(null);
-			
-			tabOpciones.addTab("Materias aprobadas ",new ImageIcon (""), panelAprobadas, null);
-				
-			JScrollPane spAprobadas = new JScrollPane();
-			spAprobadas.setBounds(10, 11, 558, 407);
-			panelAprobadas.add(spAprobadas);
-			
-			tablaAprobadas = new JTable();
-			tablaAprobadas.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			spAprobadas.setViewportView(tablaAprobadas);
-			tablaAprobadas.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"Lectoescritura", "9"},
-					{"Taller de utilitarios", "10"},
-				},
-				new String[] {
-					"Materia", "Nota"
-				}
-			) {
-				@SuppressWarnings("rawtypes")
-				Class[] columnTypes = new Class[] {
-					String.class, String.class
-				};
-				public Class<?> getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-				boolean[] columnEditables = new boolean[] {
-					true, false
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-				public void itemStateChanged(ItemEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			tablaAprobadas.getColumnModel().getColumn(0).setPreferredWidth(40);
-			tablaAprobadas.getColumnModel().getColumn(1).setResizable(false);
-			tablaAprobadas.getColumnModel().getColumn(1).setPreferredWidth(248);
-			tablaAprobadas.setRowHeight(25);
-			tablaAprobadas.getTableHeader().setReorderingAllowed(false);
-			
-			mnuPrototipo = new JMenu ("Prototipo  ");
-			mnuPrototipo.setMnemonic ((int)'P');
-			
-			mostrarPrototipo = new JMenuItem ("Ver  ", new ImageIcon ("Imagenes/tabla.png"));
-			mostrarPrototipo.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
-			mostrarPrototipo.setMnemonic ((int)'V');
-			mostrarPrototipo.addActionListener (this);
-			
-			cerrarAplicacion = new JMenuItem ("Salir del sistema  ", new ImageIcon ("Imagenes/cerrar.png"));
-			cerrarAplicacion.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
-			cerrarAplicacion.setMnemonic ((int)'Q');	
-			cerrarAplicacion.addActionListener (this);
-			
-			mnuPrototipo.add (mostrarPrototipo);
+				new Color(0, 0, 0)
+			)
+		);
+		panelAprobadas.setLayout(null);
 		
+		tabOpciones.addTab("Materias aprobadas ",new ImageIcon (""), panelAprobadas, null);
 			
-			materia = new JLabel (" " + "Proyecto Profesional II", Label.LEFT);
-			materia.setForeground (Color.black);
-			
-			firma = new JLabel ("" + "GRC - Godoy y De Napoli." + " ", JLabel.RIGHT);
-			firma.setForeground (Color.black);
-			
-			barraDeEstado.setLayout (new BorderLayout());
-			barraDeEstado.add (materia, BorderLayout.WEST);
-			barraDeEstado.add (firma, BorderLayout.EAST);
+		JScrollPane spAprobadas = new JScrollPane();
+		spAprobadas.setBounds(10, 11, 558, 407);
+		panelAprobadas.add(spAprobadas);
+		
+		tablaAprobadas = new JTable();
+		tablaAprobadas.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		spAprobadas.setViewportView(tablaAprobadas);
+		tablaAprobadas.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Lectoescritura", "9"},
+				{"Taller de utilitarios", "10"},
+			},
+			new String[] {
+				"Materia", "Nota"
+			}
+		) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+				String.class, String.class
+			};
+			public Class<?> getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				true, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			public void itemStateChanged(ItemEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		tablaAprobadas.getColumnModel().getColumn(0).setPreferredWidth(40);
+		tablaAprobadas.getColumnModel().getColumn(1).setResizable(false);
+		tablaAprobadas.getColumnModel().getColumn(1).setPreferredWidth(248);
+		tablaAprobadas.setRowHeight(25);
+		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
+		
+		mnuPrototipo = new JMenu ("Prototipo  ");
+		mnuPrototipo.setMnemonic ((int)'P');
+		
+		mostrarPrototipo = new JMenuItem ("Ver  ", new ImageIcon ("Imagenes/tabla.png"));
+		mostrarPrototipo.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
+		mostrarPrototipo.setMnemonic ((int)'V');
+		mostrarPrototipo.addActionListener (this);
+		
+		cerrarAplicacion = new JMenuItem ("Salir del sistema  ", new ImageIcon ("Imagenes/cerrar.png"));
+		cerrarAplicacion.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
+		cerrarAplicacion.setMnemonic ((int)'Q');	
+		cerrarAplicacion.addActionListener (this);
+		
+		mnuPrototipo.add (mostrarPrototipo);
+	
+		
+		materia = new JLabel (" " + "Proyecto Profesional II", Label.LEFT);
+		materia.setForeground (Color.black);
+		
+		firma = new JLabel ("" + "GRC - Godoy y De Napoli." + " ", JLabel.RIGHT);
+		firma.setForeground (Color.black);
+		
+		barraDeEstado.setLayout (new BorderLayout());
+		barraDeEstado.add (materia, BorderLayout.WEST);
+		barraDeEstado.add (firma, BorderLayout.EAST);
 
-			escritorio.putClientProperty ("JDesktopPane.dragMode", "outline");
+		escritorio.putClientProperty ("JDesktopPane.dragMode", "outline");
 
-			getContentPane().add (escritorio, BorderLayout.NORTH);
-			getContentPane().add (barraDeEstado, BorderLayout.SOUTH);
-			
-			setVisible (true);
-		}
+		getContentPane().add (escritorio, BorderLayout.NORTH);
+		getContentPane().add (barraDeEstado, BorderLayout.SOUTH);
+		
+		DefaultListModel modeloList = new DefaultListModel();
+		modeloList.addElement(Receptor.getRecomendacion());
+		listaRecomendaciones.setModel(modeloList);
+		
+		setVisible (true);
+	}
 
 	private void salirDelPrograma() 
 	{
@@ -335,5 +348,11 @@ ItemListener
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void setLista(String recomendacion)
+	{
+		modelListaRecomendaciones.addElement(recomendacion);
 	}
 }
