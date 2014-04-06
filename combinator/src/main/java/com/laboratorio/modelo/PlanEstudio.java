@@ -24,6 +24,10 @@ public class PlanEstudio
 	@JoinTable(name = "PlanEstudios")
 	List<Materia> correlativas;
 	
+	public PlanEstudio(){
+		
+	}
+	
 	public PlanEstudio(List<Materia> materias, List<Materia> correlativas) //HashMap<Materia, Set<Materia>> correlativas 
 	{
 		super();
