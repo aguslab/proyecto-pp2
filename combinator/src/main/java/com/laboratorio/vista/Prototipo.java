@@ -228,7 +228,7 @@ ItemListener
 		tabOpciones.addTab("Materias aprobadas ",new ImageIcon (""), panelAprobadas, null);
 			
 		JScrollPane spAprobadas = new JScrollPane();
-		spAprobadas.setBounds(10, 11, 558, 407);
+		spAprobadas.setBounds(10, 11, 1175, 549);
 		panelAprobadas.add(spAprobadas);
 		
 		tablaAprobadas = new JTable();
@@ -236,40 +236,25 @@ ItemListener
 		spAprobadas.setViewportView(tablaAprobadas);
 		tablaAprobadas.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Lectoescritura", "9"},
-				{"Taller de utilitarios", "10"},
 			},
 			new String[] {
 				"Materia", "Nota"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class
 			};
-			public Class<?> getColumnClass(int columnIndex) {
+			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-				true, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-			public void itemStateChanged(ItemEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
 		});
-		tablaAprobadas.getColumnModel().getColumn(0).setPreferredWidth(40);
+		tablaAprobadas.getColumnModel().getColumn(0).setPreferredWidth(248);
 		tablaAprobadas.getColumnModel().getColumn(1).setResizable(false);
-		tablaAprobadas.getColumnModel().getColumn(1).setPreferredWidth(248);
+		tablaAprobadas.getColumnModel().getColumn(1).setPreferredWidth(40);
 		tablaAprobadas.setRowHeight(25);
 		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
+		DefaultTableModel tablaTempAprobadas = (DefaultTableModel) tablaAprobadas.getModel();
+		tablaTempAprobadas = Receptor.getMateriasAprobadas(tablaTempAprobadas);
 		
 		mnuPrototipo = new JMenu ("Prototipo  ");
 		mnuPrototipo.setMnemonic ((int)'P');
