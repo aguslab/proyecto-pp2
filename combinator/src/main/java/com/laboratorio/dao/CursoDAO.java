@@ -129,7 +129,7 @@ public class CursoDAO
 			return cursos;
 		}
 		
-		public Recomendacion combinaciones(ArrayList<Curso> cursos) 
+		public Recomendacion combinaciones(List<Curso> cursos) 
 		{
 			List<Horario> curso_horarios;
 			String nombreMateria;
