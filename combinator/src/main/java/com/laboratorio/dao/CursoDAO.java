@@ -90,7 +90,7 @@ public class CursoDAO
 	
 	//Cuenta la cantidad de veces que aparece cada materia en la tabla de
 		//materias_aprobadas. cantAprobada = 0 no está aprobada, cantAprobada>0 esta aprobada
-		public ArrayList<Curso> quitarAprobadas(ArrayList<Curso> cursos) 
+		public List<Curso> quitarAprobadas(List<Curso> cursos) 
 		{
 			Integer materia_id;
 			for(int i= 0; i < cursos.size(); i++)
