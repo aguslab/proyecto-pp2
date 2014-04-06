@@ -68,7 +68,7 @@ public class CursoDAO
 		return S;
 	}
 	
-	public ArrayList<Curso> getCursosPorTurno(Integer horaInicio)
+	public List<Curso> getCursosPorTurno(Integer horaInicio)
 	{
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
@@ -90,7 +90,7 @@ public class CursoDAO
 	
 	//Cuenta la cantidad de veces que aparece cada materia en la tabla de
 		//materias_aprobadas. cantAprobada = 0 no está aprobada, cantAprobada>0 esta aprobada
-		public List<Curso> quitarAprobadas(List<Curso> cursos) 
+		public List<Curso> quitarMateriasAprobadas(List<Curso> cursos) 
 		{
 			Integer materia_id;
 			for(int i= 0; i < cursos.size(); i++)
@@ -110,7 +110,7 @@ public class CursoDAO
 			return cursos;
 		}
 		
-		public ArrayList<Curso> quitarCorrelativasNoCursables(ArrayList<Curso> cursos) 
+		public List<Curso> quitarCorrelativasNoCursables(List<Curso> cursos) 
 		{
 			System.out.println("entra");
 			Integer materia_id; //"SELECT materias FROM PlanEstudio INNER JOIN Curso ON correlativas_id = materia_id"
