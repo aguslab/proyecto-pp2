@@ -1,7 +1,9 @@
 package com.laboratorio.dao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +17,6 @@ import javax.persistence.criteria.Root;
 
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
-import com.laboratorio.modelo.Materia;
 import com.laboratorio.modelo.Recomendacion;
 
 public class CursoDAO 
@@ -68,66 +69,72 @@ public class CursoDAO
 		return S;
 	}
 	
-	public List<Curso> getCursosPorTurno(Integer horaInicio)
+	@SuppressWarnings("unchecked")
+	public Set<Curso> getCursosPorTurno(Integer horaInicio)
 	{
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
 		Root<Curso> cur = cq.from(Curso.class);
 		cq.select(cur);
-		
+		//TODO: agregar metaclases!
 		Join<Curso,Horario> jo = cur.join("horario");
 		Predicate conjuncion = builder.conjunction();
 		
 		conjuncion.getExpressions().add(builder.greaterThanOrEqualTo(jo.get("horaInicio").as(Integer.class), horaInicio));
 		
-		Join<Curso,Materia> joMat = cur.join("materia");
-		
 		cq.where(conjuncion);
 		TypedQuery<?> q = em.createQuery(cq);
 		
-		return (ArrayList<Curso>) q.getResultList();
+		List<Curso> cursos =(List<Curso>) q.getResultList();
+		Set<Curso> curs = new HashSet<Curso>();
+		for(Curso c : cursos){
+			curs.add(c);
+		}
+		
+		return curs;
 	}
 	
 	//Cuenta la cantidad de veces que aparece cada materia en la tabla de
 		//materias_aprobadas. cantAprobada = 0 no está aprobada, cantAprobada>0 esta aprobada
-		public List<Curso> quitarMateriasAprobadas(List<Curso> cursos) 
+		public Set<Curso> quitarMateriasAprobadas(Set<Curso> cursos) 
 		{
-			Integer materia_id;
-			for(int i= 0; i < cursos.size(); i++)
+			int materia_id;
+			Set<Curso> cursosCopia = new HashSet<Curso>(cursos);
+			for(Curso c : cursosCopia)
 			{
-				materia_id = cursos.get(i).getMateria().getId();
+				materia_id = c.getMateria().getId();
 				String a = new String("0");
-				System.out.println("id materia:" + materia_id );
+//				System.out.println("id materia:" + materia_id );
 				Query query = em.createQuery("SELECT COUNT(*) FROM MateriaAprobada WHERE materia.id = " +  materia_id);
-				System.out.println("query " + query.getResultList().get(0).toString());
+//				System.out.println("query " + query.getResultList().get(0).toString());
 				
 				if(!query.getResultList().get(0).toString().equals(a))
 				{
-					System.out.println("borro " + materia_id);
-					cursos.remove(i);
+//					System.out.println("borro " + materia_id);
+					cursos.remove(c);
 				}
 			}
 			return cursos;
 		}
 		
-		public List<Curso> quitarCorrelativasNoCursables(List<Curso> cursos) 
-		{
-			System.out.println("entra");
-			Integer materia_id; //"SELECT materias FROM PlanEstudio INNER JOIN Curso ON correlativas_id = materia_id"
-			Query query = em.createQuery("SELECT pe.materias FROM PlanEstudio pe INNER JOIN Curso c ON pe.correlativas.id = c.materia.id");
-			System.out.println("sale query");
-			for(int i= 0; i < query.getResultList().size(); i++)
-			{
-				materia_id = cursos.get(i).getMateria().getId();
-				if(!query.getResultList().get(i).toString().equals(materia_id.toString()))
-				{
-					System.out.println("borro " + materia_id.toString());
-					cursos.remove(i);
-				}
-			}
-			System.out.println("return");
-			return cursos;
-		}
+//		public List<Curso> quitarCorrelativasNoCursables(List<Curso> cursos) 
+//		{
+//			System.out.println("entra");
+//			Integer materia_id; //"SELECT materias FROM PlanEstudio INNER JOIN Curso ON correlativas_id = materia_id"
+//			Query query = em.createQuery("SELECT pe.materias FROM PlanEstudio pe INNER JOIN Curso c ON pe.correlativas.id = c.materia.id");
+//			System.out.println("sale query");
+//			for(int i= 0; i < query.getResultList().size(); i++)
+//			{
+//				materia_id = cursos.get(i).getMateria().getId();
+//				if(!query.getResultList().get(i).toString().equals(materia_id.toString()))
+//				{
+//					System.out.println("borro " + materia_id.toString());
+//					cursos.remove(i);
+//				}
+//			}
+//			System.out.println("return");
+//			return cursos;
+//		}
 		
 		public Recomendacion combinaciones(List<Curso> cursos) 
 		{
