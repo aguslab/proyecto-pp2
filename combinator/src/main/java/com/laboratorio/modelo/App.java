@@ -314,13 +314,9 @@ public class App
 			CursoDAO.getInstancia().alta(cursoIntroALaMatematica7);
 			CursoDAO.getInstancia().alta(cursoLecto);
 			
-			MateriaAprobadaDAO.getInstancia().alta(matAprobCalculo1);
 			MateriaAprobadaDAO.getInstancia().alta(matAprobIngles1);
-			MateriaAprobadaDAO.getInstancia().alta(matAprobPP1);
 			MateriaAprobadaDAO.getInstancia().alta(matAprobIP);
 			MateriaAprobadaDAO.getInstancia().alta(matAprobIntroALaMatematica);
-			MateriaAprobadaDAO.getInstancia().alta(matAprobLecto);
-			MateriaAprobadaDAO.getInstancia().alta(matAprobTallerUtilitarios);
 			
 			
 			PlanEstudioDAO.getInstancia().alta(planEstudio);
@@ -343,9 +339,10 @@ public class App
 			materiasAprobadas.add(lecto);
 			materiasAprobadas.add(tallerUtilitarios);
 			
-			for(Curso c : cursosACursar){
-				System.out.print("Puede cursar " + c.getMateria().getNombre()+": ");
-				System.out.println(planEstudio.tieneCorrelativas(c.getMateria(), materiasAprobadas));
+			Set<Curso> cursosDisponiblesTurnoNoche = Combinador.getCursosDisponibles(18);
+			System.out.println("Cursos disponibles a cursar despues de ser filtrados");
+			for(Curso c : cursosDisponiblesTurnoNoche){
+				System.out.println(c.getMateria().getNombre());
 			}
 			
 			
