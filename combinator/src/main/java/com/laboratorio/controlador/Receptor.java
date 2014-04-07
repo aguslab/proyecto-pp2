@@ -1,12 +1,11 @@
 package com.laboratorio.controlador;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import com.laboratorio.dao.CursoDAO;
 import com.laboratorio.dao.HorarioDAO;
 import com.laboratorio.dao.MateriaAprobadaDAO;
@@ -20,8 +19,8 @@ import com.laboratorio.vista.Escritorio;
 
 public class Receptor
 {
-	static ArrayList<Curso> cursos;
-	public Receptor(ArrayList<Curso> cursos)
+	static Set<Curso> cursos;
+	public Receptor(Set<Curso> cursos)
 	{
 		this.cursos = cursos;
 	}
@@ -142,7 +141,7 @@ public class Receptor
         Curso c7 = new Curso(irm,horar5);
         Curso c8 = new Curso(lecto,horar7);
         
-        cursos = new ArrayList<Curso>();
+        cursos = new HashSet<Curso>();
 		cursos.add(c1);
 		cursos.add(c2);
 		cursos.add(c3);
@@ -194,13 +193,13 @@ public class Receptor
 		
 	}
 
-	public ArrayList<Curso> getCursos() 
+	public Set<Curso> getCursos() 
 	{
 		return cursos;
 	}
 
 
-	public void setCursos(ArrayList<Curso> cursos) 
+	public void setCursos(Set<Curso> cursos) 
 	{
 		this.cursos = cursos;
 	}
