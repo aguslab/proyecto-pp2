@@ -1,58 +1,61 @@
 package com.laboratorio.modelo;
 
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PlanEstudios")
-public class PlanEstudio 
-{
+@Table(name = "PlanEstudios")
+public class PlanEstudio {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "PlanEstudios")
-	List<Materia> materias;
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name = "PlanEstudios")
-	List<Materia> correlativas;
-	
+	@Column(nullable = false, columnDefinition = "blob")
+	private HashMap<Materia, Set<Materia>> correlativas;
+
 	public PlanEstudio(){
 		
 	}
 	
-	public PlanEstudio(List<Materia> materias, List<Materia> correlativas) //HashMap<Materia, Set<Materia>> correlativas 
-	{
+	public PlanEstudio(HashMap<Materia, Set<Materia>> correlativas) {
 		super();
-		this.materias = materias;
 		this.correlativas = correlativas;
 	}
 
-	public List<Materia> getCorrelativas() 
-	{
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public HashMap<Materia, Set<Materia>> getCorrelativas() {
 		return correlativas;
 	}
 
-	public void setCorrelativas(List<Materia> correlativas) 
-	{
-		this.materias = correlativas;
+	public void setCorrelativas(HashMap<Materia, Set<Materia>> correlativas) {
+		this.correlativas = correlativas;
 	}
 	
-	public List<Materia> getMaterias() 
-	{
-		return materias;
-	}
+	public boolean tieneCorrelativas(Materia materiaACursar, Set<Materia> materiasAprobadas){
+    	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
+    	if(this.correlativas.containsKey(materiaACursar)){
+    		for(Materia ma : this.correlativas.get(materiaACursar)){
+    			System.out.println(ma.getNombre());
+    		}
+    		return materiasAprobadas.containsAll(this.correlativas.get(materiaACursar));
+    	}
+    	
+    	return false;
+    }
 
-	public void setMaterias(List<Materia> materias) 
-	{
-		this.materias = materias;
-	}
-	
 }
