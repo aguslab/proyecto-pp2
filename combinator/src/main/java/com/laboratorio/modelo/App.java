@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.laboratorio.controlador.Combinador;
 import com.laboratorio.dao.CursoDAO;
-import com.laboratorio.dao.HorarioDAO;
+import com.laboratorio.dao.MateriaAprobadaDAO;
 import com.laboratorio.dao.MateriaDAO;
+import com.laboratorio.dao.PlanEstudioDAO;
 
 /**
  * Hello world!
@@ -15,22 +17,80 @@ import com.laboratorio.dao.MateriaDAO;
  */
 public class App 
 {
-    @SuppressWarnings("null")
-	public static void main( String[] args )
+    public static void main( String[] args )
     {
         //String act = "PP1 PP2 PP3 Mate Ingles";
         
       //CREO MATERIAS NUEVAS
-        Materia pp1 = new Materia("pp1");
-        Materia pp2 = new Materia("pp2");
-        Materia pp3 = new Materia("pp3");
-        Materia mate1 = new Materia("mate1");
-        Materia mate2 = new Materia("mate2");
-        Materia ingles = new Materia("ingles");
-        Materia ip = new Materia("IP");
-        Materia irm = new Materia("IRM");
-        Materia lecto = new Materia("Lectoescritura");
+    	Materia ip = new Materia("Introducción a la Programación");
+    	ip.setId(1);
+        Materia introALaMatematica = new Materia("Introducción a la Matemática");
+        introALaMatematica.setId(2);
+        Materia lecto = new Materia("Taller de Lectoescritura");
+        lecto.setId(3);
+        Materia prog1 = new Materia("Programación I");
+        prog1.setId(4);
         Materia logica = new Materia("Lógica y teoría de números");
+        logica.setId(5);
+        Materia orga1 = new Materia("Organización del computador I");
+        orga1.setId(6);
+        Materia prog2 = new Materia("Programación II");
+        prog2.setId(7);
+        Materia algebraLineal = new Materia("Algebra Lineal");
+        algebraLineal.setId(8);
+        Materia sisto1 = new Materia("Sistemas Operativos y Redes I");
+        sisto1.setId(9);
+        Materia prog3 = new Materia("Programación III");
+        prog3.setId(10);
+        Materia calculo1 = new Materia("Calculo I");
+        calculo1.setId(11);
+        Materia psec = new Materia("Problemas Socioeconómicos contemporáneos");
+        psec.setId(12);
+        Materia baseDatos1 = new Materia("Base de datos I");
+        baseDatos1.setId(13);
+        Materia mateDiscreta = new Materia("Matemática Discreta");
+        mateDiscreta.setId(14);
+        Materia especificacionSoft = new Materia("Especificaciones y verificaciones de Software");
+        especificacionSoft.setId(15);
+        Materia teoriaDeLaComputacion = new Materia("Teoría de la computación");
+        teoriaDeLaComputacion.setId(16);
+        Materia ingenieria1 = new Materia("Ingeniería de software I");
+        ingenieria1.setId(17);
+        Materia probabilidadEstadistica = new Materia("Probabilidad y Estadística");
+        probabilidadEstadistica.setId(18);
+        Materia pp1 = new Materia("Proyecto Profesional I");
+        pp1.setId(19);
+        Materia ingenieria2 = new Materia("Ingeniería de software II");
+        ingenieria2.setId(20);
+        Materia orga2 = new Materia("Organización del computador II");
+        orga2.setId(21);
+        Materia pp2 = new Materia("Proyecto Profesional II");
+        pp2.setId(22);
+        Materia baseDatos2 = new Materia("Base de datos II");
+        baseDatos2.setId(23);
+        Materia sisto2 = new Materia("Sistemas Operativos y Redes II");
+        sisto2.setId(24);
+        Materia practicaProfSup1 = new Materia("Práctica Profesional Supervisada I");
+        practicaProfSup1.setId(25);
+        Materia modeladoYOptimizacion = new Materia("Modelado y Optimización");
+        modeladoYOptimizacion.setId(26);
+        Materia informaticaYSociedad= new Materia("Informática y Sociedad");
+        informaticaYSociedad.setId(27);
+        Materia practicaProfSup2 = new Materia("Práctica Profesional Supervisada II");
+        practicaProfSup2.setId(28);
+        Materia gestionProyectos = new Materia("Gestión de Proyectos");
+        gestionProyectos.setId(29);
+        Materia laboratorioInterdisciplinario = new Materia("Laboratorio interdisciplinario");
+        laboratorioInterdisciplinario.setId(30);
+        Materia tallerUtilitarios = new Materia("Taller de Utilitarios");
+        tallerUtilitarios.setId(31);
+        Materia ingles1 = new Materia("Ingles Lectocomprension I");
+        ingles1.setId(32);
+        Materia ingles2 = new Materia("Ingles Lectocomprension II");
+        ingles2.setId(33);
+        Materia ingles3 = new Materia("Ingles Lectocomprension III");
+        ingles3.setId(34);
+        
         
        
         
@@ -79,72 +139,215 @@ public class App
         horar7.add(n15);
         
         //CREO CURSOS (materia q se dicta y en que turno)
-        Curso c1 = new Curso(mate1, horar);
-        Curso c2 = new Curso(pp1, horar2);
-        Curso c3 = new Curso(ingles, horar3);
-        Curso c4 = new Curso(pp2,horar4);
-        Curso c5 = new Curso(pp2,horar5);
-        Curso c6 = new Curso(ip,horar6);
-        Curso c7 = new Curso(irm,horar5);
-        Curso c8 = new Curso(lecto,horar7);
+        Curso cursoCalculo1 = new Curso(calculo1, horar);
+        Curso cursoPP1 = new Curso(pp1, horar2);
+        Curso cursoIngles1 = new Curso(ingles1, horar3);
+        Curso cursoPP2 = new Curso(pp2,horar4);
+        Curso cursoIP = new Curso(ip,horar6);
+        Curso cursoIntroALaMatematica7 = new Curso(introALaMatematica,horar5);
+        Curso cursoLecto = new Curso(lecto,horar7);
+        
+        
+        //CREO PLAN DE ESTUDIOS
+        Set<Materia> sinCorrelativas = new HashSet<Materia>();
+        
+        Set<Materia> correlativasProg1 = new HashSet<Materia>();
+        correlativasProg1.add(ip);
+        
+        Set<Materia> correlativasLogica = new HashSet<Materia>();
+        correlativasLogica.add(introALaMatematica);
+        
+        Set<Materia> correlativasProg2 = new HashSet<Materia>();
+        correlativasProg2.add(prog1);
+        
+        Set<Materia> correlativasAlgebraLineal = new HashSet<Materia>();
+        correlativasAlgebraLineal.add(introALaMatematica);
+        
+        Set<Materia> correlativasSisto1 = new HashSet<Materia>();
+        correlativasSisto1.add(orga1);
+        
+        Set<Materia> correlativasProg3 = new HashSet<Materia>();
+        correlativasProg3.add(prog2);
+        
+        Set<Materia> correlativasCalculo1 = new HashSet<Materia>();
+        correlativasCalculo1.add(introALaMatematica);
+        
+        Set<Materia> correlativasBaseDatos1 = new HashSet<Materia>();
+        correlativasBaseDatos1.add(logica);
+        correlativasBaseDatos1.add(prog2);
+        
+        Set<Materia> correlativasMateDiscreta = new HashSet<Materia>();
+        correlativasMateDiscreta.add(logica);
+        correlativasMateDiscreta.add(calculo1);
+        correlativasMateDiscreta.add(algebraLineal);
+        
+        Set<Materia> correlativasEspecificacion = new HashSet<Materia>();
+        correlativasEspecificacion.add(logica);
+        
+        Set<Materia> correlativasTeoriaComputacion = new HashSet<Materia>();
+        correlativasTeoriaComputacion.add(prog3);
+        correlativasTeoriaComputacion.add(mateDiscreta);
+        correlativasTeoriaComputacion.add(orga1);
+        
+        Set<Materia> correlativasIngeieria1 = new HashSet<Materia>();
+        correlativasIngeieria1.add(prog3);
+        
+        Set<Materia> correlativasProbabilidadEstadistica = new HashSet<Materia>();
+        correlativasProbabilidadEstadistica.add(calculo1);
+        correlativasProbabilidadEstadistica.add(mateDiscreta);
+        
+        Set<Materia> correlativasPP1 = new HashSet<Materia>();
+        correlativasPP1.add(prog3);
+        correlativasPP1.add(baseDatos1);
+        correlativasPP1.add(ingenieria1);
+        correlativasPP1.add(especificacionSoft);
+        
+        Set<Materia> correlativasIngenieria2 = new HashSet<Materia>();
+        correlativasIngenieria2.add(ingenieria1);
+        
+        Set<Materia> correlativasOrga2 = new HashSet<Materia>();
+        correlativasOrga2.add(orga1);
+        
+        Set<Materia> correlativasPP2 = new HashSet<Materia>();
+        correlativasPP2.add(pp1);
+        
+        Set<Materia> correlativasBaseDatos2 = new HashSet<Materia>();
+        correlativasBaseDatos2.add(baseDatos1);
+        correlativasBaseDatos2.add(prog3);
+        
+        Set<Materia> correlativasSisto2 = new HashSet<Materia>();
+        correlativasSisto2.add(sisto1);
+        
+        Set<Materia> correlativasPracticaProfSup1 = new HashSet<Materia>();
+        correlativasPracticaProfSup1.add(pp2);
+        correlativasPracticaProfSup1.add(baseDatos2);
+        
+        Set<Materia> correlativasModeladoOptim = new HashSet<Materia>();
+        correlativasModeladoOptim.add(probabilidadEstadistica);
+        
+        Set<Materia> correlativasInformaticaSociedad = new HashSet<Materia>();
+        correlativasInformaticaSociedad.add(ingenieria1);
+        
+        Set<Materia> correlativasPracticaProfSup2 = new HashSet<Materia>();
+        correlativasPracticaProfSup2.add(practicaProfSup1);
+        correlativasPracticaProfSup2.add(modeladoYOptimizacion);
+        
+        Set<Materia> correlativasGestionProyectos = new HashSet<Materia>();
+        correlativasGestionProyectos.add(ingenieria2);
+        
+        //TODO CASO ESPECIAL!! necesita 11 materias cualquiera!!
+//        Set<Materia> correlativasLaboratorioInterdisciplinario = new HashSet<Materia>();
+        
+        Set<Materia> correlativasIngles2 = new HashSet<Materia>();
+        correlativasIngles2.add(ingles1);
+        
+        Set<Materia> correlativasIngles3 = new HashSet<Materia>();
+        correlativasIngles2.add(ingles2);
+        
+        HashMap<Materia,Set<Materia>> correlativas = new HashMap<Materia, Set<Materia>>();
+        correlativas.put(ip, sinCorrelativas);
+        correlativas.put(introALaMatematica, sinCorrelativas);
+        correlativas.put(lecto, sinCorrelativas);
+        correlativas.put(prog1, correlativasProg1);
+        correlativas.put(logica, correlativasLogica);
+        correlativas.put(orga1, sinCorrelativas);
+        correlativas.put(prog2, correlativasProg2);
+        correlativas.put(algebraLineal, correlativasAlgebraLineal);
+        correlativas.put(sisto1, correlativasSisto1);
+        correlativas.put(prog3, correlativasProg3);
+        correlativas.put(calculo1, correlativasCalculo1);
+        correlativas.put(psec, sinCorrelativas);
+        correlativas.put(baseDatos1, correlativasBaseDatos1);
+        correlativas.put(mateDiscreta, correlativasMateDiscreta);
+        correlativas.put(especificacionSoft, correlativasEspecificacion);
+        correlativas.put(teoriaDeLaComputacion, correlativasTeoriaComputacion);
+        correlativas.put(ingenieria1, correlativasIngeieria1);
+        correlativas.put(probabilidadEstadistica, correlativasProbabilidadEstadistica);
+        correlativas.put(pp1, correlativasPP1);
+        correlativas.put(ingenieria2, correlativasIngenieria2);
+        correlativas.put(orga2, correlativasOrga2);
+        correlativas.put(pp2, correlativasPP2);
+        correlativas.put(baseDatos2, correlativasBaseDatos2);
+        correlativas.put(sisto2, correlativasSisto2);
+        correlativas.put(practicaProfSup1, correlativasPracticaProfSup1);
+        correlativas.put(modeladoYOptimizacion, correlativasModeladoOptim);
+        correlativas.put(informaticaYSociedad, correlativasInformaticaSociedad);
+        correlativas.put(practicaProfSup2, correlativasPracticaProfSup2);
+        correlativas.put(gestionProyectos, correlativasGestionProyectos);
+        //TODO CASO ESPECIAL!!! 
+//      correlativas.put(laboratorioInterdisciplinario, );
+        correlativas.put(ingles1, sinCorrelativas);
+        correlativas.put(ingles2, correlativasIngles2);
+        correlativas.put(ingles3, correlativasIngles3);
+        
+        
+        PlanEstudio planEstudio = new PlanEstudio(correlativas);
+        
         
       //CREO MATERIA APROBADA
-      //  MateriaAprobada matAprob1 = new MateriaAprobada(mate1,10.0);
-        
-        //CREO UN PLAN DE ESTUDIOS
-       /* ArrayList<Materia> materias = new ArrayList<Materia>();
-        materias.add(mate1);
-        materias.add(mate2);
-        ArrayList<Materia> correlativas = new ArrayList<Materia>();
-        correlativas.add(mate1);
-        PlanEstudio pe = new PlanEstudio(mate2,mate1);*/
-        
+      MateriaAprobada matAprobCalculo1 = new MateriaAprobada(calculo1,10.0);
+      MateriaAprobada matAprobIngles1 = new MateriaAprobada(ingles1,10.0);
+      MateriaAprobada matAprobPP1 = new MateriaAprobada(pp1,10.0);
+      MateriaAprobada matAprobIP = new MateriaAprobada(ip,10.0);
+      MateriaAprobada matAprobIntroALaMatematica = new MateriaAprobada(introALaMatematica,10.0);
+      MateriaAprobada matAprobLecto = new MateriaAprobada(lecto,10.0);
+      MateriaAprobada matAprobTallerUtilitarios = new MateriaAprobada(tallerUtilitarios,10.0);
         
         try 
         
         {
 			//System.out.println("Materia que trajo: "+MateriaDAO.getInstancia().getMateria(1).getNombre());
-			MateriaDAO.getInstancia().alta(mate1);
+			MateriaDAO.getInstancia().alta(calculo1);
 			MateriaDAO.getInstancia().alta(pp1);
-			MateriaDAO.getInstancia().alta(ingles);
+			MateriaDAO.getInstancia().alta(ingles1);
 			MateriaDAO.getInstancia().alta(pp2);
 			MateriaDAO.getInstancia().alta(ip);
-	        MateriaDAO.getInstancia().alta(irm);
+	        MateriaDAO.getInstancia().alta(introALaMatematica);
 	        MateriaDAO.getInstancia().alta(lecto);
 	        MateriaDAO.getInstancia().alta(logica);
-			//MateriaAprobadaDAO.getInstancia().alta(matAprob1);
-			CursoDAO.getInstancia().alta(c1);
-			CursoDAO.getInstancia().alta(c2);
-			CursoDAO.getInstancia().alta(c3);
-			CursoDAO.getInstancia().alta(c4);
-			CursoDAO.getInstancia().alta(c5);
-			CursoDAO.getInstancia().alta(c6);
-			CursoDAO.getInstancia().alta(c7);
-			CursoDAO.getInstancia().alta(c8);
+
+	        CursoDAO.getInstancia().alta(cursoCalculo1);
+			CursoDAO.getInstancia().alta(cursoPP1);
+			CursoDAO.getInstancia().alta(cursoIngles1);
+			CursoDAO.getInstancia().alta(cursoPP2);
+			CursoDAO.getInstancia().alta(cursoIP);
+			CursoDAO.getInstancia().alta(cursoIntroALaMatematica7);
+			CursoDAO.getInstancia().alta(cursoLecto);
 			
-			HorarioDAO.getInstancia().alta(n1);
-			HorarioDAO.getInstancia().alta(n2);
-			HorarioDAO.getInstancia().alta(n3);
-			HorarioDAO.getInstancia().alta(n4);
-			HorarioDAO.getInstancia().alta(n5);
-			HorarioDAO.getInstancia().alta(n6);
-			HorarioDAO.getInstancia().alta(n7);
-			HorarioDAO.getInstancia().alta(n8);
-			HorarioDAO.getInstancia().alta(n9);
-			HorarioDAO.getInstancia().alta(n10);
-			HorarioDAO.getInstancia().alta(n11);
-			HorarioDAO.getInstancia().alta(n12);
-			HorarioDAO.getInstancia().alta(n13);
-			HorarioDAO.getInstancia().alta(n14);
-			HorarioDAO.getInstancia().alta(n15);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobCalculo1);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobIngles1);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobPP1);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobIP);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobIntroALaMatematica);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobLecto);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobTallerUtilitarios);
 			
 			
-			//PlanEstudioDAO.getInstancia().alta(pe);
-        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(8).size());
-        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(0).getMateria().getNombre());
-        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(1).getMateria().getNombre());
-        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(2).getMateria().getNombre());
-        	//System.out.println("cursos filtrados por turno: " + CursoDAO.getInstancia().getCursosPorTurno(13).get(3).getMateria().getNombre());
+			PlanEstudioDAO.getInstancia().alta(planEstudio);
+
+			ArrayList<Curso> cursosACursar = new ArrayList<Curso>();
+			cursosACursar.add(cursoCalculo1);
+			cursosACursar.add(cursoPP1);
+			cursosACursar.add(cursoIngles1);
+			cursosACursar.add(cursoPP2);
+			cursosACursar.add(cursoIP);
+			cursosACursar.add(cursoIntroALaMatematica7);
+			cursosACursar.add(cursoLecto);
+			
+			Set<Materia> materiasAprobadas = new HashSet<Materia>();
+			materiasAprobadas.add(calculo1);
+			materiasAprobadas.add(ingles1);
+			materiasAprobadas.add(pp1);
+			materiasAprobadas.add(ip);
+			materiasAprobadas.add(introALaMatematica);
+			materiasAprobadas.add(lecto);
+			materiasAprobadas.add(tallerUtilitarios);
+			
+			for(Curso c : cursosACursar){
+				System.out.print("Puede cursar " + c.getMateria().getNombre()+": ");
+				System.out.println(planEstudio.tieneCorrelativas(c.getMateria(), materiasAprobadas));
+			}
+			
 			
 			/*
         	pp1.setId(2);
@@ -177,19 +380,11 @@ public class App
 			}*/
         	
 			
-        	ArrayList<Curso> cursos = new ArrayList<Curso>();
-			cursos.add(c1);
-			cursos.add(c2);
-			cursos.add(c3);
-			cursos.add(c4);
-			cursos.add(c5);
-			cursos.add(c6);
-			cursos.add(c7);
-			cursos.add(c8);
+        	
 						//Recomendacion r = new Recomendacion();
-			System.out.println("Recomendación 1: ");
-			Recomendacion r = CursoDAO.getInstancia().combinaciones(cursos);
-			r.mostrarRecomendacion(r);
+//			System.out.println("Recomendación 1: ");
+//			Recomendacion r = CursoDAO.getInstancia().combinaciones(materiasAprobadas);
+//			r.mostrarRecomendacion(r);
 			/*r.getLunes()[3] = "Mate1";
 			for (int i = 0; i < 4; i ++)
 			{
@@ -199,7 +394,6 @@ public class App
 		} 
         catch (Exception e) 
         {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         if(true)
@@ -207,39 +401,6 @@ public class App
         
         //ALGUNAS MATERIAS
         
-        //se usaria para las materias que no tienen correlativas
-        HashSet<Materia> Sinmaterias = new HashSet<Materia>();
-        
-        //vendrian a ser la materias correlativas de pp2
-        HashSet<Materia> correlMaterias = new HashSet<Materia>();
-        correlMaterias.add(pp1);
-        
-        //vendrian a ser la materias correlativas de pp3
-        HashSet<Materia> correlMaterias2 = new HashSet<Materia>();
-        correlMaterias2.add(pp1);
-        correlMaterias2.add(pp2);
-        
-        //vendrian a ser la materias correlativas de mate2
-        HashSet<Materia> correlMaterias3 = new HashSet<Materia>();
-        correlMaterias3.add(mate1);
-        
-        //MATERIA (CLAVE) Y SUS CORRELATIVAS (SET)
-        HashMap<Materia,Set<Materia>> m =new HashMap<Materia, Set<Materia>>();
-        m.put(pp1, Sinmaterias);
-        m.put(pp2, correlMaterias);
-        m.put(pp3, correlMaterias2);
-        m.put(mate1, Sinmaterias);
-        m.put(mate2, correlMaterias3);
-        m.put(ingles, Sinmaterias);
-        
-        
-        
-        
-        //materias aprobadas por el alumno
-        
-        
-        Set<Materia> aprobMaterias = null ;
-        aprobMaterias.add(mate1);
 		//CREO UN ALUMNO Y CARGO SUS MATERIAS APROBADAS
        // Alumno alu = new Alumno("Javi", aprobMaterias );
         
@@ -247,10 +408,9 @@ public class App
         ArrayList<Materia> mat = new ArrayList<Materia>();
         mat.add(pp1);
         mat.add(pp2);
-        mat.add(pp3);
-        mat.add(mate1);
-        mat.add(mate2);
-        mat.add(ingles);
+        mat.add(calculo1);
+        mat.add(algebraLineal);
+        mat.add(ingles2);
         
         //Lista de cursos a dictarse
         ArrayList<Curso> cursosADictarse = new ArrayList<Curso>();
