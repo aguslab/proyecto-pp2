@@ -1,6 +1,5 @@
 package com.laboratorio.modelo;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -49,8 +48,8 @@ public class PlanEstudio {
 	public boolean tieneCorrelativas(Materia materiaACursar, Set<Materia> materiasAprobadas){
     	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
     	if(this.correlativas.containsKey(materiaACursar)){
-    		for(Materia ma : this.correlativas.get(materiaACursar)){
-    			System.out.println(ma.getNombre());
+    		if(materiaACursar.getNombre().equals("Laboratorio Interdisciplinario")){
+    			return materiasAprobadas.size() >= 11;
     		}
     		return materiasAprobadas.containsAll(this.correlativas.get(materiaACursar));
     	}
