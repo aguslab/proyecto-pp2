@@ -1,6 +1,5 @@
 package com.laboratorio.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -136,19 +135,20 @@ public class CursoDAO
 //			return cursos;
 //		}
 		
-		public Recomendacion combinaciones(List<Curso> cursos) 
+		public Recomendacion combinaciones(Set<Curso> cursos) 
 		{
 			List<Horario> curso_horarios;
 			String nombreMateria;
 			Recomendacion recomendacion = new Recomendacion(); //Voy guardando la combinacion posible en la misma recomendacion hasta que terminemos de recorrer todos los cursos. Tendria que ir como atributo de CursoDAO?
 			
-			int i = 0;
-			while(i < cursos.size() && this.cantidadDeseada != 0)
+			for(Curso c : cursos)
 			{
-				curso_horarios = cursos.get(i).getHorario();
-				nombreMateria = cursos.get(i).getMateria().getNombre();
-				recomendacion = revisarHorarioNoche(curso_horarios, nombreMateria, recomendacion); //pasamos horario y nombre para ubicar en la semana
-				i++;
+				if(cantidadDeseada != 0)
+				{
+					curso_horarios = c.getHorario();
+					nombreMateria = c.getMateria().getNombre();
+					recomendacion = revisarHorarioNoche(curso_horarios, nombreMateria, recomendacion); //pasamos horario y nombre para ubicar en la semana
+				}
 			}
 
 			 //Una vez que los cursos estan ubicados en la semana, guardamos la recomendación
