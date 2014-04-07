@@ -65,9 +65,4 @@ public class Curso
 		this.horario = horario;
 	}
 
-	
-	
-	
-	
-	
 }
