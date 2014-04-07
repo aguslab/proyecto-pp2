@@ -344,7 +344,9 @@ public class App
 			for(Curso c : cursosDisponiblesTurnoNoche){
 				System.out.println(c.getMateria().getNombre());
 			}
-			
+			System.out.println();
+			System.out.println();
+			System.out.println(Recomendacion.armarRecomendacion(CursoDAO.getInstancia().combinaciones(cursosDisponiblesTurnoNoche)));
 			
 			/*
         	pp1.setId(2);
