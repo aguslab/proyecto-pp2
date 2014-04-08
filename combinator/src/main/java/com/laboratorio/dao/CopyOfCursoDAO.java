@@ -19,18 +19,18 @@ import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
 import com.laboratorio.modelo.Recomendacion;
 
-public class CursoDAO 
+public class CopyOfCursoDAO 
 {
-	private static CursoDAO instancia = null;
+	private static CopyOfCursoDAO instancia = null;
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
 	ArrayList<Recomendacion> recomendaciones = new ArrayList<Recomendacion>();
-	static HashSet<List<Curso>> subconjuntos = new HashSet<List<Curso>>();
-	public static CursoDAO getInstancia() throws Exception 
+	
+	public static CopyOfCursoDAO getInstancia() throws Exception 
 	{
 		if (instancia == null) 
 		{
-			instancia = new CursoDAO();
+			instancia = new CopyOfCursoDAO();
 		}
 		em = com.laboratorio.dao.EntityManagerUtil.getNewEM();
 		return instancia;
@@ -138,25 +138,17 @@ public class CursoDAO
 		@SuppressWarnings("null")
 		public ArrayList<Recomendacion> combinaciones(Set<Curso> cursos) 
 		{
-			 //Voy guardando la combinacion posible en la misma recomendacion hasta que terminemos de recorrer todos los cursos. Tendria que ir como atributo de CursoDAO?
-			ArrayList<Recomendacion> recomendaciones = new ArrayList<Recomendacion>(); //Para guardar todas las recomendaciones
-			ArrayList<Curso> listaCursos = new ArrayList<Curso>();
-			
-			for(Curso curso : cursos) //Esto lo hago porque necesito una lista de cursos y no quiero modificar todos los Set
+			Recomendacion recomendacion = new Recomendacion(); //Voy guardando la combinacion posible en la misma recomendacion hasta que terminemos de recorrer todos los cursos. Tendria que ir como atributo de CursoDAO?
+			Set<Curso> cursosSinUsar = new HashSet<Curso>();
+			for(Curso curso : cursos)
 			{
-				listaCursos.add(curso);
+				recomendacion = revisarHorarioNoche(curso, recomendacion); //pasamos horario y nombre para ubicar en la semana
+				if(!recomendacion.isMateriaAsignada(curso)) //Si la materia del curso no se guardó en una recomendacion entonces la guardo para crear otra
+					cursosSinUsar.add(curso);
 			}
-			armarSubconjuntos(listaCursos, listaCursos .size());
-			
-			for (List<Curso> subCursos : subconjuntos) //Pasa al siguiente ciclo un subconjunto a la vez
-			{
-				Recomendacion recomendacion = new Recomendacion();
-				for (Curso curso: subCursos) //Recorre los cursos del subconjunto pasado.
-				{
-					recomendacion = revisarHorarioNoche(curso,recomendacion); 
-				}
-				recomendaciones.add(recomendacion);
-			}	
+			recomendaciones.add(recomendacion);  //Una vez que los cursos estan ubicados en la semana, guardamos la recomendación
+			if(cursosSinUsar.size() != 0)
+				combinaciones(cursosSinUsar);
 			return recomendaciones; //Se necesitaria un ciclo mas para hacer la combinacion de las materias y asi ir guardando en una lista todas las recomendaciones
 		}
 		
@@ -271,23 +263,5 @@ public class CursoDAO
 				i++;
 			}
 			return recomendacion;
-		}
-		
-		
-		private static void armarSubconjuntos(List<Curso> mainList, int count)
-		{
-		    subconjuntos.add(mainList);
-
-		    for(int i=0; i<mainList.size(); i++)
-		    {
-		        List<Curso> temp = new ArrayList<Curso>(mainList);
-		        temp.remove(i);
-		        armarSubconjuntos(temp, temp.size());
-		    }
-		}
-		
-		public HashSet<List<Curso>> getCursosCombinados()
-		{
-			return subconjuntos;
 		}
 }

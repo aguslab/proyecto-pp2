@@ -3,6 +3,7 @@ package com.laboratorio.modelo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.laboratorio.controlador.Combinador;
@@ -11,10 +12,6 @@ import com.laboratorio.dao.MateriaAprobadaDAO;
 import com.laboratorio.dao.MateriaDAO;
 import com.laboratorio.dao.PlanEstudioDAO;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -139,14 +136,15 @@ public class App
         horar7.add(n15);
         
         //CREO CURSOS (materia q se dicta y en que turno)
-        Curso cursoCalculo1 = new Curso(calculo1, horar);
-        Curso cursoPP1 = new Curso(pp1, horar2);
+        //Curso cursoCalculo1 = new Curso(calculo1, horar);
+        //Curso cursoPP1 = new Curso(pp1, horar2);
         Curso cursoIngles1 = new Curso(ingles1, horar3);
         Curso cursoPP2 = new Curso(pp2,horar4);
-        Curso cursoIP = new Curso(ip,horar6);
-        Curso cursoIntroALaMatematica7 = new Curso(introALaMatematica,horar5);
-        Curso cursoLecto = new Curso(lecto,horar7);
-        
+        Curso cursoIP = new Curso(ip,horar);
+        Curso cursoIntroALaMatematica = new Curso(introALaMatematica,horar5);
+        Curso cursoLecto = new Curso(lecto,horar6);
+        Curso cursoPsec = new Curso(psec,horar2);
+        Curso cursoUtil = new Curso(tallerUtilitarios,horar);
         
         //CREO PLAN DE ESTUDIOS
         Set<Materia> sinCorrelativas = new HashSet<Materia>();
@@ -284,14 +282,14 @@ public class App
         PlanEstudio planEstudio = new PlanEstudio(correlativas);
         
         
-      //CREO MATERIA APROBADA
+      /*//CREO MATERIA APROBADA
       MateriaAprobada matAprobCalculo1 = new MateriaAprobada(calculo1,10.0);
       MateriaAprobada matAprobIngles1 = new MateriaAprobada(ingles1,10.0);
       MateriaAprobada matAprobPP1 = new MateriaAprobada(pp1,10.0);
       MateriaAprobada matAprobIP = new MateriaAprobada(ip,10.0);
       MateriaAprobada matAprobIntroALaMatematica = new MateriaAprobada(introALaMatematica,10.0);
       MateriaAprobada matAprobLecto = new MateriaAprobada(lecto,10.0);
-      MateriaAprobada matAprobTallerUtilitarios = new MateriaAprobada(tallerUtilitarios,10.0);
+      MateriaAprobada matAprobTallerUtilitarios = new MateriaAprobada(tallerUtilitarios,10.0);*/
         
         try 
         
@@ -305,23 +303,26 @@ public class App
 	        MateriaDAO.getInstancia().alta(introALaMatematica);
 	        MateriaDAO.getInstancia().alta(lecto);
 	        MateriaDAO.getInstancia().alta(logica);
-
-	        CursoDAO.getInstancia().alta(cursoCalculo1);
-			CursoDAO.getInstancia().alta(cursoPP1);
+	        MateriaDAO.getInstancia().alta(psec);
+	        
+	      //  CursoDAO.getInstancia().alta(cursoCalculo1);
+			//CursoDAO.getInstancia().alta(cursoPP1);
 			CursoDAO.getInstancia().alta(cursoIngles1);
 			CursoDAO.getInstancia().alta(cursoPP2);
 			CursoDAO.getInstancia().alta(cursoIP);
-			CursoDAO.getInstancia().alta(cursoIntroALaMatematica7);
+			CursoDAO.getInstancia().alta(cursoIntroALaMatematica);
 			CursoDAO.getInstancia().alta(cursoLecto);
+			CursoDAO.getInstancia().alta(cursoPsec);
+			CursoDAO.getInstancia().alta(cursoUtil);
 			
-			MateriaAprobadaDAO.getInstancia().alta(matAprobIngles1);
+			/*MateriaAprobadaDAO.getInstancia().alta(matAprobIngles1);
 			MateriaAprobadaDAO.getInstancia().alta(matAprobIP);
-			MateriaAprobadaDAO.getInstancia().alta(matAprobIntroALaMatematica);
+			MateriaAprobadaDAO.getInstancia().alta(matAprobIntroALaMatematica);*/
 			
 			
 			PlanEstudioDAO.getInstancia().alta(planEstudio);
 
-			ArrayList<Curso> cursosACursar = new ArrayList<Curso>();
+			/*ArrayList<Curso> cursosACursar = new ArrayList<Curso>();
 			cursosACursar.add(cursoCalculo1);
 			cursosACursar.add(cursoPP1);
 			cursosACursar.add(cursoIngles1);
@@ -337,7 +338,7 @@ public class App
 			materiasAprobadas.add(ip);
 			materiasAprobadas.add(introALaMatematica);
 			materiasAprobadas.add(lecto);
-			materiasAprobadas.add(tallerUtilitarios);
+			materiasAprobadas.add(tallerUtilitarios);*/
 			
 			Set<Curso> cursosDisponiblesTurnoNoche = Combinador.getCursosDisponibles(18);
 			System.out.println("Cursos disponibles a cursar despues de ser filtrados");
@@ -346,7 +347,22 @@ public class App
 			}
 			System.out.println();
 			System.out.println();
-			System.out.println(Recomendacion.armarRecomendacion(CursoDAO.getInstancia().combinaciones(cursosDisponiblesTurnoNoche)));
+			
+			ArrayList<Recomendacion> recomendaciones = CursoDAO.getInstancia().combinaciones(cursosDisponiblesTurnoNoche);
+			ArrayList<String> r = Recomendacion.armarRecomendacion(recomendaciones);
+			for(int i = 0 ; i < r.size(); i++)
+			{
+				System.out.println(i +")" + r.get(i));
+			}
+			
+			
+			/*for (List<Curso> listacur : CursoDAO.getInstancia().getCursosCombinados()) //Pasa al siguiente ciclo un subconjunto a la vez
+			{
+				System.out.println("PRIMER CICLO " + listacur);
+				for (Curso cur: listacur) //Recorre los cursos del subconjunto pasado.
+				{
+				}
+			}*/
 			
 			/*
         	pp1.setId(2);
@@ -470,4 +486,3 @@ public class App
 			}
 		}
 	}*/
-

@@ -148,63 +148,164 @@ public class Recomendacion
 	}
 	
 	@SuppressWarnings("null")
-	public static String armarRecomendacion(Recomendacion recomendacion)
+	public static ArrayList<String> armarRecomendacion(ArrayList<Recomendacion> recomendaciones)
 	{
-		String recoParaLista = "";
-		//Lunes
-		if(recomendacion.getLunes()[0] != null)
+		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
+		for (Recomendacion r : recomendaciones)
 		{
-			recoParaLista += " Lunes " + recomendacion.getLunes()[0] + " Horario: " + recomendacion.getLunes()[1] + " " + "/";
+			String recoParaLista = "";
+			//Lunes
+			if(r.getLunes()[0] != null)
+			{
+				recoParaLista += " Lunes " + r.getLunes()[0] + " Horario: " + r.getLunes()[1] + " " + "/";
+			}
+			if(r.getLunes()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Lunes " + r.getLunes()[2] + " Horario: " + r.getLunes()[3] + " " + "/";
+			}
+			//Martes
+			if(r.getMartes()[0] != null)
+			{
+				recoParaLista += " Martes " + r.getMartes()[0] + " Horario: " + r.getMartes()[1] + " " + "/";
+			}
+			if(r.getMartes()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Martes " + r.getMartes()[2] + "Horario: " + r.getMartes()[3] + " " + "/";
+			}
+			//Miercoles
+			if(r.getMiercoles()[0] != null)
+			{
+				recoParaLista += " Miercoles " + r.getMiercoles()[0] + " Horario: " + r.getMiercoles()[1] + " " + "/";
+			}
+			if(r.getMiercoles()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Miercoles " + r.getMiercoles()[2] + " Horario: " + r.getMiercoles()[3] + " " + "/";
+			}
+			//Jueves
+			if(r.getJueves()[0] != null)
+			{
+				recoParaLista += " Jueves " + r.getJueves()[0] + " Horario: " + r.getJueves()[1] + " " + "/";
+			}
+			if(r.getJueves()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Jueves " + r.getJueves()[2] + " Horario: " + r.getJueves()[3] + " " + "/";
+			}
+			//Viernes
+			if(r.getViernes()[0] != null)
+			{
+				recoParaLista += " Viernes " + r.getViernes()[0] + " Horario: " + r.getViernes()[1] + " " + "/";
+			}
+			if(r.getViernes()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Viernes " + r.getViernes()[2] + " Horario: " + r.getViernes()[3] + " " + "/";
+			}
+			//Sabado
+			if(r.getSabado()[0] != null)
+			{
+				recoParaLista += " Sabado " + r.getSabado()[0] + " Horario: " + r.getSabado()[1] + " " + "/";
+			}
+			if(r.getSabado()[2] != null) //Si es un horario partido
+			{
+				recoParaLista += " Sabado " + r.getSabado()[2] + " Horario: " + r.getLunes()[3] + " " + "/";
+			}
+			recomendacionesParaLista.add(recoParaLista);
 		}
-		if(recomendacion.getLunes()[2] != null) //Si es un horario partido
+		return recomendacionesParaLista;
+	}
+	
+	public Boolean isMateriaAsignada(Curso curso)
+	{
+		Boolean materiaAsignada = false;
+		//Lunes
+		if(getLunes()[0] != null)
 		{
-			recoParaLista += " Lunes " + recomendacion.getLunes()[2] + " Horario: " + recomendacion.getLunes()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getLunes()[0]))
+			{
+				materiaAsignada = true;
+			}
+		}
+		else if(getLunes()[2] != null) //Si es un horario partido
+		{
+			if(curso.getMateria().getNombre().equals(this.getLunes()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
 		//Martes
-		if(recomendacion.getMartes()[0] != null)
+		else if(getMartes()[0] != null)
 		{
-			recoParaLista += " Martes " + recomendacion.getMartes()[0] + " Horario: " + recomendacion.getMartes()[1] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getMartes()[0]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		if(recomendacion.getMartes()[2] != null) //Si es un horario partido
+		else if(this.getMartes()[2] != null) //Si es un horario partido
 		{
-			recoParaLista += " Martes " + recomendacion.getMartes()[2] + "Horario: " + recomendacion.getMartes()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getMartes()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
 		//Miercoles
-		if(recomendacion.getMiercoles()[0] != null)
+		else if(this.getMiercoles()[0] != null)
 		{
-			recoParaLista += " Miercoles " + recomendacion.getMiercoles()[0] + " Horario: " + recomendacion.getMiercoles()[1] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getMiercoles()[0]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		if(recomendacion.getMiercoles()[2] != null) //Si es un horario partido
+		else if(this.getMiercoles()[2] != null) //Si es un horario partido
 		{
-			recoParaLista += " Miercoles " + recomendacion.getMiercoles()[2] + " Horario: " + recomendacion.getMiercoles()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getMiercoles()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
 		//Jueves
-		if(recomendacion.getJueves()[0] != null)
+		else if(this.getJueves()[0] != null)
 		{
-			recoParaLista += " Jueves " + recomendacion.getJueves()[0] + " Horario: " + recomendacion.getJueves()[1] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getJueves()[0]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		if(recomendacion.getJueves()[2] != null) //Si es un horario partido
+		else if(this.getJueves()[2] != null) //Si es un horario partido
 		{
-			recoParaLista += " Jueves " + recomendacion.getJueves()[2] + " Horario: " + recomendacion.getJueves()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getJueves()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
 		//Viernes
-		if(recomendacion.getViernes()[0] != null)
+		else if(this.getViernes()[0] != null)
 		{
-			recoParaLista += " Viernes " + recomendacion.getViernes()[0] + " Horario: " + recomendacion.getViernes()[1] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getViernes()[0]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		if(recomendacion.getViernes()[2] != null) //Si es un horario partido
+		else if(this.getViernes()[2] != null) //Si es un horario partido
 		{
-			recoParaLista += " Viernes " + recomendacion.getViernes()[2] + " Horario: " + recomendacion.getViernes()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getViernes()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
 		//Sabado
-		if(recomendacion.getSabado()[0] != null)
+		else if(this.getSabado()[0] != null)
 		{
-			recoParaLista += " Sabado " + recomendacion.getSabado()[0] + " Horario: " + recomendacion.getSabado()[1] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getSabado()[0]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		if(recomendacion.getSabado()[2] != null) //Si es un horario partido
+		else if(this.getSabado()[2] != null) //Si es un horario partido
 		{
-			recoParaLista += " Sabado " + recomendacion.getSabado()[2] + " Horario: " + recomendacion.getLunes()[3] + " " + "/";
+			if(curso.getMateria().getNombre().equals(this.getSabado()[2]))
+			{
+				materiaAsignada = true;
+			}
 		}
-		return recoParaLista;
+		return materiaAsignada;
 	}
 }

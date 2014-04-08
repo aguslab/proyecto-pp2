@@ -21,7 +21,8 @@ public class Combinador {
 	 * @return todos los cursos a los que se puede inscribir el alumno (filtrado por horario, materias aprob y correlativas
 	 * @throws Exception
 	 */
-	public static Set<Curso> getCursosDisponibles(int horaInicio) throws Exception{
+	public static Set<Curso> getCursosDisponibles(int horaInicio) throws Exception
+	{
 		Set<Curso> cursosDisponibles = new HashSet<Curso>();
 		Set<Curso> cursosAFiltrar = new HashSet<Curso>();
 		cursosAFiltrar = CursoDAO.getInstancia().getCursosPorTurno(horaInicio);
@@ -62,8 +63,10 @@ public class Combinador {
 		// Por ahora hay un unico plan de estudios
 		PlanEstudio pe = PlanEstudioDAO.getInstancia().obtenerTodo().get(0);
 
-		for (Curso c : cursosAFiltrar) {
-			if (pe.tieneCorrelativas(c.getMateria(), materiasAprobadas)) {
+		for (Curso c : cursosAFiltrar) 
+		{
+			if (pe.tieneCorrelativas(c.getMateria(), materiasAprobadas)) 
+			{
 				cursosDisponibles.add(c);
 			}
 
