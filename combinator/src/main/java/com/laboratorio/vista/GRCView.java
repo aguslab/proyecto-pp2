@@ -2,6 +2,7 @@ package com.laboratorio.vista;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -198,17 +199,8 @@ ItemListener
 			      if (e.getValueIsAdjusting() == false)
 			      {
 			    	  DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
-			    	 //Prueba para mostrar la recomendacion elegida en la tabla
-			    	    String value = listaRecomendaciones.getSelectedValue();
-			    	    tablaTempDias = GRCController.cambiarTablaDias(tablaTempDias,value);
-			    	 /* String delimiter = "/";
-			  		String[] temp;
-			  		temp = value.split(delimiter);
-			  		for(int i = 0; i < temp.length ; i++)
-			  			System.out.println(temp[i]);
-			  		Object nuevaFilaDatos[]= {temp[1],"","","","",""};
-			  		tablaTempDias.addRow(nuevaFilaDatos);
-			  		tablaDias.setValueAt(temp[0], 0, 1);*/
+			    	  String recomendacionElegida = listaRecomendaciones.getSelectedValue();
+			    	  tablaTempDias = GRCController.cambiarTablaDias(tablaTempDias,recomendacionElegida);
 			      }
 			    }
 			  });
@@ -287,7 +279,11 @@ ItemListener
 		getContentPane().add (barraDeEstado, BorderLayout.SOUTH);
 		
 		DefaultListModel modeloList = new DefaultListModel();
-		modeloList.addElement(GRCController.getRecomendacion());
+		ArrayList<String> recomendaciones = GRCController.getRecomendacion();
+		for (int i = 0; i < recomendaciones.size(); i++) 
+		{
+			modeloList.addElement(recomendaciones.get(i));
+		}
 		listaRecomendaciones.setModel(modeloList);
 		
 		setVisible (true);
