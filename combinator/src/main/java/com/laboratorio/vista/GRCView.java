@@ -21,6 +21,7 @@ implements
 ActionListener, 
 ItemListener
 {
+	private GRCController GRC = new GRCController();
 	private JDesktopPane escritorio = new JDesktopPane ();
 	private JMenuBar barra;
 	private JMenu 
@@ -197,12 +198,14 @@ ItemListener
 			scrollPane.setViewportView(listaRecomendaciones);
 			listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
 			  {
-			    public void valueChanged(ListSelectionEvent e)
+				
+				public void valueChanged(ListSelectionEvent e)
 			    {
-			      if (e.getValueIsAdjusting() == false)
+			    	
+			    	if (e.getValueIsAdjusting() == false)
 			      {
-			    	  GRCController GRC = new GRCController();
 			    	  DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
+			    	  tablaTempDias.setRowCount(0);
 			    	  int posElegida = listaRecomendaciones.getSelectedIndex();
 			    	  tablaTempDias.setRowCount(3);
 			    	  try 
@@ -255,7 +258,6 @@ ItemListener
 		tablaAprobadas.setRowHeight(25);
 		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
 		DefaultTableModel tablaTempAprobadas = (DefaultTableModel) tablaAprobadas.getModel();
-		GRCController GRC = new GRCController();
 		tablaTempAprobadas = GRC.getMateriasAprobadas(tablaTempAprobadas);
 		
 		mnuPrototipo = new JMenu ("Prototipo  ");
