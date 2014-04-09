@@ -1,8 +1,5 @@
 package com.laboratorio.modelo;
 
-import java.util.ArrayList;
-import com.laboratorio.modelo.Materia;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
