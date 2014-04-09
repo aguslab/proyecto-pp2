@@ -54,10 +54,10 @@ public class EntityManagerUtil
 		configOverrides.put("hibernate.show_sql",
 				"true");
 		//For production
-//		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/combinator?createDatabaseIfNotExist=true");
+		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/combinator?createDatabaseIfNotExist=true");
 		
 		//FOR testing
-		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernet?createDatabaseIfNotExist=true");
+//		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernet?createDatabaseIfNotExist=true");
 		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
 		return Persistence.createEntityManagerFactory("PU", configOverrides);

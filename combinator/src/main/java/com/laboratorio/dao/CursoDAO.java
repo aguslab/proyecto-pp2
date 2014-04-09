@@ -1,6 +1,5 @@
 package com.laboratorio.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,15 +16,12 @@ import javax.persistence.criteria.Root;
 
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
-import com.laboratorio.modelo.Recomendacion;
 
 public class CursoDAO 
 {
 	private static CursoDAO instancia = null;
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
-	ArrayList<Recomendacion> recomendaciones = new ArrayList<Recomendacion>();
-	static HashSet<List<Curso>> subconjuntos = new HashSet<List<Curso>>();
 	public static CursoDAO getInstancia() throws Exception 
 	{
 		if (instancia == null) 

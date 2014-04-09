@@ -51,9 +51,4 @@ public class PlanEstudioDAO
 		return a;
 	}
 
-	public PlanEstudio getPlanEstudios(int id)
-	{
-		PlanEstudio S = em.find(PlanEstudio.class, id);
-		return S;
-	}
 }
