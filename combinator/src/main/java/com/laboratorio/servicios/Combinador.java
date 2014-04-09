@@ -1,4 +1,4 @@
-package com.laboratorio.controlador;
+package com.laboratorio.servicios;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,37 +21,13 @@ public class Combinador {
 	 * @return todos los cursos a los que se puede inscribir el alumno (filtrado por horario, materias aprob y correlativas
 	 * @throws Exception
 	 */
-	public static Set<Curso> getCursosDisponibles(int horaInicio) throws Exception
+	public Set<Curso> getCursosDisponibles(int horaInicio) throws Exception
 	{
 		Set<Curso> cursosDisponibles = new HashSet<Curso>();
 		Set<Curso> cursosAFiltrar = new HashSet<Curso>();
 		cursosAFiltrar = CursoDAO.getInstancia().getCursosPorTurno(horaInicio);
 		
-		/*
-		 * para borrar!!! **************************************
-		 */
-		System.out.println("Cursos turno noche: "+cursosAFiltrar.size());
-		for (Curso c : cursosAFiltrar) {
-			System.out.println(c.getMateria().getNombre());
-		}
-		
-		/*
-		 * ****************************************************
-		 */
-		
 		CursoDAO.getInstancia().quitarMateriasAprobadas(cursosAFiltrar);
-		
-		
-		/*
-		 * para borrar!!! **************************************
-		 */
-		System.out.println("cursos turno noche sin materias aprobrobadas: "+cursosAFiltrar.size());
-		for (Curso c : cursosAFiltrar) {
-			System.out.println(c.getMateria().getNombre());
-		}
-		/*
-		 * ****************************************************
-		 */
 		
 		//como devuelve una lista, agrego cada elemento al Set
 		Set<Materia> materiasAprobadas = new HashSet<Materia>();
@@ -65,7 +41,7 @@ public class Combinador {
 
 		for (Curso c : cursosAFiltrar) 
 		{
-			if (pe.tieneCorrelativas(c.getMateria(), materiasAprobadas)) 
+			if (tieneCorrelativas(pe, c.getMateria(), materiasAprobadas)) 
 			{
 				cursosDisponibles.add(c);
 			}
@@ -74,6 +50,17 @@ public class Combinador {
 		
 		return cursosDisponibles;
 	}
+	
+	public boolean tieneCorrelativas(PlanEstudio pe, Materia materiaACursar, Set<Materia> materiasAprobadas){
+    	if(pe.getCorrelativas().containsKey(materiaACursar)){
+    		if(materiaACursar.getNombre().equals("Laboratorio Interdisciplinario")){
+    			return materiasAprobadas.size() >= 11;
+    		}
+    		return materiasAprobadas.containsAll(pe.getCorrelativas().get(materiaACursar));
+    	}
+    	
+    	return false;
+    }
 	
 	
 	
