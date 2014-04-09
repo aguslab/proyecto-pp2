@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class RecomendacionTest 
+public class GRCControllerTest 
     extends TestCase
 {
     /**
@@ -16,7 +16,7 @@ public class RecomendacionTest
      *
      * @param testName name of the test case
      */
-    public RecomendacionTest( String testName )
+    public GRCControllerTest( String testName )
     {
         super( testName );
     }
@@ -26,7 +26,7 @@ public class RecomendacionTest
      */
     public static Test suite()
     {
-        return new TestSuite( RecomendacionTest.class );
+        return new TestSuite( GRCControllerTest.class );
     }
 
     public void testCombinador() {
