@@ -33,8 +33,8 @@ public class CursoTest
 
     public void testCurso(){
     	Materia m = new Materia("Algebra Lineal");
-    	Horario h = new Horario("Martes", "N");
-    	Horario h2 = new Horario("Jueves", "N");
+    	Horario h = new Horario("Martes", 18, 22);
+    	Horario h2 = new Horario("Jueves", 18, 22);
     	ArrayList<Horario> horarios = new ArrayList<Horario>();
     	horarios.add(h);
     	horarios.add(h2);
