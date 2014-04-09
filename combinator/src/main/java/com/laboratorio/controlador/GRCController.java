@@ -24,47 +24,35 @@ import com.laboratorio.vista.Escritorio;
 public class GRCController
 {
 	
-	public static DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, String value)
+	public static DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, String recomendacion)
 	{
 		String delimiter = "/";
 		String[] temp;
-		temp = value.split(delimiter);
+		temp = recomendacion.split(delimiter);
 		for(int i = 0; i < temp.length ; i++)
 		{
-			//tablaDias.setValueAt(temp[i], 0, i);
-			if (temp[i].startsWith(" Lunes"))
+			if (temp[i].matches("(?i).* Lunes.*")) 
 			{
-				Object nuevaFilaDatos[]= {temp[i],"","","","",""};
-				tablaDias.addRow(nuevaFilaDatos);
-				//tablaDias.setValueAt(temp[i], 0, 0);
+				tablaDias.setValueAt(temp[i], 0, 0);
 			}
-			else if(temp[i].startsWith(" Martes"))
+			else if(temp[i].matches("(?i).* Martes.*"))
 			{
-				Object nuevaFilaDatos[]= {"",temp[i],"","","",""};
-				tablaDias.addRow(nuevaFilaDatos);
-				//tablaDias.setValueAt(temp[i], 0, 1);
+				tablaDias.setValueAt(temp[i], 0, 1);
 			}
-			else if(temp[i].startsWith(" Miercoles"))
+			else if(temp[i].matches("(?i).* Miercoles.*"))
 			{
-				Object nuevaFilaDatos[]= {"","",temp[i],"","",""};
-				tablaDias.addRow(nuevaFilaDatos);
+				tablaDias.setValueAt(temp[i], 0, 2);
 			}	
-			else if(temp[i].startsWith(" Jueves"))
+			else if(temp[i].matches("(?i).* Jueves.*"))
 			{
-				Object nuevaFilaDatos[]= {"","","",temp[i],"",""};
-				tablaDias.addRow(nuevaFilaDatos);
-				//tablaDias.setValueAt(temp[i], 0, 3);
+				tablaDias.setValueAt(temp[i], 0, 3);
 			}
-			else if(temp[i].startsWith(" Viernes"))
+			else if(temp[i].matches("(?i).* Viernes.*"))
 			{
-				Object nuevaFilaDatos[]= {"","","","",temp[i],""};
-				tablaDias.addRow(nuevaFilaDatos);
-				//tablaDias.setValueAt(temp[i], 0, 4);
+				tablaDias.setValueAt(temp[i], 0, 4);
 			}
 			else
 			{
-				//Object nuevaFilaDatos[]= {"","","","","",temp[i]};
-				//tablaDias.addRow(nuevaFilaDatos);
 				tablaDias.setValueAt(temp[i], 0, 5);
 			}
 		}
@@ -74,7 +62,11 @@ public class GRCController
 
 	public static ArrayList<String> getRecomendacion() throws Exception
 	{
-		return null;//Recomendacion.armarRecomendacion(CursoDAO.getInstancia().combinaciones(cursos));
+		Combinador c = new Combinador();
+		Recomendacion recomendacion = new Recomendacion();
+		Set<Curso> cursos = c.getCursosDisponibles(18);
+		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
+		return armarRecomendacion(recomendacion.backtracking(cursosDisp));
 	}
 	
 	public static DefaultTableModel getMateriasAprobadas(DefaultTableModel tablaDias) throws Exception
@@ -91,6 +83,28 @@ public class GRCController
 			tablaDias.addRow(nuevaFilaDatos);
 		}
 		return tablaDias;
+	}
+	
+	public static ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
+	{
+		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
+		for (Recomendacion r : recomendaciones)
+		{
+			String recoParaLista = "";
+			for(Curso c : r.getRecomendacion())
+			{
+				recoParaLista += " " + c.getMateria().getNombre();
+				for(int j = 0; j < c.getHorario().size(); j++)
+				{
+					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
+					recoParaLista += " De: " + c.getHorario().get(j).getHoraInicio();
+					recoParaLista += "hs a " + c.getHorario().get(j).getHoraFin()+ " hs" ;
+				}
+				recoParaLista += "/";
+			}
+			recomendacionesParaLista.add(recoParaLista);
+		}
+		return recomendacionesParaLista;
 	}
 	
 	public static void main (String args[]) throws Exception 
