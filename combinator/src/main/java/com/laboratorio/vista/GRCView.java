@@ -11,11 +11,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.laboratorio.controlador.Receptor;
-import com.laboratorio.modelo.Recomendacion;
+import com.laboratorio.controlador.GRCController;
 
 @SuppressWarnings("serial")
-public class Prototipo 
+public class GRCView 
 extends JFrame 
 implements 
 ActionListener, 
@@ -43,7 +42,7 @@ ItemListener
 	final JList<String> listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	@SuppressWarnings("unchecked")
-	public Prototipo() throws Exception 
+	public GRCView() throws Exception 
 	{
 		super ("Recomendaciones de materias a cursar");
 		escritorio.setBackground(new Color(83, 130, 161));
@@ -201,7 +200,7 @@ ItemListener
 			    	  DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
 			    	 //Prueba para mostrar la recomendacion elegida en la tabla
 			    	    String value = listaRecomendaciones.getSelectedValue();
-			    	    tablaTempDias = Receptor.cambiarTablaDias(tablaTempDias,value);
+			    	    tablaTempDias = GRCController.cambiarTablaDias(tablaTempDias,value);
 			    	 /* String delimiter = "/";
 			  		String[] temp;
 			  		temp = value.split(delimiter);
@@ -254,7 +253,7 @@ ItemListener
 		tablaAprobadas.setRowHeight(25);
 		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
 		DefaultTableModel tablaTempAprobadas = (DefaultTableModel) tablaAprobadas.getModel();
-		tablaTempAprobadas = Receptor.getMateriasAprobadas(tablaTempAprobadas);
+		tablaTempAprobadas = GRCController.getMateriasAprobadas(tablaTempAprobadas);
 		
 		mnuPrototipo = new JMenu ("Prototipo  ");
 		mnuPrototipo.setMnemonic ((int)'P');
@@ -288,7 +287,7 @@ ItemListener
 		getContentPane().add (barraDeEstado, BorderLayout.SOUTH);
 		
 		DefaultListModel modeloList = new DefaultListModel();
-		modeloList.addElement(Receptor.getRecomendacion());
+		modeloList.addElement(GRCController.getRecomendacion());
 		listaRecomendaciones.setModel(modeloList);
 		
 		setVisible (true);
