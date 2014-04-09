@@ -3,6 +3,7 @@ package com.laboratorio.controlador;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,53 +24,106 @@ import com.laboratorio.vista.Escritorio;
 
 public class GRCController
 {
+	private List<Recomendacion> recomendacionesGRC = new ArrayList<Recomendacion>();
 	
-	public static DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, String recomendacion)
+	public List<Recomendacion> getRecomendacionesGRC()
 	{
-		String delimiter = "/";
-		String[] temp;
-		temp = recomendacion.split(delimiter);
-		for(int i = 0; i < temp.length ; i++)
+		return this.recomendacionesGRC;
+	}
+	
+	public void setRecomendacionesGRC(List<Recomendacion> r)
+	{
+		this.recomendacionesGRC = r;
+	}
+	public DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista) throws Exception
+	{
+		String nombreMateria = "";
+		String horario = "";
+		/*GRCController GRC = new GRCController();  Esto genera las combinaciones de vuelta para poder tenerlas aca
+		List<Recomendacion> recomendaciones = GRC.armarCombinaciones();*/
+		System.out.println("POSICION" + posItemLista);
+		System.out.println("TAMAÑO RECO" + recomendacionesGRC.size());
+		Recomendacion r = recomendacionesGRC.get(posItemLista); // Elige la recomendacion que se encuentra en  
+		for(Curso c : r.getRecomendacion())                     // la misma posicion que en la Jlist
 		{
-			if (temp[i].matches("(?i).* Lunes.*")) 
+			nombreMateria = c.getMateria().getNombre();
+			System.out.println("MATERIA elegida" + nombreMateria);
+			for(int j = 0; j < c.getHorario().size(); j++)
 			{
-				tablaDias.setValueAt(temp[i], 0, 0);
-			}
-			else if(temp[i].matches("(?i).* Martes.*"))
-			{
-				tablaDias.setValueAt(temp[i], 0, 1);
-			}
-			else if(temp[i].matches("(?i).* Miercoles.*"))
-			{
-				tablaDias.setValueAt(temp[i], 0, 2);
-			}	
-			else if(temp[i].matches("(?i).* Jueves.*"))
-			{
-				tablaDias.setValueAt(temp[i], 0, 3);
-			}
-			else if(temp[i].matches("(?i).* Viernes.*"))
-			{
-				tablaDias.setValueAt(temp[i], 0, 4);
-			}
-			else
-			{
-				tablaDias.setValueAt(temp[i], 0, 5);
+				String dia = c.getHorario().get(j).getDia();
+				horario = c.getHorario().get(j).getHoraInicio() + "a " + c.getHorario().get(j).getHoraFin() + " ";
+				if (dia.equals("Lunes")) 
+				{
+					if(tablaDias.getValueAt(0, 0) == null)
+						tablaDias.setValueAt(nombreMateria+horario, 0, 0);
+					else
+						tablaDias.setValueAt(nombreMateria+horario, 1, 0);
+				}
+				else if(dia.equals("Martes"))
+				{
+					System.out.println("ES MARTES");
+					if(tablaDias.getValueAt(0, 1) == null)
+					{
+						tablaDias.setValueAt(nombreMateria+horario, 0, 1);
+					}
+					else
+					{
+						tablaDias.setValueAt(nombreMateria+horario, 1, 1);
+					}
+				}
+				else if(dia.equals("Miercoles"))
+				{
+					if(tablaDias.getValueAt(0, 2) == null)
+						tablaDias.setValueAt(nombreMateria+horario, 0, 2);
+					else
+						tablaDias.setValueAt(nombreMateria+horario, 1, 2);
+				}
+				else if(dia.equals("Jueves"))
+				{
+					if(tablaDias.getValueAt(0, 3) == null)
+						tablaDias.setValueAt(nombreMateria+horario, 0, 3);
+					else
+						tablaDias.setValueAt(nombreMateria+horario, 1, 3);
+				}
+				else if(dia.equals("Viernes"))
+				{
+					System.out.println("ES NULL?" + tablaDias.getValueAt(0, 4) != null);
+					if(tablaDias.getValueAt(0, 4) == null)
+						tablaDias.setValueAt(nombreMateria+horario, 0, 4);
+					else
+						tablaDias.setValueAt(nombreMateria+horario, 1, 4);
+				}
+				else
+				{
+					if(tablaDias.getValueAt(0, 5) == null)
+						tablaDias.setValueAt(nombreMateria+horario, 0, 5);
+					else
+						tablaDias.setValueAt(nombreMateria+horario, 1, 5);
+				}
 			}
 		}
 		return tablaDias;
 	}
 	
 
-	public static ArrayList<String> getRecomendacion() throws Exception
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getRecomendaciones() throws Exception
 	{
-		Combinador c = new Combinador();
-		Recomendacion recomendacion = new Recomendacion();
-		Set<Curso> cursos = c.getCursosDisponibles(18);
-		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
-		return armarRecomendacion(recomendacion.backtracking(cursosDisp));
+		GRCController GRC = new GRCController();
+		return armarRecomendacion(GRC.armarCombinaciones());
 	}
 	
-	public static DefaultTableModel getMateriasAprobadas(DefaultTableModel tablaDias) throws Exception
+	private List<Recomendacion> armarCombinaciones() throws Exception
+	{
+		Combinador c = new Combinador();
+		Set<Curso> cursos = c.getCursosDisponibles(18);
+		Recomendacion recomendacion = new Recomendacion();
+		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
+		List<Recomendacion> recomendaciones = recomendacion.backtracking(cursosDisp);
+		return recomendaciones;
+	}
+	
+	public DefaultTableModel getMateriasAprobadas(DefaultTableModel tablaDias) throws Exception
 	{
 		List<MateriaAprobada> matAprobadas = MateriaAprobadaDAO.getInstancia().obtenerTodo();
 		String nombreMateria;
@@ -85,7 +139,7 @@ public class GRCController
 		return tablaDias;
 	}
 	
-	public static ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
+	public ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
 	{
 		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
 		for (Recomendacion r : recomendaciones)
@@ -94,13 +148,14 @@ public class GRCController
 			for(Curso c : r.getRecomendacion())
 			{
 				recoParaLista += " " + c.getMateria().getNombre();
+				System.out.println("Materia para tabla" + c.getMateria().getNombre());
 				for(int j = 0; j < c.getHorario().size(); j++)
 				{
 					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
 					recoParaLista += " De: " + c.getHorario().get(j).getHoraInicio();
 					recoParaLista += "hs a " + c.getHorario().get(j).getHoraFin()+ " hs" ;
 				}
-				recoParaLista += "/";
+				recoParaLista += "; ";
 			}
 			recomendacionesParaLista.add(recoParaLista);
 		}

@@ -123,6 +123,9 @@ ItemListener
 			spRecomendacion.setViewportView(tablaDias);
 			tablaDias.setModel(new DefaultTableModel(
 				new Object[][] {
+					{null, null, null, null, null, null},
+					{null, null, null, null, null, null},
+					{null, null, null, null, null, null},
 				},
 				new String[] {
 					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
@@ -198,9 +201,16 @@ ItemListener
 			    {
 			      if (e.getValueIsAdjusting() == false)
 			      {
+			    	  GRCController GRC = new GRCController();
 			    	  DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
-			    	  String recomendacionElegida = listaRecomendaciones.getSelectedValue();
-			    	  tablaTempDias = GRCController.cambiarTablaDias(tablaTempDias,recomendacionElegida);
+			    	  int posElegida = listaRecomendaciones.getSelectedIndex();
+			    	  tablaTempDias.setRowCount(3);
+			    	  try 
+			    	  {
+						tablaTempDias = GRC.cambiarTablaDias(tablaTempDias,posElegida);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 			      }
 			    }
 			  });
@@ -245,7 +255,8 @@ ItemListener
 		tablaAprobadas.setRowHeight(25);
 		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
 		DefaultTableModel tablaTempAprobadas = (DefaultTableModel) tablaAprobadas.getModel();
-		tablaTempAprobadas = GRCController.getMateriasAprobadas(tablaTempAprobadas);
+		GRCController GRC = new GRCController();
+		tablaTempAprobadas = GRC.getMateriasAprobadas(tablaTempAprobadas);
 		
 		mnuPrototipo = new JMenu ("Prototipo  ");
 		mnuPrototipo.setMnemonic ((int)'P');
@@ -279,7 +290,7 @@ ItemListener
 		getContentPane().add (barraDeEstado, BorderLayout.SOUTH);
 		
 		DefaultListModel modeloList = new DefaultListModel();
-		ArrayList<String> recomendaciones = GRCController.getRecomendacion();
+		ArrayList<String> recomendaciones = GRC.getRecomendaciones();
 		for (int i = 0; i < recomendaciones.size(); i++) 
 		{
 			modeloList.addElement(recomendaciones.get(i));
