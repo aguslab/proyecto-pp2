@@ -30,11 +30,6 @@ public class MateriaAprobada
 		this.nota= nota;
 	}
 	
-	public MateriaAprobada(int i, double nota) 
-	{
-		this.nota = nota;
-	}
-
 	public int getId() 
 	{
 		return id;
@@ -60,8 +55,4 @@ public class MateriaAprobada
 		return materia;
 	}
 
-	public void setNota(Materia matAprobada)
-	{
-		this.materia = matAprobada;
-	}
 }
