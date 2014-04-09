@@ -22,7 +22,6 @@ public class MateriaAprobada
 
 	public MateriaAprobada()
 	{
-		
 	}
 	
 	public MateriaAprobada(Materia materia, double nota) 

@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.laboratorio.controlador.Combinador;
 import com.laboratorio.dao.CursoDAO;
 import com.laboratorio.dao.MateriaAprobadaDAO;
 import com.laboratorio.dao.MateriaDAO;
 import com.laboratorio.dao.PlanEstudioDAO;
+import com.laboratorio.servicios.Combinador;
 
 public class App 
 {
@@ -340,7 +340,8 @@ public class App
 			materiasAprobadas.add(lecto);
 			materiasAprobadas.add(tallerUtilitarios);*/
 			
-			Set<Curso> cursosDisponiblesTurnoNoche = Combinador.getCursosDisponibles(18);
+			Combinador com = new Combinador();
+			Set<Curso> cursosDisponiblesTurnoNoche = com.getCursosDisponibles(18);
 			System.out.println("Cursos disponibles a cursar despues de ser filtrados");
 			for(Curso c : cursosDisponiblesTurnoNoche){
 				System.out.println(c.getMateria().getNombre());
@@ -348,12 +349,12 @@ public class App
 			System.out.println();
 			System.out.println();
 			
-			ArrayList<Recomendacion> recomendaciones = CursoDAO.getInstancia().combinaciones(cursosDisponiblesTurnoNoche);
-			ArrayList<String> r = Recomendacion.armarRecomendacion(recomendaciones);
-			for(int i = 0 ; i < r.size(); i++)
-			{
-				System.out.println(i +")" + r.get(i));
-			}
+//			ArrayList<Recomendacion> recomendaciones = CursoDAO.getInstancia().combinaciones(cursosDisponiblesTurnoNoche);
+//			ArrayList<String> r = Recomendacion.armarRecomendacion(recomendaciones);
+//			for(int i = 0 ; i < r.size(); i++)
+//			{
+//				System.out.println(i +")" + r.get(i));
+//			}
 			
 			
 			/*for (List<Curso> listacur : CursoDAO.getInstancia().getCursosCombinados()) //Pasa al siguiente ciclo un subconjunto a la vez

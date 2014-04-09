@@ -45,16 +45,4 @@ public class PlanEstudio {
 		this.correlativas = correlativas;
 	}
 	
-	public boolean tieneCorrelativas(Materia materiaACursar, Set<Materia> materiasAprobadas){
-    	//SIEMPRE deberia tenerlo, si no es algun problema nuestro
-    	if(this.correlativas.containsKey(materiaACursar)){
-    		if(materiaACursar.getNombre().equals("Laboratorio Interdisciplinario")){
-    			return materiasAprobadas.size() >= 11;
-    		}
-    		return materiasAprobadas.containsAll(this.correlativas.get(materiaACursar));
-    	}
-    	
-    	return false;
-    }
-
 }

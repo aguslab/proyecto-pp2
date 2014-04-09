@@ -1,5 +1,7 @@
 package com.laboratorio.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="horario")
-public class Horario
+public class Horario implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_horario;
@@ -19,7 +22,7 @@ public class Horario
 	@Column(nullable = false)
 	private int horaFin;
 	@Column(nullable = false)
-	private String dia;
+	private String dia;//TODO: cambiar por enum??
 	
 	
 	public Horario()
@@ -30,22 +33,6 @@ public class Horario
 		this.dia = dia;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
-		/* if(turno.equals("M"))
-		 {
-			 this.horaInicio = 8;
-			 this.horaFin = 12;
-		 }
-		 else if(turno.equals("T"))
-		 {
-			 this.horaInicio = 13;
-			 this.horaFin = 17;
-		 }
-		 else
-		 {
-			 this.horaInicio = 18;
-			 this.horaFin = 22;
-		 }*/
-		 
 	}
 
 	public int getId() 
