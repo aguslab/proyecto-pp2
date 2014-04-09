@@ -3,7 +3,6 @@ package com.laboratorio.controlador;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,30 +23,31 @@ import com.laboratorio.vista.Escritorio;
 
 public class GRCController
 {
-	private List<Recomendacion> recomendacionesGRC = new ArrayList<Recomendacion>();
+	private static List<Recomendacion> recomendacionesGRC = null;
 	
+	public GRCController(){
+		try {
+			if(recomendacionesGRC == null){
+				recomendacionesGRC = armarCombinaciones();				
+			}
+		} catch (Exception e) {
+			System.out.println("OPSSS!!! esto es embazazoso!!");
+		}
+	}
 	public List<Recomendacion> getRecomendacionesGRC()
 	{
-		return this.recomendacionesGRC;
+		return recomendacionesGRC;
 	}
 	
-	public void setRecomendacionesGRC(List<Recomendacion> r)
-	{
-		this.recomendacionesGRC = r;
-	}
 	public DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista) throws Exception
 	{
 		String nombreMateria = "";
 		String horario = "";
-		/*GRCController GRC = new GRCController();  Esto genera las combinaciones de vuelta para poder tenerlas aca
-		List<Recomendacion> recomendaciones = GRC.armarCombinaciones();*/
-		System.out.println("POSICION" + posItemLista);
-		System.out.println("TAMAÑO RECO" + recomendacionesGRC.size());
-		Recomendacion r = recomendacionesGRC.get(posItemLista); // Elige la recomendacion que se encuentra en  
-		for(Curso c : r.getRecomendacion())                     // la misma posicion que en la Jlist
+		List<Recomendacion> recomendaciones = recomendacionesGRC;
+		Recomendacion r = recomendaciones.get(posItemLista);
+		for(Curso c : r.getRecomendacion())
 		{
 			nombreMateria = c.getMateria().getNombre();
-			System.out.println("MATERIA elegida" + nombreMateria);
 			for(int j = 0; j < c.getHorario().size(); j++)
 			{
 				String dia = c.getHorario().get(j).getDia();
@@ -61,7 +61,6 @@ public class GRCController
 				}
 				else if(dia.equals("Martes"))
 				{
-					System.out.println("ES MARTES");
 					if(tablaDias.getValueAt(0, 1) == null)
 					{
 						tablaDias.setValueAt(nombreMateria+horario, 0, 1);
@@ -87,7 +86,6 @@ public class GRCController
 				}
 				else if(dia.equals("Viernes"))
 				{
-					System.out.println("ES NULL?" + tablaDias.getValueAt(0, 4) != null);
 					if(tablaDias.getValueAt(0, 4) == null)
 						tablaDias.setValueAt(nombreMateria+horario, 0, 4);
 					else
@@ -106,11 +104,9 @@ public class GRCController
 	}
 	
 
-	@SuppressWarnings("unchecked")
 	public ArrayList<String> getRecomendaciones() throws Exception
 	{
-		GRCController GRC = new GRCController();
-		return armarRecomendacion(GRC.armarCombinaciones());
+		return armarRecomendacion(recomendacionesGRC);
 	}
 	
 	private List<Recomendacion> armarCombinaciones() throws Exception
@@ -148,7 +144,6 @@ public class GRCController
 			for(Curso c : r.getRecomendacion())
 			{
 				recoParaLista += " " + c.getMateria().getNombre();
-				System.out.println("Materia para tabla" + c.getMateria().getNombre());
 				for(int j = 0; j < c.getHorario().size(); j++)
 				{
 					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
@@ -409,7 +404,7 @@ public class GRCController
         
         /////CREO MATERIA APROBADA
         MateriaAprobada matAprobProg1 = new MateriaAprobada(prog1, 8);
-        MateriaAprobada matAprobProg2 = new MateriaAprobada(prog2, 7);
+//        MateriaAprobada matAprobProg2 = new MateriaAprobada(prog2, 7);
 //        MateriaAprobada matAprobCalculo1 = new MateriaAprobada(calculo1,10.0);
 //        MateriaAprobada matAprobIngles1 = new MateriaAprobada(ingles1,10.0);
 //        MateriaAprobada matAprobPP1 = new MateriaAprobada(pp1,10.0);
@@ -443,11 +438,13 @@ try
 			CursoDAO.getInstancia().alta(cursoUtil);
 			
 			MateriaAprobadaDAO.getInstancia().alta(matAprobProg1);
-			MateriaAprobadaDAO.getInstancia().alta(matAprobProg2);
+//			MateriaAprobadaDAO.getInstancia().alta(matAprobProg2);
 			
 			
 			PlanEstudioDAO.getInstancia().alta(planEstudio);
 			
+			/*
+			PROBRAR!!!!
 			Combinador com = new Combinador();
 			//18 es la hora de inicio del turno que quiere filtrar (18 hs para turno noche)
 			Set<Curso> cursosDisponiblesTurnoNoche = com.getCursosDisponibles(18);
@@ -455,7 +452,6 @@ try
 			ArrayList<Curso> cursos = new ArrayList<Curso>(cursosDisponiblesTurnoNoche);
 			Recomendacion reco = new Recomendacion();
 			List<Recomendacion> recomendaciones = reco.backtracking(cursos);
-			System.out.println("cant REco: "+recomendaciones.size());
 			int i = 1;
 			for(Recomendacion r : recomendaciones){
 				System.out.println();
@@ -473,6 +469,7 @@ try
 				}
 				i++;
 			}
+			*/
 			
 		new Escritorio ();
         }
