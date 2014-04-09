@@ -33,7 +33,7 @@ public class MateriaAprobadaDAOTest
         return new TestSuite( MateriaAprobadaDAOTest.class );
     }
 
-    public void testAltaMateriaAprobada() throws Exception{
+    public void testAltaMateriaAprobadaOk() throws Exception{
     	Materia M = new Materia("Programacion I");
     	MateriaAprobada MA = new MateriaAprobada(M,9);
     	
@@ -43,7 +43,7 @@ public class MateriaAprobadaDAOTest
     }
     
     public void testObtenerTodasLasMateriasAprobadas() throws Exception{
-    	List<Materia> materias = MateriaDAO.getInstancia().obtenerTodo();
+    	List<MateriaAprobada> materias = MateriaAprobadaDAO.getInstancia().obtenerTodo();
     	
     	assertNotNull(materias);
     }

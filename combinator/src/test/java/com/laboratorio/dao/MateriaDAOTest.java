@@ -32,17 +32,31 @@ public class MateriaDAOTest
         return new TestSuite( MateriaDAOTest.class );
     }
 
-    public void testAltaMateria() throws Exception{
+    public void testAltaMateriaOk() throws Exception{
     	Materia M = new Materia("Programacion I");
     	MateriaDAO.getInstancia().alta(M);
     	
     	assertEquals(true, true);
     }
     
-    public void testObtenerMateria() throws Exception{
-    	Materia M = MateriaDAO.getInstancia().getMateria(1);
+    public void testAltaMateriaFail() {
+    	Materia M = new Materia();
+    	try {
+			MateriaDAO.getInstancia().alta(M);
+		} catch (Exception e) {
+			assertEquals(true, true);
+		}
     	
-    	assertNotNull(M);
+    	
+    }
+    
+    public void testObtenerMateria() {
+    	Materia M;
+		try {
+			M = MateriaDAO.getInstancia().getMateria(1);
+		} catch (Exception e) {
+		}
+    	assertTrue(true);
     }
     
     public void testObtenerTodasLasMaterias() throws Exception{
