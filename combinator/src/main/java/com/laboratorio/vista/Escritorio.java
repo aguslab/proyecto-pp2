@@ -30,7 +30,7 @@ public class Escritorio extends JWindow
 		setLocation (pantalla.width / 2 - getWidth() / 2, pantalla.height / 2 - getHeight() / 2);
 
 		this.setVisible(true);
-		new Prototipo();
+		new GRCView();
 
 		toFront();
 		dispose ();
