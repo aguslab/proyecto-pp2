@@ -85,10 +85,7 @@ public class CursoDAO
 		TypedQuery<?> q = em.createQuery(cq);
 		
 		List<Curso> cursos =(List<Curso>) q.getResultList();
-		Set<Curso> curs = new HashSet<Curso>();
-		for(Curso c : cursos){
-			curs.add(c);
-		}
+		Set<Curso> curs = new HashSet<Curso>(cursos);
 		
 		return curs;
 	}
@@ -103,191 +100,14 @@ public class CursoDAO
 			{
 				materia_id = c.getMateria().getId();
 				String a = new String("0");
-//				System.out.println("id materia:" + materia_id );
 				Query query = em.createQuery("SELECT COUNT(*) FROM MateriaAprobada WHERE materia.id = " +  materia_id);
-//				System.out.println("query " + query.getResultList().get(0).toString());
 				
 				if(!query.getResultList().get(0).toString().equals(a))
 				{
-//					System.out.println("borro " + materia_id);
 					cursos.remove(c);
 				}
 			}
 			return cursos;
 		}
 		
-//		public List<Curso> quitarCorrelativasNoCursables(List<Curso> cursos) 
-//		{
-//			System.out.println("entra");
-//			Integer materia_id; //"SELECT materias FROM PlanEstudio INNER JOIN Curso ON correlativas_id = materia_id"
-//			Query query = em.createQuery("SELECT pe.materias FROM PlanEstudio pe INNER JOIN Curso c ON pe.correlativas.id = c.materia.id");
-//			System.out.println("sale query");
-//			for(int i= 0; i < query.getResultList().size(); i++)
-//			{
-//				materia_id = cursos.get(i).getMateria().getId();
-//				if(!query.getResultList().get(i).toString().equals(materia_id.toString()))
-//				{
-//					System.out.println("borro " + materia_id.toString());
-//					cursos.remove(i);
-//				}
-//			}
-//			System.out.println("return");
-//			return cursos;
-//		}
-		
-		@SuppressWarnings("null")
-		public ArrayList<Recomendacion> combinaciones(Set<Curso> cursos) 
-		{
-			 //Voy guardando la combinacion posible en la misma recomendacion hasta que terminemos de recorrer todos los cursos. Tendria que ir como atributo de CursoDAO?
-			ArrayList<Recomendacion> recomendaciones = new ArrayList<Recomendacion>(); //Para guardar todas las recomendaciones
-			ArrayList<Curso> listaCursos = new ArrayList<Curso>();
-			
-			for(Curso curso : cursos) //Esto lo hago porque necesito una lista de cursos y no quiero modificar todos los Set
-			{
-				listaCursos.add(curso);
-			}
-			armarSubconjuntos(listaCursos, listaCursos .size());
-			
-			for (List<Curso> subCursos : subconjuntos) //Pasa al siguiente ciclo un subconjunto a la vez
-			{
-				Recomendacion recomendacion = new Recomendacion();
-				for (Curso curso: subCursos) //Recorre los cursos del subconjunto pasado.
-				{
-					recomendacion = revisarHorarioNoche(curso,recomendacion); 
-				}
-				recomendaciones.add(recomendacion);
-			}	
-			return recomendaciones; //Se necesitaria un ciclo mas para hacer la combinacion de las materias y asi ir guardando en una lista todas las recomendaciones
-		}
-		
-		public Recomendacion revisarHorarioNoche(Curso curso, Recomendacion recomendacion)
-		{
-			List<Horario> curso_horarios =  curso.getHorario();
-			String nombreMateria = curso.getMateria().getNombre();
-			int i = 0;
-			while (i < curso_horarios.size())
-			{
-				if(curso_horarios.get(i).getHoraInicio() == 18 && curso_horarios.get(i).getHoraFin() == 22)
-				{
-					 if(curso_horarios.get(i).getDia().equals("Lunes") && recomendacion.getLunes()[0] == null && recomendacion.getLunes()[2] == null) //Si es una materia que se dicta los Lunes 4 horas se guardará en dias[0] siempre que no haya una materia los lunes de 2 horas ocupando dias[0] y/o dias[1] 
-					 {
-						 //los indices 0 y 1 guardan nombre y horario
-						 recomendacion.getLunes()[0] = nombreMateria;
-						 recomendacion.getLunes()[1] = "18 a 22"; // no pido de nuevo el horario al curso pq ya se que es de 18 a 22
-					 }
-					 else if(curso_horarios.get(i).getDia().equals("Martes")  && recomendacion.getMartes()[0] == null && recomendacion.getMartes()[2] == null)
-					 {
-						 recomendacion.getMartes()[0] = nombreMateria;
-						 recomendacion.getMartes()[1] = "18 a 22";
-					 }
-					 else if(curso_horarios.get(i).getDia().equals("Miercoles")  && recomendacion.getMiercoles()[0] == null && recomendacion.getMiercoles()[2] == null)
-					 {
-						 recomendacion.getMiercoles()[0] = nombreMateria;
-						 recomendacion.getMiercoles()[1] = "18 a 22";
-					 }
-					 else if(curso_horarios.get(i).getDia().equals("Jueves")  && recomendacion.getJueves()[0] == null && recomendacion.getJueves()[2] == null)
-					 {
-						 recomendacion.getJueves()[0] = nombreMateria;
-						 recomendacion.getJueves()[1] = "18 a 22";
-					 }
-					 else if(curso_horarios.get(i).getDia().equals("Viernes")  && recomendacion.getViernes()[0] == null && recomendacion.getViernes()[2] == null)
-					 {
-						 recomendacion.getViernes()[0] = nombreMateria;
-						 recomendacion.getViernes()[1] = "18 a 22";
-					 }
-					 else if(curso_horarios.get(i).getDia().equals("Sabado")  && recomendacion.getSabado()[0] == null && recomendacion.getSabado()[2] == null)
-					 {
-						 recomendacion.getSabado()[0] = nombreMateria;
-						 recomendacion.getSabado()[1] = "18 a 22";
-					 }
-				}
-				else if(curso_horarios.get(i).getHoraInicio() == 18 && curso_horarios.get(i).getHoraFin() == 20)
-				{
-					if(curso_horarios.get(i).getDia().equals("Lunes")  && recomendacion.getLunes()[0] == null)
-					 {
-						 recomendacion.getLunes()[0] = nombreMateria;
-						 recomendacion.getLunes()[1] = "18 a 20";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Martes")  && recomendacion.getMartes()[0] == null)
-					 {
-						 recomendacion.getMartes()[0] = nombreMateria;
-						 recomendacion.getMartes()[1] = "18 a 20";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Miercoles")  && recomendacion.getMiercoles()[0] == null)
-					 {
-						 recomendacion.getMiercoles()[0] = nombreMateria;
-						 recomendacion.getMiercoles()[1] = "18 a 20";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Jueves")  && recomendacion.getJueves()[0] == null)
-					 {
-						 recomendacion.getJueves()[0] = nombreMateria;
-						 recomendacion.getJueves()[1] = "18 a 20";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Viernes")  && recomendacion.getViernes()[0] == null)
-					 {
-						 recomendacion.getViernes()[0] = nombreMateria;
-						 recomendacion.getViernes()[1] = "18 a 20";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Sabado")  && recomendacion.getSabado()[0] == null)
-					 {
-						 recomendacion.getSabado()[0] = nombreMateria;
-						 recomendacion.getSabado()[1] = "18 a 20";
-					 }
-				}
-				else
-				{
-					// Si uno de los horarios es lunes pero no es de 18 a 22 y no hay una materia guardada en el horario de 20 a 22 entonces entra al if
-					if(curso_horarios.get(i).getDia().equals("Lunes")  && recomendacion.getLunes()[1] != "18 a 22" && recomendacion.getLunes()[2] == null)
-					 {
-						 recomendacion.getLunes()[2] = nombreMateria;
-						 recomendacion.getLunes()[3] = "20 a 22";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Martes")  && recomendacion.getMartes()[1] != "18 a 22" && recomendacion.getMartes()[2] == null)
-					 {
-						 recomendacion.getMartes()[2] = nombreMateria;
-						 recomendacion.getMartes()[3] = "20 a 22";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Miercoles")  && recomendacion.getMiercoles()[1] != "18 a 22" && recomendacion.getMiercoles()[2] == null)
-					 {
-						 recomendacion.getMiercoles()[2] = nombreMateria;
-						 recomendacion.getMiercoles()[3] = "20 a 22";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Jueves")  && recomendacion.getJueves()[1] != "18 a 22" && recomendacion.getJueves()[2] == null)
-					 {
-						 recomendacion.getJueves()[2] = nombreMateria;
-						 recomendacion.getJueves()[3] = "20 a 22";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Viernes")  && recomendacion.getViernes()[1] != "18 a 22" && recomendacion.getViernes()[2] == null)
-					 {
-						 recomendacion.getViernes()[2] = nombreMateria;
-						 recomendacion.getViernes()[3] = "20 a 22";
-					 }
-					else if(curso_horarios.get(i).getDia().equals("Sabado")  && recomendacion.getSabado()[1] != "18 a 22" && recomendacion.getSabado()[2] == null)
-					 {
-						 recomendacion.getSabado()[2] = nombreMateria;
-						 recomendacion.getSabado()[3] = "20 a 22";
-					 }
-				}
-				i++;
-			}
-			return recomendacion;
-		}
-		
-		
-		private static void armarSubconjuntos(List<Curso> mainList, int count)
-		{
-		    subconjuntos.add(mainList);
-
-		    for(int i=0; i<mainList.size(); i++)
-		    {
-		        List<Curso> temp = new ArrayList<Curso>(mainList);
-		        temp.remove(i);
-		        armarSubconjuntos(temp, temp.size());
-		    }
-		}
-		
-		public HashSet<List<Curso>> getCursosCombinados()
-		{
-			return subconjuntos;
-		}
 }
