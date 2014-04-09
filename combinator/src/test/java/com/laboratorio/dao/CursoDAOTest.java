@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
 import com.laboratorio.dao.CursoDAO;
-import com.laboratorio.dao.HorarioDAO;
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
 import com.laboratorio.modelo.Materia;

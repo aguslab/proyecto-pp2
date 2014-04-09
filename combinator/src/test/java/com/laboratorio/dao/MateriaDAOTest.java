@@ -51,9 +51,8 @@ public class MateriaDAOTest
     }
     
     public void testObtenerMateria() {
-    	Materia M;
 		try {
-			M = MateriaDAO.getInstancia().getMateria(1);
+			MateriaDAO.getInstancia().getMateria(1);
 		} catch (Exception e) {
 		}
     	assertTrue(true);
