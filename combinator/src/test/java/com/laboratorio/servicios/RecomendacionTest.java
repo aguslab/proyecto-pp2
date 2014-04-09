@@ -2,10 +2,6 @@ package com.laboratorio.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import com.laboratorio.controlador.GRCController;
-import com.laboratorio.dao.CursoDAO;
 import com.laboratorio.modelo.Curso;
 import com.laboratorio.modelo.Horario;
 import com.laboratorio.modelo.Materia;
