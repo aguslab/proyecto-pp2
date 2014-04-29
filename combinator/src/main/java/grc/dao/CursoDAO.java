@@ -92,7 +92,7 @@ public class CursoDAO
 		{
 			int materia_id;
 			Set<Curso> cursosCopia = new HashSet<Curso>(cursos);
-			for(Curso c : cursosCopia)
+			for(Curso c : cursos)
 			{
 				materia_id = c.getMateria().getId();
 				String a = new String("0");
@@ -100,10 +100,10 @@ public class CursoDAO
 				
 				if(!query.getResultList().get(0).toString().equals(a))
 				{
-					cursos.remove(c);
+					cursosCopia.remove(c);
 				}
 			}
-			return cursos;
+			return cursosCopia;
 		}
 		
 }

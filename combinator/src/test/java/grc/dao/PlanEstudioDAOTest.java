@@ -46,15 +46,15 @@ public class PlanEstudioDAOTest
     	correl.put(M, c);
     	PlanEstudio p = new PlanEstudio();
     	p.setCorrelativas(correl);
-    	p.setId(1);
     	
+    	int cantAntes = PlanEstudioDAO.getInstancia().obtenerTodo().size();
     	PlanEstudioDAO.getInstancia().alta(p);
-    	assertEquals(true, true);
+    	int cantDespues = PlanEstudioDAO.getInstancia().obtenerTodo().size();
+    	assertEquals(cantAntes+1, cantDespues);
     }
     
     public void testAltaPlanEstudioFail(){
-    	HashMap<Materia, Set<Materia>> correl = new HashMap<Materia, Set<Materia>>(); 
-    	PlanEstudio p = new PlanEstudio(correl);
+    	PlanEstudio p = new PlanEstudio();
     	
     	try {
 			PlanEstudioDAO.getInstancia().alta(p);
@@ -64,9 +64,8 @@ public class PlanEstudioDAOTest
     }
     
     public void testObtenerTodoPlanEstudios() throws Exception{
-    	List<PlanEstudio> materias = PlanEstudioDAO.getInstancia().obtenerTodo();
-    	
-    	assertNotNull(materias);
+    	List<PlanEstudio> pes = PlanEstudioDAO.getInstancia().obtenerTodo();
+    	assertNotNull(pes);
     }
     
 }

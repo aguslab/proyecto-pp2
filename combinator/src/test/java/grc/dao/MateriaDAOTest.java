@@ -35,9 +35,10 @@ public class MateriaDAOTest
 
     public void testAltaMateriaOk() throws Exception{
     	Materia M = new Materia("Programacion I");
+    	int cantAntes = MateriaDAO.getInstancia().obtenerTodo().size();
     	MateriaDAO.getInstancia().alta(M);
-    	
-    	assertEquals(true, true);
+    	int cantDespues = MateriaDAO.getInstancia().obtenerTodo().size();
+    	assertEquals(cantAntes, cantDespues);
     }
     
     public void testAltaMateriaFail() {
@@ -45,23 +46,18 @@ public class MateriaDAOTest
     	try {
 			MateriaDAO.getInstancia().alta(M);
 		} catch (Exception e) {
-			assertEquals(true, true);
+			assertTrue(true);
 		}
-    	
     	
     }
     
-    public void testObtenerMateria() {
-		try {
-			MateriaDAO.getInstancia().getMateria(1);
-		} catch (Exception e) {
-		}
-    	assertTrue(true);
+    public void testObtenerMateria() throws Exception {
+		Materia m = MateriaDAO.getInstancia().getMateria(1);
+    	assertNotNull(m);
     }
     
     public void testObtenerTodasLasMaterias() throws Exception{
     	List<Materia> materias = MateriaDAO.getInstancia().obtenerTodo();
-    	
     	assertNotNull(materias);
     }
     

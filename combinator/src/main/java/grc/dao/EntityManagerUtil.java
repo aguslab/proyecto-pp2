@@ -57,7 +57,7 @@ public class EntityManagerUtil
 		
 		//FOR testing
 		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernet?createDatabaseIfNotExist=true");
-		configOverrides.put("hibernate.hbm2ddl.auto", "create");
+//		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
 		return Persistence.createEntityManagerFactory("PU", configOverrides);
 	}

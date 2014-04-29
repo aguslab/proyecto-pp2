@@ -35,17 +35,17 @@ public class MateriaAprobadaDAOTest
     }
 
     public void testAltaMateriaAprobadaOk() throws Exception{
-    	Materia M = new Materia("Programacion I");
+    	Materia M = new Materia("C");
     	MateriaAprobada MA = new MateriaAprobada(M,9);
-    	
+    	int cantAntes = MateriaAprobadaDAO.getInstancia().obtenerTodo().size();
+    	M.setId(cantAntes+1);
     	MateriaAprobadaDAO.getInstancia().alta(MA);
-    	
-    	assertEquals(true, true);
+    	int cantDespues = MateriaAprobadaDAO.getInstancia().obtenerTodo().size();
+    	assertEquals(cantAntes+1, cantDespues);
     }
     
     public void testObtenerTodasLasMateriasAprobadas() throws Exception{
     	List<MateriaAprobada> materias = MateriaAprobadaDAO.getInstancia().obtenerTodo();
-    	
     	assertNotNull(materias);
     }
     

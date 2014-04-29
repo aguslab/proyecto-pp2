@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +20,7 @@ public class Curso implements Serializable
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne(optional = false, cascade={CascadeType.ALL}) //TODO: cambiar a manyToOne cuando hayas mas carreras?
+	@ManyToOne(optional = false, cascade={CascadeType.ALL}) //TODO: cambiar a manyToOne cuando hayas mas carreras?
 	private Materia materia;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Horario> horario;

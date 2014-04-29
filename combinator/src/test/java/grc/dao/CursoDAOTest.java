@@ -5,7 +5,6 @@ import grc.dao.EntityManagerUtil;
 import grc.modelo.Curso;
 import grc.modelo.Horario;
 import grc.modelo.Materia;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,8 +27,9 @@ public class CursoDAOTest extends TestCase {
 	 * 
 	 * @param testName
 	 *            name of the test case
+	 * @throws Exception 
 	 */
-	public CursoDAOTest(String testName) {
+	public CursoDAOTest(String testName) throws Exception {
 		super(testName);
 	}
 
@@ -59,11 +59,7 @@ public class CursoDAOTest extends TestCase {
 	}
 
 	public void testAltaCursoFail() {
-		ArrayList<Horario> horar = new ArrayList<Horario>();
-		horar.add(new Horario());
-
-		Materia a = new Materia("A");
-		Curso c1 = new Curso(a, horar);
+		Curso c1 = new Curso();
 		try {
 			Mockito.when(emu.getNewEM().merge(c1)).thenThrow(
 					new RuntimeException());
@@ -79,7 +75,7 @@ public class CursoDAOTest extends TestCase {
 		assertNotNull(c);
 	}
 
-	public void testObtenerTodosLosCurso() throws Exception {
+	public void testObtenerTodosLosCursos() throws Exception {
 		List<Curso> c = CursoDAO.getInstancia().obtenerTodo();
 		assertNotNull(c);
 	}
@@ -90,15 +86,10 @@ public class CursoDAOTest extends TestCase {
 	}
 
 	public void testQuitarMateriasAprobadas() throws Exception {
-		ArrayList<Horario> horar = new ArrayList<Horario>();
-		horar.add(new Horario("a", 18, 22));
-		Materia a = new Materia("a");
-		Curso c1 = new Curso(a, horar);
-
-		Set<Curso> cursos = new HashSet<Curso>();
-		cursos.add(c1);
-		Set<Curso> cf = CursoDAO.getInstancia().quitarMateriasAprobadas(cursos);
-		assertEquals(true, true);// TODO!
+		List<Curso> c = CursoDAO.getInstancia().obtenerTodo();
+		Set<Curso> cursos = new HashSet<Curso>(c);
+		Set<Curso> csma  = CursoDAO.getInstancia().quitarMateriasAprobadas(cursos);
+		assertNotNull(csma);
 	}
 
 }
