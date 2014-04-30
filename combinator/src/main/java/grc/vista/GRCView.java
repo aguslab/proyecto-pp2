@@ -132,10 +132,10 @@ ItemListener
 					"Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"
 				}
 			) {
-				Class[] columnTypes = new Class[] {
+				Class<String>[] columnTypes = new Class[] {
 					String.class, String.class, String.class, String.class, String.class, String.class
 				};
-				public Class getColumnClass(int columnIndex) {
+				public Class<String> getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
 			});
@@ -152,6 +152,7 @@ ItemListener
 			
 			JCheckBox cbManana = new JCheckBox("");
 			cbManana.setBounds(131, 7, 21, 23);
+			cbManana.setSelected(true);
 			panelRecomendaciones.add(cbManana);
 			
 			JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
@@ -162,17 +163,19 @@ ItemListener
 			lblTarde.setBounds(172, 11, 49, 14);
 			panelRecomendaciones.add(lblTarde);
 			
-			JCheckBox checkBox = new JCheckBox("");
-			checkBox.setBounds(208, 7, 21, 23);
-			panelRecomendaciones.add(checkBox);
+			JCheckBox cbTarde = new JCheckBox("");
+			cbTarde.setBounds(208, 7, 21, 23);
+			cbTarde.setSelected(true);
+			panelRecomendaciones.add(cbTarde);
 			
 			JLabel lblNoche = new JLabel("Noche");
 			lblNoche.setBounds(253, 11, 49, 14);
 			panelRecomendaciones.add(lblNoche);
 			
-			JCheckBox checkBox_1 = new JCheckBox("");
-			checkBox_1.setBounds(293, 7, 21, 23);
-			panelRecomendaciones.add(checkBox_1);
+			JCheckBox cbNoche = new JCheckBox("");
+			cbNoche.setBounds(293, 7, 21, 23);
+			cbNoche.setSelected(true);
+			panelRecomendaciones.add(cbNoche);
 			
 			JButton btnOk2 = new JButton(new ImageIcon ("Imagenes/ok.png"));
 			btnOk2.setBounds(1145, 241, 24, 23);
@@ -279,7 +282,7 @@ ItemListener
 		materia = new JLabel (" " + "Proyecto Profesional II", Label.LEFT);
 		materia.setForeground (Color.black);
 		
-		firma = new JLabel ("" + "GRC - Godoy y De Napoli." + " ", JLabel.RIGHT);
+		firma = new JLabel ("" + "GRC - Godoy - De Napoli." + " ", JLabel.RIGHT);
 		firma.setForeground (Color.black);
 		
 		barraDeEstado.setLayout (new BorderLayout());
