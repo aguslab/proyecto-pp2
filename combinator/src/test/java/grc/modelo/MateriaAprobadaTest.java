@@ -45,4 +45,11 @@ public class MateriaAprobadaTest
     	assertEquals("M", ma.getMateriaAprobada().getNombre());
     }
     
+    public void testMateriaAprobadaNota(){
+    	Materia m = new Materia("M");
+    	MateriaAprobada ma = new MateriaAprobada(m, 8.0);
+    	
+    	assertEquals(8.0, ma.getNota());
+    }
+    
 }

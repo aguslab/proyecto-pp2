@@ -47,6 +47,63 @@ public class MateriaTest
     	assertFalse(m.equals(M));
     }
     
+    public void testMateriaEqualConMismaMateria(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	m.setNombre("M");
+    	
+    	assertTrue(m.equals(m));
+    }
+    
+    public void testMateriaEqualConNull(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	m.setNombre("M");
+    	
+    	Materia M = null;
+    	assertFalse(m.equals(M));
+    }
+    
+    public void testMateriaEqualConDistintaClase(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	m.setNombre("M");
+    	
+    	MateriaAprobada M = new MateriaAprobada(m,8);
+    	assertFalse(m.equals(M));
+    }
+    
+    public void testMateriaEqualDistintoId(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	m.setNombre("M");
+    	
+    	Materia M = new Materia();
+    	M.setId(2);
+    	M.setNombre("M");
+    	assertFalse(m.equals(M));
+    }
+    
+    public void testMateriaEqualNombreMateriaNull(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	m.setNombre("M");
+    	
+    	Materia M = new Materia();
+    	M.setId(1);
+    	assertFalse(m.equals(M));
+    }
+    
+    public void testMateriaEqualNombreMateriaNullConNull(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	
+    	Materia M = new Materia();
+    	M.setId(1);
+    	M.setNombre("N");
+    	assertFalse(m.equals(M));
+    }
+    
     public void testMateriaHashCode(){
     	Materia m = new Materia();
     	m.setId(1);
@@ -57,4 +114,11 @@ public class MateriaTest
     	assertEquals(m.hashCode(),M.hashCode());
     }
     
+    public void testMateriaHashCodeConNombreNull(){
+    	Materia m = new Materia();
+    	m.setId(1);
+    	Materia M = new Materia();
+    	M.setId(1);
+    	assertEquals(m.hashCode(),M.hashCode());
+    }
 }

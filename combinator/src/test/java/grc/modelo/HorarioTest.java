@@ -31,12 +31,12 @@ public class HorarioTest
 
     public void testHorario(){
     	Horario h = new Horario();
-    	h.setId(1);
-    	h.setDia("Lunes");
+    	Dia lun = Dia.LUNES;
+    	h.setDia(lun.name());
     	h.setHoraFin(22);
     	h.setHoraInicio(18);
     	
-    	assertEquals("Lunes", h.getDia());
+    	assertEquals("LUNES", h.getDia());
     }
     
     public void testHorarioHora(){
@@ -45,6 +45,14 @@ public class HorarioTest
     	h.setHoraInicio(18);
     	
     	assertEquals(2, h.getHoraFin()-h.getHoraInicio());
+    }
+    
+    public void testHorarioId(){
+    	Horario h = new Horario();
+    	h.setHoraFin(20);
+    	h.setHoraInicio(18);
+    	h.setId(10);
+    	assertEquals(10, h.getId());
     }
     
 }
