@@ -53,7 +53,7 @@ public class Filtrador {
 	
 	public boolean tieneCorrelativas(PlanEstudio pe, Materia materiaACursar, Set<Materia> materiasAprobadas){
     	if(pe.getCorrelativas().containsKey(materiaACursar)){
-    		if(materiaACursar.getNombre().equals("Laboratorio Interdisciplinario")){
+    		if(materiaACursar.getNombre().equalsIgnoreCase("Laboratorio Interdisciplinario")){
     			return materiasAprobadas.size() >= 11;
     		}
     		return materiasAprobadas.containsAll(pe.getCorrelativas().get(materiaACursar));
