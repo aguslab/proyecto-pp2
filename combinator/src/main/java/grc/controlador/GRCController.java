@@ -1,21 +1,13 @@
 package grc.controlador;
 
-import grc.dao.CursoDAO;
 import grc.dao.MateriaAprobadaDAO;
-import grc.dao.MateriaDAO;
-import grc.dao.PlanEstudioDAO;
 import grc.modelo.Curso;
-import grc.modelo.Horario;
-import grc.modelo.Materia;
 import grc.modelo.MateriaAprobada;
-import grc.modelo.PlanEstudio;
 import grc.servicios.Filtrador;
 import grc.servicios.Recomendacion;
 import grc.vista.Escritorio;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +23,7 @@ public class GRCController
 				recomendacionesGRC = armarCombinaciones();				
 			}
 		} catch (Exception e) {
-			System.out.println("OPSSS!!! esto es embazazoso!!");
+			System.out.println("OPSSS!!! esto es embarazoso!!");
 		}
 	}
 	public List<Recomendacion> getRecomendacionesGRC()
@@ -52,14 +44,14 @@ public class GRCController
 			{
 				String dia = c.getHorario().get(j).getDia();
 				horario = c.getHorario().get(j).getHoraInicio() + "a " + c.getHorario().get(j).getHoraFin() + " ";
-				if (dia.equals("Lunes")) 
+				if (dia.equalsIgnoreCase("Lunes")) 
 				{
 					if(tablaDias.getValueAt(0, 0) == null)
 						tablaDias.setValueAt(nombreMateria+horario, 0, 0);
 					else
 						tablaDias.setValueAt(nombreMateria+horario, 1, 0);
 				}
-				else if(dia.equals("Martes"))
+				else if(dia.equalsIgnoreCase("Martes"))
 				{
 					if(tablaDias.getValueAt(0, 1) == null)
 					{
@@ -70,21 +62,21 @@ public class GRCController
 						tablaDias.setValueAt(nombreMateria+horario, 1, 1);
 					}
 				}
-				else if(dia.equals("Miercoles"))
+				else if(dia.equalsIgnoreCase("Miercoles"))
 				{
 					if(tablaDias.getValueAt(0, 2) == null)
 						tablaDias.setValueAt(nombreMateria+horario, 0, 2);
 					else
 						tablaDias.setValueAt(nombreMateria+horario, 1, 2);
 				}
-				else if(dia.equals("Jueves"))
+				else if(dia.equalsIgnoreCase("Jueves"))
 				{
 					if(tablaDias.getValueAt(0, 3) == null)
 						tablaDias.setValueAt(nombreMateria+horario, 0, 3);
 					else
 						tablaDias.setValueAt(nombreMateria+horario, 1, 3);
 				}
-				else if(dia.equals("Viernes"))
+				else if(dia.equalsIgnoreCase("Viernes"))
 				{
 					if(tablaDias.getValueAt(0, 4) == null)
 						tablaDias.setValueAt(nombreMateria+horario, 0, 4);
@@ -159,6 +151,21 @@ public class GRCController
 	
 	public static void main (String args[]) throws Exception 
 	{
+		
+//		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+//		a.init();
+		/*
+		 * ALTAAAAAAAAAAAAAA
+		 */
+//		a.altaMaterias();
+//
+//		a.altaCursos();
+//
+//		a.altaMateriasAprobadas();
+//		
+//		a.altaPlanEstudio();
+		/*
+		
 		//filtra por turno, materias aprobadas, correlatividades
 				//Despues con todo eso hace las combinaciones
 				
@@ -443,39 +450,44 @@ try
 			
 			PlanEstudioDAO.getInstancia().alta(planEstudio);
 			
-			/*
-			PROBRAR!!!!
-			Combinador com = new Combinador();
-			//18 es la hora de inicio del turno que quiere filtrar (18 hs para turno noche)
-			Set<Curso> cursosDisponiblesTurnoNoche = com.getCursosDisponibles(18);
-			
-			ArrayList<Curso> cursos = new ArrayList<Curso>(cursosDisponiblesTurnoNoche);
-			Recomendacion reco = new Recomendacion();
-			List<Recomendacion> recomendaciones = reco.backtracking(cursos);
-			int i = 1;
-			for(Recomendacion r : recomendaciones){
-				System.out.println();
-				System.out.println();
-				System.out.println("Recomendacion " + i);
-				for(Curso c : r.getRecomendacion()){
-					System.out.println("Materia: " + c.getMateria().getNombre());
-					for(int j=0;j<c.getHorario().size();j++){
-						System.out.println("---Dia: " + c.getHorario().get(j).getDia());
-						System.out.print("---De: " + c.getHorario().get(j).getHoraInicio());
-						System.out.print("hs a " + c.getHorario().get(j).getHoraFin()+ " hs") ;
-						System.out.println();	
-					}
-					
-				}
-				i++;
-			}
 			*/
 			
+			
+			
+			
+			
+//			PROBRAR!!!!
+//			Filtrador fil = new Filtrador();
+			//18 es la hora de inicio del turno que quiere filtrar (18 hs para turno noche)
+//			Set<Curso> cursosDisponiblesTurnoNoche = fil.getCursosDisponibles(18);
+			
+//			ArrayList<Curso> cursos = new ArrayList<Curso>(cursosDisponiblesTurnoNoche);
+//			Recomendacion reco = new Recomendacion();
+//			List<Recomendacion> recomendaciones;
+//			reco.backtracking(cursos);
+//			int i = 1;
+//			for(Recomendacion r : recomendaciones){
+//				System.out.println();
+//				System.out.println();
+//				System.out.println("Recomendacion " + i);
+//				for(Curso c : r.getRecomendacion()){
+//					System.out.println("Materia: " + c.getMateria().getNombre());
+//					for(int j=0;j<c.getHorario().size();j++){
+//						System.out.println("---Dia: " + c.getHorario().get(j).getDia());
+//						System.out.print("---De: " + c.getHorario().get(j).getHoraInicio());
+//						System.out.print("hs a " + c.getHorario().get(j).getHoraFin()+ " hs") ;
+//						System.out.println();	
+//					}
+//					
+//				}
+//				i++;
+//			}
+			
 		new Escritorio ();
-        }
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
+//        }
+//		catch (Exception e) 
+//		{
+//			e.printStackTrace();
+//		}
 	}
 }
