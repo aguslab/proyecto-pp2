@@ -1,7 +1,6 @@
 package grc.dao;
 
 import grc.dao.CursoDAO;
-import grc.dao.EntityManagerUtil;
 import grc.modelo.Curso;
 import grc.modelo.Horario;
 import grc.modelo.Materia;
@@ -9,9 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -40,9 +36,6 @@ public class CursoDAOTest extends TestCase {
 		return new TestSuite(CursoDAOTest.class);
 	}
 
-	@InjectMocks
-	private EntityManagerUtil emu = Mockito.mock(EntityManagerUtil.class);
-
 	public void testAltaCursoOk() {
 		ArrayList<Horario> horar = new ArrayList<Horario>();
 		horar.add(new Horario("lunes", 18, 22));
@@ -61,8 +54,6 @@ public class CursoDAOTest extends TestCase {
 	public void testAltaCursoFail() {
 		Curso c1 = new Curso();
 		try {
-			Mockito.when(emu.getNewEM().merge(c1)).thenThrow(
-					new RuntimeException());
 			CursoDAO.getInstancia().alta(c1);
 		} catch (Exception e) {
 			assertTrue(true);

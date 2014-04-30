@@ -1,10 +1,7 @@
 package grc.dao;
 
-import grc.dao.EntityManagerUtil;
 import grc.dao.HorarioDAO;
 import grc.modelo.Horario;
-
-import org.mockito.Mockito;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -32,13 +29,10 @@ public class HorarioDAOTest extends TestCase {
 		return new TestSuite(HorarioDAOTest.class);
 	}
 
-	private EntityManagerUtil emu = Mockito.mock(EntityManagerUtil.class);
 
 	public void testAltaHorarioFail() {
 		Horario h = null;
 		try {
-			Mockito.when(emu.getNewEM().merge(h)).thenThrow(
-					new RuntimeException());
 			HorarioDAO.getInstancia().alta(h);
 		} catch (Exception e) {
 			assertTrue(true);
