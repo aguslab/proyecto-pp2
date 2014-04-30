@@ -28,7 +28,7 @@ public class CursoDAO
 		{
 			instancia = new CursoDAO();
 		}
-		em = grc.dao.EntityManagerUtil.getNewEM();
+		em = EntityManagerUtil.getNewEM();
 		return instancia;
 	}
 	
