@@ -29,7 +29,7 @@ public class GRCControllerTest
         return new TestSuite( GRCControllerTest.class );
     }
 
-    public void testCombinador() {
+    public void testGRCControllerMain() {
     	
 		try {
 			GRCController.main(null);
@@ -38,6 +38,10 @@ public class GRCControllerTest
 		}
 		
 		assertTrue(true);
+    }
+    
+    public void testGRCControllerContructor(){
+    	new GRCController();
     }
     
     
