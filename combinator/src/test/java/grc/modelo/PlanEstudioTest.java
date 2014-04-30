@@ -1,6 +1,5 @@
 package grc.modelo;
 
-import grc.modelo.Materia;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
