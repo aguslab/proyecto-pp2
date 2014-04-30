@@ -19,126 +19,196 @@ import grc.modelo.PlanEstudio;
 
 public class Alta_mat_cur_matApr {
 
-	public static void main(String[] args) throws Exception {
+	private PlanEstudio planEstudio;
+	// /////////MATERIAS
+	// CREO MATERIAS NUEVAS
+	Materia ip;
+	Materia introALaMatematica;
+	Materia lecto;
+	Materia prog1;
+	Materia logica;
+	Materia orga1;
+	Materia prog2;
+	Materia algebraLineal;
+	Materia sisto1;
+	Materia prog3;
+	Materia calculo1;
+	Materia psec;
+	Materia baseDatos1;
+	Materia mateDiscreta;
+	Materia especificacionSoft;
+	Materia teoriaDeLaComputacion;
+	Materia ingenieria1;
+	Materia probabilidadEstadistica;
+	Materia pp1;
+	Materia ingenieria2;
+	Materia orga2;
+	Materia pp2;
+	Materia baseDatos2;
+	Materia sisto2;
+	Materia practicaProfSup1;
+	Materia modeladoYOptimizacion;
+	Materia informaticaYSociedad;
+	Materia practicaProfSup2;
+	Materia gestionProyectos;
+	Materia laboratorioInterdisciplinario;
+	Materia tallerUtilitarios;
+	Materia ingles1;
+	Materia ingles2;
+	Materia ingles3;
+
+	// MATERIAS APROBADAS
+	MateriaAprobada maIngles1;
+	MateriaAprobada maIP;
+	MateriaAprobada maProg1;
+
+	// //////////Horarios
+	Horario lun18a22;
+	Horario mar18a22;
+	Horario jue18a20;
+	Horario vier18a22;
+	Horario lun18a20;
+	Horario mar18a20;
+	Horario mier18a20;
+	Horario mier20a22;
+	Horario vier20a22;
+	Horario sab08a12;
+
+	// ///////////CURSOS
+	Curso curIngles1;
+	Curso curIngles2;
+	Curso curIngles3;
+	Curso curProg1;
+	Curso curProg2;
+	Curso curProg3;
+	Curso curTallerLecto;
+	Curso curTallerLecto_;
+	Curso curIntroALaMat;
+	Curso curCalculo1;
+
+	public PlanEstudio getPlanEstudios() {
+		return planEstudio;
+	}
+
+	public void init() {
 		// //////////Horarios
-		Horario lun18a22 = new Horario(Dia.LUNES.name(), 18, 22);
-		Horario mar18a22 = new Horario(Dia.MARTES.name(), 18, 22);
-		Horario jue18a20 = new Horario(Dia.JUEVES.name(), 18, 20);
-		Horario vier18a22 = new Horario(Dia.VIERNES.name(), 18, 22);
-		Horario lun18a20 = new Horario(Dia.LUNES.name(), 18, 20);
-		Horario mar18a20 = new Horario(Dia.MARTES.name(), 18, 20);
-		Horario mier18a20 = new Horario(Dia.MIERCOLES.name(), 18, 20);
-		Horario mier20a22 = new Horario(Dia.MIERCOLES.name(), 20, 22);
-		Horario vier20a22 = new Horario(Dia.VIERNES.name(), 20, 22);
+		lun18a22 = new Horario(Dia.LUNES.name(), 18, 22);
+		mar18a22 = new Horario(Dia.MARTES.name(), 18, 22);
+		jue18a20 = new Horario(Dia.JUEVES.name(), 18, 20);
+		vier18a22 = new Horario(Dia.VIERNES.name(), 18, 22);
+		lun18a20 = new Horario(Dia.LUNES.name(), 18, 20);
+		mar18a20 = new Horario(Dia.MARTES.name(), 18, 20);
+		mier18a20 = new Horario(Dia.MIERCOLES.name(), 18, 20);
+		mier20a22 = new Horario(Dia.MIERCOLES.name(), 20, 22);
+		vier20a22 = new Horario(Dia.VIERNES.name(), 20, 22);
+		sab08a12= new Horario(Dia.SABADO.name(), 8, 12);
 
 		// /////////MATERIAS
 		// CREO MATERIAS NUEVAS
-		Materia ip = new Materia("Introducción a la Programación");
+		ip = new Materia("Introducción a la Programación");
 		ip.setId(1);
-		Materia introALaMatematica = new Materia(
-				"Introducción a la Matemática");
+		introALaMatematica = new Materia("Introducción a la Matemática");
 		introALaMatematica.setId(2);
-		Materia lecto = new Materia("Taller de Lectoescritura");
+		lecto = new Materia("Taller de Lectoescritura");
 		lecto.setId(3);
-		Materia prog1 = new Materia("Programación I");
+		prog1 = new Materia("Programación I");
 		prog1.setId(4);
-		Materia logica = new Materia("Lógica y teoría de números");
+		logica = new Materia("Lógica y teoría de números");
 		logica.setId(5);
-		Materia orga1 = new Materia("Organización del computador I");
+		orga1 = new Materia("Organización del computador I");
 		orga1.setId(6);
-		Materia prog2 = new Materia("Programación II");
+		prog2 = new Materia("Programación II");
 		prog2.setId(7);
-		Materia algebraLineal = new Materia("Algebra Lineal");
+		algebraLineal = new Materia("Algebra Lineal");
 		algebraLineal.setId(8);
-		Materia sisto1 = new Materia("Sistemas Operativos y Redes I");
+		sisto1 = new Materia("Sistemas Operativos y Redes I");
 		sisto1.setId(9);
-		Materia prog3 = new Materia("Programación III");
+		prog3 = new Materia("Programación III");
 		prog3.setId(10);
-		Materia calculo1 = new Materia("Calculo I");
+		calculo1 = new Materia("Calculo I");
 		calculo1.setId(11);
-		Materia psec = new Materia("Problemas Socioeconómicos contemporáneos");
+		psec = new Materia("Problemas Socioeconómicos contemporáneos");
 		psec.setId(12);
-		Materia baseDatos1 = new Materia("Base de datos I");
+		baseDatos1 = new Materia("Base de datos I");
 		baseDatos1.setId(13);
-		Materia mateDiscreta = new Materia("Matemática Discreta");
+		mateDiscreta = new Materia("Matemática Discreta");
 		mateDiscreta.setId(14);
-		Materia especificacionSoft = new Materia(
+		especificacionSoft = new Materia(
 				"Especificaciones y verificaciones de Software");
 		especificacionSoft.setId(15);
-		Materia teoriaDeLaComputacion = new Materia(
-				"Teoría de la computación");
+		teoriaDeLaComputacion = new Materia("Teoría de la computación");
 		teoriaDeLaComputacion.setId(16);
-		Materia ingenieria1 = new Materia("Ingeniería de software I");
+		ingenieria1 = new Materia("Ingeniería de software I");
 		ingenieria1.setId(17);
-		Materia probabilidadEstadistica = new Materia(
-				"Probabilidad y Estadística");
+		probabilidadEstadistica = new Materia("Probabilidad y Estadística");
 		probabilidadEstadistica.setId(18);
-		Materia pp1 = new Materia("Proyecto Profesional I");
+		pp1 = new Materia("Proyecto Profesional I");
 		pp1.setId(19);
-		Materia ingenieria2 = new Materia("Ingeniería de software II");
+		ingenieria2 = new Materia("Ingeniería de software II");
 		ingenieria2.setId(20);
-		Materia orga2 = new Materia("Organización del computador II");
+		orga2 = new Materia("Organización del computador II");
 		orga2.setId(21);
-		Materia pp2 = new Materia("Proyecto Profesional II");
+		pp2 = new Materia("Proyecto Profesional II");
 		pp2.setId(22);
-		Materia baseDatos2 = new Materia("Base de datos II");
+		baseDatos2 = new Materia("Base de datos II");
 		baseDatos2.setId(23);
-		Materia sisto2 = new Materia("Sistemas Operativos y Redes II");
+		sisto2 = new Materia("Sistemas Operativos y Redes II");
 		sisto2.setId(24);
-		Materia practicaProfSup1 = new Materia(
-				"Práctica Profesional Supervisada I");
+		practicaProfSup1 = new Materia("Práctica Profesional Supervisada I");
 		practicaProfSup1.setId(25);
-		Materia modeladoYOptimizacion = new Materia("Modelado y Optimización");
+		modeladoYOptimizacion = new Materia("Modelado y Optimización");
 		modeladoYOptimizacion.setId(26);
-		Materia informaticaYSociedad = new Materia("Informática y Sociedad");
+		informaticaYSociedad = new Materia("Informática y Sociedad");
 		informaticaYSociedad.setId(27);
-		Materia practicaProfSup2 = new Materia(
-				"Práctica Profesional Supervisada II");
+		practicaProfSup2 = new Materia("Práctica Profesional Supervisada II");
 		practicaProfSup2.setId(28);
-		Materia gestionProyectos = new Materia("Gestión de Proyectos");
+		gestionProyectos = new Materia("Gestión de Proyectos");
 		gestionProyectos.setId(29);
-		Materia laboratorioInterdisciplinario = new Materia(
+		laboratorioInterdisciplinario = new Materia(
 				"Laboratorio interdisciplinario");
 		laboratorioInterdisciplinario.setId(30);
-		Materia tallerUtilitarios = new Materia("Taller de Utilitarios");
+		tallerUtilitarios = new Materia("Taller de Utilitarios");
 		tallerUtilitarios.setId(31);
-		Materia ingles1 = new Materia("Ingles Lectocomprension I");
+		ingles1 = new Materia("Ingles Lectocomprension I");
 		ingles1.setId(32);
-		Materia ingles2 = new Materia("Ingles Lectocomprension II");
+		ingles2 = new Materia("Ingles Lectocomprension II");
 		ingles2.setId(33);
-		Materia ingles3 = new Materia("Ingles Lectocomprension III");
+		ingles3 = new Materia("Ingles Lectocomprension III");
 		ingles3.setId(34);
 
 		// ///////////CURSOS
 		List<Horario> listHor = new ArrayList<Horario>();
 		listHor.add(lun18a22);
 		listHor.add(mar18a22);
-		Curso curIngles1 = new Curso(ingles1, listHor);
-		Curso curIngles2 = new Curso(ingles2, listHor);
+		curIngles1 = new Curso(ingles1, listHor);
+		curIngles2 = new Curso(ingles2, listHor);
+		listHor = new ArrayList<Horario>();
+		listHor.add(sab08a12);
+		curIngles3 = new Curso(ingles3, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun18a20);
 		listHor.add(mar18a20);
 		listHor.add(mier18a20);
-		Curso curProg1 = new Curso(prog1, listHor);
+		curProg1 = new Curso(prog1, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar18a22);
 		listHor.add(vier18a22);
-		Curso curProg2 = new Curso(prog2, listHor);
-		Curso curProg3 = new Curso(prog3, listHor);
+		curProg2 = new Curso(prog2, listHor);
+		curProg3 = new Curso(prog3, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
-		Curso curTallerLecto = new Curso(lecto, listHor);
+		curTallerLecto = new Curso(lecto, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue18a20);
-		Curso curTallerLecto_ = new Curso(lecto, listHor);
+		curTallerLecto_ = new Curso(lecto, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
 		listHor.add(vier18a22);
-		Curso curIntroALaMat = new Curso(introALaMatematica, listHor);
+		curIntroALaMat = new Curso(introALaMatematica, listHor);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier20a22);
 		listHor.add(vier20a22);
-		Curso curCalculo1 = new Curso(calculo1, listHor);
+		curCalculo1 = new Curso(calculo1, listHor);
 
 		// PLAN ESTUDIOS
 		// CREO PLAN DE ESTUDIOS
@@ -276,32 +346,33 @@ public class Alta_mat_cur_matApr {
 		correlativas.put(ingles2, correlativasIngles2);
 		correlativas.put(ingles3, correlativasIngles3);
 
-		PlanEstudio planEstudio = new PlanEstudio(correlativas);
-
+		planEstudio = new PlanEstudio(correlativas);
 
 		// MATERIAS APROBADAS
-		MateriaAprobada maIngles1 = new MateriaAprobada(ingles1, 7);
-		MateriaAprobada maIP= new MateriaAprobada(ip, 10);
-		MateriaAprobada maProg1= new MateriaAprobada(prog1, 9);
-		
-		/*
-		 * ALTAAAAAAAAAAAAAA
-		 */
+		maIngles1 = new MateriaAprobada(ingles1, 7);
+		maIP = new MateriaAprobada(ip, 10);
+		maProg1 = new MateriaAprobada(prog1, 9);
+	}
 
+	public void altaMaterias() throws Exception {
 		// MATERIAS
 		MateriaDAO.getInstancia().alta(prog1);
 		MateriaDAO.getInstancia().alta(prog2);
 		MateriaDAO.getInstancia().alta(prog3);
 		MateriaDAO.getInstancia().alta(ingles1);
 		MateriaDAO.getInstancia().alta(ingles2);
+		MateriaDAO.getInstancia().alta(ingles3);
 		MateriaDAO.getInstancia().alta(ip);
 		MateriaDAO.getInstancia().alta(introALaMatematica);
 		MateriaDAO.getInstancia().alta(lecto);
 		MateriaDAO.getInstancia().alta(calculo1);
+	}
 
+	public void altaCursos() throws Exception {
 		// CURSOS
 		CursoDAO.getInstancia().alta(curIngles1);
 		CursoDAO.getInstancia().alta(curIngles2);
+		CursoDAO.getInstancia().alta(curIngles3);
 		CursoDAO.getInstancia().alta(curProg1);
 		CursoDAO.getInstancia().alta(curProg2);
 		CursoDAO.getInstancia().alta(curProg3);
@@ -310,15 +381,31 @@ public class Alta_mat_cur_matApr {
 		CursoDAO.getInstancia().alta(curIntroALaMat);
 		CursoDAO.getInstancia().alta(curCalculo1);
 
+	}
+
+	public void altaMateriasAprobadas() throws Exception {
 		// MATERIAS APROBADAS
 		MateriaAprobadaDAO.getInstancia().alta(maIngles1);
 		MateriaAprobadaDAO.getInstancia().alta(maIP);
 		MateriaAprobadaDAO.getInstancia().alta(maProg1);
-		
-		
-		//PLAN ESTUDIOS
-		PlanEstudioDAO.getInstancia().alta(planEstudio);
-		
 	}
+
+	public void altaPlanEstudio() throws Exception {
+		// PLAN ESTUDIOS
+		PlanEstudioDAO.getInstancia().alta(planEstudio);
+	}
+
+//	public static void main(String[] args) throws Exception {
+//
+//		/*
+//		 * ALTAAAAAAAAAAAAAA
+//		 */
+//		altaMaterias();
+//
+//		altaCursos();
+//
+//		altaMateriasAprobadas();
+//
+//	}
 
 }
