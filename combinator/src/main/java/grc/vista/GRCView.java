@@ -34,7 +34,10 @@ ItemListener
 		cerrarAplicacion;
 
 	private JPanel barraDeEstado = new JPanel ();
-
+	
+	private JCheckBox cbManiana;
+	private JCheckBox cbTarde;
+	private JCheckBox cbNoche;
 	private JLabel firma;
 	private JLabel materia;
 	private JTable tablaAprobadas;
@@ -150,10 +153,10 @@ ItemListener
 			lblManiana.setBounds(85, 11, 57, 14);
 			panelRecomendaciones.add(lblManiana);
 			
-			JCheckBox cbManana = new JCheckBox("");
-			cbManana.setBounds(131, 7, 21, 23);
-			cbManana.setSelected(true);
-			panelRecomendaciones.add(cbManana);
+			cbManiana = new JCheckBox("");
+			cbManiana.setBounds(131, 7, 21, 23);
+			cbManiana.setSelected(true);
+			panelRecomendaciones.add(cbManiana);
 			
 			JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
 			lblRecomendaciones.setBounds(10, 217, 112, 14);
@@ -163,7 +166,7 @@ ItemListener
 			lblTarde.setBounds(172, 11, 49, 14);
 			panelRecomendaciones.add(lblTarde);
 			
-			JCheckBox cbTarde = new JCheckBox("");
+			cbTarde = new JCheckBox("");
 			cbTarde.setBounds(208, 7, 21, 23);
 			cbTarde.setSelected(true);
 			panelRecomendaciones.add(cbTarde);
@@ -172,7 +175,7 @@ ItemListener
 			lblNoche.setBounds(253, 11, 49, 14);
 			panelRecomendaciones.add(lblNoche);
 			
-			JCheckBox cbNoche = new JCheckBox("");
+			cbNoche = new JCheckBox("");
 			cbNoche.setBounds(293, 7, 21, 23);
 			cbNoche.setSelected(true);
 			panelRecomendaciones.add(cbNoche);
@@ -213,6 +216,7 @@ ItemListener
 			    	  tablaTempDias.setRowCount(3);
 			    	  try 
 			    	  {
+			    		GRC.filtrarTurnos(cbManiana.isSelected(), cbTarde.isSelected(),cbNoche.isSelected());
 						tablaTempDias = GRC.cambiarTablaDias(tablaTempDias,posElegida);
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -351,4 +355,18 @@ ItemListener
 	{
 		modelListaRecomendaciones.addElement(recomendacion);
 	}
+	
+
+	public boolean getCbManiana() {
+		return cbManiana.isSelected();
+	}
+	
+	public boolean getCbTarde() {
+		return cbTarde.isSelected();
+	}
+
+	public boolean getCbNoche() {
+		return cbNoche.isSelected();
+	}
+
 }

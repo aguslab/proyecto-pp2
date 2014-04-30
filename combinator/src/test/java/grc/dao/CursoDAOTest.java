@@ -72,7 +72,7 @@ public class CursoDAOTest extends TestCase {
 	}
 
 	public void testObtenerCursoPorTurno() throws Exception {
-		Set<Curso> c = CursoDAO.getInstancia().getCursosPorTurno(18);
+		Set<Curso> c = CursoDAO.getInstancia().getCursosPorTurno(18,22);
 		assertNotNull(c);
 	}
 

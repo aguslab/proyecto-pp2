@@ -37,12 +37,13 @@ public class FiltradorTest
 
     public void testFiltradorCursosDisponibles() throws Exception{
     	Filtrador fil = new Filtrador();
-    	fil.getCursosDisponibles(12);	
+    	fil.getCursosDisponibles(true, true, true);	
     	assertNotNull(fil);
     }
     
     public void testFiltradorCorrelativas(){
     	Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+    	a.init();
     	PlanEstudio pe = a.getPlanEstudios();
     	Materia materiaACursar = new Materia("Laboratorio interdisciplinario");
     	materiaACursar.setId(30);
@@ -52,8 +53,6 @@ public class FiltradorTest
     	}
     	
     	Filtrador f = new Filtrador();
-    	System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    	System.out.println(pe.getCorrelativas().size());
     	boolean puedeCursar = f.tieneCorrelativas(pe, materiaACursar, materiasAprobadas);
     	assertTrue(puedeCursar);
     }

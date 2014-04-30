@@ -5,7 +5,9 @@ import grc.modelo.Curso;
 import grc.modelo.MateriaAprobada;
 import grc.servicios.Filtrador;
 import grc.servicios.Recomendacion;
+import grc.tmp.Alta_mat_cur_matApr;
 import grc.vista.Escritorio;
+import grc.vista.GRCView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +18,11 @@ import javax.swing.table.DefaultTableModel;
 public class GRCController
 {
 	private static List<Recomendacion> recomendacionesGRC = null;
-	
-	public GRCController(){
-		try {
-			if(recomendacionesGRC == null){
-				recomendacionesGRC = armarCombinaciones();				
-			}
-		} catch (Exception e) {
-			System.out.println("OPSSS!!! esto es embarazoso!!");
-		}
+
+	public GRCController() throws Exception{
+		this.filtrarTurnos(true, true, true);				
 	}
+	
 	public List<Recomendacion> getRecomendacionesGRC()
 	{
 		return recomendacionesGRC;
@@ -101,10 +98,10 @@ public class GRCController
 		return armarRecomendacion(recomendacionesGRC);
 	}
 	
-	private List<Recomendacion> armarCombinaciones() throws Exception
+	private List<Recomendacion> armarCombinaciones(boolean filtrarManiana, boolean filtrarTarde, boolean filtrarNoche) throws Exception
 	{
 		Filtrador c = new Filtrador();
-		Set<Curso> cursos = c.getCursosDisponibles(18);
+		Set<Curso> cursos = c.getCursosDisponibles(filtrarManiana, filtrarTarde, filtrarNoche);
 		Recomendacion recomendacion = new Recomendacion();
 		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
 		List<Recomendacion> recomendaciones = recomendacion.backtracking(cursosDisp);
@@ -152,18 +149,21 @@ public class GRCController
 	public static void main (String args[]) throws Exception 
 	{
 		
-//		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
-//		a.init();
-		/*
-		 * ALTAAAAAAAAAAAAAA
-		 */
-//		a.altaMaterias();
-//
-//		a.altaCursos();
-//
-//		a.altaMateriasAprobadas();
-//		
-//		a.altaPlanEstudio();
+		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+		a.init();
+		
+//		  ALTAAAAAAAAAAAAAA
+		 
+		a.altaMaterias();
+		
+//		a.altaHorarios();
+		
+		a.altaCursos();
+
+		a.altaMateriasAprobadas();
+		
+		a.altaPlanEstudio();
+		
 		/*
 		
 		//filtra por turno, materias aprobadas, correlatividades
@@ -489,5 +489,16 @@ try
 //		{
 //			e.printStackTrace();
 //		}
+	}
+	
+	public void filtrarTurnos(boolean filtrarManiana, boolean filtrarTarde,	boolean filtrarNoche) {
+		try {
+			if(recomendacionesGRC == null){
+				recomendacionesGRC = armarCombinaciones(filtrarManiana, filtrarTarde, filtrarNoche);				
+			}
+		} catch (Exception e) {
+			System.out.println("OPSSS!!! esto es embarazoso!!");
+		}
+		
 	}
 }

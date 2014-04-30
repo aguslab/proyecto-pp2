@@ -65,7 +65,7 @@ public class CursoDAO
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Set<Curso> getCursosPorTurno(Integer horaInicio)
+	public Set<Curso> getCursosPorTurno(Integer horaInicio, Integer horaFin)
 	{
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
@@ -75,7 +75,8 @@ public class CursoDAO
 		Join<Curso,Horario> jo = cur.join("horario");
 		Predicate conjuncion = builder.conjunction();
 		
-		conjuncion.getExpressions().add(builder.greaterThanOrEqualTo(jo.get("horaInicio").as(Integer.class), horaInicio));
+		conjuncion.getExpressions().add(builder.ge(jo.get("horaInicio").as(Integer.class), horaInicio));
+		conjuncion.getExpressions().add(builder.le(jo.get("horaFin").as(Integer.class), horaFin));
 		
 		cq.where(conjuncion);
 		TypedQuery<?> q = em.createQuery(cq);
@@ -92,7 +93,7 @@ public class CursoDAO
 		{
 			int materia_id;
 			Set<Curso> cursosCopia = new HashSet<Curso>(cursos);
-			for(Curso c : cursos)
+			for(Curso c : cursosCopia)
 			{
 				materia_id = c.getMateria().getId();
 				String a = new String("0");
@@ -100,10 +101,10 @@ public class CursoDAO
 				
 				if(!query.getResultList().get(0).toString().equals(a))
 				{
-					cursosCopia.remove(c);
+					cursos.remove(c);
 				}
 			}
-			return cursosCopia;
+			return cursos;
 		}
 		
 }

@@ -51,9 +51,9 @@ public class EntityManagerUtil
 				"pp2");
 		configOverrides.put("hibernate.connection.password",
 				"labo");
-		configOverrides.put("hibernate.show_sql","true");
+//		configOverrides.put("hibernate.show_sql","true");
 		
-		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernet?createDatabaseIfNotExist=true");
+		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
 		//FOR testing
 //		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 

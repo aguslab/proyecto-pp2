@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import grc.dao.CursoDAO;
+import grc.dao.HorarioDAO;
 import grc.dao.MateriaAprobadaDAO;
 import grc.dao.MateriaDAO;
 import grc.dao.PlanEstudioDAO;
@@ -82,7 +83,6 @@ public class Alta_mat_cur_matApr {
 	Curso curProg2;
 	Curso curProg3;
 	Curso curTallerLecto;
-	Curso curTallerLecto_;
 	Curso curIntroALaMat;
 	Curso curCalculo1;
 
@@ -93,15 +93,25 @@ public class Alta_mat_cur_matApr {
 	public void init() {
 		// //////////Horarios
 		lun18a22 = new Horario(Dia.LUNES.name(), 18, 22);
+//		lun18a22.setId(1);
 		mar18a22 = new Horario(Dia.MARTES.name(), 18, 22);
+//		mar18a22.setId(2);
 		jue18a20 = new Horario(Dia.JUEVES.name(), 18, 20);
+//		jue18a20.setId(3);
 		vier18a22 = new Horario(Dia.VIERNES.name(), 18, 22);
+//		vier18a22.setId(4);
 		lun18a20 = new Horario(Dia.LUNES.name(), 18, 20);
+//		lun18a20.setId(5);
 		mar18a20 = new Horario(Dia.MARTES.name(), 18, 20);
+//		mar18a20.setId(6);
 		mier18a20 = new Horario(Dia.MIERCOLES.name(), 18, 20);
+//		mier18a20.setId(7);
 		mier20a22 = new Horario(Dia.MIERCOLES.name(), 20, 22);
+//		mier20a22.setId(8);
 		vier20a22 = new Horario(Dia.VIERNES.name(), 20, 22);
+//		vier20a22.setId(9);
 		sab08a12= new Horario(Dia.SABADO.name(), 8, 12);
+//		sab08a12.setId(10);
 
 		// /////////MATERIAS
 		// CREO MATERIAS NUEVAS
@@ -181,34 +191,40 @@ public class Alta_mat_cur_matApr {
 		listHor.add(lun18a22);
 		listHor.add(mar18a22);
 		curIngles1 = new Curso(ingles1, listHor);
-		curIngles2 = new Curso(ingles2, listHor);
+//		curIngles1.setId(1);
+		curIngles3 = new Curso(ingles3, listHor);
+//		curIngles3.setId(2);
 		listHor = new ArrayList<Horario>();
 		listHor.add(sab08a12);
-		curIngles3 = new Curso(ingles3, listHor);
+		curIngles2 = new Curso(ingles2, listHor);
+//		curIngles2.setId(3);
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun18a20);
 		listHor.add(mar18a20);
 		listHor.add(mier18a20);
 		curProg1 = new Curso(prog1, listHor);
+//		curProg1.setId(4);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar18a22);
 		listHor.add(vier18a22);
 		curProg2 = new Curso(prog2, listHor);
+//		curProg2.setId(5);
 		curProg3 = new Curso(prog3, listHor);
+//		curProg3.setId(6);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
 		curTallerLecto = new Curso(lecto, listHor);
-		listHor = new ArrayList<Horario>();
-		listHor.add(jue18a20);
-		curTallerLecto_ = new Curso(lecto, listHor);
+//		curTallerLecto.setId(7);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
 		listHor.add(vier18a22);
 		curIntroALaMat = new Curso(introALaMatematica, listHor);
+//		curIntroALaMat.setId(8);
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier20a22);
 		listHor.add(vier20a22);
 		curCalculo1 = new Curso(calculo1, listHor);
+//		curCalculo1.setId(9);
 
 		// PLAN ESTUDIOS
 		// CREO PLAN DE ESTUDIOS
@@ -306,7 +322,7 @@ public class Alta_mat_cur_matApr {
 		correlativasIngles2.add(ingles1);
 
 		Set<Materia> correlativasIngles3 = new HashSet<Materia>();
-		correlativasIngles2.add(ingles2);
+		correlativasIngles3.add(ingles2);
 
 		HashMap<Materia, Set<Materia>> correlativas = new HashMap<Materia, Set<Materia>>();
 		correlativas.put(ip, sinCorrelativas);
@@ -340,7 +356,7 @@ public class Alta_mat_cur_matApr {
 		correlativas.put(practicaProfSup2, correlativasPracticaProfSup2);
 		correlativas.put(gestionProyectos, correlativasGestionProyectos);
 		// TODO CASO ESPECIAL!!!
-		// correlativas.put(laboratorioInterdisciplinario, );
+		correlativas.put(laboratorioInterdisciplinario, sinCorrelativas);
 		correlativas.put(tallerUtilitarios, sinCorrelativas);
 		correlativas.put(ingles1, sinCorrelativas);
 		correlativas.put(ingles2, correlativasIngles2);
@@ -367,6 +383,19 @@ public class Alta_mat_cur_matApr {
 		MateriaDAO.getInstancia().alta(lecto);
 		MateriaDAO.getInstancia().alta(calculo1);
 	}
+	
+	public void altaHorarios() throws Exception{
+		HorarioDAO.getInstancia().alta(lun18a22);
+		HorarioDAO.getInstancia().alta(mar18a22);
+		HorarioDAO.getInstancia().alta(jue18a20);
+		HorarioDAO.getInstancia().alta(vier18a22);
+		HorarioDAO.getInstancia().alta(lun18a20);
+		HorarioDAO.getInstancia().alta(mar18a20);
+		HorarioDAO.getInstancia().alta(mier18a20);
+		HorarioDAO.getInstancia().alta(mier20a22);
+		HorarioDAO.getInstancia().alta(vier20a22);
+		HorarioDAO.getInstancia().alta(sab08a12);
+	}
 
 	public void altaCursos() throws Exception {
 		// CURSOS
@@ -377,7 +406,6 @@ public class Alta_mat_cur_matApr {
 		CursoDAO.getInstancia().alta(curProg2);
 		CursoDAO.getInstancia().alta(curProg3);
 		CursoDAO.getInstancia().alta(curTallerLecto);
-		CursoDAO.getInstancia().alta(curTallerLecto_);
 		CursoDAO.getInstancia().alta(curIntroALaMat);
 		CursoDAO.getInstancia().alta(curCalculo1);
 
@@ -394,18 +422,5 @@ public class Alta_mat_cur_matApr {
 		// PLAN ESTUDIOS
 		PlanEstudioDAO.getInstancia().alta(planEstudio);
 	}
-
-//	public static void main(String[] args) throws Exception {
-//
-//		/*
-//		 * ALTAAAAAAAAAAAAAA
-//		 */
-//		altaMaterias();
-//
-//		altaCursos();
-//
-//		altaMateriasAprobadas();
-//
-//	}
 
 }

@@ -38,7 +38,7 @@ public class MateriaDAOTest
     	int cantAntes = MateriaDAO.getInstancia().obtenerTodo().size();
     	MateriaDAO.getInstancia().alta(M);
     	int cantDespues = MateriaDAO.getInstancia().obtenerTodo().size();
-    	assertEquals(cantAntes, cantDespues);
+    	assertEquals(cantAntes+1, cantDespues);
     }
     
     public void testAltaMateriaFail() {

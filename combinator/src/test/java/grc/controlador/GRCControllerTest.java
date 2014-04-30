@@ -40,7 +40,7 @@ public class GRCControllerTest
 		assertTrue(true);
     }
     
-    public void testGRCControllerContructor(){
+    public void testGRCControllerContructor() throws Exception{
     	new GRCController();
     }
     
