@@ -38,8 +38,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	private JLabel firma;
 	private JLabel materia;
 	private JTable tablaAprobadas;
-	@SuppressWarnings("unused")
-	private Integer tabSeleccionado;
 	DefaultListModel modelListaRecomendaciones;
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
@@ -81,21 +79,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 				.getDefaultToolkit().getScreenSize().height - getHeight()) / 2);
 		setVisible(true);
 		final JTabbedPane tabOpciones = new JTabbedPane(JTabbedPane.LEFT);
-		tabOpciones.addChangeListener(new ChangeListener()
-		{
-			public void stateChanged(ChangeEvent arg0)
-			{
-				if (tabOpciones.getTitleAt(tabOpciones.getSelectedIndex()).equals(
-						"Recomendaciones                         "))
-				{
-					tabSeleccionado = 0;
-				} else if (tabOpciones.getTitleAt(tabOpciones.getSelectedIndex()).equals(
-						"Materias aprobadas                         "))
-				{
-					tabSeleccionado = 1;
-				}
-			}
-		});
 		tabOpciones.setBounds(10, 11, 772, 474);
 		getContentPane().add(tabOpciones);
 
@@ -114,22 +97,44 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		final JTable tablaDias = new JTable(modeloTablaDias);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
-		tablaDias.setModel(new DefaultTableModel(new Object[][]{
-				{null, null, null, null, null, null}, {null, null, null, null, null, null},
-				{null, null, null, null, null, null},}, new String[]{"Lunes", "Martes",
-				"Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado"})
-		{
-			@SuppressWarnings("unchecked")
-			Class<String>[] columnTypes = new Class[]{String.class, String.class, String.class,
-					String.class, String.class, String.class};
-			public Class<String> getColumnClass(int columnIndex)
-			{
-				return columnTypes[columnIndex];
+		tablaDias.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"8 a 9", null, null, null, null, null, null},
+				{"9 a 10", null, null, null, null, null, null},
+				{"10 a 11", null, null, null, null, null, null},
+				{"11 a 12", null, null, null, null, null, null},
+				{"12 a 13", null, null, null, null, null, null},
+				{"13 a 14", null, null, null, null, null, null},
+				{"14 a 15", null, null, null, null, null, null},
+				{"15 a 16", null, null, null, null, null, null},
+				{"16 a 17", null, null, null, null, null, null},
+				{"17 a 18", null, null, null, null, null, null},
+				{"18 a 19", null, null, null, null, null, null},
+				{"19 a 20", null, null, null, null, null, null},
+				{"20 a 21", null, null, null, null, null, null},
+				{"21 a 22", null, null, null, null, null, null},
+			},
+			new String[] {
+				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
 			}
-		});
+		));
+		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(248);
+//		tablaDias.setModel(new DefaultTableModel(
+//			new Object[][] {
+//				{"Lunes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//				{"Martes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//				{"Miercoles", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//				{"Jueves", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//				{"Viernes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//				{"Sabado", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+//			},
+//			new String[] {
+//				"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
+//			}
+//		));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
-
+		
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
 		panelRecomendaciones.add(lblHorarios);
@@ -183,9 +188,9 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbNoche.setSelected(true);
 		panelRecomendaciones.add(cbNoche);
 
-		JButton btnOk2 = new JButton(new ImageIcon("Imagenes/ok.png"));
-		btnOk2.setBounds(1145, 241, 24, 23);
-		panelRecomendaciones.add(btnOk2);
+		JButton btnOk = new JButton(new ImageIcon("Imagenes/ok.png"));
+		btnOk.setBounds(1145, 241, 24, 23);
+		panelRecomendaciones.add(btnOk);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 37, 1125, 169);
@@ -212,14 +217,13 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 			public void valueChanged(ListSelectionEvent e)
 			{
-
 				if (e.getValueIsAdjusting() == false)
 				{
 					DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
 					tablaTempDias.setRowCount(0);
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
-					tablaTempDias.setRowCount(3);
+					controller.borrarValores(tablaTempDias);
 					try
 					{
 						tablaTempDias = controller.cambiarTablaDias(tablaTempDias, posElegida);
@@ -270,8 +274,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		mostrarPrototipo.setMnemonic((int) 'V');
 		mostrarPrototipo.addActionListener(this);
 
-		cerrarAplicacion = new JMenuItem("Salir del sistema  ",
-				new ImageIcon("Imagenes/cerrar.png"));
+		cerrarAplicacion = new JMenuItem("Salir del sistema  ");
 		cerrarAplicacion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
 		cerrarAplicacion.setMnemonic((int) 'Q');
 		cerrarAplicacion.addActionListener(this);
@@ -382,7 +385,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
