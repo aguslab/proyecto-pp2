@@ -100,25 +100,25 @@ public class Alta_mat_cur_matApr
 	{
 		// //////////Horarios
 		lun18a22 = new Horario(Dia.LUNES.name(), 18, 22);
-//		 lun18a22.setId(1);
+		// lun18a22.setId(1);
 		mar18a22 = new Horario(Dia.MARTES.name(), 18, 22);
-//		 mar18a22.setId(2);
+		// mar18a22.setId(2);
 		jue18a20 = new Horario(Dia.JUEVES.name(), 18, 20);
-//		 jue18a20.setId(3);
+		// jue18a20.setId(3);
 		vier18a22 = new Horario(Dia.VIERNES.name(), 18, 22);
-//		 vier18a22.setId(4);
+		// vier18a22.setId(4);
 		lun18a20 = new Horario(Dia.LUNES.name(), 18, 20);
-//		 lun18a20.setId(5);
+		// lun18a20.setId(5);
 		mar18a20 = new Horario(Dia.MARTES.name(), 18, 20);
-//		 mar18a20.setId(6);
+		// mar18a20.setId(6);
 		mier18a20 = new Horario(Dia.MIERCOLES.name(), 18, 20);
-//		 mier18a20.setId(7);
+		// mier18a20.setId(7);
 		mier20a22 = new Horario(Dia.MIERCOLES.name(), 20, 22);
-//		 mier20a22.setId(8);
+		// mier20a22.setId(8);
 		vier20a22 = new Horario(Dia.VIERNES.name(), 20, 22);
-//		 vier20a22.setId(9);
+		// vier20a22.setId(9);
 		sab08a12 = new Horario(Dia.SABADO.name(), 8, 12);
-//		 sab08a12.setId(10);
+		// sab08a12.setId(10);
 
 		// /////////MATERIAS
 		// CREO MATERIAS NUEVAS
