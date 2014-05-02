@@ -34,7 +34,6 @@ public class GRCController implements ActionListener
 			throws Exception
 	{
 		String nombreMateria = "";
-		String horario = "";
 		List<Recomendacion> recomendaciones = this.vista.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
 			return tablaDias;
@@ -42,50 +41,38 @@ public class GRCController implements ActionListener
 		for (Curso c : r.getRecomendacion())
 		{
 			nombreMateria = c.getMateria().getNombre();
-			for (int j = 0; j < c.getHorario().size(); j++)
+			for (Horario horario : c.getHorario()) 
 			{
-				String dia = c.getHorario().get(j).getDia();
-				horario = c.getHorario().get(j).getHoraInicio() + "a "
-						+ c.getHorario().get(j).getHoraFin() + " ";
-				if (dia.equalsIgnoreCase("Lunes"))
-				{
-					if (tablaDias.getValueAt(0, 0) == null)
-						tablaDias.setValueAt(nombreMateria + horario, 0, 0);
-					else
-						tablaDias.setValueAt(nombreMateria + horario, 1, 0);
-				} else if (dia.equalsIgnoreCase("Martes"))
-				{
-					if (tablaDias.getValueAt(0, 1) == null)
-					{
-						tablaDias.setValueAt(nombreMateria + horario, 0, 1);
-					} else
-					{
-						tablaDias.setValueAt(nombreMateria + horario, 1, 1);
+				String dia = horario.getDia();
+				int horaInicio = horario.getHoraInicio();
+				int horaFin = horario.getHoraFin();
+				if (dia.equalsIgnoreCase("Lunes")) {
+					for (int i = horaInicio; i < horaFin; i++) {
+						tablaDias.setValueAt(nombreMateria,  i-8,1);
 					}
-				} else if (dia.equalsIgnoreCase("Miercoles"))
-				{
-					if (tablaDias.getValueAt(0, 2) == null)
-						tablaDias.setValueAt(nombreMateria + horario, 0, 2);
-					else
-						tablaDias.setValueAt(nombreMateria + horario, 1, 2);
-				} else if (dia.equalsIgnoreCase("Jueves"))
-				{
-					if (tablaDias.getValueAt(0, 3) == null)
-						tablaDias.setValueAt(nombreMateria + horario, 0, 3);
-					else
-						tablaDias.setValueAt(nombreMateria + horario, 1, 3);
-				} else if (dia.equalsIgnoreCase("Viernes"))
-				{
-					if (tablaDias.getValueAt(0, 4) == null)
-						tablaDias.setValueAt(nombreMateria + horario, 0, 4);
-					else
-						tablaDias.setValueAt(nombreMateria + horario, 1, 4);
-				} else
-				{
-					if (tablaDias.getValueAt(0, 5) == null)
-						tablaDias.setValueAt(nombreMateria + horario, 0, 5);
-					else
-						tablaDias.setValueAt(nombreMateria + horario, 1, 5);
+				} else if (dia.equalsIgnoreCase("Martes")) {
+					for (int i = horaInicio; i < horaFin; i++) {
+						tablaDias.setValueAt(nombreMateria,  i-8, 2);
+					}
+				} else if (dia.equalsIgnoreCase("Miercoles")) {
+					System.out.println("HORAi" + horaInicio);
+					System.out.println("HORA F" + horaFin);
+					for (int i = horaInicio; i < horaFin; i++) {
+						System.out.println(i);
+						tablaDias.setValueAt(nombreMateria,  i-8, 3);
+					}
+				} else if (dia.equalsIgnoreCase("Jueves")) {
+					for (int i = horaInicio; i < horaFin; i++) {
+						tablaDias.setValueAt(nombreMateria,  i-8, 4);
+					}
+				} else if (dia.equalsIgnoreCase("Viernes")) {
+					for (int i = horaInicio; i < horaFin; i++) {
+						tablaDias.setValueAt(nombreMateria,  i-8, 5);
+					}
+				} else if (dia.equalsIgnoreCase("Sabado")) {
+					for (int i = horaInicio; i < horaFin; i++) {
+						tablaDias.setValueAt(nombreMateria,  i-8, 6);
+					}
 				}
 			}
 		}
@@ -113,6 +100,27 @@ public class GRCController implements ActionListener
 		return tablaDias;
 	}
 
+	public DefaultTableModel borrarValores(DefaultTableModel tablaDias)
+	{
+		tablaDias.setRowCount(14);
+		tablaDias.setValueAt("8 a 9", 0, 0);
+		tablaDias.setValueAt("9 a 10", 1, 0);
+		tablaDias.setValueAt("10 a 11", 2, 0);
+		tablaDias.setValueAt("11 a 12", 3, 0);
+		tablaDias.setValueAt("12 a 13", 4, 0);
+		tablaDias.setValueAt("13 a 14", 5, 0);
+		tablaDias.setValueAt("14 a 15", 6, 0);
+		tablaDias.setValueAt("15 a 16", 7, 0);
+		tablaDias.setValueAt("16 a 17", 8, 0);
+		tablaDias.setValueAt("17 a 18", 9, 0);
+		tablaDias.setValueAt("18 a 19", 10, 0);
+		tablaDias.setValueAt("19 a 20", 11, 0);
+		tablaDias.setValueAt("20 a 21", 12, 0);
+		tablaDias.setValueAt("21 a 22", 13, 0);
+		
+		return tablaDias;
+	}
+	
 	public ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
 	{
 		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
