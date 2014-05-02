@@ -1,4 +1,4 @@
-package grc.modelo;
+package grc.dominio;
 
 import java.io.Serializable;
 

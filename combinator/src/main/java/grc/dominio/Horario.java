@@ -1,4 +1,4 @@
-package grc.modelo;
+package grc.dominio;
 
 import java.io.Serializable;
 
@@ -34,7 +34,13 @@ public class Horario implements Serializable
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 	}
-
+	
+	public Horario(int horaInicio, int horaFin)
+	{
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+	}
+	
 	public int getId() 
 	{
 		return id_horario;
