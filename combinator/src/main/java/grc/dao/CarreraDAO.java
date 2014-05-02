@@ -1,43 +1,43 @@
 package grc.dao;
 
-import grc.dominio.Horario;
-
+import grc.dominio.Carrera;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
-public class HorarioDAO 
+public class CarreraDAO
 {
-	private static HorarioDAO instancia = null;
-
+	private static CarreraDAO instancia = null;
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
-
-	public static HorarioDAO getInstancia() throws Exception 
+	public static CarreraDAO getInstancia() throws Exception
 	{
 		if (instancia == null)
 		{
-			instancia = new HorarioDAO();
+			instancia = new CarreraDAO();
 		}
-		em = grc.dao.EntityManagerUtil.getNewEM();
+		em = EntityManagerUtil.getNewEM();
 		return instancia;
 	}
-	
-	
-	public void alta(Horario H) throws Exception 
+
+	public void alta(Carrera C) throws Exception
 	{
-		try 
+		try
 		{
 			em.getTransaction().begin();
-			em.merge(H);
+			em.merge(C);
 			em.flush();
 			em.getTransaction().commit();
-		} 
-		catch (Exception e) 
+		} catch (Exception e)
 		{
 			em.getTransaction().rollback();
 			throw e;
 		}
 	}
+
+	public Carrera getCarrera(int id)
+	{
+		return em.find(Carrera.class, id);
+	}
+
 
 }

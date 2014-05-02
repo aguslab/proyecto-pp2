@@ -1,6 +1,7 @@
 package grc.dao;
 
-import grc.modelo.PlanEstudio;
+import grc.dominio.Carrera;
+import grc.dominio.PlanEstudio;
 
 import java.util.List;
 
@@ -8,14 +9,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-public class PlanEstudioDAO 
+public class PlanEstudioDAO
 {
 	private static PlanEstudioDAO instancia = null;
 
 	@PersistenceContext(unitName = "PU")
 	private static EntityManager em = null;
 
-	public static PlanEstudioDAO getInstancia() throws Exception 
+	public static PlanEstudioDAO getInstancia() throws Exception
 	{
 		if (instancia == null)
 		{
@@ -24,18 +25,16 @@ public class PlanEstudioDAO
 		em = grc.dao.EntityManagerUtil.getNewEM();
 		return instancia;
 	}
-	
-	
-	public void alta(PlanEstudio PE) throws Exception 
+
+	public void alta(PlanEstudio PE) throws Exception
 	{
-		try 
+		try
 		{
 			em.getTransaction().begin();
 			em.merge(PE);
 			em.flush();
 			em.getTransaction().commit();
-		} 
-		catch (Exception e) 
+		} catch (Exception e)
 		{
 			em.getTransaction().rollback();
 			throw e;
@@ -43,12 +42,21 @@ public class PlanEstudioDAO
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PlanEstudio> obtenerTodo() 
+	public List<PlanEstudio> obtenerTodo()
 	{
 		List<PlanEstudio> a = null;
 		Query query = em.createQuery("from PlanEstudio");
 		a = query.getResultList();
 		return a;
+	}
+
+	@SuppressWarnings("unchecked")
+	public PlanEstudio getPlanEstudioDeCarrera(Carrera carrera)
+	{
+		int idC = carrera.getId();
+		Query query = em.createQuery("from PlanEstudio p WHERE p.carrera.id = " + idC);
+		PlanEstudio pe = ((List<PlanEstudio>) query.getResultList()).get(0);
+		return pe;
 	}
 
 }

@@ -1,6 +1,6 @@
 package grc.dao;
 
-import grc.modelo.Materia;
+import grc.dominio.Materia;
 
 import java.util.List;
 
