@@ -1,97 +1,35 @@
 package grc.servicios;
 
-import grc.dao.CursoDAO;
-import grc.dao.MateriaAprobadaDAO;
-import grc.dao.PlanEstudioDAO;
-import grc.modelo.Curso;
-import grc.modelo.Materia;
-import grc.modelo.MateriaAprobada;
-import grc.modelo.PlanEstudio;
-
+import grc.dominio.Curso;
+import grc.dominio.Horario;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Filtrador {
+public class Filtrador
+{
 
-	/**
-	 * 
-	 * @param filtrarNoche
-	 * @param filtrarTarde
-	 * @param filtrarManiana
-	 * @param horaInicio
-	 *            : la hora de inicio del horario del curso a los que se quiere
-	 *            inscribir el alumno
-	 * @return todos los cursos a los que se puede inscribir el alumno (filtrado
-	 *         por horario, materias aprob y correlativas
-	 * @throws Exception
-	 */
-	public Set<Curso> getCursosDisponibles(boolean filtrarManiana,
-			boolean filtrarTarde, boolean filtrarNoche) throws Exception {
-		Set<Curso> cursosDisponibles = new HashSet<Curso>();
-		Set<Curso> cursosAFiltrar = new HashSet<Curso>();
-		int horaInicioMan = 8;
-		int horaInicioTar = 13;
-		int horaInicioNoch = 18;
-		if (filtrarManiana) {
-			cursosAFiltrar = CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioMan, horaInicioTar-1);
-			System.out.println("MANANA: " +CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioMan, horaInicioTar-1).size());
-		}
-		if (filtrarTarde) {
-			cursosAFiltrar.addAll(CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioTar,horaInicioNoch-1));
-			System.out.println("TARDE: " +CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioTar,horaInicioNoch-1).size());
-		}
-		if (filtrarNoche) {
-			cursosAFiltrar.addAll(CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioNoch,horaInicioNoch+4));
-			System.out.println("NOCHE: " +CursoDAO.getInstancia().getCursosPorTurno(
-					horaInicioNoch,horaInicioNoch+4).size());
-		}
-		System.out.println("TODOS: " +cursosAFiltrar.size());
-		CursoDAO.getInstancia().quitarMateriasAprobadas(cursosAFiltrar);
+	public Set<Curso> getCursosDisponibles(List<Curso> cursos, List<Horario> horarios)
+			throws Exception
+	{
+		Set<Curso> cursosFiltrados = new HashSet<Curso>();
 
-		// como devuelve una lista, agrego cada elemento al Set
-		Set<Materia> materiasAprobadas = new HashSet<Materia>();
-		List<MateriaAprobada> mataprobadas = MateriaAprobadaDAO.getInstancia()
-				.obtenerTodo();
-		for (MateriaAprobada m : mataprobadas) {
-			materiasAprobadas.add(m.getMateriaAprobada());
-		}
-
-		System.out.println("Cursos a filtrar!!!");
-		for (Curso c : cursosAFiltrar) {
-			System.out.println(c.getMateria().getNombre() + ": " + c.getId());
-		}
-
-		// Por ahora hay un unico plan de estudios
-		PlanEstudio pe = PlanEstudioDAO.getInstancia().obtenerTodo().get(0);
-
-		for (Curso c : cursosAFiltrar) {
-			if (tieneCorrelativas(pe, c.getMateria(), materiasAprobadas)) {
-				cursosDisponibles.add(c);
+		for (Curso c : cursos)
+		{
+			List<Horario> horas = c.getHorario();
+			for (Horario hc : horas){
+				for (Horario h : horarios)
+				{
+					if(hc.getHoraInicio() >= h.getHoraInicio() && hc.getHoraFin() <= h.getHoraFin()){
+						cursosFiltrados.add(c);
+					}
+				}
 			}
-
 		}
+		
+		System.out.println("TODOS: " + cursosFiltrados.size());
 
-		return cursosDisponibles;
-	}
-
-	public boolean tieneCorrelativas(PlanEstudio pe, Materia materiaACursar,
-			Set<Materia> materiasAprobadas) {
-		if (pe.getCorrelativas().containsKey(materiaACursar)) {
-			if (materiaACursar.getNombre().equalsIgnoreCase(
-					"Laboratorio Interdisciplinario")) {
-				return materiasAprobadas.size() >= 11;
-			}
-			return materiasAprobadas.containsAll(pe.getCorrelativas().get(
-					materiaACursar));
-		}
-
-		return false;
+		return cursosFiltrados;
 	}
 
 }

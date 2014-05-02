@@ -1,7 +1,7 @@
 package grc.servicios;
 
-import grc.modelo.Curso;
-import grc.modelo.Horario;
+import grc.dominio.Curso;
+import grc.dominio.Horario;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Recomendacion implements Serializable {
@@ -22,7 +23,10 @@ public class Recomendacion implements Serializable {
 	boolean[] jueves = new boolean[24];
 	boolean[] viernes = new boolean[24];
 	boolean[] sabado = new boolean[24];
-
+	
+	private long timeToWait = 1;
+	private long timeInit;
+	private boolean finishRecoOK = true;
 	public Recomendacion() {
 		this.recomendacion = new ArrayList<Curso>();
 	}
@@ -31,18 +35,25 @@ public class Recomendacion implements Serializable {
 		return recomendacion;
 	}
 
-	public List<Recomendacion> backtracking(List<Curso> cursosAfiltrar)
-			throws ClassNotFoundException, IOException {
+	public List<Recomendacion> backtracking(List<Curso> cursos) throws ClassNotFoundException,
+			IOException {
 		List<Recomendacion> resultado = new ArrayList<Recomendacion>();
 		Recomendacion recomendaciontemp = new Recomendacion();
-
-		armarSubconjuntos(resultado, cursosAfiltrar, recomendaciontemp, 0);
+		timeInit = new Date().getTime();
+		armarSubconjuntos(resultado, cursos, recomendaciontemp, 0);
 		return resultado;
 	}
 
-	private void armarSubconjuntos(List<Recomendacion> resultado,
-			List<Curso> cursos, Recomendacion recomendaciontemp, int desde)
-			throws ClassNotFoundException, IOException {
+	private void armarSubconjuntos(List<Recomendacion> resultado, List<Curso> cursos,
+			Recomendacion recomendaciontemp, int desde) throws ClassNotFoundException, IOException {
+		
+		long timeNow = new Date().getTime();
+		if (timeNow - this.timeInit > timeToWait){
+			System.out.println("SE PASO EL TIEMPO!!!");
+			finishRecoOK = false;
+			return;
+		}
+			
 		if (desde == cursos.size())
 			return;
 
@@ -54,7 +65,7 @@ public class Recomendacion implements Serializable {
 			armarSubconjuntos(resultado, cursos, recomendaciontemp, desde + 1);
 			recomendaciontemp.eliminarCurso(cursos.get(desde));
 		}
-		
+
 	}
 
 	private void agregarCurso(Curso curso) {
@@ -155,4 +166,10 @@ public class Recomendacion implements Serializable {
 
 		return horarioVacio;
 	}
+
+	public boolean isFinishRecoOK()
+	{
+		return finishRecoOK;
+	}
+
 }
