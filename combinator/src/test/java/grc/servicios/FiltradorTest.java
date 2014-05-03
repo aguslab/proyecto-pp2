@@ -1,12 +1,10 @@
 package grc.servicios;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import grc.modelo.Materia;
-import grc.modelo.PlanEstudio;
+import java.util.ArrayList;
+import java.util.List;
+import grc.dominio.Curso;
+import grc.dominio.Horario;
 import grc.servicios.Filtrador;
-import grc.tmp.Alta_mat_cur_matApr;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -35,26 +33,58 @@ public class FiltradorTest
         return new TestSuite( FiltradorTest.class );
     }
 
-    public void testFiltradorCursosDisponibles() throws Exception{
+    public void testFiltradorCursosDisponiblesSinCursos() throws Exception{
     	Filtrador fil = new Filtrador();
-    	fil.getCursosDisponibles(true, true, true);	
-    	assertNotNull(fil);
+    	List<Curso> c = new ArrayList<Curso>();
+    	List<Horario> h = new ArrayList<Horario>();
+    	assertEquals(0, fil.getCursosDisponibles(c, h).size());
     }
     
-    public void testFiltradorCorrelativas(){
-    	Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
-    	a.init();
-    	PlanEstudio pe = a.getPlanEstudios();
-    	Materia materiaACursar = new Materia("Laboratorio interdisciplinario");
-    	materiaACursar.setId(30);
-    	Set<Materia> materiasAprobadas = new HashSet<Materia>();
-    	for(int i=0; i<15;i++){
-    		materiasAprobadas.add(new Materia("A"+i));	
-    	}
-    	
-    	Filtrador f = new Filtrador();
-    	boolean puedeCursar = f.tieneCorrelativas(pe, materiaACursar, materiasAprobadas);
-    	assertTrue(puedeCursar);
+    public void testFiltradorCursosDisponiblesConCursosSinHoras() throws Exception{
+    	Filtrador fil = new Filtrador();
+    	List<Curso> cursos = new ArrayList<Curso>();
+    	Curso c1 = new Curso();
+    	c1.setHorario(new ArrayList<Horario>());
+    	cursos.add(c1);
+    	List<Horario> h = new ArrayList<Horario>();
+    	assertEquals(0, fil.getCursosDisponibles(cursos, h).size());
     }
     
+    public void testFiltradorCursosDisponiblesConCursosConHorasNoche() throws Exception{
+    	Filtrador fil = new Filtrador();
+    	List<Curso> cursos = new ArrayList<Curso>();
+    	Curso c1 = new Curso();
+    	List<Horario> horas = new ArrayList<Horario>();
+    	Horario h1 = new Horario(18, 20);
+    	Horario h2 = new Horario(8, 12);
+    	Horario h3 = new Horario(20, 22);
+    	horas.add(h1);
+    	horas.add(h2);
+    	horas.add(h3);
+    	c1.setHorario(horas);
+    	cursos.add(c1);
+    	List<Horario> h = new ArrayList<Horario>();
+    	Horario hf = new Horario(18, 22);
+    	h.add(hf);
+    	assertEquals(1, fil.getCursosDisponibles(cursos, h).size());
+    }
+    
+    public void testFiltradorCursosDisponiblesConCursosConHorasManana() throws Exception{
+    	Filtrador fil = new Filtrador();
+    	List<Curso> cursos = new ArrayList<Curso>();
+    	Curso c1 = new Curso();
+    	List<Horario> horas = new ArrayList<Horario>();
+    	Horario h1 = new Horario(8, 12);
+    	Horario h2 = new Horario(10, 13);
+    	Horario h3 = new Horario(20, 22);
+    	horas.add(h1);
+    	horas.add(h2);
+    	horas.add(h3);
+    	c1.setHorario(horas);
+    	cursos.add(c1);
+    	List<Horario> h = new ArrayList<Horario>();
+    	Horario hf = new Horario(8, 12);
+    	h.add(hf);
+    	assertEquals(1, fil.getCursosDisponibles(cursos, h).size());
+    }
 }
