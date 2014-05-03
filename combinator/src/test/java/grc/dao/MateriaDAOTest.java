@@ -1,8 +1,11 @@
 package grc.dao;
 
 import grc.dao.MateriaDAO;
-import grc.modelo.Materia;
+import grc.dominio.Materia;
+import grc.dominio.MateriaAprobada;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import junit.framework.Test;
@@ -34,7 +37,7 @@ public class MateriaDAOTest
     }
 
     public void testAltaMateriaOk() throws Exception{
-    	Materia M = new Materia("Programacion I");
+    	Materia M = new Materia("Prog");
     	int cantAntes = MateriaDAO.getInstancia().obtenerTodo().size();
     	MateriaDAO.getInstancia().alta(M);
     	int cantDespues = MateriaDAO.getInstancia().obtenerTodo().size();
@@ -48,8 +51,17 @@ public class MateriaDAOTest
 		} catch (Exception e) {
 			assertTrue(true);
 		}
-    	
     }
+    
+    public void testAltaMateria() throws Exception
+	{
+		Materia M = new Materia("D");
+		int cantAntes = MateriaDAO.getInstancia().obtenerTodo().size();
+		M.setId(cantAntes+1);
+		MateriaDAO.getInstancia().alta(M);
+		int cantDespues = MateriaDAO.getInstancia().obtenerTodo().size();
+		assertEquals(cantAntes + 1, cantDespues);
+	}
     
     public void testObtenerMateria() throws Exception {
 		Materia m = MateriaDAO.getInstancia().getMateria(1);

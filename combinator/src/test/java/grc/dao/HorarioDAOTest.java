@@ -1,8 +1,7 @@
 package grc.dao;
 
 import grc.dao.HorarioDAO;
-import grc.modelo.Horario;
-
+import grc.dominio.Horario;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -39,11 +38,21 @@ public class HorarioDAOTest extends TestCase {
 		}
 	}
 
-	public void testAltaHorarioOk() throws Exception {
+	public void testAltaHorarioOk() {
 
 		Horario h = new Horario("Lunes", 18, 22);
-		HorarioDAO.getInstancia().alta(h);
-
+		try
+		{
+			HorarioDAO.getInstancia().alta(h);
+		} catch (Exception e)
+		{
+			assertFalse(true);
+		}
+		assertTrue(true);
+	}
+	
+	public void testGetHorario() throws Exception{
+		assertNotNull(HorarioDAO.getInstancia().getHorario(1));
 	}
 
 }

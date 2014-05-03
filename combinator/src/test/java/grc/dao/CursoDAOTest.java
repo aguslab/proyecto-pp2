@@ -1,11 +1,12 @@
 package grc.dao;
 
 import grc.dao.CursoDAO;
-import grc.modelo.Curso;
-import grc.modelo.Horario;
-import grc.modelo.Materia;
+import grc.dominio.Carrera;
+import grc.dominio.Curso;
+import grc.dominio.Horario;
+import grc.dominio.Materia;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,19 +37,18 @@ public class CursoDAOTest extends TestCase {
 		return new TestSuite(CursoDAOTest.class);
 	}
 
-	public void testAltaCursoOk() {
-		ArrayList<Horario> horar = new ArrayList<Horario>();
-		horar.add(new Horario("lunes", 18, 22));
-
-		Materia a = new Materia("A");
-		Curso c1 = new Curso(a, horar);
-		boolean sinError = true;
-		try {
-			CursoDAO.getInstancia().alta(c1);
-		} catch (Exception e) {
-			sinError = false;
-		}
-		assertTrue(sinError);
+	public void testAltaCursoOk() throws Exception {
+		List<Horario> horar = new ArrayList<Horario>();
+		Horario lun18a22 = null ;
+		horar.add(lun18a22);
+		Materia m = new Materia("M");
+		m.setId(MateriaDAO.getInstancia().obtenerTodo().size()+1);
+		Curso c1 = new Curso();
+		c1.setMateria(m);
+		int cantAntes = CursoDAO.getInstancia().obtenerTodo().size();
+		CursoDAO.getInstancia().alta(c1);
+    	int cantDespues = CursoDAO.getInstancia().obtenerTodo().size();
+    	assertEquals(cantAntes+1, cantDespues);
 	}
 
 	public void testAltaCursoFail() {
@@ -58,7 +58,18 @@ public class CursoDAOTest extends TestCase {
 		} catch (Exception e) {
 			assertTrue(true);
 		}
-
+	}
+	
+	public void testAltaCurso() throws Exception {
+		Materia m = new Materia("M");
+		m.setId(MateriaDAO.getInstancia().obtenerTodo().size()+1);
+		Curso c1 = new Curso();
+		c1.setMateria(m);
+		int cantAntes = CursoDAO.getInstancia().obtenerTodo().size();
+		c1.setId(cantAntes+1);
+		CursoDAO.getInstancia().alta(c1);
+    	int cantDespues = CursoDAO.getInstancia().obtenerTodo().size();
+    	assertEquals(cantAntes+1, cantDespues);
 	}
 
 	public void testObtenerCurso() throws Exception {
@@ -76,10 +87,9 @@ public class CursoDAOTest extends TestCase {
 		assertNotNull(c);
 	}
 
-	public void testQuitarMateriasAprobadas() throws Exception {
-		List<Curso> c = CursoDAO.getInstancia().obtenerTodo();
-		Set<Curso> cursos = new HashSet<Curso>(c);
-		Set<Curso> csma  = CursoDAO.getInstancia().quitarMateriasAprobadas(cursos);
+	public void testCursoPorCarrera() throws Exception {
+		Carrera c = CarreraDAO.getInstancia().getCarrera(0);
+		Set<Curso> csma  = CursoDAO.getInstancia().getCursosPorCarrera(c);
 		assertNotNull(csma);
 	}
 
