@@ -29,17 +29,6 @@ public class GRCControllerTest
         return new TestSuite( GRCControllerTest.class );
     }
 
-    public void testGRCControllerMain() {
-    	
-		try {
-			GRCController.main(null);
-		} catch (Exception e) {
-			assertTrue(false);
-		}
-		
-		assertTrue(true);
-    }
-    
     public void testGRCControllerContructor() throws Exception{
     	new GRCController();
     }
