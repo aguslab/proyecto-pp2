@@ -1,8 +1,8 @@
-package grc.modelo;
+package grc.dominio;
 
-import grc.modelo.Curso;
-import grc.modelo.Horario;
-import grc.modelo.Materia;
+import grc.dominio.Curso;
+import grc.dominio.Horario;
+import grc.dominio.Materia;
 
 import java.util.ArrayList;
 

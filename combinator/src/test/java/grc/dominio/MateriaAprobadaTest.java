@@ -1,7 +1,10 @@
-package grc.modelo;
+package grc.dominio;
 
-import grc.modelo.Materia;
-import grc.modelo.MateriaAprobada;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import grc.dominio.Materia;
+import grc.dominio.MateriaAprobada;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,16 +43,26 @@ public class MateriaAprobadaTest
     
     public void testMateriaAprobadasetMateria(){
     	Materia m = new Materia("M");
-    	MateriaAprobada ma = new MateriaAprobada(m, 8.0);
+    	Timestamp f = new Timestamp(new Date().getTime());
+    	MateriaAprobada ma = new MateriaAprobada(m, 8.0, f);
     	
     	assertEquals("M", ma.getMateriaAprobada().getNombre());
     }
     
     public void testMateriaAprobadaNota(){
     	Materia m = new Materia("M");
-    	MateriaAprobada ma = new MateriaAprobada(m, 8.0);
-    	
+    	Timestamp f = new Timestamp(new Date().getTime());
+    	MateriaAprobada ma = new MateriaAprobada(m, 8.0, f);
     	assertEquals(8.0, ma.getNota());
+    }
+    
+    public void testMateriaAprobadaFecha(){
+    	Materia m = new Materia("M");
+    	Timestamp f = new Timestamp(new Date().getTime());
+    	MateriaAprobada ma = new MateriaAprobada();
+    	ma.setMateriaAprobada(m);
+    	ma.setFechaAprobado(f);
+    	assertEquals(f, ma.getFechaAprobado());
     }
     
 }

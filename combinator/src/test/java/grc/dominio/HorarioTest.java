@@ -1,6 +1,7 @@
-package grc.modelo;
+package grc.dominio;
 
-import grc.modelo.Horario;
+import grc.dominio.Dia;
+import grc.dominio.Horario;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -45,6 +46,12 @@ public class HorarioTest
     	h.setHoraInicio(18);
     	
     	assertEquals(2, h.getHoraFin()-h.getHoraInicio());
+    }
+    
+    public void testHorarioHoraIniFin(){
+    	Horario h = new Horario(18, 22);
+    	
+    	assertEquals(4, h.getHoraFin()-h.getHoraInicio());
     }
     
     public void testHorarioId(){

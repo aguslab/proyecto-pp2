@@ -1,4 +1,4 @@
-package grc.modelo;
+package grc.dominio;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class PlanEstudioTest 
+public class DiaTest 
     extends TestCase
 {
     /**
@@ -15,7 +15,7 @@ public class PlanEstudioTest
      *
      * @param testName name of the test case
      */
-    public PlanEstudioTest( String testName )
+    public DiaTest( String testName )
     {
         super( testName );
     }
@@ -25,13 +25,12 @@ public class PlanEstudioTest
      */
     public static Test suite()
     {
-        return new TestSuite( PlanEstudioTest.class );
+        return new TestSuite( DiaTest.class );
     }
 
-    public void testPlanEstudioId(){
-    	PlanEstudio pe = new PlanEstudio();
-    	pe.setId(1);
-    	assertEquals(1, pe.getId());
+    public void testDiaLunes(){
+    	Dia lunes = Dia.LUNES;
+    	assertEquals("LUNES", lunes.name());
     }
     
 }
