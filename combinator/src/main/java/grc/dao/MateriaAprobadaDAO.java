@@ -29,7 +29,10 @@ public class MateriaAprobadaDAO
 	
 	public void alta(MateriaAprobada MA) throws Exception 
 	{
-		try 
+		int id = obtenerTodo().size();
+		if(MA.getId()<=id)
+			MA.setId(id+1);
+		try
 		{
 			em.getTransaction().begin();
 			em.merge(MA);

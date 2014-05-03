@@ -1,8 +1,11 @@
 package grc.dao;
 
+import java.util.List;
+
 import grc.dominio.Carrera;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 public class CarreraDAO
 {
@@ -21,6 +24,9 @@ public class CarreraDAO
 
 	public void alta(Carrera C) throws Exception
 	{
+		int id = obtenerTodo().size();
+		if (C.getId() <= id)
+			C.setId(id + 1);
 		try
 		{
 			em.getTransaction().begin();
@@ -39,5 +45,13 @@ public class CarreraDAO
 		return em.find(Carrera.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Carrera> obtenerTodo()
+	{
+		List<Carrera> a = null;
+		Query query = em.createQuery("from Carrera");
+		a = query.getResultList();
+		return a;
+	}
 
 }

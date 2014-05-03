@@ -28,6 +28,9 @@ public class PlanEstudioDAO
 
 	public void alta(PlanEstudio PE) throws Exception
 	{
+		int id = obtenerTodo().size();
+		if(PE.getId()<=id)
+			PE.setId(id+1);
 		try
 		{
 			em.getTransaction().begin();

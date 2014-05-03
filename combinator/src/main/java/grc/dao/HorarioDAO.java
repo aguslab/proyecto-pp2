@@ -39,5 +39,10 @@ public class HorarioDAO
 			throw e;
 		}
 	}
+	
+	public Horario getHorario(int id)
+	{
+		return em.find(Horario.class, id);
+	}
 
 }

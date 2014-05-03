@@ -23,6 +23,9 @@ public class MateriaDAO {
 	}
 
 	public void alta(Materia M) throws Exception {
+		int id = obtenerTodo().size();
+		if(M.getId()<=id)
+			M.setId(id+1);
 		try {
 			em.getTransaction().begin();
 			em.merge(M);

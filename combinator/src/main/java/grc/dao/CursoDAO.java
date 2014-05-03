@@ -35,6 +35,9 @@ public class CursoDAO
 
 	public void alta(Curso C) throws Exception
 	{
+		int id = obtenerTodo().size();
+		if(C.getId()<=id)
+			C.setId(id+1);
 		try
 		{
 			em.getTransaction().begin();
