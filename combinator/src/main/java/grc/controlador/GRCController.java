@@ -3,7 +3,9 @@ package grc.controlador;
 import grc.dao.MateriaAprobadaDAO;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
+import grc.dominio.Materia;
 import grc.dominio.MateriaAprobada;
+import grc.dominio.PlanEstudio;
 import grc.servicios.Filtrador;
 import grc.servicios.Recomendacion;
 import grc.vista.GRCView;
@@ -147,6 +149,7 @@ public class GRCController implements ActionListener
 		}
 		return recomendacionesParaLista;
 	}
+	
 
 	// public static void main(String args[]) throws Exception
 	// {

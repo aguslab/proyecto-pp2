@@ -118,7 +118,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
 			}
 		));
-		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(248);
+		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(15);
 //		tablaDias.setModel(new DefaultTableModel(
 //			new Object[][] {
 //				{"Lunes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},

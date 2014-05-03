@@ -2,6 +2,8 @@ package grc.servicios;
 
 import grc.dominio.Curso;
 import grc.dominio.Horario;
+import grc.dominio.Materia;
+import grc.dominio.PlanEstudio;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +13,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Recomendacion implements Serializable {
 
@@ -24,7 +28,7 @@ public class Recomendacion implements Serializable {
 	boolean[] viernes = new boolean[24];
 	boolean[] sabado = new boolean[24];
 	
-	private long timeToWait = 1;
+	private long timeToWait = 1000;
 	private long timeInit;
 	private boolean finishRecoOK = true;
 	public Recomendacion() {
@@ -68,6 +72,88 @@ public class Recomendacion implements Serializable {
 
 	}
 
+	public ArrayList<Integer> cantMaterias(List<Recomendacion> recomendaciones)
+	{
+		Materia materia;
+		ArrayList<Integer> cantidades = new ArrayList<Integer>();
+		//Cuento la cantidad de poscorrelativas de cada recomendacion
+		for(Recomendacion r: recomendaciones)
+		{
+			Integer cantMaterias = r.getRecomendacion().size();
+			cantidades.add(cantMaterias);
+		}
+		return cantidades;
+	}
+	
+	public ArrayList<Integer> cantPosCorrelativas(List<Recomendacion> recomendaciones, PlanEstudio pe)
+	{
+		HashMap<Materia, Set<Materia>> correlativas = pe.getCorrelativas();
+		ArrayList<Integer> cantidades = new ArrayList<Integer>();
+		Materia materia;
+		for(Recomendacion r: recomendaciones) //Por cada recomendacion
+		{
+			Integer cantPosCorrelativas = 0;
+			for (Curso c : r.getRecomendacion())  // Por cada curso
+			{
+				materia = c.getMateria();
+				for(int i = 0; i < correlativas.size(); i ++) //me fijo cuantas veces aparece una materia como correlativa de otras
+				{
+					if(correlativas.get(i).contains(materia))
+					{
+						cantPosCorrelativas++; // las cuento
+					}
+				}
+			}
+			cantidades.add(cantPosCorrelativas); // termino de contar y las guardo en una lista
+		}
+		return cantidades;
+	}
+	
+	/*public ArrayList<Integer> cantPosCorrelativas(List<Recomendacion> recomendaciones, PlanEstudio pe, List<Curso> cursosDisponibles)
+	{
+		Materia materia;
+		ArrayList<Integer> cantidades = new ArrayList<Integer>();
+		//Cuento la cantidad de poscorrelativas de cada recomendacion
+		for(Recomendacion r: recomendaciones)
+		{
+			Integer cantPosCorrelativas = 0;
+			for (Curso c : r.getRecomendacion())
+			{
+				materia = c.getMateria();
+				Integer cant = pe.getCorrelativas().get(materia).size();
+				if(cant != null)
+					cantPosCorrelativas += cant;
+				else
+					cantPosCorrelativas += 0;
+			}
+			cantidades.add(cantPosCorrelativas);
+		}
+		return cantidades;
+	}*/
+	
+	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones, ArrayList<Integer> cantidades)
+	{
+		System.out.println("RECO largo antes de ordenar" + recomendaciones.size());
+		//ordeno segun las cantidades de poscorrelativas de cada recomendacion
+		Recomendacion rTemp;
+		int temp,j;
+		for(int i = 1; i < cantidades.size(); i++)
+		{
+			temp = cantidades.get(i);
+			rTemp = recomendaciones.get(i);
+			j = i;
+			while(j > 0 && cantidades.get(j - 1) < temp )
+			{
+				cantidades.set(j, cantidades.get(j-1));
+				recomendaciones.set(j, recomendaciones.get(j-1));
+				j--;
+			}
+			cantidades.set(j, temp);
+			recomendaciones.set(j, rTemp);
+		}
+		return recomendaciones;
+	}
+	
 	private void agregarCurso(Curso curso) {
 		this.recomendacion.add(curso);
 		this.agregarHorariosRecomendacion(curso);
