@@ -44,7 +44,7 @@ public class Inicializador
 		List<Recomendacion> recomendacionesCursos = null;
 		try
 		{
-			// generarAltas();
+//			 generarAltas();
 		} catch (Exception e)
 		{
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
@@ -110,7 +110,7 @@ public class Inicializador
 		
 //		printRecomendaciones(recomendacionesCursos);
 		
-		Modelo model = new Modelo(cursos, recomendacionesCursos);
+		Modelo model = new Modelo(cursos, recomendacionesCursos, pe);
 		try
 		{
 			model.calcularRecomendaciones(cursos);
