@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -99,6 +100,7 @@ public class Recomendacion implements Serializable
 		HashMap<Materia, Set<Materia>> correlativas = pe.getCorrelativas();
 		ArrayList<Integer> cantidades = new ArrayList<Integer>();
 		Materia materia;
+		int la = 0;
 		for (Recomendacion r : recomendaciones) // Por cada recomendacion
 		{
 			Integer cantPosCorrelativas = 0;
@@ -106,9 +108,9 @@ public class Recomendacion implements Serializable
 			{
 				materia = c.getMateria();
 				Collection<Set<Materia>> correl = correlativas.values();
-				for (Set<Materia> mats : correl)
+				for (Set<Materia> mats : correl) //Contamos la cantidad de veces que 
 				{
-					for (Materia m : mats)
+					for (Materia m : mats) //aparece una materia como correlativa de otras
 					{
 						if (m.getNombre().equalsIgnoreCase(materia.getNombre()))
 						{
@@ -116,17 +118,45 @@ public class Recomendacion implements Serializable
 						}
 					}
 				}
+				System.out.println(c.getMateria().getNombre());
 			}
+			System.out.println("Reco " + la +" Cantidad: " + cantPosCorrelativas);
+			la++;
+			System.out.println("-----------------------------------------------------");
 			cantidades.add(cantPosCorrelativas); // termino de contar y las
 													// guardo en una lista
 		}
 		return cantidades;
 	}
 
+/*	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones,
+			ArrayList<Integer> cantidades)
+	{
+		System.out.println("cantidad de recos" + recomendaciones.size());
+		// ordeno segun las cantidades de poscorrelativas de cada recomendacion
+		Recomendacion rTemp;
+		int temp, j;
+		for (int i = 1; i < cantidades.size(); i++)
+		{
+			temp = cantidades.get(i);
+			rTemp = recomendaciones.get(i);
+			j = i;
+			while (j > 0 && cantidades.get(j - 1) < temp)
+			{
+				cantidades.set(j, cantidades.get(j - 1));
+				recomendaciones.set(j, recomendaciones.get(j - 1));
+				j--;
+			}
+			cantidades.set(j, temp);
+			recomendaciones.set(j, rTemp);
+		}
+		return recomendaciones;
+	}*///Lo comento para dejarlo tal cual esta ahora
+	
 	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones,
 			ArrayList<Integer> cantidades)
 	{
-		System.out.println("RECO largo antes de ordenar" + recomendaciones.size());
+		System.out.println("cantidad de recos" + recomendaciones.size());
 		// ordeno segun las cantidades de poscorrelativas de cada recomendacion
 		Recomendacion rTemp;
 		int temp, j;

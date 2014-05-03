@@ -51,9 +51,12 @@ public class Modelo extends Observable
 	{
 		Recomendacion reco = new Recomendacion();
 		List<Recomendacion> recomendaciones = reco.backtracking(cursos);
+		//Ordenamos por cantidad de materias
 		ArrayList<Integer> cantMaterias = reco.cantMaterias(recomendaciones);
-		//ArrayList<Integer> cantPosCorrelativas = reco.cantPosCorrelativas(recomendaciones, planEstudio);
 		reco.ordenarRecomendaciones(recomendaciones, cantMaterias);
+		//Una vez ordenado por cantidad de materias ordenamos por cantidades de poscorrelativas
+		ArrayList<Integer> cantPosCorrelativas = reco.cantPosCorrelativas(recomendaciones, planEstudio);
+		reco.ordenarRecomendaciones(recomendaciones, cantPosCorrelativas);
 		this.finishRecoOK = reco.isFinishRecoOK();
 		this.setRecomendaciones(recomendaciones);
 	}
