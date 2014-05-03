@@ -27,8 +27,6 @@ public class Filtrador
 			}
 		}
 		
-		System.out.println("TODOS: " + cursosFiltrados.size());
-
 		return cursosFiltrados;
 	}
 

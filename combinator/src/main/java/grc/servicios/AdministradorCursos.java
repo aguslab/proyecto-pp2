@@ -65,18 +65,17 @@ public class AdministradorCursos
 		}
 	}
 
-	private boolean tieneCorrelativas(PlanEstudio pe, Materia materiaACursar,
+	public boolean tieneCorrelativas(PlanEstudio pe, Materia materiaACursar,
 			List<Materia> materiasAprobadas)
 	{
 		if (pe.getCorrelativas().containsKey(materiaACursar))
 		{
-			if (materiaACursar.getNombre().equalsIgnoreCase("Laboratorio Interdisciplinario"))
-			{
-				return materiasAprobadas.size() >= 11;
-			}
+//			if (materiaACursar.getNombre().equalsIgnoreCase("Laboratorio Interdisciplinario"))
+//			{
+//				return materiasAprobadas.size() >= 11;
+//			}
 			return materiasAprobadas.containsAll(pe.getCorrelativas().get(materiaACursar));
 		}
-
 		return false;
 	}
 
