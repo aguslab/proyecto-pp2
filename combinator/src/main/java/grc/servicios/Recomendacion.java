@@ -12,12 +12,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class Recomendacion implements Serializable {
+public class Recomendacion implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	List<Curso> recomendacion;
@@ -27,20 +29,23 @@ public class Recomendacion implements Serializable {
 	boolean[] jueves = new boolean[24];
 	boolean[] viernes = new boolean[24];
 	boolean[] sabado = new boolean[24];
-	
+
 	private long timeToWait = 1000;
 	private long timeInit;
 	private boolean finishRecoOK = true;
-	public Recomendacion() {
+	public Recomendacion()
+	{
 		this.recomendacion = new ArrayList<Curso>();
 	}
 
-	public List<Curso> getRecomendacion() {
+	public List<Curso> getRecomendacion()
+	{
 		return recomendacion;
 	}
 
 	public List<Recomendacion> backtracking(List<Curso> cursos) throws ClassNotFoundException,
-			IOException {
+			IOException
+	{
 		List<Recomendacion> resultado = new ArrayList<Recomendacion>();
 		Recomendacion recomendaciontemp = new Recomendacion();
 		timeInit = new Date().getTime();
@@ -49,21 +54,24 @@ public class Recomendacion implements Serializable {
 	}
 
 	private void armarSubconjuntos(List<Recomendacion> resultado, List<Curso> cursos,
-			Recomendacion recomendaciontemp, int desde) throws ClassNotFoundException, IOException {
-		
+			Recomendacion recomendaciontemp, int desde) throws ClassNotFoundException, IOException
+	{
+
 		long timeNow = new Date().getTime();
-		if (timeNow - this.timeInit > timeToWait){
+		if (timeNow - this.timeInit > timeToWait)
+		{
 			System.out.println("SE PASO EL TIEMPO!!!");
 			finishRecoOK = false;
 			return;
 		}
-			
+
 		if (desde == cursos.size())
 			return;
 
 		armarSubconjuntos(resultado, cursos, recomendaciontemp, desde + 1);
 
-		if (recomendaciontemp.sePuedeAgregar(cursos.get(desde))) {
+		if (recomendaciontemp.sePuedeAgregar(cursos.get(desde)))
+		{
 			recomendaciontemp.agregarCurso(cursos.get(desde));
 			resultado.add(recomendaciontemp.clonar());
 			armarSubconjuntos(resultado, cursos, recomendaciontemp, desde + 1);
@@ -76,76 +84,61 @@ public class Recomendacion implements Serializable {
 	{
 		Materia materia;
 		ArrayList<Integer> cantidades = new ArrayList<Integer>();
-		//Cuento la cantidad de poscorrelativas de cada recomendacion
-		for(Recomendacion r: recomendaciones)
+		// Cuento la cantidad de poscorrelativas de cada recomendacion
+		for (Recomendacion r : recomendaciones)
 		{
 			Integer cantMaterias = r.getRecomendacion().size();
 			cantidades.add(cantMaterias);
 		}
 		return cantidades;
 	}
-	
-	public ArrayList<Integer> cantPosCorrelativas(List<Recomendacion> recomendaciones, PlanEstudio pe)
+
+	public ArrayList<Integer> cantPosCorrelativas(List<Recomendacion> recomendaciones,
+			PlanEstudio pe)
 	{
 		HashMap<Materia, Set<Materia>> correlativas = pe.getCorrelativas();
 		ArrayList<Integer> cantidades = new ArrayList<Integer>();
 		Materia materia;
-		for(Recomendacion r: recomendaciones) //Por cada recomendacion
+		for (Recomendacion r : recomendaciones) // Por cada recomendacion
 		{
 			Integer cantPosCorrelativas = 0;
-			for (Curso c : r.getRecomendacion())  // Por cada curso
+			for (Curso c : r.getRecomendacion()) // Por cada curso
 			{
 				materia = c.getMateria();
-				for(int i = 0; i < correlativas.size(); i ++) //me fijo cuantas veces aparece una materia como correlativa de otras
+				Collection<Set<Materia>> correl = correlativas.values();
+				for (Set<Materia> mats : correl)
 				{
-					if(correlativas.get(i).contains(materia))
+					for (Materia m : mats)
 					{
-						cantPosCorrelativas++; // las cuento
+						if (m.getNombre().equalsIgnoreCase(materia.getNombre()))
+						{
+							cantPosCorrelativas++;
+						}
 					}
 				}
 			}
-			cantidades.add(cantPosCorrelativas); // termino de contar y las guardo en una lista
+			cantidades.add(cantPosCorrelativas); // termino de contar y las
+													// guardo en una lista
 		}
 		return cantidades;
 	}
-	
-	/*public ArrayList<Integer> cantPosCorrelativas(List<Recomendacion> recomendaciones, PlanEstudio pe, List<Curso> cursosDisponibles)
-	{
-		Materia materia;
-		ArrayList<Integer> cantidades = new ArrayList<Integer>();
-		//Cuento la cantidad de poscorrelativas de cada recomendacion
-		for(Recomendacion r: recomendaciones)
-		{
-			Integer cantPosCorrelativas = 0;
-			for (Curso c : r.getRecomendacion())
-			{
-				materia = c.getMateria();
-				Integer cant = pe.getCorrelativas().get(materia).size();
-				if(cant != null)
-					cantPosCorrelativas += cant;
-				else
-					cantPosCorrelativas += 0;
-			}
-			cantidades.add(cantPosCorrelativas);
-		}
-		return cantidades;
-	}*/
-	
-	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones, ArrayList<Integer> cantidades)
+
+	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones,
+			ArrayList<Integer> cantidades)
 	{
 		System.out.println("RECO largo antes de ordenar" + recomendaciones.size());
-		//ordeno segun las cantidades de poscorrelativas de cada recomendacion
+		// ordeno segun las cantidades de poscorrelativas de cada recomendacion
 		Recomendacion rTemp;
-		int temp,j;
-		for(int i = 1; i < cantidades.size(); i++)
+		int temp, j;
+		for (int i = 1; i < cantidades.size(); i++)
 		{
 			temp = cantidades.get(i);
 			rTemp = recomendaciones.get(i);
 			j = i;
-			while(j > 0 && cantidades.get(j - 1) < temp )
+			while (j > 0 && cantidades.get(j - 1) < temp)
 			{
-				cantidades.set(j, cantidades.get(j-1));
-				recomendaciones.set(j, recomendaciones.get(j-1));
+				cantidades.set(j, cantidades.get(j - 1));
+				recomendaciones.set(j, recomendaciones.get(j - 1));
 				j--;
 			}
 			cantidades.set(j, temp);
@@ -153,26 +146,31 @@ public class Recomendacion implements Serializable {
 		}
 		return recomendaciones;
 	}
-	
-	private void agregarCurso(Curso curso) {
+
+	private void agregarCurso(Curso curso)
+	{
 		this.recomendacion.add(curso);
 		this.agregarHorariosRecomendacion(curso);
 	}
 
-	private void eliminarCurso(Curso curso) {
+	private void eliminarCurso(Curso curso)
+	{
 		this.recomendacion.remove(curso);
 		this.limpiarHorariosRecomendacion(curso);
 	}
 
-	private void agregarHorariosRecomendacion(Curso curso) {
+	private void agregarHorariosRecomendacion(Curso curso)
+	{
 		this.setearHorariosRecomendacion(curso, true);
 	}
 
-	private void limpiarHorariosRecomendacion(Curso curso) {
+	private void limpiarHorariosRecomendacion(Curso curso)
+	{
 		this.setearHorariosRecomendacion(curso, false);
 	}
 
-	private Recomendacion clonar() throws IOException, ClassNotFoundException {
+	private Recomendacion clonar() throws IOException, ClassNotFoundException
+	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(this);
@@ -182,33 +180,47 @@ public class Recomendacion implements Serializable {
 		return (Recomendacion) ois.readObject();
 	}
 
-	private void setearHorariosRecomendacion(Curso curso, boolean valorASetear) {
-		for (Horario horario : curso.getHorario()) {
+	private void setearHorariosRecomendacion(Curso curso, boolean valorASetear)
+	{
+		for (Horario horario : curso.getHorario())
+		{
 			String dia = horario.getDia();
 			int horaInicio = horario.getHoraInicio();
 			int horaFin = horario.getHoraFin();
-			if (dia.equalsIgnoreCase("Lunes")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			if (dia.equalsIgnoreCase("Lunes"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					lunes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Martes")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			} else if (dia.equalsIgnoreCase("Martes"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					martes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Miercoles")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			} else if (dia.equalsIgnoreCase("Miercoles"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					miercoles[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Jueves")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			} else if (dia.equalsIgnoreCase("Jueves"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					jueves[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Viernes")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			} else if (dia.equalsIgnoreCase("Viernes"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					viernes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Sabado")) {
-				for (int i = horaInicio; i < horaFin; i++) {
+			} else if (dia.equalsIgnoreCase("Sabado"))
+			{
+				for (int i = horaInicio; i < horaFin; i++)
+				{
 					sabado[i] = valorASetear;
 				}
 			}
@@ -216,35 +228,49 @@ public class Recomendacion implements Serializable {
 
 	}
 
-	private boolean sePuedeAgregar(Curso curso) {
+	private boolean sePuedeAgregar(Curso curso)
+	{
 		boolean horarioVacio = true;
-		for (Horario horario : curso.getHorario()) {
+		for (Horario horario : curso.getHorario())
+		{
 			String dia = horario.getDia();
 			int horaInicio = horario.getHoraInicio();
 			int horaFin = horario.getHoraFin();
 
-			if (dia.equalsIgnoreCase("Lunes")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			if (dia.equalsIgnoreCase("Lunes"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (lunes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Martes")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			} else if (dia.equalsIgnoreCase("Martes"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (martes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Miercoles")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			} else if (dia.equalsIgnoreCase("Miercoles"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (miercoles[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Jueves")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			} else if (dia.equalsIgnoreCase("Jueves"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (jueves[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Viernes")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			} else if (dia.equalsIgnoreCase("Viernes"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (viernes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Sabado")) {
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++) {
+			} else if (dia.equalsIgnoreCase("Sabado"))
+			{
+				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				{
 					horarioVacio = horarioVacio && (sabado[i] == false);
 				}
 			}
