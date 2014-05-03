@@ -1,6 +1,5 @@
 package grc.dominio;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -58,6 +57,11 @@ public class MateriaAprobada
 	public Materia getMateriaAprobada()
 	{
 		return materia;
+	}
+
+	public void setMateriaAprobada(Materia materia)
+	{
+		this.materia = materia;
 	}
 
 	public Timestamp getFechaAprobado()

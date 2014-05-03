@@ -5,11 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,9 +16,9 @@ public class Curso implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne(optional = false, cascade = {CascadeType.ALL})
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	// TODO: cambiar a manyToOne cuando hayas mas carreras?
 	private Materia materia;
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -71,14 +68,14 @@ public class Curso implements Serializable
 		this.horarios = horario;
 	}
 
-	public List<Carrera> getCarreras()
-	{
-		return carreras;
-	}
-
-	public void setCarreras(List<Carrera> carreras)
-	{
-		this.carreras = carreras;
-	}
+//	public List<Carrera> getCarreras()
+//	{
+//		return carreras;
+//	}
+//
+//	public void setCarreras(List<Carrera> carreras)
+//	{
+//		this.carreras = carreras;
+//	}
 
 }
