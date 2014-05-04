@@ -1,7 +1,6 @@
 package grc.modelo;
 
 import grc.dominio.Curso;
-import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
 import grc.servicios.Recomendacion;
 
@@ -16,13 +15,15 @@ public class Modelo extends Observable
 	private List<Recomendacion> recomendaciones;
 	private boolean finishRecoOK;
 	private PlanEstudio planEstudio;
+	private long timeToWait;
 	// private List<Observer> vistaObserver;
 
-	public Modelo(List<Curso> cursosDisponibles, List<Recomendacion> recomendaciones, PlanEstudio planEstudio)
+	public Modelo(List<Curso> cursosDisponibles, List<Recomendacion> recomendaciones, PlanEstudio planEstudio, long timeToWait)
 	{
 		this.cursosDisponibles = cursosDisponibles;
 		this.recomendaciones = recomendaciones;
 		this.planEstudio = planEstudio;
+		this.timeToWait = timeToWait;
 	}
 
 	public List<Curso> getCursosDisponibles()
@@ -49,7 +50,7 @@ public class Modelo extends Observable
 	public void calcularRecomendaciones(List<Curso> cursos) throws ClassNotFoundException,
 			IOException
 	{
-		Recomendacion reco = new Recomendacion();
+		Recomendacion reco = new Recomendacion(this.timeToWait);
 		List<Recomendacion> recomendaciones = reco.backtracking(cursos);
 		//Ordenamos por cantidad de materias
 		ArrayList<Integer> cantMaterias = reco.cantMaterias(recomendaciones);
