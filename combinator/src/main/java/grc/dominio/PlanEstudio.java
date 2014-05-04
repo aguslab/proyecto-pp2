@@ -16,7 +16,6 @@ public class PlanEstudio
 {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false, columnDefinition = "blob")
 	private HashMap<Materia, Set<Materia>> correlativas;
