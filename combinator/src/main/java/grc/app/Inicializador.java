@@ -41,7 +41,6 @@ public class Inicializador
 		PlanEstudio pe = null;
 		List<MateriaAprobada> matAprobadas = null;
 		Set<Curso> cursosDisponibles = null;
-		List<Recomendacion> recomendacionesCursos = null;
 		try
 		{
 //			 generarAltas();
@@ -110,15 +109,8 @@ public class Inicializador
 		
 //		printRecomendaciones(recomendacionesCursos);
 		long timeToWait = 1000;
-		Modelo model = new Modelo(cursos, recomendacionesCursos, pe, timeToWait);
-		try
-		{
-			model.calcularRecomendaciones(cursos);
-		} catch (Exception e)
-		{
-			System.out.println("ERROR AL GENERAR RECOMEDACIONES!!!");
-			e.printStackTrace();
-		}
+		Modelo model = new Modelo(cursos, pe, timeToWait);
+		
 		GRCController controller = new GRCController();
 		GRCView vista = null;
 		try
@@ -130,7 +122,14 @@ public class Inicializador
 			e1.printStackTrace();
 		}
 		model.addObserver(vista);
-		
+		try
+		{
+			model.calcularRecomendaciones(cursos);
+		} catch (Exception e)
+		{
+			System.out.println("ERROR AL GENERAR RECOMEDACIONES!!!");
+			e.printStackTrace();
+		}
 		try
 		{
 			vista.initVista();
