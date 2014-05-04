@@ -2,10 +2,6 @@ package grc.dao;
 
 import grc.dao.MateriaDAO;
 import grc.dominio.Materia;
-import grc.dominio.MateriaAprobada;
-
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.Test;
