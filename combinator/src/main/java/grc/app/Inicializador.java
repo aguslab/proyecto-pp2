@@ -109,8 +109,8 @@ public class Inicializador
 //		}
 		
 //		printRecomendaciones(recomendacionesCursos);
-		
-		Modelo model = new Modelo(cursos, recomendacionesCursos, pe);
+		long timeToWait = 1000;
+		Modelo model = new Modelo(cursos, recomendacionesCursos, pe, timeToWait);
 		try
 		{
 			model.calcularRecomendaciones(cursos);
@@ -131,14 +131,6 @@ public class Inicializador
 		}
 		model.addObserver(vista);
 		
-//		try
-//		{
-//			new Escritorio();
-//		} catch (Exception e1)
-//		{
-//			System.out.println("ERROR AL INICIAR ESCRITORIOOOO");
-//			e1.printStackTrace();
-//		}
 		try
 		{
 			vista.initVista();
