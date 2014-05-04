@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -31,12 +30,15 @@ public class Recomendacion implements Serializable
 	boolean[] viernes = new boolean[24];
 	boolean[] sabado = new boolean[24];
 
-	private long timeToWait = 1000;
+	private long timeToWait;
 	private long timeInit;
-	private boolean finishRecoOK = true;
-	public Recomendacion()
+	private boolean finishRecoOK;
+	
+	public Recomendacion(long timeToWait)
 	{
+		this.timeToWait = timeToWait;
 		this.recomendacion = new ArrayList<Curso>();
+		finishRecoOK = true;
 	}
 
 	public List<Curso> getRecomendacion()
@@ -48,8 +50,8 @@ public class Recomendacion implements Serializable
 			IOException
 	{
 		List<Recomendacion> resultado = new ArrayList<Recomendacion>();
-		Recomendacion recomendaciontemp = new Recomendacion();
-		timeInit = new Date().getTime();
+		Recomendacion recomendaciontemp = new Recomendacion(timeToWait);
+		this.timeInit = new Date().getTime();
 		armarSubconjuntos(resultado, cursos, recomendaciontemp, 0);
 		return resultado;
 	}
@@ -83,7 +85,6 @@ public class Recomendacion implements Serializable
 
 	public ArrayList<Integer> cantMaterias(List<Recomendacion> recomendaciones)
 	{
-		Materia materia;
 		ArrayList<Integer> cantidadMaterias = new ArrayList<Integer>();
 		// Cuento la cantidad de poscorrelativas de cada recomendacion
 		for (Recomendacion r : recomendaciones)
@@ -128,7 +129,7 @@ public class Recomendacion implements Serializable
 		}
 		return cantidadPoscorrelativas;
 	}
-	
+
 	public List<Recomendacion> ordenarRecomendaciones(List<Recomendacion> recomendaciones,
 			ArrayList<Integer> cantidad)
 	{
@@ -245,37 +246,37 @@ public class Recomendacion implements Serializable
 
 			if (dia.equalsIgnoreCase("Lunes"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (lunes[i] == false);
 				}
 			} else if (dia.equalsIgnoreCase("Martes"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (martes[i] == false);
 				}
 			} else if (dia.equalsIgnoreCase("Miercoles"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (miercoles[i] == false);
 				}
 			} else if (dia.equalsIgnoreCase("Jueves"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (jueves[i] == false);
 				}
 			} else if (dia.equalsIgnoreCase("Viernes"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (viernes[i] == false);
 				}
 			} else if (dia.equalsIgnoreCase("Sabado"))
 			{
-				for (int i = horaInicio; i < horaFin && horarioVacio; i++)
+				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (sabado[i] == false);
 				}
@@ -290,4 +291,9 @@ public class Recomendacion implements Serializable
 		return finishRecoOK;
 	}
 
+	public void setRecomendacion(List<Curso> recomendacion)
+	{
+		this.recomendacion = recomendacion;
+	}
+	
 }
