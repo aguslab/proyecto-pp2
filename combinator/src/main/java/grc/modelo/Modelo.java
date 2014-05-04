@@ -18,10 +18,9 @@ public class Modelo extends Observable
 	private long timeToWait;
 	// private List<Observer> vistaObserver;
 
-	public Modelo(List<Curso> cursosDisponibles, List<Recomendacion> recomendaciones, PlanEstudio planEstudio, long timeToWait)
+	public Modelo(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeToWait)
 	{
 		this.cursosDisponibles = cursosDisponibles;
-		this.recomendaciones = recomendaciones;
 		this.planEstudio = planEstudio;
 		this.timeToWait = timeToWait;
 	}
