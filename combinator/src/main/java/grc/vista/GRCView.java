@@ -295,8 +295,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 		getContentPane().add(escritorio, BorderLayout.NORTH);
 		getContentPane().add(barraDeEstado, BorderLayout.SOUTH);
-		mostrarRecos();
-		System.out.println("AAAAAAAAAAAAAAAAAAAA");
 	}
 
 	public void initVista() throws Exception
