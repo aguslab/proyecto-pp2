@@ -63,7 +63,6 @@ public class Inicializador
 		try
 		{
 			pe = PlanEstudioDAO.getInstancia().getPlanEstudioDeCarrera(licSistemas);
-			pe.getCarrera().getNombre();
 		} catch (Exception e)
 		{
 			System.out.println("PROBLEMA AL OBTENER PLAN DE ESTUDIOS!!!");
@@ -108,8 +107,8 @@ public class Inicializador
 //		}
 		
 //		printRecomendaciones(recomendacionesCursos);
-		long timeToWait = 1000;
-		Modelo model = new Modelo(cursos, pe, timeToWait);
+		long timeOut = 100;
+		Modelo model = new Modelo(cursos, pe, timeOut);
 		
 		GRCController controller = new GRCController();
 		GRCView vista = null;
@@ -124,7 +123,7 @@ public class Inicializador
 		model.addObserver(vista);
 		try
 		{
-			model.calcularRecomendaciones(cursos);
+			model.calcularRecomendaciones(cursos, false);
 		} catch (Exception e)
 		{
 			System.out.println("ERROR AL GENERAR RECOMEDACIONES!!!");
