@@ -123,7 +123,7 @@ public class Inicializador
 		model.addObserver(vista);
 		try
 		{
-			model.calcularRecomendaciones(cursos, false);
+			model.actualizarRecomendaciones(cursos, false);
 		} catch (Exception e)
 		{
 			System.out.println("ERROR AL GENERAR RECOMEDACIONES!!!");
