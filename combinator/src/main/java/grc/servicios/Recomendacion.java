@@ -30,15 +30,17 @@ public class Recomendacion implements Serializable
 	boolean[] viernes = new boolean[24];
 	boolean[] sabado = new boolean[24];
 
-	private long timeToWait;
+	private long timeOut;
 	private long timeInit;
 	private boolean finishRecoOK;
+	private boolean puedeEsperar;
 	
 	public Recomendacion(long timeToWait)
 	{
-		this.timeToWait = timeToWait;
+		this.timeOut = timeToWait;
 		this.recomendacion = new ArrayList<Curso>();
 		finishRecoOK = true;
+		this.puedeEsperar = false;
 	}
 
 	public List<Curso> getRecomendacion()
@@ -50,7 +52,7 @@ public class Recomendacion implements Serializable
 			IOException
 	{
 		List<Recomendacion> resultado = new ArrayList<Recomendacion>();
-		Recomendacion recomendaciontemp = new Recomendacion(timeToWait);
+		Recomendacion recomendaciontemp = new Recomendacion(timeOut);
 		this.timeInit = new Date().getTime();
 		armarSubconjuntos(resultado, cursos, recomendaciontemp, 0);
 		return resultado;
@@ -59,9 +61,8 @@ public class Recomendacion implements Serializable
 	private void armarSubconjuntos(List<Recomendacion> resultado, List<Curso> cursos,
 			Recomendacion recomendaciontemp, int desde) throws ClassNotFoundException, IOException
 	{
-
 		long timeNow = new Date().getTime();
-		if (timeNow - this.timeInit > timeToWait)
+		if (!this.puedeEsperar && timeNow - this.timeInit > timeOut)
 		{
 			System.out.println("SE PASO EL TIEMPO!!!");
 			finishRecoOK = false;
@@ -295,5 +296,12 @@ public class Recomendacion implements Serializable
 	{
 		this.recomendacion = recomendacion;
 	}
+
+	public void setPuedeEsperar(boolean puedeEsperar)
+	{
+		this.puedeEsperar = puedeEsperar;
+	}
+	
+	
 	
 }
