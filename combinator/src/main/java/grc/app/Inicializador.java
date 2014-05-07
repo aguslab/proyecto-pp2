@@ -50,8 +50,8 @@ public class Inicializador
 
 		vista = new GRCView(model, controller);
 		model.addObserver(vista);
-		model.actualizarRecomendaciones(cursos, false);
 		vista.initVista();
+		model.actualizarRecomendaciones(cursos, false);
 	}
 
 }
