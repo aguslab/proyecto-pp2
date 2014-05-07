@@ -1,7 +1,7 @@
 package grc.vista;
 
 import grc.controlador.GRCController;
-import grc.modelo.Modelo;
+import grc.modelo.GRCModel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,8 +11,6 @@ import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class GRCView extends JFrame implements Observer, ActionListener
 {
-	private Modelo model;
+	private GRCModel model;
 	private GRCController controller;
 	private JDesktopPane escritorio = new JDesktopPane();
 	private JMenuBar barra;
@@ -43,7 +41,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 
-	public GRCView(Modelo model, final GRCController controller) throws Exception
+	public GRCView(GRCModel model, final GRCController controller) throws Exception
 	{
 		super("Recomendaciones de materias a cursar");
 		this.model = model;
@@ -238,7 +236,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 					controller.borrarValores(tablaTempDias);
 					try
 					{
-						tablaTempDias = controller.cambiarTablaDias(tablaTempDias, posElegida);
+						controller.cambiarTablaDias(tablaTempDias, posElegida);
 					} catch (Exception e1)
 					{
 						e1.printStackTrace();
@@ -371,7 +369,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	{
 		try
 		{
-			System.out.println("UPDATE DE LA VIEW");
 			mostrarRecos();
 		} catch (Exception e)
 		{
@@ -380,7 +377,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		}
 	}
 
-	public Modelo getModelo()
+	public GRCModel getModelo()
 	{
 		return this.model;
 	}
@@ -402,7 +399,5 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		
 	}
 }
