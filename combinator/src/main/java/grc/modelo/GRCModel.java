@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class Modelo extends Observable
+public class GRCModel extends Observable
 {
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
@@ -18,7 +18,7 @@ public class Modelo extends Observable
 	private long timeToWait;
 	// private List<Observer> vistaObserver;
 
-	public Modelo(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeToWait)
+	public GRCModel(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeToWait)
 	{
 		this.cursosDisponibles = cursosDisponibles;
 		this.planEstudio = planEstudio;
