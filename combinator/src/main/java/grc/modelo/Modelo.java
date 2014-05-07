@@ -46,10 +46,11 @@ public class Modelo extends Observable
 		this.notifyObservers();
 	}
 
-	public void calcularRecomendaciones(List<Curso> cursos) throws ClassNotFoundException,
+	public void actualizarRecomendaciones(List<Curso> cursos, boolean puedeEsperar) throws ClassNotFoundException,
 			IOException
 	{
 		Recomendacion reco = new Recomendacion(this.timeToWait);
+		reco.setPuedeEsperar(puedeEsperar);
 		List<Recomendacion> recomendaciones = reco.backtracking(cursos);
 		//Ordenamos por cantidad de materias
 		ArrayList<Integer> cantMaterias = reco.cantMaterias(recomendaciones);
