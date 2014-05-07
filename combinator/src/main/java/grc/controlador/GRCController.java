@@ -171,7 +171,7 @@ public class GRCController
 				horarios);
 		System.out.println("cantida cursos: "+cursos.size());
 		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
-		this.vista.getModelo().calcularRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
+		this.vista.getModelo().actualizarRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
 	}
 
 	public GRCView getVista()
