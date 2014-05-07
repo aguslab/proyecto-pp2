@@ -54,6 +54,9 @@ public class EntityManagerUtil
 //		configOverrides.put("hibernate.show_sql","true");
 		
 		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
+		
+		//SonarQube
+//		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/pruebas?createDatabaseIfNotExist=true");
 		//FOR testing
 //		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
