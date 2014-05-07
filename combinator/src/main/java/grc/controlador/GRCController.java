@@ -4,7 +4,7 @@ import grc.dao.MateriaAprobadaDAO;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
-import grc.servicios.Filtrador;
+import grc.servicios.Filtro;
 import grc.servicios.Recomendacion;
 import grc.vista.GRCView;
 
@@ -20,12 +20,14 @@ public class GRCController
 	private boolean filtroManiana;
 	private boolean filtroTarde;
 	private boolean filtroNoche;
+	private boolean filtroPuedeEsperar;
 
 	public GRCController()
 	{
 		filtroManiana = true;
 		filtroTarde = true;
 		filtroNoche = true;
+		filtroPuedeEsperar = false;
 	}
 
 	public DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista)
@@ -53,10 +55,7 @@ public class GRCController
 						tablaDias.setValueAt(nombreMateria,  i-8, 2);
 					}
 				} else if (dia.equalsIgnoreCase("Miercoles")) {
-					System.out.println("HORAi" + horaInicio);
-					System.out.println("HORA F" + horaFin);
 					for (int i = horaInicio; i < horaFin; i++) {
-						System.out.println(i);
 						tablaDias.setValueAt(nombreMateria,  i-8, 3);
 					}
 				} else if (dia.equalsIgnoreCase("Jueves")) {
@@ -147,23 +146,10 @@ public class GRCController
 	}
 	
 
-	public void filtrarTurnos(boolean filtro, String turno) throws Exception
+	public void filtrarTurnos() throws Exception
 	{
 		List<Horario> horarios = new ArrayList<Horario>();
 		Horario horarTmp;
-		switch (turno) {
-			case "M" :
-				filtroManiana = filtro;
-				break;
-			case "T" :
-				filtroTarde = filtro;
-				break;
-			case "N" :
-				filtroNoche = filtro;
-				break;
-			default :
-				break;
-		}
 		if (filtroManiana)
 		{
 			horarTmp = new Horario(8, 12);
@@ -180,11 +166,12 @@ public class GRCController
 			horarios.add(horarTmp);
 		}
 
-		Filtrador f = new Filtrador();
+		Filtro f = new Filtro();
 		Set<Curso> cursos = f.getCursosDisponibles(this.vista.getModelo().getCursosDisponibles(),
 				horarios);
+		System.out.println("cantida cursos: "+cursos.size());
 		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
-		this.vista.getModelo().calcularRecomendaciones(cursosDisp);
+		this.vista.getModelo().calcularRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
 	}
 
 	public GRCView getVista()
@@ -197,17 +184,27 @@ public class GRCController
 		this.vista = vista;
 	}
 
-	public void cambioFiltros(boolean filtro, String turno)
+	public void cambioFiltros()
 	{
+		cambioPreferencias();
 		try
 		{
-			filtrarTurnos(filtro, turno);
+			filtrarTurnos();
 		} catch (Exception e)
 		{
 			System.out.println("ERROR AL FILTRAR!!!");
 			e.printStackTrace();
 		}
 
+	}
+
+	private void cambioPreferencias()
+	{
+		this.filtroManiana = this.vista.getCbManiana();
+		this.filtroTarde = this.vista.getCbTarde();
+		this.filtroNoche = this.vista.getCbNoche();
+		this.filtroPuedeEsperar = this.vista.puedeEsperar();
+		System.out.println(filtroPuedeEsperar + "puede esperar!!!");
 	}
 
 }
