@@ -64,7 +64,6 @@ public class Recomendacion implements Serializable
 		long timeNow = new Date().getTime();
 		if (!this.puedeEsperar && timeNow - this.timeInit > timeOut)
 		{
-			System.out.println("SE PASO EL TIEMPO!!!");
 			finishRecoOK = false;
 			return;
 		}
@@ -102,7 +101,6 @@ public class Recomendacion implements Serializable
 		HashMap<Materia, Set<Materia>> correlativas = pe.getCorrelativas();
 		ArrayList<Integer> cantidadPoscorrelativas = new ArrayList<Integer>();
 		Materia materia;
-		int la = 0;
 		for (Recomendacion r : recomendaciones) // Por cada recomendacion
 		{
 			Integer cantPosCorrelativas = 0;
@@ -120,11 +118,7 @@ public class Recomendacion implements Serializable
 						}
 					}
 				}
-				System.out.println(c.getMateria().getNombre());
 			}
-			System.out.println("Reco " + la +" Cantidad: " + cantPosCorrelativas);
-			la++;
-			System.out.println("-----------------------------------------------------");
 			cantidadPoscorrelativas.add(cantPosCorrelativas); // termino de contar y las
 													// guardo en una lista
 		}
