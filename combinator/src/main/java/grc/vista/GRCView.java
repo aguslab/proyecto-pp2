@@ -133,6 +133,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 //		));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
+		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
