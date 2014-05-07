@@ -35,6 +35,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	public JCheckBox cbManiana;
 	private JCheckBox cbTarde;
 	private JCheckBox cbNoche;
+	private JCheckBox cbPuedeEsperar;
 	private JLabel firma;
 	private JLabel materia;
 	private JTable tablaAprobadas;
@@ -146,8 +147,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbManiana = new JCheckBox("");
 		cbManiana.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("filtro mañanaaaaa");
-				controller.cambioFiltros(getCbManiana(), "M");
+				controller.cambioFiltros();
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
@@ -166,7 +166,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbTarde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("filtro tardeeeeee");
-				controller.cambioFiltros(getCbTarde(), "T");
+				controller.cambioFiltros();
 			}
 		});
 		cbTarde.setBounds(208, 7, 21, 23);
@@ -180,8 +180,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbNoche = new JCheckBox("");
 		cbNoche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("filtro nocheeeee");
-				controller.cambioFiltros(getCbNoche(), "N");
+				controller.cambioFiltros();
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
@@ -212,6 +211,19 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		});
 		listaRecomendaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaRecomendaciones);
+		
+		cbPuedeEsperar = new JCheckBox();
+		cbPuedeEsperar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.cambioFiltros();
+			}
+		});
+		cbPuedeEsperar.setBounds(490, 7, 21, 23);
+		panelRecomendaciones.add(cbPuedeEsperar);
+		
+		JLabel label = new JLabel("Puedo Esperar :)");
+		label.setBounds(380, 11, 111, 14);
+		panelRecomendaciones.add(label);
 		listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
 		{
 
@@ -348,6 +360,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	public boolean getCbNoche()
 	{
 		return cbNoche.isSelected();
+	}
+	
+	public boolean puedeEsperar()
+	{
+		return cbPuedeEsperar.isSelected();
 	}
 
 	public void update(Observable o, Object arg)
