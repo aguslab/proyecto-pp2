@@ -13,7 +13,7 @@ import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.dominio.PlanEstudio;
-import grc.modelo.Modelo;
+import grc.modelo.GRCModel;
 import grc.servicios.Filtro;
 import grc.servicios.Recomendacion;
 import grc.vista.GRCView;
@@ -108,7 +108,7 @@ public class Inicializador
 		
 //		printRecomendaciones(recomendacionesCursos);
 		long timeOut = 50;
-		Modelo model = new Modelo(cursos, pe, timeOut);
+		GRCModel model = new GRCModel(cursos, pe, timeOut);
 		
 		GRCController controller = new GRCController();
 		GRCView vista = null;
