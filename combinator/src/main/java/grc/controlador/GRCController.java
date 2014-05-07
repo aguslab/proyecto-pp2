@@ -173,11 +173,6 @@ public class GRCController
 		this.vista.getModelo().actualizarRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
 	}
 
-	public GRCView getVista()
-	{
-		return vista;
-	}
-
 	public void setVista(GRCView vista)
 	{
 		this.vista = vista;
@@ -203,7 +198,6 @@ public class GRCController
 		this.filtroTarde = this.vista.getCbTarde();
 		this.filtroNoche = this.vista.getCbNoche();
 		this.filtroPuedeEsperar = this.vista.puedeEsperar();
-		System.out.println(filtroPuedeEsperar + "puede esperar!!!");
 	}
 
 }
