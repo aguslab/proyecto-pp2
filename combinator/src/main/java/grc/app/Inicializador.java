@@ -14,7 +14,7 @@ import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.dominio.PlanEstudio;
 import grc.modelo.Modelo;
-import grc.servicios.AdministradorCursos;
+import grc.servicios.Filtro;
 import grc.servicios.Recomendacion;
 import grc.vista.GRCView;
 
@@ -78,11 +78,11 @@ public class Inicializador
 			e.printStackTrace();
 		}
 
-		AdministradorCursos ac = new AdministradorCursos();
+		Filtro fil = new Filtro();
 
 		try
 		{
-			cursosDisponibles = ac.getCursosDisponibles(pe, matAprobadas);
+			cursosDisponibles = fil.getCursosDisponibles(pe, matAprobadas);
 		} catch (Exception e)
 		{
 			System.out.println("PROBLEMA AL OBTENER CURSOS DISPONIBLES!!!");
@@ -107,7 +107,7 @@ public class Inicializador
 //		}
 		
 //		printRecomendaciones(recomendacionesCursos);
-		long timeOut = 100;
+		long timeOut = 50;
 		Modelo model = new Modelo(cursos, pe, timeOut);
 		
 		GRCController controller = new GRCController();
