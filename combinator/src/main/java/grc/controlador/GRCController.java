@@ -30,13 +30,13 @@ public class GRCController
 		filtroPuedeEsperar = false;
 	}
 
-	public DefaultTableModel cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista)
+	public void cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista)
 			throws Exception
 	{
 		String nombreMateria = "";
 		List<Recomendacion> recomendaciones = this.vista.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
-			return tablaDias;
+			return;
 		Recomendacion r = recomendaciones.get(posItemLista);
 		for (Curso c : r.getRecomendacion())
 		{
@@ -73,7 +73,6 @@ public class GRCController
 				}
 			}
 		}
-		return tablaDias;
 	}
 
 	public ArrayList<String> getRecomendaciones() throws Exception
