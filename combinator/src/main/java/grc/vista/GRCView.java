@@ -40,6 +40,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	DefaultListModel modelListaRecomendaciones;
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
+	JTable tablaDias;
 
 	public GRCView(GRCModel model, final GRCController controller) throws Exception
 	{
@@ -76,7 +77,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2, (Toolkit
 				.getDefaultToolkit().getScreenSize().height - getHeight()) / 2);
-		setVisible(true);
+//		setVisible(true);
 		final JTabbedPane tabOpciones = new JTabbedPane(JTabbedPane.LEFT);
 		tabOpciones.setBounds(10, 11, 772, 474);
 		getContentPane().add(tabOpciones);
@@ -93,7 +94,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		spRecomendacion.setEnabled(false);
 		spRecomendacion.setBounds(10, 241, 1125, 319);
 		panelRecomendaciones.add(spRecomendacion);
-		final JTable tablaDias = new JTable(modeloTablaDias);
+		tablaDias = new JTable(modeloTablaDias);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
 		tablaDias.setModel(new DefaultTableModel(
@@ -396,6 +397,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		if(!this.model.isFinishRecomendacionOK()){
 			mensajeNoCompletoReco();
 		}
+	}
+	
+	public DefaultTableModel getTablaDias()
+	{
+		return (DefaultTableModel) tablaDias.getModel();
 	}
 
 	public void actionPerformed(ActionEvent e)
