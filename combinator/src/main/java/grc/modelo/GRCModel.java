@@ -3,6 +3,7 @@ package grc.modelo;
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
 import grc.servicios.FiltroMaterias;
+import grc.servicios.FiltroMateriasyPoscorrelativas;
 import grc.servicios.FiltroPoscorrelativas;
 import grc.servicios.Recomendacion;
 
@@ -18,6 +19,7 @@ public class GRCModel extends Observable
 	private boolean finishRecoOK;
 	private PlanEstudio planEstudio;
 	private long timeToWait;
+	private Recomendacion recomendacionActual;
 	// private List<Observer> vistaObserver;
 
 	public GRCModel(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeToWait)
@@ -25,6 +27,7 @@ public class GRCModel extends Observable
 		this.cursosDisponibles = cursosDisponibles;
 		this.planEstudio = planEstudio;
 		this.timeToWait = timeToWait;
+		this.recomendaciones = new ArrayList<Recomendacion>();
 	}
 
 	public List<Curso> getCursosDisponibles()
@@ -72,9 +75,27 @@ public class GRCModel extends Observable
 		this.setRecomendaciones(recomendaciones);
 	}
 	
-	public void actualizarRecomendacion(List<Recomendacion> recomendaciones) throws ClassNotFoundException,
-	IOException
+	public void actualizarOrdenamiento(boolean filtroMaterias, boolean filtroPoscorrelativas)
 	{
+		if(filtroMaterias && !filtroPoscorrelativas)
+		{
+			System.out.println("Filtro materias");
+			FiltroMaterias fm = new FiltroMaterias();
+			fm.ordenar(recomendaciones);
+		}
+		else if (filtroPoscorrelativas && !filtroMaterias)
+		{
+			System.out.println("Filtro poscorrelativas");
+			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
+			fp.ordenar(recomendaciones, planEstudio);
+		}
+		else if (filtroPoscorrelativas && filtroMaterias)
+		{
+			System.out.println("Filtro ambos");
+			FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
+			fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
+		}
+		this.finishRecoOK = true;
 		this.setRecomendaciones(recomendaciones);
 	}
 
@@ -82,15 +103,11 @@ public class GRCModel extends Observable
 	{
 		return finishRecoOK;
 	}
-	
-	// public List<Observer> getVistaObserver() {
-	// return vistaObserver;
-	// }
 
-	// public void setVistaObserver(List<Observer> vistaObserver) {
-	// this.vistaObserver = vistaObserver;
-	// }
+	public void actualizarRecomendacionActual(int posElegida)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
-	
-
 }
