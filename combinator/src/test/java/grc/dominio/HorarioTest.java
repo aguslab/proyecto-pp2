@@ -33,7 +33,7 @@ public class HorarioTest
     public void testHorario(){
     	Horario h = new Horario();
     	Dia lun = Dia.LUNES;
-    	h.setDia(lun.name());
+    	h.setDia(lun);
     	h.setHoraFin(22);
     	h.setHoraInicio(18);
     	

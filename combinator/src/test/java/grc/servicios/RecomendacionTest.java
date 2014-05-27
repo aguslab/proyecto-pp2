@@ -3,6 +3,7 @@ package grc.servicios;
 import grc.app.Alta_mat_cur_matApr;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
+import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
@@ -46,14 +47,14 @@ public class RecomendacionTest extends TestCase
 		Materia mn = new Materia("N");
 		Materia mt = new Materia("T");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("LUNES", 18, 22));
-		h.add(new Horario("MARTES", 18, 20));
+		h.add(new Horario(Dia.LUNES, 18, 22));
+		h.add(new Horario(Dia.MARTES, 18, 20));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario("LUNES", 18, 20));
-		h2.add(new Horario("MIERCOLES", 20, 22));
+		h2.add(new Horario(Dia.LUNES, 18, 20));
+		h2.add(new Horario(Dia.MIERCOLES, 20, 22));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h2.add(new Horario("MARTES", 20, 22));
-		h2.add(new Horario("MIERCOLES", 20, 22));
+		h2.add(new Horario(Dia.MARTES, 20, 22));
+		h2.add(new Horario(Dia.MIERCOLES, 20, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -76,14 +77,14 @@ public class RecomendacionTest extends TestCase
 		Materia mn = new Materia("N");
 		Materia mt = new Materia("T");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("LUNES", 18, 22));
-		h.add(new Horario("MARTES", 18, 22));
+		h.add(new Horario(Dia.LUNES, 18, 22));
+		h.add(new Horario(Dia.MARTES, 18, 22));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario("LUNES", 18, 22));
-		h2.add(new Horario("MIERCOLES", 18, 22));
+		h2.add(new Horario(Dia.LUNES, 18, 22));
+		h2.add(new Horario(Dia.MIERCOLES, 18, 22));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h3.add(new Horario("MARTES", 18, 22));
-		h3.add(new Horario("MIERCOLES", 18, 22));
+		h3.add(new Horario(Dia.MARTES, 18, 22));
+		h3.add(new Horario(Dia.MIERCOLES, 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -106,15 +107,15 @@ public class RecomendacionTest extends TestCase
 		Materia mn = new Materia("N");
 		Materia mt = new Materia("T");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario("VIERNES", 18, 20));
-		h2.add(new Horario("SABADO", 8, 12));
+		h2.add(new Horario(Dia.VIERNES, 18, 20));
+		h2.add(new Horario(Dia.SABADO, 8, 12));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h2.add(new Horario("JUEVES", 20, 22));
-		h2.add(new Horario("VIERNES", 8, 12));
+		h2.add(new Horario(Dia.JUEVES, 20, 22));
+		h2.add(new Horario(Dia.VIERNES, 8, 12));
 		List<Horario> h4 = new ArrayList<Horario>();
-		h4.add(new Horario("SABADO", 10, 12));
+		h4.add(new Horario(Dia.SABADO, 10, 12));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -140,15 +141,15 @@ public class RecomendacionTest extends TestCase
 		Materia mn = new Materia("N");
 		Materia mt = new Materia("T");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 20, 22));
+		h.add(new Horario(Dia.JUEVES, 20, 22));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario("VIERNES", 18, 22));
-		h2.add(new Horario("SABADO", 8, 12));
+		h2.add(new Horario(Dia.VIERNES, 18, 22));
+		h2.add(new Horario(Dia.SABADO, 8, 12));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h3.add(new Horario("JUEVES", 20, 22));
-		h3.add(new Horario("VIERNES", 18, 22));
+		h3.add(new Horario(Dia.JUEVES, 20, 22));
+		h3.add(new Horario(Dia.VIERNES, 18, 22));
 		List<Horario> h4 = new ArrayList<Horario>();
-		h4.add(new Horario("SABADO", 8, 10));
+		h4.add(new Horario(Dia.SABADO, 8, 10));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -172,7 +173,7 @@ public class RecomendacionTest extends TestCase
 	{
 		Materia m = new Materia("M");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("wtf", 18, 22));
+		h.add(new Horario(Dia.valueOf("asd"), 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -197,7 +198,7 @@ public class RecomendacionTest extends TestCase
 	{
 		Materia m = new Materia("M");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -218,19 +219,19 @@ public class RecomendacionTest extends TestCase
 		Materia mt = new Materia("T");
 		Materia ma = new Materia("E");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
-		h.add(new Horario("SABADO", 8, 12));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
+		h.add(new Horario(Dia.SABADO, 8, 12));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario("VIERNES", 18, 20));
-		h2.add(new Horario("SABADO", 8, 12));
-		h2.add(new Horario("LUNES", 8, 12));
-		h2.add(new Horario("MARTES", 18, 20));
+		h2.add(new Horario(Dia.VIERNES, 18, 20));
+		h2.add(new Horario(Dia.SABADO, 8, 12));
+		h2.add(new Horario(Dia.LUNES, 8, 12));
+		h2.add(new Horario(Dia.MARTES, 18, 20));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h3.add(new Horario("JUEVES", 20, 22));
-		h3.add(new Horario("VIERNES", 8, 12));
-		h3.add(new Horario("SABADO", 8, 12));
+		h3.add(new Horario(Dia.JUEVES, 20, 22));
+		h3.add(new Horario(Dia.VIERNES, 8, 12));
+		h3.add(new Horario(Dia.SABADO, 8, 12));
 		List<Horario> h4 = new ArrayList<Horario>();
-		h4.add(new Horario("SABADO", 10, 12));
+		h4.add(new Horario(Dia.SABADO, 10, 12));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -284,7 +285,7 @@ public class RecomendacionTest extends TestCase
 		Materia m = new Materia("Ingles Lectocomprension I");
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
 		Curso c1 = new Curso(ca, m, h);
@@ -308,7 +309,7 @@ public class RecomendacionTest extends TestCase
 		Materia m = new Materia("Ingles Lectocomprension III");
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
 		Curso c1 = new Curso(ca, m, h);
@@ -332,7 +333,7 @@ public class RecomendacionTest extends TestCase
 	{
 		Materia m = new Materia("Ingles Lectocomprension I");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -376,7 +377,7 @@ public class RecomendacionTest extends TestCase
 	{
 		Materia m = new Materia("Ingles Lectocomprension I");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -388,7 +389,7 @@ public class RecomendacionTest extends TestCase
 
 		Materia m2 = new Materia("Ingles Lectocomprension II");
 		List<Horario> h2 = new ArrayList<Horario>();
-		h.add(new Horario("VIERNES", 18, 22));
+		h.add(new Horario(Dia.VIERNES, 18, 22));
 		Curso c2 = new Curso(ca, m2, h2);
 		List<Curso> cursos2 = new ArrayList<Curso>();
 		cursos2.add(c1);
@@ -415,7 +416,7 @@ public class RecomendacionTest extends TestCase
 	{
 		Materia m = new Materia("Ingles Lectocomprension I");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario("JUEVES", 18, 22));
+		h.add(new Horario(Dia.JUEVES, 18, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
@@ -427,7 +428,7 @@ public class RecomendacionTest extends TestCase
 
 		Materia m2 = new Materia("Ingles Lectocomprension II");
 		List<Horario> h2 = new ArrayList<Horario>();
-		h.add(new Horario("VIERNES", 18, 22));
+		h.add(new Horario(Dia.VIERNES, 18, 22));
 		Curso c2 = new Curso(ca, m2, h2);
 		List<Curso> cursos2 = new ArrayList<Curso>();
 		cursos2.add(c1);

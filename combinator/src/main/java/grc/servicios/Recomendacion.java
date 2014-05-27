@@ -1,6 +1,7 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
+import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
@@ -186,40 +187,40 @@ public class Recomendacion implements Serializable
 	{
 		for (Horario horario : curso.getHorario())
 		{
-			String dia = horario.getDia();
+			Dia dia = horario.getDia();
 			int horaInicio = horario.getHoraInicio();
 			int horaFin = horario.getHoraFin();
-			if (dia.equalsIgnoreCase("Lunes"))
+			if (dia.name().equalsIgnoreCase("Lunes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					lunes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Martes"))
+			} else if (dia.name().equalsIgnoreCase("Martes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					martes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Miercoles"))
+			} else if (dia.name().equalsIgnoreCase("Miercoles"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					miercoles[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Jueves"))
+			} else if (dia.name().equalsIgnoreCase("Jueves"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					jueves[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Viernes"))
+			} else if (dia.name().equalsIgnoreCase("Viernes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					viernes[i] = valorASetear;
 				}
-			} else if (dia.equalsIgnoreCase("Sabado"))
+			} else if (dia.name().equalsIgnoreCase("Sabado"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
@@ -235,41 +236,41 @@ public class Recomendacion implements Serializable
 		boolean horarioVacio = true;
 		for (Horario horario : curso.getHorario())
 		{
-			String dia = horario.getDia();
+			Dia dia = horario.getDia();
 			int horaInicio = horario.getHoraInicio();
 			int horaFin = horario.getHoraFin();
 
-			if (dia.equalsIgnoreCase("Lunes"))
+			if (dia.name().equalsIgnoreCase("Lunes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (lunes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Martes"))
+			} else if (dia.name().equalsIgnoreCase("Martes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (martes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Miercoles"))
+			} else if (dia.name().equalsIgnoreCase("Miercoles"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (miercoles[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Jueves"))
+			} else if (dia.name().equalsIgnoreCase("Jueves"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (jueves[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Viernes"))
+			} else if (dia.name().equalsIgnoreCase("Viernes"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{
 					horarioVacio = horarioVacio && (viernes[i] == false);
 				}
-			} else if (dia.equalsIgnoreCase("Sabado"))
+			} else if (dia.name().equalsIgnoreCase("Sabado"))
 			{
 				for (int i = horaInicio; i < horaFin; i++)
 				{

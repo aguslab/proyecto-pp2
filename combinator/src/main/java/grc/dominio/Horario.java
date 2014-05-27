@@ -22,13 +22,13 @@ public class Horario implements Serializable
 	@Column(nullable = false)
 	private int horaFin;
 	@Column(nullable = false)
-	private String dia;//TODO: cambiar por enum??
+	private Dia dia;//TODO: cambiar por enum??
 	
 	
 	public Horario()
 	{
 	}
-	public Horario(String dia, int horaInicio, int horaFin)
+	public Horario(Dia dia, int horaInicio, int horaFin)
 	{
 		this.dia = dia;
 		this.horaInicio = horaInicio;
@@ -71,12 +71,12 @@ public class Horario implements Serializable
 		this.horaFin = horaFin;
 	}
 	
-	public String getDia()
+	public Dia getDia()
 	{
 		return dia;
 	}
 	
-	public void setDia(String dia)
+	public void setDia(Dia dia)
 	{
 		this.dia = dia;
 	}

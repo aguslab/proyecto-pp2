@@ -1,6 +1,7 @@
 package grc.dao;
 
 import grc.dao.HorarioDAO;
+import grc.dominio.Dia;
 import grc.dominio.Horario;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -40,7 +41,7 @@ public class HorarioDAOTest extends TestCase {
 
 	public void testAltaHorarioOk() {
 
-		Horario h = new Horario("Lunes", 18, 22);
+		Horario h = new Horario(Dia.LUNES, 18, 22);
 		try
 		{
 			HorarioDAO.getInstancia().alta(h);

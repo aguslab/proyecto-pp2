@@ -2,6 +2,7 @@ package grc.controlador;
 
 import grc.dao.MateriaAprobadaDAO;
 import grc.dominio.Curso;
+import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.modelo.GRCModel;
@@ -43,40 +44,40 @@ public class GRCController
 			nombreMateria = c.getMateria().getNombre();
 			for (Horario horario : c.getHorario())
 			{
-				String dia = horario.getDia();
+				Dia dia = horario.getDia();
 				int horaInicio = horario.getHoraInicio();
 				int horaFin = horario.getHoraFin();
-				if (dia.equalsIgnoreCase("Lunes"))
+				if (dia.name().equalsIgnoreCase("Lunes"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
 						tablaDias.setValueAt(nombreMateria, i - 8, 1);
 					}
-				} else if (dia.equalsIgnoreCase("Martes"))
+				} else if (dia.name().equalsIgnoreCase("Martes"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
 						tablaDias.setValueAt(nombreMateria, i - 8, 2);
 					}
-				} else if (dia.equalsIgnoreCase("Miercoles"))
+				} else if (dia.name().equalsIgnoreCase("Miercoles"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
 						tablaDias.setValueAt(nombreMateria, i - 8, 3);
 					}
-				} else if (dia.equalsIgnoreCase("Jueves"))
+				} else if (dia.name().equalsIgnoreCase("Jueves"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
 						tablaDias.setValueAt(nombreMateria, i - 8, 4);
 					}
-				} else if (dia.equalsIgnoreCase("Viernes"))
+				} else if (dia.name().equalsIgnoreCase("Viernes"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
 						tablaDias.setValueAt(nombreMateria, i - 8, 5);
 					}
-				} else if (dia.equalsIgnoreCase("Sabado"))
+				} else if (dia.name().equalsIgnoreCase("Sabado"))
 				{
 					for (int i = horaInicio; i < horaFin; i++)
 					{
