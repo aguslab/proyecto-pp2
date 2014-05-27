@@ -5,6 +5,7 @@ import grc.modelo.GRCModel;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -34,6 +35,8 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	private JCheckBox cbTarde;
 	private JCheckBox cbNoche;
 	private JCheckBox cbPuedeEsperar;
+	private JCheckBox cbCantMaterias;
+	private JCheckBox cbCantPoscorrelativas;
 	private JLabel firma;
 	private JLabel materia;
 	private JTable tablaAprobadas;
@@ -95,6 +98,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		spRecomendacion.setBounds(10, 241, 1125, 319);
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
+		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
 		tablaDias.setModel(new DefaultTableModel(
@@ -119,19 +123,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		));
 		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(15);
-//		tablaDias.setModel(new DefaultTableModel(
-//			new Object[][] {
-//				{"Lunes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//				{"Martes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//				{"Miercoles", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//				{"Jueves", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//				{"Viernes", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//				{"Sabado", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-//			},
-//			new String[] {
-//				"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
-//			}
-//		));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -224,9 +215,51 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		JLabel label = new JLabel("Puedo Esperar :)");
 		label.setBounds(380, 11, 111, 14);
 		panelRecomendaciones.add(label);
+		
+		JLabel lblCantMaterias = new JLabel("Materias");
+		lblCantMaterias.setBounds(125, 217, 57, 14);
+		panelRecomendaciones.add(lblCantMaterias);
+		
+		cbCantMaterias = new JCheckBox("");
+		cbCantMaterias.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try 
+				{
+					controller.filtrarRecomendaciones();
+				} 
+				catch (ClassNotFoundException | IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+		cbCantMaterias.setBounds(172, 213, 21, 23);
+		panelRecomendaciones.add(cbCantMaterias);
+		
+		JLabel lblCantPoscorrelativas = new JLabel("Poscorrelativas");
+		lblCantPoscorrelativas.setBounds(218, 217, 97, 14);
+		panelRecomendaciones.add(lblCantPoscorrelativas);
+		
+		cbCantPoscorrelativas = new JCheckBox("");
+		cbCantPoscorrelativas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try 
+				{
+					controller.filtrarRecomendaciones();
+				} 
+				catch (ClassNotFoundException | IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+		cbCantPoscorrelativas.setBounds(306, 213, 21, 23);
+		panelRecomendaciones.add(cbCantPoscorrelativas);
 		listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
 		{
-
 			public void valueChanged(ListSelectionEvent e)
 			{
 				if (e.getValueIsAdjusting() == false)
@@ -367,6 +400,16 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		return cbPuedeEsperar.isSelected();
 	}
 
+	public boolean getCbMaterias()
+	{
+		return cbCantMaterias.isSelected();
+	}
+	
+	public boolean getCbPoscorrelativas()
+	{
+		return cbCantPoscorrelativas.isSelected();
+	}
+	
 	public void update(Observable o, Object arg)
 	{
 		try
