@@ -4,15 +4,10 @@ import grc.dao.MateriaAprobadaDAO;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
-import grc.dominio.PlanEstudio;
+import grc.modelo.GRCModel;
 import grc.servicios.Filtro;
-import grc.servicios.FiltroMaterias;
-import grc.servicios.FiltroMateriasyPoscorrelativas;
-import grc.servicios.FiltroPoscorrelativas;
 import grc.servicios.Recomendacion;
-import grc.vista.GRCView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,61 +16,71 @@ import javax.swing.table.DefaultTableModel;
 
 public class GRCController
 {
-	private GRCView vista;
+	private GRCModel modelo;
 	private boolean filtroManiana;
 	private boolean filtroTarde;
 	private boolean filtroNoche;
 	private boolean filtroPuedeEsperar;
-	private boolean filtroMaterias;
-	private boolean filtroPoscorrelativas;
 
-	public GRCController()
+	public GRCController(GRCModel model)
 	{
-		filtroManiana = true;
-		filtroTarde = true;
-		filtroNoche = true;
+		filtroManiana = false;
+		filtroTarde = false;
+		filtroNoche = false;
 		filtroPuedeEsperar = false;
+		this.modelo = model;
 	}
 
-	public void cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista)
-			throws Exception
+	public void cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista) throws Exception
 	{
 		String nombreMateria = "";
-		List<Recomendacion> recomendaciones = this.vista.getModelo().getRecomendaciones();
+		List<Recomendacion> recomendaciones = null;// this.vista.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
 			return;
 		Recomendacion r = recomendaciones.get(posItemLista);
 		for (Curso c : r.getRecomendacion())
 		{
 			nombreMateria = c.getMateria().getNombre();
-			for (Horario horario : c.getHorario()) 
+			for (Horario horario : c.getHorario())
 			{
 				String dia = horario.getDia();
 				int horaInicio = horario.getHoraInicio();
 				int horaFin = horario.getHoraFin();
-				if (dia.equalsIgnoreCase("Lunes")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8,1);
+				if (dia.equalsIgnoreCase("Lunes"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 1);
 					}
-				} else if (dia.equalsIgnoreCase("Martes")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8, 2);
+				} else if (dia.equalsIgnoreCase("Martes"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 2);
 					}
-				} else if (dia.equalsIgnoreCase("Miercoles")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8, 3);
+				} else if (dia.equalsIgnoreCase("Miercoles"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 3);
 					}
-				} else if (dia.equalsIgnoreCase("Jueves")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8, 4);
+				} else if (dia.equalsIgnoreCase("Jueves"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 4);
 					}
-				} else if (dia.equalsIgnoreCase("Viernes")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8, 5);
+				} else if (dia.equalsIgnoreCase("Viernes"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 5);
 					}
-				} else if (dia.equalsIgnoreCase("Sabado")) {
-					for (int i = horaInicio; i < horaFin; i++) {
-						tablaDias.setValueAt(nombreMateria,  i-8, 6);
+				} else if (dia.equalsIgnoreCase("Sabado"))
+				{
+					for (int i = horaInicio; i < horaFin; i++)
+					{
+						tablaDias.setValueAt(nombreMateria, i - 8, 6);
 					}
 				}
 			}
@@ -84,7 +89,7 @@ public class GRCController
 
 	public ArrayList<String> getRecomendaciones() throws Exception
 	{
-		return armarRecomendacion(this.vista.getModelo().getRecomendaciones());
+		return armarRecomendacion(this.getModelo().getRecomendaciones());
 	}
 
 	public DefaultTableModel getMateriasAprobadas(DefaultTableModel tablaDias) throws Exception
@@ -103,27 +108,27 @@ public class GRCController
 		return tablaDias;
 	}
 
-	public DefaultTableModel borrarValores(DefaultTableModel tablaDias)
-	{
-		tablaDias.setRowCount(14);
-		tablaDias.setValueAt("8 a 9", 0, 0);
-		tablaDias.setValueAt("9 a 10", 1, 0);
-		tablaDias.setValueAt("10 a 11", 2, 0);
-		tablaDias.setValueAt("11 a 12", 3, 0);
-		tablaDias.setValueAt("12 a 13", 4, 0);
-		tablaDias.setValueAt("13 a 14", 5, 0);
-		tablaDias.setValueAt("14 a 15", 6, 0);
-		tablaDias.setValueAt("15 a 16", 7, 0);
-		tablaDias.setValueAt("16 a 17", 8, 0);
-		tablaDias.setValueAt("17 a 18", 9, 0);
-		tablaDias.setValueAt("18 a 19", 10, 0);
-		tablaDias.setValueAt("19 a 20", 11, 0);
-		tablaDias.setValueAt("20 a 21", 12, 0);
-		tablaDias.setValueAt("21 a 22", 13, 0);
-		
-		return tablaDias;
-	}
-	
+//	private DefaultTableModel borrarValores(DefaultTableModel tablaDias)
+//	{
+//		tablaDias.setRowCount(14);
+//		tablaDias.setValueAt("8 a 9", 0, 0);
+//		tablaDias.setValueAt("9 a 10", 1, 0);
+//		tablaDias.setValueAt("10 a 11", 2, 0);
+//		tablaDias.setValueAt("11 a 12", 3, 0);
+//		tablaDias.setValueAt("12 a 13", 4, 0);
+//		tablaDias.setValueAt("13 a 14", 5, 0);
+//		tablaDias.setValueAt("14 a 15", 6, 0);
+//		tablaDias.setValueAt("15 a 16", 7, 0);
+//		tablaDias.setValueAt("16 a 17", 8, 0);
+//		tablaDias.setValueAt("17 a 18", 9, 0);
+//		tablaDias.setValueAt("18 a 19", 10, 0);
+//		tablaDias.setValueAt("19 a 20", 11, 0);
+//		tablaDias.setValueAt("20 a 21", 12, 0);
+//		tablaDias.setValueAt("21 a 22", 13, 0);
+//
+//		return tablaDias;
+//	}
+
 	public ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
 	{
 		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
@@ -150,44 +155,53 @@ public class GRCController
 		}
 		return recomendacionesParaLista;
 	}
-	
 
 	public void filtrarTurnos() throws Exception
 	{
 		List<Horario> horarios = new ArrayList<Horario>();
-		Horario horarTmp;
+		
 		if (filtroManiana)
 		{
-			horarTmp = new Horario(8, 12);
+			System.out.println("MAÑANA");
+			Horario horarTmp = new Horario(8, 12);
 			horarios.add(horarTmp);
 		}
 		if (filtroTarde)
 		{
-			horarTmp = new Horario(13, 17);
+			System.out.println("tarde");
+			Horario horarTmp = new Horario(13, 17);
 			horarios.add(horarTmp);
 		}
 		if (filtroNoche)
 		{
-			horarTmp = new Horario(18, 22);
+			System.out.println("noche");
+			Horario horarTmp = new Horario(18, 22);
 			horarios.add(horarTmp);
 		}
 
 		Filtro f = new Filtro();
-		Set<Curso> cursos = f.getCursosDisponibles(this.vista.getModelo().getCursosDisponibles(),
+		Set<Curso> cursos = f.getCursosDisponibles(this.getModelo().getCursosDisponibles(),
 				horarios);
-		System.out.println("cantida cursos: "+cursos.size());
-		List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
-		this.vista.getModelo().actualizarRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
+		 System.out.println("cantidad cursos: "+cursos.size());
+		 List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
+		System.out.println("CANT RECOS ANTES: " + this.modelo.getRecomendaciones().size());
+		this.modelo.actualizarRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
+		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size());
 	}
 
-	public void setVista(GRCView vista)
+	private GRCModel getModelo()
 	{
-		this.vista = vista;
+		return this.modelo;
 	}
 
-	public void cambioFiltros()
+	// public void setVista(GRCView vista)
+	// {
+	// this.vista = vista;
+	// }
+
+	public void generarRecomendaciones()
 	{
-		cambioPreferencias();
+		// cambioPreferencias();
 		try
 		{
 			filtrarTurnos();
@@ -199,39 +213,42 @@ public class GRCController
 
 	}
 
-	private void cambioPreferencias()
+	// public void cambioPreferencias()
+	// {
+	// this.filtroManiana = this.vista.getCbManiana();
+	// this.filtroTarde = this.vista.getCbTarde();
+	// this.filtroNoche = this.vista.getCbNoche();
+	// this.filtroPuedeEsperar = this.vista.puedeEsperar();
+	// }
+
+	public void seleccionActualRecomendacion(int posElegida)
 	{
-		this.filtroManiana = this.vista.getCbManiana();
-		this.filtroTarde = this.vista.getCbTarde();
-		this.filtroNoche = this.vista.getCbNoche();
-		this.filtroPuedeEsperar = this.vista.puedeEsperar();
+		this.modelo.actualizarRecomendacionActual(posElegida);
+
+	}
+
+	public void filtrarRecomendaciones(boolean ordMaterias, boolean ordPoscorrelativas)
+	{
+		this.getModelo().actualizarOrdenamiento(ordMaterias, ordPoscorrelativas);
 	}
 	
-	public void filtrarRecomendaciones() throws ClassNotFoundException, IOException
+	public void filtrarManiana(boolean fm)
 	{
-		List<Recomendacion> recomendaciones = this.vista.getModelo().getRecomendaciones();
-		PlanEstudio planEstudio = this.vista.getModelo().getPlanEstudio();
-		this.filtroMaterias = this.vista.getCbMaterias();
-		this.filtroPoscorrelativas = this.vista.getCbPoscorrelativas();
-		
-		if(filtroMaterias && !filtroPoscorrelativas)
-		{
-			System.out.println("Filtro materias");
-			FiltroMaterias fm = new FiltroMaterias();
-			fm.ordenar(recomendaciones);
-		}
-		else if (filtroPoscorrelativas && !filtroMaterias)
-		{
-			System.out.println("Filtro poscorrelativas");
-			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
-			fp.ordenar(recomendaciones, planEstudio);
-		}
-		else if (filtroPoscorrelativas && filtroMaterias)
-		{
-			System.out.println("Filtro ambos");
-			FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
-			fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
-		}
-		this.vista.getModelo().actualizarRecomendacion(recomendaciones);
+		this.filtroManiana = fm;
+	}
+
+	public void filtrarTarde(boolean ft)
+	{
+		this.filtroTarde = ft;
+	}
+	
+	public void filtrarNoche(boolean fn)
+	{
+		this.filtroNoche = fn;
+	}
+	
+	public void puedeEsperar(boolean pe)
+	{
+		this.filtroPuedeEsperar = pe;
 	}
 }
