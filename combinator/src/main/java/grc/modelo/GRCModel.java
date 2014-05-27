@@ -2,6 +2,8 @@ package grc.modelo;
 
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
+import grc.servicios.FiltroMaterias;
+import grc.servicios.FiltroPoscorrelativas;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -29,6 +31,11 @@ public class GRCModel extends Observable
 	{
 		return cursosDisponibles;
 	}
+	
+	public PlanEstudio getPlanEstudio()
+	{
+		return this.planEstudio;
+	}
 
 	// public void setCursosDisponibles(List<Curso> cursosDisponibles) {
 	// this.cursosDisponibles = cursosDisponibles;
@@ -52,13 +59,22 @@ public class GRCModel extends Observable
 		Recomendacion reco = new Recomendacion(this.timeToWait);
 		reco.setPuedeEsperar(puedeEsperar);
 		List<Recomendacion> recomendaciones = reco.backtracking(cursos);
-		//Ordenamos por cantidad de materias
+		
+		/*//Ordenamos por cantidad de materias
 		ArrayList<Integer> cantMaterias = reco.cantMaterias(recomendaciones);
 		reco.ordenarRecomendaciones(recomendaciones, cantMaterias);
 		//Una vez ordenado por cantidad de materias ordenamos por cantidades de poscorrelativas
 		ArrayList<Integer> cantPosCorrelativas = reco.cantPosCorrelativas(recomendaciones, planEstudio);
-		reco.ordenarRecomendaciones(recomendaciones, cantPosCorrelativas);
+		reco.ordenarRecomendaciones(recomendaciones, cantPosCorrelativas);*/
+		//reco.ordenarRecomendaciones(recomendaciones, planEstudio);
+		
 		this.finishRecoOK = reco.isFinishRecoOK();
+		this.setRecomendaciones(recomendaciones);
+	}
+	
+	public void actualizarRecomendacion(List<Recomendacion> recomendaciones) throws ClassNotFoundException,
+	IOException
+	{
 		this.setRecomendaciones(recomendaciones);
 	}
 
