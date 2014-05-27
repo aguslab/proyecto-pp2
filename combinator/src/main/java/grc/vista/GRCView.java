@@ -50,7 +50,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		super("Recomendaciones de materias a cursar");
 		this.model = model;
 		this.controller = controller;
-		controller.setVista(this);
+//		controller.setVista(this);
 
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener(new UISwitchListener((JComponent) getRootPane()));
@@ -138,11 +138,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbManiana = new JCheckBox("");
 		cbManiana.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.cambioFiltros();
+				controller.filtrarManiana(getCbManiana());
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
-		cbManiana.setSelected(true);
+//		cbManiana.setSelected(true);
 		panelRecomendaciones.add(cbManiana);
 
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
@@ -157,11 +157,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbTarde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("filtro tardeeeeee");
-				controller.cambioFiltros();
+				controller.filtrarTarde(getCbTarde());
 			}
 		});
 		cbTarde.setBounds(208, 7, 21, 23);
-		cbTarde.setSelected(true);
+//		cbTarde.setSelected(true);
 		panelRecomendaciones.add(cbTarde);
 
 		JLabel lblNoche = new JLabel("Noche");
@@ -171,11 +171,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbNoche = new JCheckBox("");
 		cbNoche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controller.cambioFiltros();
+				controller.filtrarNoche(getCbNoche());
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
-		cbNoche.setSelected(true);
+//		cbNoche.setSelected(true);
 		panelRecomendaciones.add(cbNoche);
 
 		JButton btnOk = new JButton(new ImageIcon("Imagenes/ok.png"));
@@ -206,7 +206,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbPuedeEsperar = new JCheckBox();
 		cbPuedeEsperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.cambioFiltros();
+				controller.puedeEsperar(puedeEsperar());
 			}
 		});
 		cbPuedeEsperar.setBounds(490, 7, 21, 23);
@@ -215,6 +215,15 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		JLabel label = new JLabel("Puedo Esperar :)");
 		label.setBounds(380, 11, 111, 14);
 		panelRecomendaciones.add(label);
+		
+		JButton btnVerRecomendaciones = new JButton("Ver Recomendaciones");
+		btnVerRecomendaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.generarRecomendaciones();
+			}
+		});
+		btnVerRecomendaciones.setBounds(584, 7, 167, 23);
+		panelRecomendaciones.add(btnVerRecomendaciones);
 		
 		JLabel lblCantMaterias = new JLabel("Materias");
 		lblCantMaterias.setBounds(125, 217, 57, 14);
@@ -225,14 +234,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				try 
-				{
-					controller.filtrarRecomendaciones();
-				} 
-				catch (ClassNotFoundException | IOException e) 
-				{
-					e.printStackTrace();
-				}
+				controller.filtrarRecomendaciones(getCbMaterias(), getCbPoscorrelativas());
 			}
 		});
 		cbCantMaterias.setBounds(172, 213, 21, 23);
@@ -246,14 +248,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbCantPoscorrelativas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				try 
-				{
-					controller.filtrarRecomendaciones();
-				} 
-				catch (ClassNotFoundException | IOException e) 
-				{
-					e.printStackTrace();
-				}
+				controller.filtrarRecomendaciones(getCbMaterias(), getCbPoscorrelativas());
 			}
 		});
 		cbCantPoscorrelativas.setBounds(306, 213, 21, 23);
@@ -268,10 +263,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 					tablaTempDias.setRowCount(0);
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
-					controller.borrarValores(tablaTempDias);
+					borrarValores(tablaTempDias);
 					try
 					{
-						controller.cambiarTablaDias(tablaTempDias, posElegida);
+						cambioSeleccionActual(posElegida);
+						controller.seleccionActualRecomendacion(posElegida);
 					} catch (Exception e1)
 					{
 						e1.printStackTrace();
@@ -342,7 +338,13 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		getContentPane().add(barraDeEstado, BorderLayout.SOUTH);
 	}
 
-	public void initVista() throws Exception
+	protected void cambioSeleccionActual(int posElegida)
+	{
+		
+		
+	}
+
+	public void showVista()
 	{
 		setVisible(true);
 	}
@@ -449,5 +451,24 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+	}
+	
+	public void borrarValores(DefaultTableModel tablaDias)
+	{
+		tablaDias.setRowCount(14);
+		tablaDias.setValueAt("8 a 9", 0, 0);
+		tablaDias.setValueAt("9 a 10", 1, 0);
+		tablaDias.setValueAt("10 a 11", 2, 0);
+		tablaDias.setValueAt("11 a 12", 3, 0);
+		tablaDias.setValueAt("12 a 13", 4, 0);
+		tablaDias.setValueAt("13 a 14", 5, 0);
+		tablaDias.setValueAt("14 a 15", 6, 0);
+		tablaDias.setValueAt("15 a 16", 7, 0);
+		tablaDias.setValueAt("16 a 17", 8, 0);
+		tablaDias.setValueAt("17 a 18", 9, 0);
+		tablaDias.setValueAt("18 a 19", 10, 0);
+		tablaDias.setValueAt("19 a 20", 11, 0);
+		tablaDias.setValueAt("20 a 21", 12, 0);
+		tablaDias.setValueAt("21 a 22", 13, 0);
 	}
 }
