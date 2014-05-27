@@ -26,7 +26,13 @@ public class GRCViewText implements Observer
 	{
 		GRCModel model = (GRCModel) o;
 		this.printRecomendaciones(model.getRecomendaciones());
-
+		try
+		{
+			this.volverAMenuPrincipal();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	public void main(String[] args)
 	{
@@ -41,6 +47,7 @@ public class GRCViewText implements Observer
 	}
 	public void menuPrincipal() throws Exception
 	{
+		boolean salir = false;
 		limpiarPantalla();
 		System.out.println("Bienvenido al Generador de Recomendaciones de Cursada");
 		System.out.println();
@@ -50,11 +57,12 @@ public class GRCViewText implements Observer
 		System.out.println("2 - Tarde");
 		System.out.println("3 - Noche");
 		System.out.println("4 - Quitar todos los filtros");
+		System.out.println("0 - Salir");
 		String entradaTeclado = getOpcionUsuario();
-		List<String> opciones = Arrays.asList(entradaTeclado.split(";"));
-		for (String opc : opciones)
-		{
-		}
+//		List<String> opciones = Arrays.asList(entradaTeclado.split(";"));
+//		for (String opc : opciones)
+//		{
+//		}
 
 		switch (entradaTeclado) {
 			case "1" :
@@ -71,27 +79,35 @@ public class GRCViewText implements Observer
 				controller.filtrarTarde(false);
 				controller.filtrarNoche(false);
 				break;
+			case "0" :
+				System.out.println("Felicitaciones por usar el mejor y único recomendador de cursadas");
+				break;
 			default :
 				System.out.println("Ingrese una opción correcta.");
+				salir = true;
 				break;
 		}
-		controller.filtrarTurnos();
-
-		volverAMenuPrincipal();
+		
+		if(!salir){
+			controller.filtrarTurnos();
+			volverAMenuPrincipal();	
+		}else{
+			System.exit(0);
+		}
+		
 	}
 
 	public void volverAMenuPrincipal() throws Exception
 	{
 		System.out.println();
-		System.out.println("Para volver al menu principal presiones 1");
-		String entradaTeclado = getOpcionUsuario();
-		if (entradaTeclado.equals("1"))
+		String entradaTeclado;
+		do
+		{
+			System.out.println("Para volver al menu principal presiones 1");
+			entradaTeclado = getOpcionUsuario();
+		} while (!entradaTeclado.equals("1"));
 		{
 			menuPrincipal();
-		} else
-		{
-			System.out.println("Ingrese una opción correcta.");
-			volverAMenuPrincipal();
 		}
 	}
 
