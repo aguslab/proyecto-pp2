@@ -68,7 +68,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		Set<Curso> cursosDisponibles = null;
 		try
 		{
-//			 generarAltas();
+			 generarAltas();
 		} catch (Exception e)
 		{
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
@@ -95,12 +95,12 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		
 		GRCController controller = new GRCController(model);
 		GRCView vista = null;
-		GRCViewText viewText = new GRCViewText(controller);
+//		GRCViewText viewText = new GRCViewText(controller);
 		vista = new GRCView(model, controller);
 		model.addObserver(vista);
-		model.addObserver(viewText);
+//		model.addObserver(viewText);
 		vista.showVista();
-		viewText.menuPrincipal();
+//		viewText.menuPrincipal();
 		model.actualizarRecomendaciones(cursos, false);
 	}
 
