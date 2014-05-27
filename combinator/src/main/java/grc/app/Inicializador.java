@@ -68,7 +68,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		Set<Curso> cursosDisponibles = null;
 		try
 		{
-			 generarAltas();
+//			 generarAltas();
 		} catch (Exception e)
 		{
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
