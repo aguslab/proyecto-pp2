@@ -4,10 +4,15 @@ import grc.dao.MateriaAprobadaDAO;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
+import grc.dominio.PlanEstudio;
 import grc.servicios.Filtro;
+import grc.servicios.FiltroMaterias;
+import grc.servicios.FiltroMateriasyPoscorrelativas;
+import grc.servicios.FiltroPoscorrelativas;
 import grc.servicios.Recomendacion;
 import grc.vista.GRCView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +26,8 @@ public class GRCController
 	private boolean filtroTarde;
 	private boolean filtroNoche;
 	private boolean filtroPuedeEsperar;
+	private boolean filtroMaterias;
+	private boolean filtroPoscorrelativas;
 
 	public GRCController()
 	{
@@ -199,5 +206,32 @@ public class GRCController
 		this.filtroNoche = this.vista.getCbNoche();
 		this.filtroPuedeEsperar = this.vista.puedeEsperar();
 	}
-
+	
+	public void filtrarRecomendaciones() throws ClassNotFoundException, IOException
+	{
+		List<Recomendacion> recomendaciones = this.vista.getModelo().getRecomendaciones();
+		PlanEstudio planEstudio = this.vista.getModelo().getPlanEstudio();
+		this.filtroMaterias = this.vista.getCbMaterias();
+		this.filtroPoscorrelativas = this.vista.getCbPoscorrelativas();
+		
+		if(filtroMaterias && !filtroPoscorrelativas)
+		{
+			System.out.println("Filtro materias");
+			FiltroMaterias fm = new FiltroMaterias();
+			fm.ordenar(recomendaciones);
+		}
+		else if (filtroPoscorrelativas && !filtroMaterias)
+		{
+			System.out.println("Filtro poscorrelativas");
+			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
+			fp.ordenar(recomendaciones, planEstudio);
+		}
+		else if (filtroPoscorrelativas && filtroMaterias)
+		{
+			System.out.println("Filtro ambos");
+			FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
+			fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
+		}
+		this.vista.getModelo().actualizarRecomendacion(recomendaciones);
+	}
 }
