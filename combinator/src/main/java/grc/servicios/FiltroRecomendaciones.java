@@ -3,7 +3,7 @@ package grc.servicios;
 import java.util.Collections;
 import java.util.List;
 
-class FiltroRecomendaciones
+class FiltroRecomendaciones 
 {
 	/*public List<Recomendacion> ordenar(List<Recomendacion> recomendaciones, ArrayList<Integer> cantidad)
 	{
@@ -30,6 +30,6 @@ class FiltroRecomendaciones
 */
 	public void ordenar (List<RecomendacionComparable> rComparables)
 	{
-		Collections.sort(rComparables, new Comparador());
+		Collections.sort(rComparables);
 	}
 }

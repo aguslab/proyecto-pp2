@@ -1,6 +1,8 @@
 package grc.servicios;
 
-public class RecomendacionComparable 
+import java.util.Comparator;
+
+public class RecomendacionComparable  implements Comparable<RecomendacionComparable>
 {
 	Recomendacion recomendacion;
 	Integer cantidad;
@@ -29,6 +31,12 @@ public class RecomendacionComparable
 	public void setCantidad(Integer cantidad) 
 	{
 		this.cantidad = cantidad;
+	}
+
+	@Override
+	public int compareTo(RecomendacionComparable o) 
+	{
+		return o.getCantidad() - this.getCantidad();
 	}
 
 }

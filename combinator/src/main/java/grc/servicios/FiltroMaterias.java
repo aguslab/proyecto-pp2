@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FiltroMaterias extends FiltroRecomendaciones
 {
-	public ArrayList<Integer> contar(List<Recomendacion> recomendaciones) 
+	public ArrayList<Integer> contarCantMaterias(List<Recomendacion> recomendaciones) 
 	{
 		ArrayList<Integer> cantidadMaterias = new ArrayList<Integer>();
 		// Cuento la cantidad de poscorrelativas de cada recomendacion
@@ -15,10 +15,5 @@ public class FiltroMaterias extends FiltroRecomendaciones
 			cantidadMaterias.add(cantMaterias);
 		}
 		return cantidadMaterias;
-	}
-	
-	public void ordenar(List<RecomendacionComparable> recomendacionesComparables)
-	{
-		super.ordenar(recomendacionesComparables);
 	}
 }

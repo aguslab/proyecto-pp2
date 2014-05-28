@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class FiltroPoscorrelativas extends FiltroRecomendaciones
 {
-	public ArrayList<Integer> contar(List<Recomendacion> recomendaciones, PlanEstudio pe) 
+	public ArrayList<Integer> contarCantPosCorrelativas(List<Recomendacion> recomendaciones, PlanEstudio pe) 
 	{
 		HashMap<Materia, Set<Materia>> correlativas = pe.getCorrelativas();
 		ArrayList<Integer> cantidadPoscorrelativas = new ArrayList<Integer>();
@@ -39,10 +39,5 @@ public class FiltroPoscorrelativas extends FiltroRecomendaciones
 													// guardo en una lista
 		}
 		return cantidadPoscorrelativas;
-	}
-	
-	public void ordenar(List<RecomendacionComparable> recomendacionesComparables)
-	{
-		super.ordenar(recomendacionesComparables);
 	}
 }

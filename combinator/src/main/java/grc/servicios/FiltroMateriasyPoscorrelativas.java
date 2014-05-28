@@ -6,7 +6,7 @@ import grc.modelo.GRCModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FiltroMateriasyPoscorrelativas
+public class FiltroMateriasyPoscorrelativas extends FiltroRecomendaciones
 {
 	List<RecomendacionComparable> rComparables = new ArrayList<RecomendacionComparable>();
 	ArrayList<Integer> cantidad;
@@ -14,6 +14,7 @@ public class FiltroMateriasyPoscorrelativas
 	
 	public void ordenarRecomendaciones(List<Recomendacion> recomendaciones, PlanEstudio planEstudio)
 	{
+		
 		/*FiltroMaterias fm = new FiltroMaterias();
 		cantidad = fm.contar(recomendaciones);
 		rComparables = GRCController.crearRecomendacionesComparables(recomendaciones, cantidad);
