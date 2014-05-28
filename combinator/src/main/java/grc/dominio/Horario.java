@@ -22,7 +22,7 @@ public class Horario implements Serializable
 	@Column(nullable = false)
 	private int horaFin;
 	@Column(nullable = false)
-	private Dia dia;//TODO: cambiar por enum??
+	private Dia dia;
 	
 	
 	public Horario()
