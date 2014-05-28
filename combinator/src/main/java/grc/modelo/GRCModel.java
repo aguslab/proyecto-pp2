@@ -5,13 +5,11 @@ import grc.dominio.PlanEstudio;
 import grc.servicios.FiltroMaterias;
 import grc.servicios.FiltroMateriasyPoscorrelativas;
 import grc.servicios.FiltroPoscorrelativas;
-import grc.servicios.Comparador;
 import grc.servicios.Recomendacion;
 import grc.servicios.RecomendacionComparable;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
@@ -82,18 +80,20 @@ public class GRCModel extends Observable
 	{
 		List<RecomendacionComparable> rComparables = new ArrayList<RecomendacionComparable>();
 		ArrayList<Integer> cantidad;
+		int matUsado = 0;
+		int PosUsado = 0;
 		
 		if(filtroMaterias && !filtroPoscorrelativas)
 		{
 			FiltroMaterias fm = new FiltroMaterias();
-			cantidad = fm.contar(recomendaciones);
+			cantidad = fm.contarCantMaterias(recomendaciones);
 			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
 			fm.ordenar(rComparables);
 		}
 		else if (filtroPoscorrelativas && !filtroMaterias)
 		{
 			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
-			cantidad = fp.contar(recomendaciones, planEstudio);
+			cantidad = fp.contarCantPosCorrelativas(recomendaciones, planEstudio);
 			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
 			fp.ordenar(rComparables);
 		}
@@ -102,6 +102,18 @@ public class GRCModel extends Observable
 			System.out.println("Filtro ambos");
 		//	FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
 			//fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
+			
+			FiltroMaterias fm = new FiltroMaterias();
+			cantidad = fm.contarCantMaterias(recomendaciones);
+			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
+			fm.ordenar(rComparables);
+			
+			/*recomendaciones = armarRecomendaciones(rComparables);
+			
+			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
+			cantidad = fp.contar(recomendaciones, planEstudio);
+			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
+			fp.ordenar(rComparables);*/
 		}
 
 		recomendaciones = armarRecomendaciones(rComparables); // Paso las recoComparables ordenadas a recomendaciones comunes
