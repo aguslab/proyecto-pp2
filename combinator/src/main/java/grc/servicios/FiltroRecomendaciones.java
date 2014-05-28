@@ -1,11 +1,11 @@
 package grc.servicios;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-class FiltroRecomendaciones 
+class FiltroRecomendaciones
 {
-	public List<Recomendacion> ordenar(List<Recomendacion> recomendaciones, ArrayList<Integer> cantidad)
+	/*public List<Recomendacion> ordenar(List<Recomendacion> recomendaciones, ArrayList<Integer> cantidad)
 	{
 		System.out.println("cantidad de recos" + recomendaciones.size());
 		// ordeno segun las cantidades de poscorrelativas de cada recomendacion
@@ -26,5 +26,10 @@ class FiltroRecomendaciones
 			recomendaciones.set(j, rTemp);
 		}
 		return recomendaciones;
+	}
+*/
+	public void ordenar (List<RecomendacionComparable> rComparables)
+	{
+		Collections.sort(rComparables, new Comparador());
 	}
 }

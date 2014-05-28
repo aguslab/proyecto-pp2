@@ -1,8 +1,5 @@
 package grc.servicios;
 
-import grc.dominio.PlanEstudio;
-import java.util.Collections;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +17,8 @@ public class FiltroMaterias extends FiltroRecomendaciones
 		return cantidadMaterias;
 	}
 	
-	public List<Recomendacion> ordenar(List<Recomendacion> recomendaciones)
+	public void ordenar(List<RecomendacionComparable> recomendacionesComparables)
 	{
-		ArrayList<Integer> cantMaterias = contar(recomendaciones);
-		return super.ordenar(recomendaciones, cantMaterias);
+		super.ordenar(recomendacionesComparables);
 	}
 }

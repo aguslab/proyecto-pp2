@@ -41,9 +41,8 @@ public class FiltroPoscorrelativas extends FiltroRecomendaciones
 		return cantidadPoscorrelativas;
 	}
 	
-	public List<Recomendacion> ordenar(List<Recomendacion> recomendaciones, PlanEstudio pe)
+	public void ordenar(List<RecomendacionComparable> recomendacionesComparables)
 	{
-		ArrayList<Integer> cantPoscorrelativas = contar(recomendaciones, pe);
-		return super.ordenar(recomendaciones, cantPoscorrelativas);
+		super.ordenar(recomendacionesComparables);
 	}
 }
