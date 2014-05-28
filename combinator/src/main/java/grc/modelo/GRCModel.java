@@ -5,10 +5,13 @@ import grc.dominio.PlanEstudio;
 import grc.servicios.FiltroMaterias;
 import grc.servicios.FiltroMateriasyPoscorrelativas;
 import grc.servicios.FiltroPoscorrelativas;
+import grc.servicios.Comparador;
 import grc.servicios.Recomendacion;
+import grc.servicios.RecomendacionComparable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
@@ -77,26 +80,58 @@ public class GRCModel extends Observable
 	
 	public void actualizarOrdenamiento(boolean filtroMaterias, boolean filtroPoscorrelativas)
 	{
+		List<RecomendacionComparable> rComparables = new ArrayList<RecomendacionComparable>();
+		ArrayList<Integer> cantidad;
+		
 		if(filtroMaterias && !filtroPoscorrelativas)
 		{
-			System.out.println("Filtro materias");
 			FiltroMaterias fm = new FiltroMaterias();
-			fm.ordenar(recomendaciones);
+			cantidad = fm.contar(recomendaciones);
+			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
+			fm.ordenar(rComparables);
 		}
 		else if (filtroPoscorrelativas && !filtroMaterias)
 		{
-			System.out.println("Filtro poscorrelativas");
 			FiltroPoscorrelativas fp = new FiltroPoscorrelativas();
-			fp.ordenar(recomendaciones, planEstudio);
+			cantidad = fp.contar(recomendaciones, planEstudio);
+			rComparables = crearRecomendacionesComparables(recomendaciones, cantidad);
+			fp.ordenar(rComparables);
 		}
 		else if (filtroPoscorrelativas && filtroMaterias)
 		{
 			System.out.println("Filtro ambos");
-			FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
-			fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
+		//	FiltroMateriasyPoscorrelativas fmp = new FiltroMateriasyPoscorrelativas();
+			//fmp.ordenarRecomendaciones(recomendaciones, planEstudio);
 		}
+
+		recomendaciones = armarRecomendaciones(rComparables); // Paso las recoComparables ordenadas a recomendaciones comunes
 		this.finishRecoOK = true;
 		this.setRecomendaciones(recomendaciones);
+	}
+
+	public List<RecomendacionComparable> crearRecomendacionesComparables(
+			List<Recomendacion> recomendaciones, ArrayList<Integer> cantidad) 
+	{
+		List<RecomendacionComparable> recomendacionesComparables = new ArrayList<RecomendacionComparable>();
+		int i = 0;
+		for(Recomendacion r: recomendaciones)
+		{
+			RecomendacionComparable rc = new RecomendacionComparable(r,cantidad.get(i));
+			recomendacionesComparables.add(rc);
+			i++;
+		}
+		return recomendacionesComparables;
+	}
+	
+	private List<Recomendacion> armarRecomendaciones(List<RecomendacionComparable> rComparables)
+	{
+		List<Recomendacion> recomendaciones = new ArrayList<Recomendacion>();
+		for(RecomendacionComparable rc : rComparables)
+		{
+			Recomendacion r = rc.getRecomendacion();
+			recomendaciones.add(r);
+		}
+		return recomendaciones;
 	}
 
 	public boolean isFinishRecomendacionOK()
@@ -109,5 +144,4 @@ public class GRCModel extends Observable
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
