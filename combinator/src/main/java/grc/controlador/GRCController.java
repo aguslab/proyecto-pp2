@@ -6,6 +6,10 @@ import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.modelo.GRCModel;
+import grc.servicios.Criterio;
+import grc.servicios.CriterioAmbos;
+import grc.servicios.CriterioMateria;
+import grc.servicios.CriterioPoscorrelativa;
 import grc.servicios.Filtro;
 import grc.servicios.Recomendacion;
 
@@ -228,9 +232,30 @@ public class GRCController
 
 	}
 
-	public void filtrarRecomendaciones(boolean ordMaterias, boolean ordPoscorrelativas)
+	/*public void filtrarRecomendaciones(boolean ordMaterias, boolean ordPoscorrelativas)
 	{
 		this.getModelo().actualizarOrdenamiento(ordMaterias, ordPoscorrelativas);
+	}*/
+	
+	public void ordenarRecomendaciones(int ordenadorElegido)
+	{
+		Criterio criterio = null;
+		
+		if(ordenadorElegido == 0)
+		{
+			criterio = new CriterioMateria(true);
+		}
+		else if(ordenadorElegido == 1)
+		{
+			criterio = new CriterioPoscorrelativa(0);
+		}
+		else if(ordenadorElegido == 2)
+		{
+			List<Integer> ambosCriterios = new ArrayList<Integer>();
+			ambosCriterios.add(0);
+			criterio = new CriterioAmbos(ambosCriterios);
+		}
+		this.getModelo().actualizarOrdenamiento(criterio);
 	}
 	
 	public void filtrarManiana(boolean fm)
