@@ -5,7 +5,6 @@ import grc.modelo.GRCModel;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,11 +34,9 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	private JCheckBox cbTarde;
 	private JCheckBox cbNoche;
 	private JCheckBox cbPuedeEsperar;
-	private JCheckBox cbCantMaterias;
-	private JCheckBox cbCantPoscorrelativas;
+	private JComboBox cbOrdenador;
 	private JLabel firma;
 	private JLabel materia;
-	private JTable tablaAprobadas;
 	DefaultListModel modelListaRecomendaciones;
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
@@ -50,6 +47,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		super("Recomendaciones de materias a cursar");
 		this.model = model;
 		this.controller = controller;
+		escritorio.setBounds(0, 0, 1317, 1);
 //		controller.setVista(this);
 
 		escritorio.setBackground(new Color(83, 130, 161));
@@ -80,22 +78,53 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2, (Toolkit
 				.getDefaultToolkit().getScreenSize().height - getHeight()) / 2);
-//		setVisible(true);
-		final JTabbedPane tabOpciones = new JTabbedPane(JTabbedPane.LEFT);
-		tabOpciones.setBounds(10, 11, 772, 474);
-		getContentPane().add(tabOpciones);
+		getContentPane().setLayout(null);
 
 		modeloTablaDias = new DefaultTableModel();
 
+		modelListaRecomendaciones = new DefaultListModel();
+
+		mnuPrototipo = new JMenu("Prototipo  ");
+		mnuPrototipo.setMnemonic((int) 'P');
+
+		mostrarPrototipo = new JMenuItem("Ver  ", new ImageIcon("Imagenes/tabla.png"));
+		mostrarPrototipo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
+		mostrarPrototipo.setMnemonic((int) 'V');
+		mostrarPrototipo.addActionListener(this);
+
+		cerrarAplicacion = new JMenuItem("Salir del sistema  ");
+		cerrarAplicacion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
+		cerrarAplicacion.setMnemonic((int) 'Q');
+		cerrarAplicacion.addActionListener(this);
+
+		mnuPrototipo.add(mostrarPrototipo);
+
+		materia = new JLabel(" " + "Proyecto Profesional II", Label.LEFT);
+		materia.setForeground(Color.black);
+
+		firma = new JLabel("" + "GRC - Godoy - De Napoli." + " ", JLabel.RIGHT);
+		firma.setForeground(Color.black);
+		barraDeEstado.setBounds(0, 577, 1317, 14);
+
+		barraDeEstado.setLayout(new BorderLayout());
+		barraDeEstado.add(materia, BorderLayout.WEST);
+		barraDeEstado.add(firma, BorderLayout.EAST);
+
+		escritorio.putClientProperty("JDesktopPane.dragMode", "outline");
+
+		getContentPane().add(escritorio);
+		getContentPane().add(barraDeEstado);
+		
 		// Tabla Recomendaciones
 		JPanel panelRecomendaciones = new JPanel();
+		panelRecomendaciones.setBounds(0, 0, 1317, 571);
+		getContentPane().add(panelRecomendaciones);
 		panelRecomendaciones.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tabOpciones.addTab("Recomendaciones ", new ImageIcon(""), panelRecomendaciones, null);
 		panelRecomendaciones.setLayout(null);
-
+				
 		JScrollPane spRecomendacion = new JScrollPane();
 		spRecomendacion.setEnabled(false);
-		spRecomendacion.setBounds(10, 241, 1125, 319);
+		spRecomendacion.setBounds(10, 241, 1297, 319);
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -130,11 +159,10 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
 		panelRecomendaciones.add(lblHorarios);
-
+		
 		JLabel lblManiana = new JLabel("Ma\u00F1ana");
 		lblManiana.setBounds(85, 11, 57, 14);
 		panelRecomendaciones.add(lblManiana);
-
 		cbManiana = new JCheckBox("");
 		cbManiana.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,17 +170,17 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
-//		cbManiana.setSelected(true);
+		//		cbManiana.setSelected(true);
 		panelRecomendaciones.add(cbManiana);
-
+				
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
 		lblRecomendaciones.setBounds(10, 217, 112, 14);
 		panelRecomendaciones.add(lblRecomendaciones);
-
+							
 		JLabel lblTarde = new JLabel("Tarde");
 		lblTarde.setBounds(172, 11, 49, 14);
 		panelRecomendaciones.add(lblTarde);
-
+		
 		cbTarde = new JCheckBox("");
 		cbTarde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,11 +191,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbTarde.setBounds(208, 7, 21, 23);
 //		cbTarde.setSelected(true);
 		panelRecomendaciones.add(cbTarde);
-
+		
 		JLabel lblNoche = new JLabel("Noche");
 		lblNoche.setBounds(253, 11, 49, 14);
 		panelRecomendaciones.add(lblNoche);
-
+										
 		cbNoche = new JCheckBox("");
 		cbNoche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -175,18 +203,12 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
-//		cbNoche.setSelected(true);
-		panelRecomendaciones.add(cbNoche);
-
-		JButton btnOk = new JButton(new ImageIcon("Imagenes/ok.png"));
-		btnOk.setBounds(1145, 241, 24, 23);
-		panelRecomendaciones.add(btnOk);
-
+		//		cbNoche.setSelected(true);
+				panelRecomendaciones.add(cbNoche);
+						
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 37, 1125, 169);
+		scrollPane.setBounds(10, 37, 1297, 169);
 		panelRecomendaciones.add(scrollPane);
-
-		modelListaRecomendaciones = new DefaultListModel();
 		listaRecomendaciones = new JList(modelListaRecomendaciones);
 		listaRecomendaciones.setModel(new AbstractListModel()
 		{
@@ -225,34 +247,16 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		btnVerRecomendaciones.setBounds(584, 7, 167, 23);
 		panelRecomendaciones.add(btnVerRecomendaciones);
 		
-		JLabel lblCantMaterias = new JLabel("Materias");
-		lblCantMaterias.setBounds(125, 217, 57, 14);
-		panelRecomendaciones.add(lblCantMaterias);
-		
-		cbCantMaterias = new JCheckBox("");
-		cbCantMaterias.addActionListener(new ActionListener() 
-		{
+		cbOrdenador = new JComboBox();
+		cbOrdenador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				controller.filtrarRecomendaciones(getCbMaterias(), getCbPoscorrelativas());
+				controller.ordenarRecomendaciones(cbOrdenador.getSelectedIndex());
 			}
 		});
-		cbCantMaterias.setBounds(172, 213, 21, 23);
-		panelRecomendaciones.add(cbCantMaterias);
-		
-		JLabel lblCantPoscorrelativas = new JLabel("Poscorrelativas");
-		lblCantPoscorrelativas.setBounds(218, 217, 97, 14);
-		panelRecomendaciones.add(lblCantPoscorrelativas);
-		
-		cbCantPoscorrelativas = new JCheckBox("");
-		cbCantPoscorrelativas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				controller.filtrarRecomendaciones(getCbMaterias(), getCbPoscorrelativas());
-			}
-		});
-		cbCantPoscorrelativas.setBounds(306, 213, 21, 23);
-		panelRecomendaciones.add(cbCantPoscorrelativas);
+		cbOrdenador.setModel(new DefaultComboBoxModel(new String[] {"Materias", "Poscorrelativas", "Ambos"}));
+		cbOrdenador.setBounds(124, 214, 125, 20);
+		panelRecomendaciones.add(cbOrdenador);
 		listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent e)
@@ -273,69 +277,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 						e1.printStackTrace();
 					}
 				}
-			}
-		});
-
-		// Tabla Materia aprobadas
-		JPanel panelAprobadas = new JPanel();
-		panelAprobadas.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelAprobadas.setLayout(null);
-
-		tabOpciones.addTab("Materias aprobadas ", new ImageIcon(""), panelAprobadas, null);
-
-		JScrollPane spAprobadas = new JScrollPane();
-		spAprobadas.setBounds(10, 11, 1175, 549);
-		panelAprobadas.add(spAprobadas);
-
-		tablaAprobadas = new JTable();
-		tablaAprobadas.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		spAprobadas.setViewportView(tablaAprobadas);
-		tablaAprobadas.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"Materia",
-				"Nota"})
-		{
-			Class[] columnTypes = new Class[]{String.class, String.class};
-			public Class getColumnClass(int columnIndex)
-			{
-				return columnTypes[columnIndex];
-			}
-		});
-		tablaAprobadas.getColumnModel().getColumn(0).setPreferredWidth(248);
-		tablaAprobadas.getColumnModel().getColumn(1).setResizable(false);
-		tablaAprobadas.getColumnModel().getColumn(1).setPreferredWidth(40);
-		tablaAprobadas.setRowHeight(25);
-		tablaAprobadas.getTableHeader().setReorderingAllowed(false);
-		DefaultTableModel tablaTempAprobadas = (DefaultTableModel) tablaAprobadas.getModel();
-		tablaTempAprobadas = controller.getMateriasAprobadas(tablaTempAprobadas);
-
-		mnuPrototipo = new JMenu("Prototipo  ");
-		mnuPrototipo.setMnemonic((int) 'P');
-
-		mostrarPrototipo = new JMenuItem("Ver  ", new ImageIcon("Imagenes/tabla.png"));
-		mostrarPrototipo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
-		mostrarPrototipo.setMnemonic((int) 'V');
-		mostrarPrototipo.addActionListener(this);
-
-		cerrarAplicacion = new JMenuItem("Salir del sistema  ");
-		cerrarAplicacion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
-		cerrarAplicacion.setMnemonic((int) 'Q');
-		cerrarAplicacion.addActionListener(this);
-
-		mnuPrototipo.add(mostrarPrototipo);
-
-		materia = new JLabel(" " + "Proyecto Profesional II", Label.LEFT);
-		materia.setForeground(Color.black);
-
-		firma = new JLabel("" + "GRC - Godoy - De Napoli." + " ", JLabel.RIGHT);
-		firma.setForeground(Color.black);
-
-		barraDeEstado.setLayout(new BorderLayout());
-		barraDeEstado.add(materia, BorderLayout.WEST);
-		barraDeEstado.add(firma, BorderLayout.EAST);
-
-		escritorio.putClientProperty("JDesktopPane.dragMode", "outline");
-
-		getContentPane().add(escritorio, BorderLayout.NORTH);
-		getContentPane().add(barraDeEstado, BorderLayout.SOUTH);
+			}																										});
 	}
 
 	protected void cambioSeleccionActual(int posElegida)
@@ -401,16 +343,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	{
 		return cbPuedeEsperar.isSelected();
 	}
-
-	public boolean getCbMaterias()
-	{
-		return cbCantMaterias.isSelected();
-	}
-	
-	public boolean getCbPoscorrelativas()
-	{
-		return cbCantPoscorrelativas.isSelected();
-	}
 	
 	public void update(Observable o, Object arg)
 	{
@@ -455,7 +387,18 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	
 	public void borrarValores(DefaultTableModel tablaDias)
 	{
+
+		/*for (int i = 0; i < tablaDias.getRowCount(); i++)
+		{
+		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
+		      {
+		    	  tablaDias.setValueAt("", i, j);
+		      }
+		}*/
+		   
+		
 		tablaDias.setRowCount(14);
+		
 		tablaDias.setValueAt("8 a 9", 0, 0);
 		tablaDias.setValueAt("9 a 10", 1, 0);
 		tablaDias.setValueAt("10 a 11", 2, 0);
