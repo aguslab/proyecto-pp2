@@ -44,7 +44,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 	public GRCView(GRCModel model, final GRCController controller) throws Exception
 	{
-		super("Recomendaciones de materias a cursar");
+		super("Generador de Recomendaciones de Cursadas");
 		this.model = model;
 		this.controller = controller;
 		escritorio.setBounds(0, 0, 1317, 1);
