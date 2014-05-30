@@ -2,10 +2,10 @@ package grc.modelo;
 
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
+import grc.servicios.ComparadorAmbos;
 import grc.servicios.ComparadorMaterias;
 import grc.servicios.ComparadorPoscorrelativas;
 import grc.servicios.Criterio;
-import grc.servicios.OrdenadorAmbos;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -79,12 +79,12 @@ public class GRCModel extends Observable
 			comparadorPoscorrelativas.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
 			Collections.sort(recomendaciones, comparadorPoscorrelativas);
 		}
-		else if (tipoCriterio instanceof Integer) 
+		else if (tipoCriterio instanceof List<?>) 
 		{
 			//ORDENAR POR AMBAS
-			OrdenadorAmbos ordenadorAmbos = new OrdenadorAmbos(recomendaciones, (Integer) tipoCriterio);
-			ordenadorAmbos.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
-			ordenadorAmbos.ordenar();
+			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) tipoCriterio);
+			comparadorAmbos.setPlanEstudio(planEstudio);
+			Collections.sort(recomendaciones, comparadorAmbos);
 		}
 		this.finishRecoOK = true;
 		this.setRecomendaciones(recomendaciones);
