@@ -248,9 +248,9 @@ public class GRCController
 		else if(ordenadorElegido == 2)
 		{
 			List<Character> tiposCriterio = new ArrayList<Character>();
-			tiposCriterio.add('c');
 			tiposCriterio.add('a');
-			tiposCriterio.add('d');
+			tiposCriterio.add('c');
+			tiposCriterio.add('d'); //d: criterioMateria=true. Cualquier otra letra: criterioMateria=false.
 			criterio = new CriterioAmbos(tiposCriterio); //(a,c): mayorM y mayorP, (b,c): menorM y mayorP, (c,a): mayorP y mayorM, (c,b): mayorP, menorM
 		}
 		this.getModelo().actualizarOrdenamiento(criterio);
