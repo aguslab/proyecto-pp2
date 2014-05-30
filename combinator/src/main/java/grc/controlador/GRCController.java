@@ -243,17 +243,15 @@ public class GRCController
 		
 		if(ordenadorElegido == 0)
 		{
-			criterio = new CriterioMateria(true);
+			criterio = new CriterioMateria(true); //true: por mayor cantidad, false: por menor cantidad
 		}
 		else if(ordenadorElegido == 1)
 		{
-			criterio = new CriterioPoscorrelativa(0);
+			criterio = new CriterioPoscorrelativa(""); //siempre se ordena por mayor cantidad
 		}
 		else if(ordenadorElegido == 2)
 		{
-			List<Integer> ambosCriterios = new ArrayList<Integer>();
-			ambosCriterios.add(0);
-			criterio = new CriterioAmbos(ambosCriterios);
+			criterio = new CriterioAmbos(1); //0: mayorM y mayorP, 1: menorM y mayorP, 2: mayorP y mayorM, 3: mayorP, menorM
 		}
 		this.getModelo().actualizarOrdenamiento(criterio);
 	}
