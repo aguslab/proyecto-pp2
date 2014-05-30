@@ -1,20 +1,12 @@
 package grc.servicios;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ComparadorMaterias extends Comparador
 {
-	public ArrayList<Integer> contarCantMaterias(List<Recomendacion> recomendaciones) 
+	Boolean criterio;
+	
+	public  ComparadorMaterias(Boolean criterio)
 	{
-		ArrayList<Integer> cantidadMaterias = new ArrayList<Integer>();
-		// Cuento la cantidad de poscorrelativas de cada recomendacion
-		for (Recomendacion r : recomendaciones)
-		{
-			Integer cantMaterias = r.getRecomendacion().size();
-			cantidadMaterias.add(cantMaterias);
-		}
-		return cantidadMaterias;
+		this.criterio = criterio;
 	}
 	
 	private Integer contarCantidadMaterias(Recomendacion recomendacion)
@@ -27,8 +19,23 @@ public class ComparadorMaterias extends Comparador
 	{
 		Integer cantidadRecomendacion1 = contarCantidadMaterias(o1);
 		Integer cantidadRecomendacion2 = contarCantidadMaterias(o2);
-		return cantidadRecomendacion2 - cantidadRecomendacion1;
+		if(criterio)
+			return cantidadRecomendacion2 - cantidadRecomendacion1; //Mayor a menor
+		else
+			return cantidadRecomendacion1 - cantidadRecomendacion2; //Menor a mayor
 	}
 	
 
+	/*public ArrayList<Integer> contarCantMaterias(List<Recomendacion> recomendaciones) 
+	{
+		ArrayList<Integer> cantidadMaterias = new ArrayList<Integer>();
+		// Cuento la cantidad de poscorrelativas de cada recomendacion
+		for (Recomendacion r : recomendaciones)
+		{
+			Integer cantMaterias = r.getRecomendacion().size();
+			cantidadMaterias.add(cantMaterias);
+		}
+		return cantidadMaterias;
+	}*/
+	
 }

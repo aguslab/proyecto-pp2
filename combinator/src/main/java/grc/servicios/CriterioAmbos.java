@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CriterioAmbos extends Criterio
 {
-	public CriterioAmbos(List<Integer> criterio) 
+	public CriterioAmbos(Integer criterio) 
 	{
 		super(criterio);
 	}

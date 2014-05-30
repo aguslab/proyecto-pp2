@@ -9,7 +9,7 @@ public class Criterio
 		this.criterio = criterio;
 	}
 	
-	public Object getCriterio()
+	public Object getTipoCriterio()
 	{
 		return this.criterio;
 	}
