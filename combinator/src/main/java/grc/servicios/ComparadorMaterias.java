@@ -9,7 +9,7 @@ public class ComparadorMaterias extends Comparador
 		this.criterio = criterio;
 	}
 	
-	private Integer contarCantidadMaterias(Recomendacion recomendacion)
+	public Integer contarCantidadMaterias(Recomendacion recomendacion)
 	{
 		return recomendacion.getRecomendacion().size();
 	}

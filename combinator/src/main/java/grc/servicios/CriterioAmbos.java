@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CriterioAmbos extends Criterio
 {
-	public CriterioAmbos(Integer criterio) 
+	public CriterioAmbos(List<Character> tiposCriterio) 
 	{
-		super(criterio);
+		super(tiposCriterio);
 	}
 }

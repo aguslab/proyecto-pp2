@@ -20,7 +20,7 @@ public class ComparadorPoscorrelativas extends Comparador
 		return cantidadRecomendacion2 - cantidadRecomendacion1;
 	}
 	
-	private Integer contarCantidadPoscorrelativas(Recomendacion recomendacion, PlanEstudio planEstudio)
+	public Integer contarCantidadPoscorrelativas(Recomendacion recomendacion, PlanEstudio planEstudio)
 	{
 		HashMap<Materia, Set<Materia>> correlativas = planEstudio.getCorrelativas();
 		Integer cantidadPoscorrelativas = 0;
