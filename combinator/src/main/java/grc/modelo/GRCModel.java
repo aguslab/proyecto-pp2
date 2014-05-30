@@ -5,6 +5,7 @@ import grc.dominio.PlanEstudio;
 import grc.servicios.ComparadorMaterias;
 import grc.servicios.ComparadorPoscorrelativas;
 import grc.servicios.Criterio;
+import grc.servicios.OrdenadorAmbos;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -65,25 +66,25 @@ public class GRCModel extends Observable
 	
 	public void actualizarOrdenamiento(Criterio criterio)
 	{
-		if(criterio.getCriterio() instanceof Boolean)
+		Object tipoCriterio = criterio.getTipoCriterio();
+		if(tipoCriterio instanceof Boolean)
 		{
-			System.out.println("ORDENAR POR MATERIA");
-			Collections.sort(recomendaciones, new ComparadorMaterias());
+			//ORDENAR POR MATERIA
+			Collections.sort(recomendaciones, new ComparadorMaterias((Boolean) tipoCriterio));
 		}
-		else if (criterio.getCriterio() instanceof Integer)
+		else if (tipoCriterio instanceof String)
 		{
-			System.out.println("ORDENAR POR POSCORRELATIVA");
+			//ORDENAR POR POSCORRELATIVA
 			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas();
-			comparadorPoscorrelativas.setPlanEstudio(planEstudio);
+			comparadorPoscorrelativas.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
 			Collections.sort(recomendaciones, comparadorPoscorrelativas);
 		}
-		else if (criterio.getCriterio() instanceof List<?>) 
+		else if (tipoCriterio instanceof Integer) 
 		{
-			System.out.println("ORDENAR POR AMBAS");
-			Collections.sort(recomendaciones, new ComparadorMaterias());
-			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas();
-			comparadorPoscorrelativas.setPlanEstudio(planEstudio);
-			Collections.sort(recomendaciones, comparadorPoscorrelativas);
+			//ORDENAR POR AMBAS
+			OrdenadorAmbos ordenadorAmbos = new OrdenadorAmbos(recomendaciones, (Integer) tipoCriterio);
+			ordenadorAmbos.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
+			ordenadorAmbos.ordenar();
 		}
 		this.finishRecoOK = true;
 		this.setRecomendaciones(recomendaciones);
