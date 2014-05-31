@@ -73,6 +73,7 @@ public class Alta_mat_cur_matApr
 	Horario lun18a22;
 	Horario mar18a22;
 	Horario jue18a20;
+	Horario jue18a22;
 	Horario vier18a22;
 	Horario lun18a20;
 	Horario mar18a20;
@@ -92,6 +93,7 @@ public class Alta_mat_cur_matApr
 	// ///////////CURSOS
 	Curso curIngles1;
 	Curso curIngles2;
+	Curso curIngles2_c2;
 	Curso curIngles3;
 	Curso curProg1;
 	Curso curProg2;
@@ -103,6 +105,7 @@ public class Alta_mat_cur_matApr
 	Curso curTallerUtilitarios;
 	Curso curLogYTeoDeNum;
 	Curso curOrga1;
+	Curso curOrga1_c2;
 	Curso curOrga2;
 	Curso curAlgebraLineal;
 
@@ -119,6 +122,7 @@ public class Alta_mat_cur_matApr
 		mar18a22 = new Horario(Dia.MARTES, 18, 22);
 		// mar18a22.setId(2);
 		jue18a20 = new Horario(Dia.JUEVES, 18, 20);
+		jue18a22 = new Horario(Dia.JUEVES, 18, 22);
 		// jue18a20.setId(3);
 		vier18a22 = new Horario(Dia.VIERNES, 18, 22);
 		// vier18a22.setId(4);
@@ -222,55 +226,62 @@ public class Alta_mat_cur_matApr
 		List<Horario> listHor = new ArrayList<Horario>();
 		listHor.add(lun18a22);
 		listHor.add(mar18a22);
-		curIngles1 = new Curso(carreras, ingles1, listHor);
-		curIngles3 = new Curso(carreras, ingles3, listHor);
+		curIngles1 = new Curso(carreras, ingles1, listHor, "01");
+		curIngles3 = new Curso(carreras, ingles3, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(sab08a12);
-		curIngles2 = new Curso(carreras, ingles2, listHor);
+		curIngles2 = new Curso(carreras, ingles2, listHor, "01");
+		listHor = new ArrayList<Horario>();
+		listHor.add(sab08a12);
+		curIngles2_c2 = new Curso(carreras, ingles2, listHor, "02");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun18a20);
 		listHor.add(mar18a20);
 		listHor.add(mier18a20);
-		curProg1 = new Curso(carreras, prog1, listHor);
+		curProg1 = new Curso(carreras, prog1, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar18a22);
 		listHor.add(vier18a22);
-		curProg2 = new Curso(carreras, prog2, listHor);
-		curProg3 = new Curso(carreras, prog3, listHor);
+		curProg2 = new Curso(carreras, prog2, listHor, "01");
+		curProg3 = new Curso(carreras, prog3, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
-		curTallerLecto = new Curso(carreras, lecto, listHor);
+		curTallerLecto = new Curso(carreras, lecto, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
 		listHor.add(vier18a22);
-		curIntroALaMat = new Curso(carreras, introALaMatematica, listHor);
+		curIntroALaMat = new Curso(carreras, introALaMatematica, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier20a22);
 		listHor.add(vier20a22);
-		curCalculo1 = new Curso(carreras, calculo1, listHor);
+		curCalculo1 = new Curso(carreras, calculo1, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun08a12);
 		listHor.add(mier08a12);
-		curPsec = new Curso(carreras, psec, listHor);
+		curPsec = new Curso(carreras, psec, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar15a17);
-		curTallerUtilitarios= new Curso(carreras, tallerUtilitarios, listHor);
+		curTallerUtilitarios= new Curso(carreras, tallerUtilitarios, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun15a17);
 		listHor.add(mier15a17);
-		curLogYTeoDeNum= new Curso(carreras, logica, listHor);
+		curLogYTeoDeNum= new Curso(carreras, logica, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue15a17);
 		listHor.add(sab10a12);
-		curOrga1= new Curso(carreras, orga1, listHor);
+		curOrga1= new Curso(carreras, orga1, listHor, "01");
+		listHor = new ArrayList<Horario>();
+		listHor.add(lun18a20);
+		listHor.add(jue18a22);
+		curOrga1_c2= new Curso(carreras, orga1, listHor, "02");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue18a20);
 		listHor.add(vier18a22);
-		curOrga2 = new Curso(carreras, orga2, listHor);
+		curOrga2 = new Curso(carreras, orga2, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue18a20);
 		listHor.add(lun18a20);
-		curAlgebraLineal = new Curso(carreras, algebraLineal, listHor);
+		curAlgebraLineal = new Curso(carreras, algebraLineal, listHor, "01");
 		
 		
 		
@@ -466,6 +477,7 @@ public class Alta_mat_cur_matApr
 		// CURSOS
 		CursoDAO.getInstancia().alta(curIngles1);
 		CursoDAO.getInstancia().alta(curIngles2);
+		CursoDAO.getInstancia().alta(curIngles2_c2);
 		CursoDAO.getInstancia().alta(curIngles3);
 		CursoDAO.getInstancia().alta(curProg1);
 		CursoDAO.getInstancia().alta(curProg2);
@@ -477,6 +489,7 @@ public class Alta_mat_cur_matApr
 		CursoDAO.getInstancia().alta(curTallerUtilitarios);
 		CursoDAO.getInstancia().alta(curLogYTeoDeNum);
 		CursoDAO.getInstancia().alta(curOrga1);
+		CursoDAO.getInstancia().alta(curOrga1_c2);
 		CursoDAO.getInstancia().alta(curOrga2);
 	}
 
