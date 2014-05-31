@@ -36,13 +36,19 @@ public class GRCController
 		this.modelo = model;
 	}
 
-	public void cambiarTablaDias(DefaultTableModel tablaDias, int posItemLista) throws Exception
+	public DefaultTableModel cambiarTablaDias(Recomendacion recomendacion) throws Exception
 	{
+		DefaultTableModel tablaDias = new DefaultTableModel();
+		for(int i = 0 ; i <= 6 ; i++)
+			tablaDias.addColumn("asd");
+		tablaDias.setRowCount(0);
+		tablaDias.setRowCount(14);
+		borrarValores(tablaDias);
 		String nombreMateria = "";
-		List<Recomendacion> recomendaciones = null;// this.vista.getModelo().getRecomendaciones();
+		List<Recomendacion> recomendaciones = this.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
-			return;
-		Recomendacion r = recomendaciones.get(posItemLista);
+			return tablaDias;
+		Recomendacion r = recomendacion;
 		for (Curso c : r.getRecomendacion())
 		{
 			nombreMateria = c.getMateria().getNombre();
@@ -90,6 +96,7 @@ public class GRCController
 				}
 			}
 		}
+		return tablaDias;
 	}
 
 	public ArrayList<String> getRecomendaciones() throws Exception
@@ -113,26 +120,26 @@ public class GRCController
 		return tablaDias;
 	}
 
-//	private DefaultTableModel borrarValores(DefaultTableModel tablaDias)
-//	{
-//		tablaDias.setRowCount(14);
-//		tablaDias.setValueAt("8 a 9", 0, 0);
-//		tablaDias.setValueAt("9 a 10", 1, 0);
-//		tablaDias.setValueAt("10 a 11", 2, 0);
-//		tablaDias.setValueAt("11 a 12", 3, 0);
-//		tablaDias.setValueAt("12 a 13", 4, 0);
-//		tablaDias.setValueAt("13 a 14", 5, 0);
-//		tablaDias.setValueAt("14 a 15", 6, 0);
-//		tablaDias.setValueAt("15 a 16", 7, 0);
-//		tablaDias.setValueAt("16 a 17", 8, 0);
-//		tablaDias.setValueAt("17 a 18", 9, 0);
-//		tablaDias.setValueAt("18 a 19", 10, 0);
-//		tablaDias.setValueAt("19 a 20", 11, 0);
-//		tablaDias.setValueAt("20 a 21", 12, 0);
-//		tablaDias.setValueAt("21 a 22", 13, 0);
-//
-//		return tablaDias;
-//	}
+	private DefaultTableModel borrarValores(DefaultTableModel tablaDias)
+	{
+		tablaDias.setRowCount(14);
+		tablaDias.setValueAt("8 a 9", 0, 0);
+		tablaDias.setValueAt("9 a 10", 1, 0);
+		tablaDias.setValueAt("10 a 11", 2, 0);
+		tablaDias.setValueAt("11 a 12", 3, 0);
+		tablaDias.setValueAt("12 a 13", 4, 0);
+		tablaDias.setValueAt("13 a 14", 5, 0);
+		tablaDias.setValueAt("14 a 15", 6, 0);
+		tablaDias.setValueAt("15 a 16", 7, 0);
+		tablaDias.setValueAt("16 a 17", 8, 0);
+		tablaDias.setValueAt("17 a 18", 9, 0);
+		tablaDias.setValueAt("18 a 19", 10, 0);
+		tablaDias.setValueAt("19 a 20", 11, 0);
+		tablaDias.setValueAt("20 a 21", 12, 0);
+		tablaDias.setValueAt("21 a 22", 13, 0);
+
+		return tablaDias;
+	}
 
 	public ArrayList<String> armarRecomendacion(List<Recomendacion> recomendaciones)
 	{
@@ -142,7 +149,7 @@ public class GRCController
 			String recoParaLista = "";
 			for (Curso c : r.getRecomendacion())
 			{
-				recoParaLista += " " + c.getMateria().getNombre();
+				recoParaLista += " " + c.getNombreCurso();
 				for (int j = 0; j < c.getHorario().size(); j++)
 				{
 					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
