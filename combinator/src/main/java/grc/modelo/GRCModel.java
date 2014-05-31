@@ -2,6 +2,7 @@ package grc.modelo;
 
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
+import grc.servicios.GeneradorRecomendaciones;
 import grc.servicios.ComparadorAmbos;
 import grc.servicios.ComparadorMaterias;
 import grc.servicios.ComparadorPoscorrelativas;
@@ -20,15 +21,15 @@ public class GRCModel extends Observable
 	private List<Recomendacion> recomendaciones;
 	private boolean finishRecoOK;
 	private PlanEstudio planEstudio;
-	private long timeToWait;
+	private long timeOut;
 	private Recomendacion recomendacionActual;
 	// private List<Observer> vistaObserver;
 
-	public GRCModel(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeToWait)
+	public GRCModel(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeOut)
 	{
 		this.cursosDisponibles = cursosDisponibles;
 		this.planEstudio = planEstudio;
-		this.timeToWait = timeToWait;
+		this.timeOut = timeOut;
 		this.recomendaciones = new ArrayList<Recomendacion>();
 	}
 
@@ -51,16 +52,27 @@ public class GRCModel extends Observable
 	{
 		this.recomendaciones = recomendaciones;
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(recomendaciones);
+	}
+	
+	public Recomendacion getRecomendacionActual()
+	{
+		return recomendacionActual;
+	}
+
+	public void setRecomendacionActual(Recomendacion recomendacionActual)
+	{
+		this.recomendacionActual = recomendacionActual;
+		this.setChanged();
+		this.notifyObservers(recomendacionActual);
 	}
 
 	public void actualizarRecomendaciones(List<Curso> cursos, boolean puedeEsperar) throws ClassNotFoundException,
 			IOException
 	{
-		Recomendacion reco = new Recomendacion(this.timeToWait);
-		reco.setPuedeEsperar(puedeEsperar);
-		List<Recomendacion> recomendaciones = reco.backtracking(cursos);
-		this.finishRecoOK = reco.isFinishRecoOK();
+		GeneradorRecomendaciones generadosRecom = new GeneradorRecomendaciones(timeOut, puedeEsperar);
+		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursos);
+		this.finishRecoOK = generadosRecom.isFinishRecoOK();
 		this.setRecomendaciones(recomendaciones);
 	}
 	
@@ -97,6 +109,7 @@ public class GRCModel extends Observable
 
 	public void actualizarRecomendacionActual(int posElegida)
 	{
-		// TODO Auto-generated method stub
+		this.recomendacionActual = this.recomendaciones.get(posElegida);
+		this.setRecomendacionActual(recomendacionActual);
 	}
 }
