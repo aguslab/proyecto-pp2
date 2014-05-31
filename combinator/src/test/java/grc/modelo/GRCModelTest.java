@@ -60,9 +60,9 @@ public class GRCModelTest
 		List<Carrera> ca = new ArrayList<Carrera>();
 		ca.add(c);
 		c.setId(0);
-		Curso c1 = new Curso(ca, mn, h);
-		Curso c2 = new Curso(ca, m, h2);
-		Curso c3 = new Curso(ca, mt, h3);
+		Curso c1 = new Curso(ca, mn, h, "01");
+		Curso c2 = new Curso(ca, m, h2, "01");
+		Curso c3 = new Curso(ca, mt, h3, "01");
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		cursosDisp.add(c3);
