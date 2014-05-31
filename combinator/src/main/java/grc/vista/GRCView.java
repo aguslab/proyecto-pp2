@@ -2,6 +2,7 @@ package grc.vista;
 
 import grc.controlador.GRCController;
 import grc.modelo.GRCModel;
+import grc.servicios.Recomendacion;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class GRCView extends JFrame implements Observer, ActionListener
 {
-	private GRCModel model;
+//	private GRCModel model;
 	private GRCController controller;
 	private JDesktopPane escritorio = new JDesktopPane();
 	private JMenuBar barra;
@@ -45,7 +46,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	public GRCView(GRCModel model, final GRCController controller) throws Exception
 	{
 		super("Generador de Recomendaciones de Cursadas");
-		this.model = model;
+//		this.model = model;
 		this.controller = controller;
 		escritorio.setBounds(0, 0, 1317, 1);
 //		controller.setVista(this);
@@ -268,14 +269,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
 					borrarValores(tablaTempDias);
-					try
-					{
-						cambioSeleccionActual(posElegida);
-						controller.seleccionActualRecomendacion(posElegida);
-					} catch (Exception e1)
-					{
-						e1.printStackTrace();
-					}
+					controller.seleccionActualRecomendacion(posElegida);
 				}
 			}																										});
 	}
@@ -314,8 +308,17 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		}
 	}
 	
-	public void mensajeNoCompletoReco(){
-		JOptionPane.showMessageDialog(this, "Ocurrió un problema. Puede que no se hayan generado todas las recomendaciones");
+	public void mensajeNoCompletoReco() throws Exception{
+		int reply = JOptionPane.showConfirmDialog(this,
+				"Al parecer son muchas recomendaciones! Puede que aún no se hayan generado todas ¿Desea seguir esperando para verlas todas?", "Ha pasado demasiado tiempo",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+		if (reply == JOptionPane.YES_OPTION)
+		{
+			this.setPuedeEsperar(true);
+			controller.puedeEsperar(puedeEsperar());
+			controller.filtrarTurnos();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -344,24 +347,40 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		return cbPuedeEsperar.isSelected();
 	}
 	
-	public void update(Observable o, Object arg)
+	private void setPuedeEsperar(boolean b)
 	{
-		try
-		{
-			mostrarRecos();
-		} catch (Exception e)
-		{
-			System.out.println("ERROR AL MOSTRAR LAS RECO GENERADAS!!!");
-			e.printStackTrace();
+		this.cbPuedeEsperar.setSelected(true);
+	}
+	
+	public void update(Observable obs, Object arg)
+	{
+		if(arg instanceof ArrayList){
+			try
+			{
+				mostrarRecos(obs);
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (arg instanceof Recomendacion){
+			try
+			{
+				
+				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion)arg));
+			} catch (Exception e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 	}
 
-	public GRCModel getModelo()
-	{
-		return this.model;
-	}
+//	public GRCModel getModelo()
+//	{
+//		return this.model;
+//	}
 
-	public void mostrarRecos() throws Exception
+	public void mostrarRecos(Observable o) throws Exception
 	{
 		DefaultListModel modeloList = new DefaultListModel();
 		ArrayList<String> recomendaciones = controller.getRecomendaciones();
@@ -371,7 +390,8 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		}
 		listaRecomendaciones.setModel(modeloList);
 		
-		if(!this.model.isFinishRecomendacionOK()){
+		boolean generoTodaslasRecomendaciones = ((GRCModel) o).isFinishRecomendacionOK();
+		if(!generoTodaslasRecomendaciones){
 			mensajeNoCompletoReco();
 		}
 	}
