@@ -1,19 +1,20 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
-import java.util.List;
+
+import java.util.Set;
 
 public class Recomendacion
 {
 
-	List<Curso> recomendacion;
+	Set<Curso> recomendacion;
 	
-	public Recomendacion(List<Curso> cursos)
+	public Recomendacion(Set<Curso> cursos)
 	{
 		this.recomendacion = cursos;
 	}
 	
-	public List<Curso> getRecomendacion()
+	public Set<Curso> getRecomendacion()
 	{
 		return recomendacion;
 	}

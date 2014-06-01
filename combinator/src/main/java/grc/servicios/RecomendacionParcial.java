@@ -1,43 +1,52 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
+import grc.dominio.Dia;
 import grc.dominio.Horario;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RecomendacionParcial
 {
 
-	List<Curso> recomendacion;
-	private Map<String, List<Horario>> horariosOcupados;
+	Set<Curso> cursos;
+	private Map<Dia, List<Horario>> horariosOcupados;
 
 	public RecomendacionParcial()
 	{
-		this.recomendacion = new ArrayList<Curso>();
-		this.horariosOcupados = new HashMap<String, List<Horario>>();
+		
+//		this.cursos = new HashSet<Curso>();
+//		this.horariosOcupados = new EnumMap<Dia, List<Horario>>(Dia.class);
+//		Set<Curso> cursos = new HashSet<Curso>();
+		this (new HashSet<Curso>());
 	}
 
-	public RecomendacionParcial(List<Curso> cursos)
+	public RecomendacionParcial(Set<Curso> cursos)
 	{
-		this.recomendacion = cursos;
+		this.cursos = cursos;
+		this.horariosOcupados = new EnumMap<Dia, List<Horario>>(Dia.class);
 	}
 
-	public List<Curso> getRecomendacion()
+	public Set<Curso> getRecomendacion()
 	{
-		return recomendacion;
+		return cursos;
 	}
 
 	public void agregarCurso(Curso curso)
 	{
-		this.recomendacion.add(curso);
+		this.cursos.add(curso);
 		this.agregarAHorariosOcupados(curso.getHorario());
 	}
 
 	public void eliminarCurso(Curso curso)
 	{
-		this.recomendacion.remove(curso);
+		this.cursos.remove(curso);
 		this.limpiarHorariosOcupados(curso.getHorario());
 	}
 
@@ -45,23 +54,22 @@ public class RecomendacionParcial
 	{
 		for (Horario h : horarios)
 		{
-			this.horariosOcupados.get(h.getDia().name()).remove(h);
+			this.horariosOcupados.get(h.getDia()).remove(h);
 		}
 	}
 
-	private void agregarAHorariosOcupados(List<Horario> horarios)
+	private void agregarAHorariosOcupados(Collection<Horario> horarios)
 	{
-
 		for (Horario h : horarios)
 		{
 			if (this.horariosOcupados.containsKey(h.getDia()))
 			{
-				this.horariosOcupados.get(h.getDia().name()).add(h);
+				this.horariosOcupados.get(h.getDia()).add(h);
 			} else
 			{
 				List<Horario> nuevoHorario = new ArrayList<Horario>();
 				nuevoHorario.add(h);
-				this.horariosOcupados.put(h.getDia().name(), nuevoHorario);
+				this.horariosOcupados.put(h.getDia(), nuevoHorario);
 			}
 		}
 	}
@@ -81,10 +89,9 @@ public class RecomendacionParcial
 
 		for (Horario h : curso.getHorario())
 		{
-			String horarioDia = h.getDia().name();
-			if (horariosOcupados.containsKey(horarioDia))
+			if (horariosOcupados.containsKey(h.getDia()) && horarioDisponible)
 			{
-				for (Horario horario : horariosOcupados.get(horarioDia))
+				for (Horario horario : horariosOcupados.get(h.getDia()))
 				{
 					if (horario.seSolapaCon(h))
 					{
@@ -94,21 +101,15 @@ public class RecomendacionParcial
 				}
 			}
 		}
-		if (horarioDisponible)
-		{
-			agregarAHorariosOcupados(curso.getHorario());
-		}
-
 		return horarioDisponible;
 	}
 
-	@Override
-	public RecomendacionParcial clone()
+	public Set<Curso> getCopiaCursosDeRecomendacion()
 	{
-		List<Curso> cursos = new ArrayList<Curso>();
-		cursos.addAll(this.recomendacion);
+		Set<Curso> cursos = new HashSet<Curso>();
+		cursos.addAll(this.cursos);
 
-		return new RecomendacionParcial(cursos);
+		return cursos;
 	}
 
 }
