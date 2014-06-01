@@ -1,6 +1,5 @@
 package grc.vista;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import grc.controlador.GRCController;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
@@ -28,23 +27,25 @@ public class GRCViewText implements Observer
 		this.printRecomendaciones(model.getRecomendaciones());
 		try
 		{
-			this.volverAMenuPrincipal();
+//			this.volverAMenuPrincipal();
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	public void main(String[] args)
-	{
-		try
-		{
-			menuPrincipal();
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
+//	public void main(String[] args)
+//	{
+//		try
+//		{
+//			menuPrincipal();
+//		} catch (Exception e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
 	public void menuPrincipal() throws Exception
 	{
 		boolean salir = false;
@@ -90,31 +91,30 @@ public class GRCViewText implements Observer
 		
 		if(!salir){
 			controller.filtrarTurnos();
-			volverAMenuPrincipal();	
+//			volverAMenuPrincipal();	
 		}else{
 			System.exit(0);
 		}
 		
 	}
 
-	public void volverAMenuPrincipal() throws Exception
-	{
-		System.out.println();
-		String entradaTeclado;
-		do
-		{
-			System.out.println("Para volver al menu principal presiones 1");
-			entradaTeclado = getOpcionUsuario();
-		} while (!entradaTeclado.equals("1"));
-		{
-			menuPrincipal();
-		}
-	}
+//	public void volverAMenuPrincipal() throws Exception
+//	{
+//		System.out.println();
+//		String entradaTeclado;
+//		do
+//		{
+//			System.out.println("Para volver al menu principal presiones 1");
+//			entradaTeclado = getOpcionUsuario();
+//		} while (!entradaTeclado.equals("1"));
+//		{
+//			menuPrincipal();
+//		}
+//	}
 
 	private String getOpcionUsuario()
 	{
-		Scanner entradaEscaner = new Scanner(System.in);
-		String entradaTeclado = entradaEscaner.nextLine();
+		String entradaTeclado = new Scanner(System.in).nextLine();
 		return entradaTeclado;
 	}
 
