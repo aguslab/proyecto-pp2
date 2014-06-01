@@ -11,7 +11,7 @@ import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
 import grc.modelo.GRCModel;
-import grc.servicios.Filtro;
+import grc.servicios.FiltroCursos;
 import grc.servicios.Recomendacion;
 import grc.servicios.Universidad;
 import grc.vista.GRCView;
@@ -82,7 +82,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		pe = uni.getPlanEstudioFromCarrera(licSistemas);
 		matAprobadas = uni.getMateriasAprobadasFromAlumno(alumnoNombre);
 
-		Filtro fil = new Filtro();
+		FiltroCursos fil = new FiltroCursos();
 
 		cursosDisponibles = fil.filtrarMateriasAprobadas(cursosDisponibles, matAprobadas);
 		cursosDisponibles = fil.filtrarCorrelativas(pe, cursosDisponibles, matAprobadas);
