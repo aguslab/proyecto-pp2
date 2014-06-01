@@ -5,17 +5,15 @@ import java.util.List;
 import java.util.Set;
 
 import grc.controlador.GRCController;
-import grc.dao.CarreraDAO;
-import grc.dao.MateriaAprobadaDAO;
-import grc.dao.PlanEstudioDAO;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
-import grc.dominio.MateriaAprobada;
+import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
 import grc.modelo.GRCModel;
 import grc.servicios.Filtro;
 import grc.servicios.Recomendacion;
+import grc.servicios.Universidad;
 import grc.vista.GRCView;
 import grc.vista.GRCViewText;
 
@@ -62,10 +60,12 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 	public static void main(String[] args) throws Exception
 	{
 
+		String alumnoNombre = "cualquierCosa";
 		Carrera licSistemas = null;
 		PlanEstudio pe = null;
-		List<MateriaAprobada> matAprobadas = null;
+		Set<Materia> matAprobadas = null;
 		Set<Curso> cursosDisponibles = null;
+		Universidad uni = new Universidad();
 		try
 		{
 //			 generarAltas();
@@ -74,15 +74,18 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
 			e.printStackTrace();
 		}
+		
+		licSistemas = uni.getCarrerraFromAlumno(alumnoNombre);
+		
+		cursosDisponibles = uni.getCursosFromCarrera(licSistemas);
 
-		licSistemas = CarreraDAO.getInstancia().getCarrera(0);
-
-		pe = PlanEstudioDAO.getInstancia().getPlanEstudioDeCarrera(licSistemas);
-		matAprobadas = MateriaAprobadaDAO.getInstancia().obtenerTodo();
+		pe = uni.getPlanEstudioFromCarrera(licSistemas);
+		matAprobadas = uni.getMateriasAprobadasFromAlumno(alumnoNombre);
 
 		Filtro fil = new Filtro();
 
-			cursosDisponibles = fil.getCursosDisponibles(pe, matAprobadas);
+		cursosDisponibles = fil.filtrarMateriasAprobadas(cursosDisponibles, matAprobadas);
+		cursosDisponibles = fil.filtrarCorrelativas(pe, cursosDisponibles, matAprobadas);
 
 		for (Curso c : cursosDisponibles)
 		{
