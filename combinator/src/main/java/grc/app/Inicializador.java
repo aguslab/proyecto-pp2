@@ -1,6 +1,5 @@
 package grc.app;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -62,10 +61,10 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 
 		String alumnoNombre = "cualquierCosa";
 		Carrera licSistemas = null;
-		PlanEstudio pe = null;
+		PlanEstudio planEstudio = null;
 		Set<Materia> matAprobadas = null;
 		Set<Curso> cursosDisponibles = null;
-		Universidad uni = new Universidad();
+		Universidad universidad = new Universidad();
 		try
 		{
 //			 generarAltas();
@@ -75,34 +74,33 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 			e.printStackTrace();
 		}
 		
-		licSistemas = uni.getCarrerraFromAlumno(alumnoNombre);
+		licSistemas = universidad.getCarrerraFromAlumno(alumnoNombre);
 		
-		cursosDisponibles = uni.getCursosFromCarrera(licSistemas);
+		cursosDisponibles = universidad.getCursosFromCarrera(licSistemas);
 
-		pe = uni.getPlanEstudioFromCarrera(licSistemas);
-		matAprobadas = uni.getMateriasAprobadasFromAlumno(alumnoNombre);
+		planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
+		matAprobadas = universidad.getMateriasAprobadasFromAlumno(alumnoNombre);
 
 		FiltroCursos fil = new FiltroCursos();
 
 		cursosDisponibles = fil.filtrarMateriasAprobadas(cursosDisponibles, matAprobadas);
-		cursosDisponibles = fil.filtrarCorrelativas(pe, cursosDisponibles, matAprobadas);
+		cursosDisponibles = fil.filtrarCorrelativas(planEstudio, cursosDisponibles, matAprobadas);
 
 		for (Curso c : cursosDisponibles)
 		{
-			System.out.println("nombre: " + c.getMateria().getNombre());
+			System.out.println("nombre: " + c.getNombreCurso());
 		}
 
-		List<Curso> cursos = new ArrayList<Curso>(cursosDisponibles);
-		long timeOut = 50;
-		GRCModel model = new GRCModel(cursos, pe, timeOut);
+		long timeOut = 10;
+		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, timeOut);
 		
 		GRCController controller = new GRCController(model);
 		GRCView vista = new GRCView(model, controller);
-//		GRCViewText viewText = new GRCViewText(controller);
+		GRCViewText viewText = new GRCViewText(controller);
 		model.addObserver(vista);
-//		model.addObserver(viewText);
+		model.addObserver(viewText);
 		vista.showVista();
-//		viewText.menuPrincipal();
+		viewText.menuPrincipal();
 //		model.actualizarRecomendaciones(cursos, false);
 	}
 
