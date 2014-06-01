@@ -100,7 +100,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		model.addObserver(vista);
 		model.addObserver(viewText);
 		vista.showVista();
-		viewText.menuPrincipal();
+//		viewText.menuPrincipal();
 //		model.actualizarRecomendaciones(cursos, false);
 	}
 
