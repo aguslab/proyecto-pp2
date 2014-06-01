@@ -113,32 +113,4 @@ public class CursoDAO
 		return curs;
 	}
 
-	/**
-	 * Al conjunto de cursos recibido como parametro, quita los cursos que dicten materias
-	 * 
-	 * @param cursos
-	 * @return
-	 */
-	// Cuenta la cantidad de veces que aparece cada materia en la tabla de
-	// materias_aprobadas.
-	// cantAprobada = 0 no está aprobada, cantAprobada>0 esta aprobada
-//	public Set<Curso> quitarMateriasAprobadas(Set<Curso> cursos)
-//	{
-//		int materia_id;
-//		Set<Curso> cursosCopia = new HashSet<Curso>(cursos);
-//		for (Curso c : cursosCopia)
-//		{
-//			materia_id = c.getMateria().getId();
-//			String a = new String("0");
-//			Query query = em.createQuery("SELECT COUNT(*) FROM MateriaAprobada WHERE materia.id = "
-//					+ materia_id);
-//
-//			if (!query.getResultList().get(0).toString().equals(a))
-//			{
-//				cursos.remove(c);
-//			}
-//		}
-//		return cursos;
-//	}
-
 }
