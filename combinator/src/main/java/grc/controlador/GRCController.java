@@ -10,7 +10,7 @@ import grc.servicios.Criterio;
 import grc.servicios.CriterioAmbos;
 import grc.servicios.CriterioMateria;
 import grc.servicios.CriterioPoscorrelativa;
-import grc.servicios.Filtro;
+import grc.servicios.FiltroCursos;
 import grc.servicios.Recomendacion;
 
 import java.util.ArrayList;
@@ -185,7 +185,7 @@ public class GRCController
 			horarios.add(Horario.NOCHE);
 		}
 
-		Filtro f = new Filtro();
+		FiltroCursos f = new FiltroCursos();
 		Set<Curso> cursos = f.filtrarPorHorario(this.getModelo().getCursosDisponibles(),
 				horarios);
 		 System.out.println("cantidad cursos: "+cursos.size());
