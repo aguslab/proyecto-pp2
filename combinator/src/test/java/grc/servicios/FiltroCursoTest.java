@@ -12,7 +12,7 @@ import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.MateriaAprobada;
 import grc.dominio.PlanEstudio;
-import grc.servicios.Filtro;
+import grc.servicios.FiltroCursos;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class FiltroTest 
+public class FiltroCursoTest 
     extends TestCase
 {
     /**
@@ -28,7 +28,7 @@ public class FiltroTest
      *
      * @param testName name of the test case
      */
-    public FiltroTest( String testName )
+    public FiltroCursoTest( String testName )
     {
         super( testName );
     }
@@ -38,28 +38,28 @@ public class FiltroTest
      */
     public static Test suite()
     {
-        return new TestSuite( FiltroTest.class );
+        return new TestSuite( FiltroCursoTest.class );
     }
 
     public void testFiltroCursosDisponiblesSinCursos() throws Exception{
-    	Filtro fil = new Filtro();
+    	FiltroCursos fil = new FiltroCursos();
     	List<Curso> c = new ArrayList<Curso>();
     	List<Horario> h = new ArrayList<Horario>();
-    	assertEquals(0, fil.getCursosDisponibles(c, h).size());
+    	assertEquals(0, fil.filtrarPorHorario(c, h).size());
     }
     
     public void testFiltroCursosDisponiblesConCursosSinHoras() throws Exception{
-    	Filtro fil = new Filtro();
+    	FiltroCursos fil = new FiltroCursos();
     	List<Curso> cursos = new ArrayList<Curso>();
     	Curso c1 = new Curso();
     	c1.setHorario(new ArrayList<Horario>());
     	cursos.add(c1);
     	List<Horario> h = new ArrayList<Horario>();
-    	assertEquals(0, fil.getCursosDisponibles(cursos, h).size());
+    	assertEquals(0, fil.filtrarPorHorario(cursos, h).size());
     }
     
     public void testFiltroCursosDisponiblesConCursosConHorasNoche() throws Exception{
-    	Filtro fil = new Filtro();
+    	FiltroCursos fil = new FiltroCursos();
     	List<Curso> cursos = new ArrayList<Curso>();
     	Curso c1 = new Curso();
     	List<Horario> horas = new ArrayList<Horario>();
@@ -74,11 +74,11 @@ public class FiltroTest
     	List<Horario> h = new ArrayList<Horario>();
     	Horario hf = new Horario(18, 22);
     	h.add(hf);
-    	assertEquals(1, fil.getCursosDisponibles(cursos, h).size());
+    	assertEquals(1, fil.filtrarPorHorario(cursos, h).size());
     }
     
     public void testFiltroCursosDisponiblesConCursosConHorasManana() throws Exception{
-    	Filtro fil = new Filtro();
+    	FiltroCursos fil = new FiltroCursos();
     	List<Curso> cursos = new ArrayList<Curso>();
     	Curso c1 = new Curso();
     	List<Horario> horas = new ArrayList<Horario>();
@@ -89,7 +89,7 @@ public class FiltroTest
     	List<Horario> h = new ArrayList<Horario>();
     	Horario hf = new Horario(8, 12);
     	h.add(hf);
-    	assertEquals(1, fil.getCursosDisponibles(cursos, h).size());
+    	assertEquals(1, fil.filtrarPorHorario(cursos, h).size());
     }
     
     public void testFiltroCorrelativasOk(){
@@ -102,7 +102,7 @@ public class FiltroTest
     		materiasAprobadas.add(new Materia("A"+i));	
     	}
     	
-    	Filtro ac = new Filtro();
+    	FiltroCursos ac = new FiltroCursos();
     	boolean puedeCursar = ac.tieneCorrelativas(pe, materiaACursar, materiasAprobadas);
     	assertTrue(puedeCursar);
     }
@@ -117,7 +117,7 @@ public class FiltroTest
     		materiasAprobadas.add(new Materia("A"+i));	
     	}
     	
-    	Filtro ac = new Filtro();
+    	FiltroCursos ac = new FiltroCursos();
     	boolean puedeCursar = ac.tieneCorrelativas(pe, materiaACursar, materiasAprobadas);
     	assertFalse(puedeCursar);
     }
@@ -136,7 +136,7 @@ public class FiltroTest
     	lma.add(ma1);
     	lma.add(ma2);
     	
-    	Filtro ac = new Filtro();
-    	assertNotNull(ac.getCursosDisponibles(pe, lma));
+    	FiltroCursos ac = new FiltroCursos();
+    	assertNotNull(ac.filtrarCorrelativas(pe, lma));
     }
 }
