@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 public class GRCModel extends Observable
 {
@@ -25,9 +26,9 @@ public class GRCModel extends Observable
 	private Recomendacion recomendacionActual;
 	// private List<Observer> vistaObserver;
 
-	public GRCModel(List<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeOut)
+	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeOut)
 	{
-		this.cursosDisponibles = cursosDisponibles;
+		this.cursosDisponibles = new ArrayList<Curso>(cursosDisponibles);
 		this.planEstudio = planEstudio;
 		this.timeOut = timeOut;
 		this.recomendaciones = new ArrayList<Recomendacion>();
@@ -72,7 +73,7 @@ public class GRCModel extends Observable
 	{
 		GeneradorRecomendaciones generadosRecom = new GeneradorRecomendaciones(timeOut, puedeEsperar);
 		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursos);
-		this.finishRecoOK = generadosRecom.isFinishRecoOK();
+		this.finishRecoOK = generadosRecom.seCompletoLaGeneracionDeRecomendaciones();
 		this.setRecomendaciones(recomendaciones);
 	}
 	
