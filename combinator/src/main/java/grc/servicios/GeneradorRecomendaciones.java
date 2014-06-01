@@ -1,30 +1,28 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GeneradorRecomendaciones
 {
 
-	List<Curso> recomendacion;
+	Set<Curso> cursosRecomendables;
 	private long timeOut;
 	private long timeInit;
-	private boolean finishRecoOK;
+	private boolean seCompletoLaGeneracionDeRecomendaciones;
 	private boolean puedeEsperar;
 
 	public GeneradorRecomendaciones(long timeOut, boolean puedeEsperar)
 	{
 		this.timeOut = timeOut;
-		this.recomendacion = new ArrayList<Curso>();
-		// finishRecoOK = true; //TODO: ver!!
+		this.cursosRecomendables = new HashSet<Curso>();
 		this.puedeEsperar = puedeEsperar;
-	}
-
-	public List<Curso> getRecomendacion()
-	{
-		return recomendacion;
+		this.seCompletoLaGeneracionDeRecomendaciones = false;
 	}
 
 	public List<Recomendacion> generarRecomendaciones(List<Curso> cursos)
@@ -42,12 +40,12 @@ public class GeneradorRecomendaciones
 		long timeNow = new Date().getTime();
 		if (!this.puedeEsperar && timeNow - this.timeInit > timeOut)
 		{
-			finishRecoOK = false;
+			seCompletoLaGeneracionDeRecomendaciones = false;
 			return;
 		}
 
 		if (desde == cursos.size()){
-			this.finishRecoOK = true;
+			this.seCompletoLaGeneracionDeRecomendaciones = true;
 			return;
 		}
 		armarSubconjuntos(resultado, cursos, recomendacionParcial, desde + 1);
@@ -62,9 +60,9 @@ public class GeneradorRecomendaciones
 
 	}
 
-	public boolean isFinishRecoOK()
+	public boolean seCompletoLaGeneracionDeRecomendaciones()
 	{
-		return finishRecoOK;
+		return seCompletoLaGeneracionDeRecomendaciones;
 	}
 
 }
