@@ -14,7 +14,7 @@ import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
 import grc.modelo.GRCModel;
-import grc.servicios.Filtro;
+import grc.servicios.FiltroCursos;
 import grc.vista.GRCView;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -69,8 +69,8 @@ public class GRCControllerTest
     	Horario lh2 = new Horario(18, 22);
     	lhor.add(lh1);
     	lhor.add(lh2);
-    	Filtro f = new Filtro();
-    	List<Curso> cur = new ArrayList<Curso>(f.getCursosDisponibles(model.getCursosDisponibles(), lhor));
+    	FiltroCursos f = new FiltroCursos();
+    	List<Curso> cur = new ArrayList<Curso>(f.filtrarPorHorario(model.getCursosDisponibles(), lhor));
     	
     	GRCController controller = new GRCController(model);
     	GRCView vista = new GRCView(model, controller);
@@ -114,8 +114,8 @@ public class GRCControllerTest
     	Horario lh2 = new Horario(18, 22);
     	lhor.add(lh1);
     	lhor.add(lh2);
-    	Filtro f = new Filtro();
-    	List<Curso> cur = new ArrayList<Curso>(f.getCursosDisponibles(model.getCursosDisponibles(), lhor));
+    	FiltroCursos f = new FiltroCursos();
+    	List<Curso> cur = new ArrayList<Curso>(f.filtrarPorHorario(model.getCursosDisponibles(), lhor));
     	
     	GRCController controller = new GRCController(model);
     	GRCView vista = new GRCView(model, controller);
