@@ -1,5 +1,6 @@
 package grc.dominio;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -17,8 +18,8 @@ public class PlanEstudio
 
 	@Id
 	private int id;
-	@Column(nullable = false, columnDefinition = "blob")
-	private HashMap<Materia, Set<Materia>> correlativas;
+	@Column(name="correlativas", nullable = false, columnDefinition = "blob")
+	private HashMap<Materia, Set<Materia>> correlatividades;
 	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	private Carrera carrera;
 
@@ -26,10 +27,10 @@ public class PlanEstudio
 	{
 	}
 
-	public PlanEstudio(Carrera carrera, HashMap<Materia, Set<Materia>> correlativas)
+	public PlanEstudio(Carrera carrera, HashMap<Materia, Set<Materia>> correlatividades)
 	{
 		this.carrera = carrera;
-		this.correlativas = correlativas;
+		this.correlatividades = correlatividades;
 	}
 
 	public int getId()
@@ -42,16 +43,6 @@ public class PlanEstudio
 		this.id = id;
 	}
 
-	public HashMap<Materia, Set<Materia>> getCorrelativas()
-	{
-		return correlativas;
-	}
-
-	public void setCorrelativas(HashMap<Materia, Set<Materia>> correlativas)
-	{
-		this.correlativas = correlativas;
-	}
-
 	public Carrera getCarrera()
 	{
 		return carrera;
@@ -62,4 +53,43 @@ public class PlanEstudio
 		this.carrera = carrera;
 	}
 
+	public Set<Materia> getCorrelativas(Materia materia) throws Exception
+	{
+		if (perteneceAPlanEstudio(materia))
+		{
+			return this.correlatividades.get(materia);
+		} else
+		{
+			return null;
+			// throw new Exception();
+		}
+	}
+
+	public boolean perteneceAPlanEstudio(Materia materia)
+	{
+		return this.correlatividades.containsKey(materia);
+	}
+
+	/**
+	 * 
+	 * @param materia
+	 * @return cantidad de veces que aparece la materia pasada como parámetro como
+	 * correlativa de otras materias
+	 */
+	public Integer getCantidadPoscorrelativas(Materia materia)
+	{
+		Integer cantidadPoscorrelativas = 0;
+		Collection<Set<Materia>> materiasCorrelativas = this.correlatividades.values();
+		for (Set<Materia> materias : materiasCorrelativas) 
+		{
+			for (Materia m : materias) 
+			{
+				if (m.equals(materia))
+				{
+					cantidadPoscorrelativas++;
+				}
+			}
+		}
+		return cantidadPoscorrelativas;
+	}
 }
