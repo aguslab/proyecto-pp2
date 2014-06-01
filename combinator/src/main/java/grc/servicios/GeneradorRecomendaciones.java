@@ -55,7 +55,7 @@ public class GeneradorRecomendaciones
 		if (recomendacionParcial.puedeAgregarCurso(cursos.get(desde)))
 		{
 			recomendacionParcial.agregarCurso(cursos.get(desde));
-			resultado.add(new Recomendacion(recomendacionParcial.getCursosDeRecomendacion()));
+			resultado.add(new Recomendacion(recomendacionParcial.getCopiaCursosDeRecomendacion()));
 			armarSubconjuntos(resultado, cursos, recomendacionParcial, desde + 1);
 			recomendacionParcial.eliminarCurso(cursos.get(desde));
 		}
