@@ -1,12 +1,7 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
-import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
 
 public class ComparadorPoscorrelativas extends Comparador
 {
@@ -22,25 +17,10 @@ public class ComparadorPoscorrelativas extends Comparador
 	
 	public Integer contarCantidadPoscorrelativas(Recomendacion recomendacion, PlanEstudio planEstudio)
 	{
-		HashMap<Materia, Set<Materia>> correlativas = planEstudio.getCorrelativas();
 		Integer cantidadPoscorrelativas = 0;
-		Materia materia;
-		
 		for (Curso c : recomendacion.getRecomendacion()) // Por cada curso en la recomendacion
 		{
-			materia = c.getMateria();
-			Collection<Set<Materia>> materiasCorrelativas = correlativas.values();
-			
-			for (Set<Materia> materias : materiasCorrelativas) //Contamos la cantidad de veces que 
-			{
-				for (Materia m : materias) //aparece una materia como correlativa de otras
-				{
-					if (m.getNombre().equalsIgnoreCase(materia.getNombre()))
-					{
-						cantidadPoscorrelativas++;
-					}
-				}
-			}
+			cantidadPoscorrelativas+=planEstudio.getCantidadPoscorrelativas(c.getMateria());
 		}
 		return cantidadPoscorrelativas;
 	}
