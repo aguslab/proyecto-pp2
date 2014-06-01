@@ -26,7 +26,7 @@ public class GRCController
 	private boolean filtroTarde;
 	private boolean filtroNoche;
 	private boolean filtroPuedeEsperar;
-
+//TODO eliminar estados del controlador!!!
 	public GRCController(GRCModel model)
 	{
 		filtroManiana = false;
@@ -174,25 +174,19 @@ public class GRCController
 		
 		if (filtroManiana)
 		{
-			System.out.println("MAÑANA");
-			Horario horarTmp = new Horario(8, 12);
-			horarios.add(horarTmp);
+			horarios.add(Horario.MAÑANA);
 		}
 		if (filtroTarde)
 		{
-			System.out.println("tarde");
-			Horario horarTmp = new Horario(13, 17);
-			horarios.add(horarTmp);
+			horarios.add(Horario.TARDE);
 		}
 		if (filtroNoche)
 		{
-			System.out.println("noche");
-			Horario horarTmp = new Horario(18, 22);
-			horarios.add(horarTmp);
+			horarios.add(Horario.NOCHE);
 		}
 
 		Filtro f = new Filtro();
-		Set<Curso> cursos = f.getCursosDisponibles(this.getModelo().getCursosDisponibles(),
+		Set<Curso> cursos = f.filtrarPorHorario(this.getModelo().getCursosDisponibles(),
 				horarios);
 		 System.out.println("cantidad cursos: "+cursos.size());
 		 List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
