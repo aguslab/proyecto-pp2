@@ -23,7 +23,9 @@ public class Horario implements Serializable
 	private int horaFin;
 	@Column(nullable = false)
 	private Dia dia;
-	
+	public static final Horario MAÑANA = new Horario(8, 12);
+	public static final Horario TARDE = new Horario(13, 17);
+	public static final Horario NOCHE = new Horario(18, 22);
 	
 	public Horario()
 	{
@@ -82,7 +84,7 @@ public class Horario implements Serializable
 	}
 	
 	public boolean seSolapaCon(Horario h){
-		return this.horaInicio >= h.getHoraInicio() && this.horaFin <= h.horaFin;
+		return (this.horaInicio >= h.getHoraInicio() && this.horaFin <= h.horaFin) || (h.horaInicio >= this.getHoraInicio() && h.horaFin <= this.horaFin);
 	}
 	
 	
