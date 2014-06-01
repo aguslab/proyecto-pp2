@@ -1,7 +1,6 @@
 package grc.servicios;
 
 import grc.dominio.Curso;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +28,6 @@ public class GeneradorRecomendaciones
 	}
 
 	public List<Recomendacion> generarRecomendaciones(List<Curso> cursos)
-			throws ClassNotFoundException, IOException
 	{
 		List<Recomendacion> resultado = new ArrayList<Recomendacion>();
 		RecomendacionParcial recomendacionParcial = new RecomendacionParcial();
@@ -57,7 +55,7 @@ public class GeneradorRecomendaciones
 		if (recomendacionParcial.puedeAgregarCurso(cursos.get(desde)))
 		{
 			recomendacionParcial.agregarCurso(cursos.get(desde));
-			resultado.add(new Recomendacion(recomendacionParcial.clone().getRecomendacion()));
+			resultado.add(new Recomendacion(recomendacionParcial.getCursosDeRecomendacion()));
 			armarSubconjuntos(resultado, cursos, recomendacionParcial, desde + 1);
 			recomendacionParcial.eliminarCurso(cursos.get(desde));
 		}
