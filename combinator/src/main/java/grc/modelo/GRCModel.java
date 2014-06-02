@@ -86,15 +86,13 @@ public class GRCModel extends Observable
 		else if (criterio instanceof String)
 		{
 			//ORDENAR POR POSCORRELATIVA
-			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas();
-			comparadorPoscorrelativas.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
+			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas(planEstudio);
 			Collections.sort(recomendaciones, comparadorPoscorrelativas);
 		}
 		else if (criterio instanceof List<?>) 
 		{
 			//ORDENAR POR AMBAS
-			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) criterio);
-			comparadorAmbos.setPlanEstudio(planEstudio);
+			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) criterio, planEstudio);
 			Collections.sort(recomendaciones, comparadorAmbos);
 		}
 		this.finishRecoOK = true;
