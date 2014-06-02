@@ -133,20 +133,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		spRecomendacion.setViewportView(tablaDias);
 		tablaDias.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"8 a 9", null, null, null, null, null, null},
-				{"9 a 10", null, null, null, null, null, null},
-				{"10 a 11", null, null, null, null, null, null},
-				{"11 a 12", null, null, null, null, null, null},
-				{"12 a 13", null, null, null, null, null, null},
-				{"13 a 14", null, null, null, null, null, null},
-				{"14 a 15", null, null, null, null, null, null},
-				{"15 a 16", null, null, null, null, null, null},
-				{"16 a 17", null, null, null, null, null, null},
-				{"17 a 18", null, null, null, null, null, null},
-				{"18 a 19", null, null, null, null, null, null},
-				{"19 a 20", null, null, null, null, null, null},
-				{"20 a 21", null, null, null, null, null, null},
-				{"21 a 22", null, null, null, null, null, null},
 			},
 			new String[] {
 				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
@@ -265,7 +251,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 				if (e.getValueIsAdjusting() == false)
 				{
 					DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
-					tablaTempDias.setRowCount(0);
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
 					borrarValores(tablaTempDias);
@@ -354,19 +339,22 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	
 	public void update(Observable obs, Object arg)
 	{
-		if(arg instanceof ArrayList){
+		if(arg instanceof ArrayList)
+		{
 			try
 			{
-				mostrarRecos(obs);
-			} catch (Exception e)
+				mostrarRecomendaciones(obs);
+			} 
+			catch (Exception e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if (arg instanceof Recomendacion){
+		}
+		else if (arg instanceof Recomendacion)
+		{
 			try
 			{
-				
 				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion)arg));
 			} catch (Exception e1)
 			{
@@ -380,7 +368,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 //		return this.model;
 //	}
 
-	public void mostrarRecos(Observable o) throws Exception
+	public void mostrarRecomendaciones(Observable o) throws Exception
 	{
 		DefaultListModel modeloList = new DefaultListModel();
 		ArrayList<String> recomendaciones = controller.getRecomendaciones();
@@ -391,7 +379,8 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		listaRecomendaciones.setModel(modeloList);
 		
 		boolean generoTodaslasRecomendaciones = ((GRCModel) o).isFinishRecomendacionOK();
-		if(!generoTodaslasRecomendaciones){
+		if(!generoTodaslasRecomendaciones)
+		{
 			mensajeNoCompletoReco();
 		}
 	}
@@ -407,31 +396,19 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	
 	public void borrarValores(DefaultTableModel tablaDias)
 	{
-
-		/*for (int i = 0; i < tablaDias.getRowCount(); i++)
+		tablaDias.setRowCount(14);
+		int hora1 = 8;
+		int hora2 = 9;
+		System.out.println("VIEWW" + tablaDias.getRowCount());
+		for (int i = 0; i < tablaDias.getRowCount(); i++)
 		{
+			tablaDias.setValueAt(hora1 + " a " + hora2,i,0);
 		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
 		      {
 		    	  tablaDias.setValueAt("", i, j);
 		      }
-		}*/
-		   
-		
-		tablaDias.setRowCount(14);
-		
-		tablaDias.setValueAt("8 a 9", 0, 0);
-		tablaDias.setValueAt("9 a 10", 1, 0);
-		tablaDias.setValueAt("10 a 11", 2, 0);
-		tablaDias.setValueAt("11 a 12", 3, 0);
-		tablaDias.setValueAt("12 a 13", 4, 0);
-		tablaDias.setValueAt("13 a 14", 5, 0);
-		tablaDias.setValueAt("14 a 15", 6, 0);
-		tablaDias.setValueAt("15 a 16", 7, 0);
-		tablaDias.setValueAt("16 a 17", 8, 0);
-		tablaDias.setValueAt("17 a 18", 9, 0);
-		tablaDias.setValueAt("18 a 19", 10, 0);
-		tablaDias.setValueAt("19 a 20", 11, 0);
-		tablaDias.setValueAt("20 a 21", 12, 0);
-		tablaDias.setValueAt("21 a 22", 13, 0);
+		      hora1++;
+		      hora2++;
+		}
 	}
 }
