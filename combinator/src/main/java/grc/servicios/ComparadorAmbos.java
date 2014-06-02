@@ -9,9 +9,10 @@ public class ComparadorAmbos extends Comparador
 	List<Character> criterio;
 	PlanEstudio planEstudio;
 	
-	public  ComparadorAmbos(List<Character> criterio)
+	public  ComparadorAmbos(List<Character> criterio, PlanEstudio planEstudio)
 	{
 		this.criterio = criterio;
+		this.planEstudio = planEstudio;
 	}
 	
 	@Override
@@ -21,7 +22,7 @@ public class ComparadorAmbos extends Comparador
 		
 		Boolean criterioMateria = criterio.get(2).equals('d') ? true : false;
 		ComparadorMaterias comparadorMaterias = new ComparadorMaterias(criterioMateria);
-		ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas();
+		ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas(planEstudio);
 		
 		Integer cantidadMateriasRecomendacion1 = comparadorMaterias.contarCantidadMaterias(o1);
 		Integer cantidadMateriasRecomendacion2 = comparadorMaterias.contarCantidadMaterias(o2);
