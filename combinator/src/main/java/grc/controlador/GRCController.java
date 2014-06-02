@@ -6,10 +6,6 @@ import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.modelo.GRCModel;
-import grc.servicios.Criterio;
-import grc.servicios.CriterioAmbos;
-import grc.servicios.CriterioMateria;
-import grc.servicios.CriterioPoscorrelativa;
 import grc.servicios.FiltroCursos;
 import grc.servicios.Recomendacion;
 
@@ -38,11 +34,8 @@ public class GRCController
 
 	public DefaultTableModel cambiarTablaDias(Recomendacion recomendacion) throws Exception
 	{
-		DefaultTableModel tablaDias = new DefaultTableModel();
-		for(int i = 0 ; i <= 6 ; i++)
-			tablaDias.addColumn("asd");
-		tablaDias.setRowCount(0);
-		tablaDias.setRowCount(14);
+		String[] nombreColumnas = {"","Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+		DefaultTableModel tablaDias = new DefaultTableModel(null, nombreColumnas);
 		borrarValores(tablaDias);
 		String nombreMateria = "";
 		List<Recomendacion> recomendaciones = this.getModelo().getRecomendaciones();
@@ -123,21 +116,18 @@ public class GRCController
 	private DefaultTableModel borrarValores(DefaultTableModel tablaDias)
 	{
 		tablaDias.setRowCount(14);
-		tablaDias.setValueAt("8 a 9", 0, 0);
-		tablaDias.setValueAt("9 a 10", 1, 0);
-		tablaDias.setValueAt("10 a 11", 2, 0);
-		tablaDias.setValueAt("11 a 12", 3, 0);
-		tablaDias.setValueAt("12 a 13", 4, 0);
-		tablaDias.setValueAt("13 a 14", 5, 0);
-		tablaDias.setValueAt("14 a 15", 6, 0);
-		tablaDias.setValueAt("15 a 16", 7, 0);
-		tablaDias.setValueAt("16 a 17", 8, 0);
-		tablaDias.setValueAt("17 a 18", 9, 0);
-		tablaDias.setValueAt("18 a 19", 10, 0);
-		tablaDias.setValueAt("19 a 20", 11, 0);
-		tablaDias.setValueAt("20 a 21", 12, 0);
-		tablaDias.setValueAt("21 a 22", 13, 0);
-
+		int hora1 = 8;
+		int hora2 = 9;
+		for (int i = 0; i < tablaDias.getRowCount(); i++)
+		{
+			tablaDias.setValueAt(hora1 + " a " + hora2,i,0);
+		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
+		      {
+		    	  tablaDias.setValueAt("", i, j);
+		      }
+		      hora1++;
+		      hora2++;
+		}
 		return tablaDias;
 	}
 
@@ -240,19 +230,19 @@ public class GRCController
 	
 	public void ordenarRecomendaciones(int ordenadorElegido)
 	{
-		Criterio criterio = null;
+		Object criterio = null;
 		
 		if(ordenadorElegido == 0)
-			criterio = new CriterioMateria(true); //true: por mayor cantidad, false: por menor cantidad
+			criterio = true; //true: por mayor cantidad, false: por menor cantidad
 		else if(ordenadorElegido == 1)
-			criterio = new CriterioPoscorrelativa(""); //siempre se ordena por mayor cantidad
+			criterio = ""; //siempre se ordena por mayor cantidad
 		else if(ordenadorElegido == 2)
 		{
 			List<Character> tiposCriterio = new ArrayList<Character>();
 			tiposCriterio.add('a');
 			tiposCriterio.add('c');
 			tiposCriterio.add('d'); //d: criterioMateria=true. Cualquier otra letra: criterioMateria=false.
-			criterio = new CriterioAmbos(tiposCriterio); //(a,c): mayorM y mayorP, (b,c): menorM y mayorP, (c,a): mayorP y mayorM, (c,b): mayorP, menorM
+			criterio = tiposCriterio; //(a,c): mayorM y mayorP, (b,c): menorM y mayorP, (c,a): mayorP y mayorM, (c,b): mayorP, menorM
 		}
 		this.getModelo().actualizarOrdenamiento(criterio);
 	}
