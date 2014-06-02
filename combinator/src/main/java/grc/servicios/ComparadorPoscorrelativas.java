@@ -1,11 +1,18 @@
 package grc.servicios;
 
+import java.util.List;
+
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
 
 public class ComparadorPoscorrelativas extends Comparador
 {
 	PlanEstudio planEstudio;
+	
+	public ComparadorPoscorrelativas(PlanEstudio planEstudio)
+	{
+		this.planEstudio = planEstudio;
+	}
 	
 	@Override
 	public int compare(Recomendacion o1, Recomendacion o2) 
