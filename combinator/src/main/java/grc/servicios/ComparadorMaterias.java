@@ -24,18 +24,4 @@ public class ComparadorMaterias extends Comparador
 		else
 			return cantidadRecomendacion1 - cantidadRecomendacion2; //Menor a mayor
 	}
-	
-
-	/*public ArrayList<Integer> contarCantMaterias(List<Recomendacion> recomendaciones) 
-	{
-		ArrayList<Integer> cantidadMaterias = new ArrayList<Integer>();
-		// Cuento la cantidad de poscorrelativas de cada recomendacion
-		for (Recomendacion r : recomendaciones)
-		{
-			Integer cantMaterias = r.getRecomendacion().size();
-			cantidadMaterias.add(cantMaterias);
-		}
-		return cantidadMaterias;
-	}*/
-	
 }
