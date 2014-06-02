@@ -6,7 +6,6 @@ import grc.servicios.GeneradorRecomendaciones;
 import grc.servicios.ComparadorAmbos;
 import grc.servicios.ComparadorMaterias;
 import grc.servicios.ComparadorPoscorrelativas;
-import grc.servicios.Criterio;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -77,25 +76,24 @@ public class GRCModel extends Observable
 		this.setRecomendaciones(recomendaciones);
 	}
 	
-	public void actualizarOrdenamiento(Criterio criterio)
+	public void actualizarOrdenamiento(Object criterio)
 	{
-		Object tipoCriterio = criterio.getTipoCriterio();
-		if(tipoCriterio instanceof Boolean)
+		if(criterio instanceof Boolean)
 		{
 			//ORDENAR POR MATERIA
-			Collections.sort(recomendaciones, new ComparadorMaterias((Boolean) tipoCriterio));
+			Collections.sort(recomendaciones, new ComparadorMaterias((Boolean) criterio));
 		}
-		else if (tipoCriterio instanceof String)
+		else if (criterio instanceof String)
 		{
 			//ORDENAR POR POSCORRELATIVA
 			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas();
 			comparadorPoscorrelativas.setPlanEstudio(planEstudio); //Hay que hacer algo con esto
 			Collections.sort(recomendaciones, comparadorPoscorrelativas);
 		}
-		else if (tipoCriterio instanceof List<?>) 
+		else if (criterio instanceof List<?>) 
 		{
 			//ORDENAR POR AMBAS
-			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) tipoCriterio);
+			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) criterio);
 			comparadorAmbos.setPlanEstudio(planEstudio);
 			Collections.sort(recomendaciones, comparadorAmbos);
 		}
