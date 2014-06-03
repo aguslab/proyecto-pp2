@@ -40,6 +40,7 @@ public class RecomendacionParcial
 
 	public void agregarCurso(Curso curso)
 	{
+		assert puedeAgregarCurso(curso);
 		this.cursos.add(curso);
 		this.agregarAHorariosOcupados(curso.getHorario());
 	}
