@@ -1,12 +1,13 @@
 package grc.servicios;
 
-public class ComparadorMaterias extends Comparador
+public class CriterioOrdenPorMaterias extends CriterioOrden
 {
-	Boolean criterio;
+	Boolean ordenAscendente;
 	
-	public  ComparadorMaterias(Boolean criterio)
+	public CriterioOrdenPorMaterias(int id, Boolean ordenAscendente)
 	{
-		this.criterio = criterio;
+		super(id);
+		this.ordenAscendente = ordenAscendente;
 	}
 	
 	public Integer contarCantidadMaterias(Recomendacion recomendacion)
@@ -19,7 +20,7 @@ public class ComparadorMaterias extends Comparador
 	{
 		Integer cantidadRecomendacion1 = contarCantidadMaterias(o1);
 		Integer cantidadRecomendacion2 = contarCantidadMaterias(o2);
-		if(criterio)
+		if(ordenAscendente)
 			return cantidadRecomendacion2 - cantidadRecomendacion1; //Mayor a menor
 		else
 			return cantidadRecomendacion1 - cantidadRecomendacion2; //Menor a mayor

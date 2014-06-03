@@ -1,16 +1,15 @@
 package grc.servicios;
 
-import java.util.List;
-
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
 
-public class ComparadorPoscorrelativas extends Comparador
+public class CriterioOrdenPorPoscorrelativas extends CriterioOrden
 {
 	PlanEstudio planEstudio;
 	
-	public ComparadorPoscorrelativas(PlanEstudio planEstudio)
+	public CriterioOrdenPorPoscorrelativas(int id, PlanEstudio planEstudio)
 	{
+		super(id);
 		this.planEstudio = planEstudio;
 	}
 	
