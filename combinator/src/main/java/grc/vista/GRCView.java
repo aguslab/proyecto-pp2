@@ -130,7 +130,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
-//TODO ver!!!!!!!!!!
 		tablaDias.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
