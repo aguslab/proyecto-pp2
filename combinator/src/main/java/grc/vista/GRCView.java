@@ -9,18 +9,19 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 @SuppressWarnings("serial")
 public class GRCView extends JFrame implements Observer, ActionListener
 {
-//	private GRCModel model;
-	private GRCController controller;
+	private final GRCController controller;
 	private JDesktopPane escritorio = new JDesktopPane();
 	private JMenuBar barra;
 	private JMenu mnuPrototipo;
@@ -42,15 +43,12 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
-
-	public GRCView(GRCModel model, final GRCController controller) throws Exception
+	
+	public  GRCView(GRCController controlador, Set<String> ordenElegido ) throws Exception
 	{
 		super("Generador de Recomendaciones de Cursadas");
-//		this.model = model;
-		this.controller = controller;
+		this.controller = controlador;
 		escritorio.setBounds(0, 0, 1317, 1);
-//		controller.setVista(this);
-
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener(new UISwitchListener((JComponent) getRootPane()));
 		barra = new JMenuBar();
@@ -128,16 +126,19 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		spRecomendacion.setBounds(10, 241, 1297, 319);
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
+		
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
-		tablaDias.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
-			}
-		));
+//TODO ver!!!!!!!!!!
+//		tablaDias.setModel(new DefaultTableModel(
+//			new Object[][] {
+//			},
+//			new String[] {
+//				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+//			}
+//		));
+		tablaDias.getColumnModel().getColumn(0).setCellRenderer((TableCellRenderer) new probandorender()); 
 		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
@@ -157,7 +158,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
-		//		cbManiana.setSelected(true);
 		panelRecomendaciones.add(cbManiana);
 				
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
@@ -176,7 +176,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbTarde.setBounds(208, 7, 21, 23);
-//		cbTarde.setSelected(true);
 		panelRecomendaciones.add(cbTarde);
 		
 		JLabel lblNoche = new JLabel("Noche");
@@ -190,8 +189,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
-		//		cbNoche.setSelected(true);
-				panelRecomendaciones.add(cbNoche);
+		panelRecomendaciones.add(cbNoche);
 						
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 37, 1297, 169);
@@ -238,10 +236,11 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbOrdenador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				controller.ordenarRecomendaciones(cbOrdenador.getSelectedIndex());
+				controller.ordenarRecomendaciones((String)cbOrdenador.getSelectedItem());
 			}
 		});
-		cbOrdenador.setModel(new DefaultComboBoxModel(new String[] {"Materias", "Poscorrelativas", "Ambos"}));
+		cbOrdenador.setModel(new DefaultComboBoxModel((String[])ordenElegido.toArray()));
+		
 		cbOrdenador.setBounds(124, 214, 125, 20);
 		panelRecomendaciones.add(cbOrdenador);
 		listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
@@ -253,18 +252,12 @@ public class GRCView extends JFrame implements Observer, ActionListener
 					DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
-					borrarValores(tablaTempDias);
+//					iniciarValores(tablaTempDias);
 					controller.seleccionActualRecomendacion(posElegida);
 				}
 			}																										});
 	}
-
-	protected void cambioSeleccionActual(int posElegida)
-	{
-		
-		
-	}
-
+	
 	public void showVista()
 	{
 		setVisible(true);
@@ -347,7 +340,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			} 
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -362,11 +354,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		}
 	}
-
-//	public GRCModel getModelo()
-//	{
-//		return this.model;
-//	}
 
 	public void mostrarRecomendaciones(Observable o) throws Exception
 	{
@@ -394,21 +381,21 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	{
 	}
 	
-	public void borrarValores(DefaultTableModel tablaDias)
-	{
-		tablaDias.setRowCount(14);
-		int hora1 = 8;
-		int hora2 = 9;
-		System.out.println("VIEWW" + tablaDias.getRowCount());
-		for (int i = 0; i < tablaDias.getRowCount(); i++)
-		{
-			tablaDias.setValueAt(hora1 + " a " + hora2,i,0);
-		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
-		      {
-		    	  tablaDias.setValueAt("", i, j);
-		      }
-		      hora1++;
-		      hora2++;
-		}
-	}
+//	public void iniciarValores(DefaultTableModel tablaDias)
+//	{
+//		tablaDias.setRowCount(14);
+//		int hora1 = 8;
+//		int hora2 = 9;
+//		System.out.println("VIEWW" + tablaDias.getRowCount());
+//		for (int i = 0; i < tablaDias.getRowCount(); i++)
+//		{
+//			tablaDias.setValueAt(hora1 + " a " + hora2,i,0);
+//		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
+//		      {
+//		    	  tablaDias.setValueAt("", i, j);
+//		      }
+//		      hora1++;
+//		      hora2++;
+//		}
+//	}
 }
