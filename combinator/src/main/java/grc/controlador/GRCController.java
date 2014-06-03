@@ -6,11 +6,14 @@ import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.modelo.GRCModel;
+import grc.servicios.CriterioOrden;
+import grc.servicios.CriterioOrdenPorMaterias;
 import grc.servicios.FiltroCursos;
 import grc.servicios.Recomendacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
@@ -22,21 +25,24 @@ public class GRCController
 	private boolean filtroTarde;
 	private boolean filtroNoche;
 	private boolean filtroPuedeEsperar;
+	private Map<String, CriterioOrden> criterios;
+	
 //TODO eliminar estados del controlador!!!
-	public GRCController(GRCModel model)
+	public GRCController(GRCModel model, Map<String, CriterioOrden> criterios)
 	{
 		filtroManiana = false;
 		filtroTarde = false;
 		filtroNoche = false;
 		filtroPuedeEsperar = false;
 		this.modelo = model;
+		this.criterios = criterios;
 	}
 
 	public DefaultTableModel cambiarTablaDias(Recomendacion recomendacion) throws Exception
 	{
 		String[] nombreColumnas = {"","Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 		DefaultTableModel tablaDias = new DefaultTableModel(null, nombreColumnas);
-		borrarValores(tablaDias);
+		iniciarValores(tablaDias);
 		String nombreMateria = "";
 		List<Recomendacion> recomendaciones = this.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
@@ -113,7 +119,7 @@ public class GRCController
 		return tablaDias;
 	}
 
-	private DefaultTableModel borrarValores(DefaultTableModel tablaDias)
+	private DefaultTableModel iniciarValores(DefaultTableModel tablaDias)
 	{
 		tablaDias.setRowCount(14);
 		int hora1 = 8;
@@ -209,42 +215,14 @@ public class GRCController
 
 	}
 
-	// public void cambioPreferencias()
-	// {
-	// this.filtroManiana = this.vista.getCbManiana();
-	// this.filtroTarde = this.vista.getCbTarde();
-	// this.filtroNoche = this.vista.getCbNoche();
-	// this.filtroPuedeEsperar = this.vista.puedeEsperar();
-	// }
-
 	public void seleccionActualRecomendacion(int posElegida)
 	{
 		this.modelo.actualizarRecomendacionActual(posElegida);
-
 	}
 
-	/*public void filtrarRecomendaciones(boolean ordMaterias, boolean ordPoscorrelativas)
+	public void ordenarRecomendaciones(String criterioElegido)
 	{
-		this.getModelo().actualizarOrdenamiento(ordMaterias, ordPoscorrelativas);
-	}*/
-	
-	public void ordenarRecomendaciones(int ordenadorElegido)
-	{
-		Object criterio = null;
-		
-		if(ordenadorElegido == 0)
-			criterio = true; //true: por mayor cantidad, false: por menor cantidad
-		else if(ordenadorElegido == 1)
-			criterio = ""; //siempre se ordena por mayor cantidad
-		else if(ordenadorElegido == 2)
-		{
-			List<Character> tiposCriterio = new ArrayList<Character>();
-			tiposCriterio.add('a');
-			tiposCriterio.add('c');
-			tiposCriterio.add('d'); //d: criterioMateria=true. Cualquier otra letra: criterioMateria=false.
-			criterio = tiposCriterio; //(a,c): mayorM y mayorP, (b,c): menorM y mayorP, (c,a): mayorP y mayorM, (c,b): mayorP, menorM
-		}
-		this.getModelo().actualizarOrdenamiento(criterio);
+		this.getModelo().actualizarOrdenamiento(this.criterios.get(criterioElegido));
 	}
 	
 	public void filtrarManiana(boolean fm)
