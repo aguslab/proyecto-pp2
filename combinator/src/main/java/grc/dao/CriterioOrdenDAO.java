@@ -1,23 +1,11 @@
 package grc.dao;
 
-import grc.dominio.Carrera;
-import grc.dominio.Curso;
-import grc.dominio.Horario;
 import grc.servicios.CriterioOrden;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 public class CriterioOrdenDAO
 {

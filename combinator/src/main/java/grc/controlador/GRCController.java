@@ -7,11 +7,12 @@ import grc.dominio.Horario;
 import grc.dominio.MateriaAprobada;
 import grc.modelo.GRCModel;
 import grc.servicios.CriterioOrden;
-import grc.servicios.CriterioOrdenPorMaterias;
-import grc.servicios.FiltroCursos;
+import grc.servicios.FiltroHorarios;
+import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -181,13 +182,11 @@ public class GRCController
 			horarios.add(Horario.NOCHE);
 		}
 
-		FiltroCursos f = new FiltroCursos();
-		Set<Curso> cursos = f.filtrarPorHorario(this.getModelo().getCursosDisponibles(),
-				horarios);
-		 System.out.println("cantidad cursos: "+cursos.size());
-		 List<Curso> cursosDisp = new ArrayList<Curso>(cursos);
+		IFiltro f = new FiltroHorarios(horarios);
+		Set<Curso> cursosFiltradosPorHorario = f.filtrar(new HashSet<Curso>(this.getModelo().getCursosDisponibles()));
+		 System.out.println("cantidad cursos: "+cursosFiltradosPorHorario.size());
 		System.out.println("CANT RECOS ANTES: " + this.modelo.getRecomendaciones().size());
-		this.modelo.actualizarRecomendaciones(cursosDisp, this.filtroPuedeEsperar);
+		this.modelo.actualizarRecomendaciones(cursosFiltradosPorHorario, this.filtroPuedeEsperar);
 		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size());
 	}
 
@@ -222,6 +221,7 @@ public class GRCController
 
 	public void ordenarRecomendaciones(String criterioElegido)
 	{
+		assert this.criterios.containsKey(criterioElegido);
 		this.getModelo().actualizarOrdenamiento(this.criterios.get(criterioElegido));
 	}
 	

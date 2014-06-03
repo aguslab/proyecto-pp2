@@ -1,16 +1,25 @@
 package grc.app;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import grc.controlador.GRCController;
+import grc.dao.CriterioOrdenDAO;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
 import grc.modelo.GRCModel;
-import grc.servicios.FiltroCursos;
+import grc.servicios.CriterioOrden;
+import grc.servicios.CriterioOrdenPorPoscorrelativas;
+import grc.servicios.CriterioOrdenSecuenciales;
+import grc.servicios.FiltroCorrelativas;
+import grc.servicios.FiltroMateriasAprobadas;
+import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
 import grc.servicios.Universidad;
 import grc.vista.GRCView;
@@ -30,7 +39,7 @@ private static void generarAltas() throws Exception
 		a.altaCursos();
 		a.altaMateriasAprobadas();
 		a.altaPlanEstudio();
-
+		a.altaCriterioOrden();
 	}
 
 
@@ -81,21 +90,33 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
 		matAprobadas = universidad.getMateriasAprobadasFromAlumno(alumnoNombre);
 
-		//TODO cambiar por interfaz!!!!!!!!!!!!!!!!!
-		FiltroCursos fil = new FiltroCursos();
-		cursosDisponibles = fil.filtrarMateriasAprobadas(cursosDisponibles, matAprobadas);
-		cursosDisponibles = fil.filtrarCorrelativas(planEstudio, cursosDisponibles, matAprobadas);
+		IFiltro filtro = new FiltroMateriasAprobadas(matAprobadas);
+		cursosDisponibles = filtro.filtrar(cursosDisponibles);
+		filtro = new FiltroCorrelativas(matAprobadas, planEstudio);
+		cursosDisponibles = filtro.filtrar(cursosDisponibles);
 
 		for (Curso c : cursosDisponibles)
 		{
 			System.out.println("nombre: " + c.getNombreCurso());
 		}
+		
+		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(0);
+		final CriterioOrden criterioOrdenPorPoscorrelativas = new CriterioOrdenPorPoscorrelativas(planEstudio);
+		final List<CriterioOrden> co = new ArrayList<CriterioOrden>();
+		co.add(criterioOrdenPorPoscorrelativas);
+		co.add(criterioOrdenPorMaterias);
+		CriterioOrden criterioOrdenSecuenciales = new CriterioOrdenSecuenciales(co);
+		
+		Map<String, CriterioOrden> criterios = new HashMap<String, CriterioOrden>();
+		criterios.put("Materias", criterioOrdenPorMaterias);
+		criterios.put("Poscorrelativas", criterioOrdenPorPoscorrelativas);
+		criterios.put("Ambos", criterioOrdenSecuenciales);
 
 		long timeOut = 10;
-		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, timeOut);
+		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, criterioOrdenPorMaterias, timeOut);
 		
-		GRCController controller = new GRCController(model);
-		GRCView vista = new GRCView(model, controller);
+		GRCController controller = new GRCController(model, criterios);
+		GRCView vista = new GRCView(controller, criterios.keySet());
 		GRCViewText viewText = new GRCViewText(controller);
 		model.addObserver(vista);
 		model.addObserver(viewText);
