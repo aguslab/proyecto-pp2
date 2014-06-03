@@ -4,9 +4,6 @@ import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
 import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
-import grc.servicios.CriterioOrdenSecuenciales;
-import grc.servicios.CriterioOrdenPorMaterias;
-import grc.servicios.CriterioOrdenPorPoscorrelativas;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -20,7 +17,7 @@ public class GRCModel extends Observable
 {
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
-	private boolean finishRecoOK;
+	private boolean seCompletoLaGeneracionDeRecomendaciones;
 	private PlanEstudio planEstudio;
 	private long timeOut;
 	private Recomendacion recomendacionActual;
@@ -70,13 +67,14 @@ public class GRCModel extends Observable
 		this.notifyObservers(recomendacionActual);
 	}
 
-	public void actualizarRecomendaciones(List<Curso> cursos, boolean puedeEsperar) throws ClassNotFoundException,
+	public void actualizarRecomendaciones(Set<Curso> cursos, boolean puedeEsperar) throws ClassNotFoundException,
 			IOException
 	{
+		List<Curso> cursosFiltrados = new ArrayList<Curso>(cursos);
 		GeneradorRecomendaciones generadosRecom = new GeneradorRecomendaciones(timeOut, puedeEsperar);
-		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursos);
+		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursosFiltrados);
 		Collections.sort(recomendaciones, this.co);
-		this.finishRecoOK = generadosRecom.seCompletoLaGeneracionDeRecomendaciones();
+		this.seCompletoLaGeneracionDeRecomendaciones = generadosRecom.seCompletoLaGeneracionDeRecomendaciones();
 		this.setRecomendaciones(recomendaciones);
 	}
 	
@@ -86,9 +84,9 @@ public class GRCModel extends Observable
 		this.setRecomendaciones(recomendaciones);
 	}
 	
-	public boolean isFinishRecomendacionOK()
+	public boolean seCompletoLaGeneracionDeRecomendaciones()
 	{
-		return finishRecoOK;
+		return seCompletoLaGeneracionDeRecomendaciones;
 	}
 
 	public void actualizarRecomendacionActual(int posElegida)

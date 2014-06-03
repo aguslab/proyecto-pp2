@@ -53,16 +53,11 @@ public class PlanEstudio
 		this.carrera = carrera;
 	}
 
-	public Set<Materia> getCorrelativas(Materia materia) throws Exception
+	public Set<Materia> getCorrelativas(Materia materia)
 	{
-		if (perteneceAPlanEstudio(materia))
-		{
-			return this.correlatividades.get(materia);
-		} else
-		{
-			return null;
-			// throw new Exception();
-		}
+		assert perteneceAPlanEstudio(materia);
+
+		return this.correlatividades.get(materia);
 	}
 
 	public boolean perteneceAPlanEstudio(Materia materia)
