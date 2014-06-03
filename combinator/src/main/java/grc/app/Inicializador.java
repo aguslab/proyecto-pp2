@@ -81,8 +81,8 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
 		matAprobadas = universidad.getMateriasAprobadasFromAlumno(alumnoNombre);
 
+		//TODO cambiar por interfaz!!!!!!!!!!!!!!!!!
 		FiltroCursos fil = new FiltroCursos();
-
 		cursosDisponibles = fil.filtrarMateriasAprobadas(cursosDisponibles, matAprobadas);
 		cursosDisponibles = fil.filtrarCorrelativas(planEstudio, cursosDisponibles, matAprobadas);
 
