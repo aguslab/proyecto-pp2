@@ -131,14 +131,13 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
 //TODO ver!!!!!!!!!!
-//		tablaDias.setModel(new DefaultTableModel(
-//			new Object[][] {
-//			},
-//			new String[] {
-//				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
-//			}
-//		));
-		tablaDias.getColumnModel().getColumn(0).setCellRenderer((TableCellRenderer) new probandorender()); 
+		tablaDias.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+			}
+		));
 		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
@@ -239,7 +238,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 				controller.ordenarRecomendaciones((String)cbOrdenador.getSelectedItem());
 			}
 		});
-		cbOrdenador.setModel(new DefaultComboBoxModel((String[])ordenElegido.toArray()));
+		cbOrdenador.setModel(new DefaultComboBoxModel(ordenElegido.toArray()));
 		
 		cbOrdenador.setBounds(124, 214, 125, 20);
 		panelRecomendaciones.add(cbOrdenador);
@@ -365,7 +364,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		}
 		listaRecomendaciones.setModel(modeloList);
 		
-		boolean generoTodaslasRecomendaciones = ((GRCModel) o).isFinishRecomendacionOK();
+		boolean generoTodaslasRecomendaciones = ((GRCModel) o).seCompletoLaGeneracionDeRecomendaciones();
 		if(!generoTodaslasRecomendaciones)
 		{
 			mensajeNoCompletoReco();
