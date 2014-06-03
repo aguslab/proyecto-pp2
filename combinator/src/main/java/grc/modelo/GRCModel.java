@@ -2,10 +2,11 @@ package grc.modelo;
 
 import grc.dominio.Curso;
 import grc.dominio.PlanEstudio;
+import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
-import grc.servicios.ComparadorAmbos;
-import grc.servicios.ComparadorMaterias;
-import grc.servicios.ComparadorPoscorrelativas;
+import grc.servicios.CriterioOrdenSecuenciales;
+import grc.servicios.CriterioOrdenPorMaterias;
+import grc.servicios.CriterioOrdenPorPoscorrelativas;
 import grc.servicios.Recomendacion;
 
 import java.io.IOException;
@@ -23,13 +24,15 @@ public class GRCModel extends Observable
 	private PlanEstudio planEstudio;
 	private long timeOut;
 	private Recomendacion recomendacionActual;
+	private CriterioOrden co;
 	// private List<Observer> vistaObserver;
 
-	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, long timeOut)
+	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, CriterioOrden co, long timeOut)
 	{
 		this.cursosDisponibles = new ArrayList<Curso>(cursosDisponibles);
 		this.planEstudio = planEstudio;
 		this.timeOut = timeOut;
+		this.co = co;
 		this.recomendaciones = new ArrayList<Recomendacion>();
 	}
 
@@ -72,30 +75,14 @@ public class GRCModel extends Observable
 	{
 		GeneradorRecomendaciones generadosRecom = new GeneradorRecomendaciones(timeOut, puedeEsperar);
 		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursos);
+		Collections.sort(recomendaciones, this.co);
 		this.finishRecoOK = generadosRecom.seCompletoLaGeneracionDeRecomendaciones();
 		this.setRecomendaciones(recomendaciones);
 	}
 	
-	public void actualizarOrdenamiento(Object criterio)
+	public void actualizarOrdenamiento(CriterioOrden criterio)
 	{
-		if(criterio instanceof Boolean)
-		{
-			//ORDENAR POR MATERIA
-			Collections.sort(recomendaciones, new ComparadorMaterias((Boolean) criterio));
-		}
-		else if (criterio instanceof String)
-		{
-			//ORDENAR POR POSCORRELATIVA
-			ComparadorPoscorrelativas comparadorPoscorrelativas = new ComparadorPoscorrelativas(planEstudio);
-			Collections.sort(recomendaciones, comparadorPoscorrelativas);
-		}
-		else if (criterio instanceof List<?>) 
-		{
-			//ORDENAR POR AMBAS
-			ComparadorAmbos comparadorAmbos = new ComparadorAmbos((List<Character>) criterio, planEstudio);
-			Collections.sort(recomendaciones, comparadorAmbos);
-		}
-		this.finishRecoOK = true;
+		Collections.sort(recomendaciones, criterio);
 		this.setRecomendaciones(recomendaciones);
 	}
 	
