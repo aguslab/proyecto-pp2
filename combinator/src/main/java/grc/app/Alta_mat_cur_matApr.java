@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import grc.dao.CriterioOrdenDAO;
 import grc.dao.CursoDAO;
 import grc.dao.HorarioDAO;
 import grc.dao.MateriaAprobadaDAO;
@@ -20,6 +21,9 @@ import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.MateriaAprobada;
 import grc.dominio.PlanEstudio;
+import grc.servicios.CriterioOrden;
+import grc.servicios.CriterioOrdenPorMaterias;
+import grc.servicios.CriterioOrdenPorPoscorrelativas;
 
 public class Alta_mat_cur_matApr
 {
@@ -108,6 +112,8 @@ public class Alta_mat_cur_matApr
 	Curso curOrga1_c2;
 	Curso curOrga2;
 	Curso curAlgebraLineal;
+	
+	CriterioOrden criterioOrden;
 
 	public PlanEstudio getPlanEstudios()
 	{
@@ -428,6 +434,8 @@ public class Alta_mat_cur_matApr
 		maIP = new MateriaAprobada(ip, 10, fecha);
 		maProg1 = new MateriaAprobada(prog1, 9, fecha);
 		maIntroALaMate = new MateriaAprobada(introALaMatematica, 9, fecha);
+		
+		criterioOrden = new CriterioOrdenPorMaterias(true);
 	}
 
 	public void altaMaterias() throws Exception
@@ -506,6 +514,12 @@ public class Alta_mat_cur_matApr
 	{
 		// PLAN ESTUDIOS
 		PlanEstudioDAO.getInstancia().alta(planEstudio);
+	}
+
+	public void altaCriterioOrden() throws Exception
+	{
+		CriterioOrdenDAO.getInstancia().alta(criterioOrden);
+		
 	}
 
 }
