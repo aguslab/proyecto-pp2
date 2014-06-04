@@ -17,6 +17,7 @@ import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
+import grc.modelo.EstadoFiltros;
 import grc.modelo.GRCModelo;
 import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorMaterias;
@@ -73,6 +74,10 @@ public class GRCControllerTest extends TestCase
 		a.init();
 		return a.getPlanEstudios();
 	}
+	
+	private EstadoFiltros getEstadoFiltro(){
+		return new EstadoFiltros(true, true, true, true);
+	}
 
 	public void testfiltrarTurnos() throws Exception
 	{
@@ -95,18 +100,40 @@ public class GRCControllerTest extends TestCase
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
 
-		GRCControlador controller = new GRCControlador(model, getCriterioMap());
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		controller.filtrarNoche(true);
 		assertNotNull(model.getRecomendaciones());
 	}
-	// public void testBorrarTablaDias() throws Exception{
-	// GRCController controller = new GRCController(model);
-	// GRCView vista = new GRCView(null, controller);
-	// DefaultTableModel tablaDias = vista.getTablaDias();
-	// controller.borrarValores(tablaDias);
-	// assertEquals("8 a 9", tablaDias.getValueAt(0, 0));
-	// }
 
+	public void testfiltrarTurnosDistintasHoras() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 18, 22));
+		h.add(new Horario(Dia.MARTES, 18, 22));
+		h.add(new Horario(Dia.MIERCOLES, 18, 22));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.JUEVES, 18, 22));
+		h2.add(new Horario(Dia.VIERNES, 18, 22));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		List<Carrera> ca = new ArrayList<Carrera>();
+		ca.add(c);
+		c.setId(0);
+		Curso c1 = new Curso(ca, mn, h, "01");
+		Curso c2 = new Curso(ca, m, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.filtrarNoche(true);
+		assertNotNull(model.getRecomendaciones());
+	}
+	
 	public void testCambiarTablaDias() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
@@ -127,7 +154,7 @@ public class GRCControllerTest extends TestCase
 		CriterioOrden co = new CriterioOrdenPorMaterias(true);
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
-		GRCControlador controller = new GRCControlador(model, getCriterioMap());
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		controller.filtrarNoche(true);
 		controller.seleccionActualRecomendacion(0);
 		DefaultTableModel grilla = controller.cambiarTablaDias(model.getRecomendacionActual());
@@ -140,7 +167,7 @@ public class GRCControllerTest extends TestCase
 		CriterioOrden co = new CriterioOrdenPorMaterias(true);
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
-		GRCControlador controller = new GRCControlador(model, getCriterioMap());
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		controller.filtrarTurnos();
 		controller.seleccionActualRecomendacion(0);
 		controller.cambiarTablaDias(model.getRecomendacionActual());
@@ -173,7 +200,7 @@ public class GRCControllerTest extends TestCase
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
 
-		GRCControlador controller = new GRCControlador(model, getCriterioMap());
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		controller.filtrarNoche(true);
 		controller.setCriterioOrdenamiento("Poscorrelativas");
 		assertEquals(1, model.getRecomendaciones().get(0).getRecomendacion().size());
@@ -204,7 +231,7 @@ public class GRCControllerTest extends TestCase
 
 		GRCModelo model = new GRCModelo(cursosDisp, co1, 0);
 
-		GRCControlador controller = new GRCControlador(model, getCriterioMap());
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		controller.filtrarNoche(true);
 		controller.setCriterioOrdenamiento("Ambos");
 		assertEquals(3, model.getRecomendaciones().get(0).getRecomendacion().size());
@@ -247,7 +274,7 @@ public class GRCControllerTest extends TestCase
 		criterios.put("Materias", criterioOrdenPorMaterias);
 		criterios.put("Poscorrelativas", criterioOrdenPorPoscorrelativas);
 		criterios.put("Ambos", criterioOrdenSecuenciales);
-		GRCControlador controller = new GRCControlador(model, criterios);
+		GRCControlador controller = new GRCControlador(model, criterios, getEstadoFiltro());
 		controller.filtrarNoche(true);
 		controller.setCriterioOrdenamiento("Ambos");
 		assertEquals(2, model.getRecomendaciones().get(0).getRecomendacion().size());

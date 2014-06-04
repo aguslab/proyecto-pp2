@@ -114,13 +114,13 @@ public class GRCModeloTest
     	assertEquals(2, model.getRecomendaciones().get(0).getRecomendacion().size());
     }
     
-    public void testGRCModelArmarRecomendacionesVacio() throws Exception{
-    	Set<Curso> cursosDisp = new HashSet<Curso>();
-		CriterioOrden com = new CriterioOrdenPorMaterias(true);
-    	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
-    	model.actualizarRecomendaciones(cursosDisp, true);
-    	assertEquals(1, model.getListaRecomendacionesSugeridas().size());
-    }
+//    public void testGRCModelArmarRecomendacionesVacio() throws Exception{
+//    	Set<Curso> cursosDisp = new HashSet<Curso>();
+//		CriterioOrden com = new CriterioOrdenPorMaterias(true);
+//    	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
+//    	model.actualizarRecomendaciones(cursosDisp, true);
+//    	assertEquals(1, model.getListaRecomendacionesSugeridas().size());
+//    }
     
     public void testGRCModelActualizarRecoActual() throws Exception{
     	Set<Curso> cursosDisp = new HashSet<Curso>();
