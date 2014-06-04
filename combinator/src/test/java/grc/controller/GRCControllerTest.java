@@ -207,7 +207,7 @@ public class GRCControllerTest extends TestCase
 		GRCControlador controller = new GRCControlador(model, getCriterioMap());
 		controller.filtrarNoche(true);
 		controller.setCriterioOrdenamiento("Ambos");
-		assertEquals(2, model.getRecomendaciones().get(0).getRecomendacion().size());
+		assertEquals(3, model.getRecomendaciones().get(0).getRecomendacion().size());
 	}
 	
 	public void testfiltrarTurnosOrdenandoPorSecuenciales2() throws Exception
