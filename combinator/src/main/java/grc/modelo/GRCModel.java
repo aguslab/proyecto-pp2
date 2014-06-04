@@ -1,7 +1,6 @@
 package grc.modelo;
 
 import grc.dominio.Curso;
-import grc.dominio.PlanEstudio;
 import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
 import grc.servicios.Recomendacion;
@@ -18,19 +17,16 @@ public class GRCModel extends Observable
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
 	private boolean seCompletoLaGeneracionDeRecomendaciones;
-	private PlanEstudio planEstudio;
 	private long timeOut;
 	private Recomendacion recomendacionActual;
 	private CriterioOrden criterioOrden;
 	private ArrayList<String> listaRecomendacionesSugeridas;
-	// private List<Observer> vistaObserver;
 
-	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, CriterioOrden co,
+	public GRCModel(Set<Curso> cursosDisponibles, CriterioOrden co,
 			long timeOut)
 	{
 		this.cursosDisponibles = new ArrayList<Curso>(cursosDisponibles);
 		listaRecomendacionesSugeridas = new ArrayList<String>();
-		this.planEstudio = planEstudio;
 		this.timeOut = timeOut;
 		this.criterioOrden = co;
 		this.recomendaciones = new ArrayList<Recomendacion>();
@@ -39,11 +35,6 @@ public class GRCModel extends Observable
 	public List<Curso> getCursosDisponibles()
 	{
 		return cursosDisponibles;
-	}
-
-	public PlanEstudio getPlanEstudio()
-	{
-		return this.planEstudio;
 	}
 
 	public List<Recomendacion> getRecomendaciones()
@@ -85,7 +76,8 @@ public class GRCModel extends Observable
 	public void ordenarPorCriterio(CriterioOrden criterio)
 	{
 		Collections.sort(recomendaciones, criterio);
-//		this.seCompletoLaGeneracionDeRecomendaciones = true;//TODO ver!!!
+		armarRecomendaciones();
+		this.seCompletoLaGeneracionDeRecomendaciones = true;//TODO ver!!!
 		this.setRecomendaciones();
 	}
 
@@ -142,11 +134,10 @@ public class GRCModel extends Observable
 	public GRCModel clone(){
 		Set<Curso> cursos = new HashSet<Curso>();
 		cursos.addAll(cursosDisponibles);
-		GRCModel m = new GRCModel(cursos, planEstudio, this.criterioOrden, timeOut);
+		GRCModel m = new GRCModel(cursos, this.criterioOrden, timeOut);
 		m.recomendaciones = this.recomendaciones;
 		m.listaRecomendacionesSugeridas = this.listaRecomendacionesSugeridas;
 		m.recomendacionActual = this.recomendacionActual;
-		System.out.println(m.equals(this));
 		return m;
 	}
 }
