@@ -6,7 +6,6 @@ import java.util.Set;
 
 public class Recomendacion
 {
-
 	Set<Curso> recomendacion;
 	
 	public Recomendacion(Set<Curso> cursos)
