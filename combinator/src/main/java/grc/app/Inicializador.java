@@ -10,9 +10,9 @@ import grc.controlador.GRCControlador;
 import grc.dao.CriterioOrdenDAO;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
-import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
+import grc.modelo.EstadoFiltros;
 import grc.modelo.GRCModelo;
 import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
@@ -20,27 +20,12 @@ import grc.servicios.CriterioOrdenSecuenciales;
 import grc.servicios.FiltroCorrelativas;
 import grc.servicios.FiltroMateriasAprobadas;
 import grc.servicios.IFiltro;
-import grc.servicios.Recomendacion;
 import grc.servicios.Universidad;
 import grc.vista.GRCVista;
-import grc.vista.GRCVistaConsola;
+import grc.vista.GRCVistaTexto;
 
 public class Inicializador
 {
-
-private static void generarAltas() throws Exception
-	{
-
-		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
-		a.init();
-		// ALTAAAAAAAAAAAAAA
-		a.altaMaterias();
-		//a.altaHorarios(); // NO alta!!!
-		a.altaCursos();
-		a.altaMateriasAprobadas();
-		a.altaPlanEstudio();
-		a.altaCriterioOrden();
-	}
 
 	public static void main(String[] args) throws Exception
 	{
@@ -50,15 +35,6 @@ private static void generarAltas() throws Exception
 		Set<Materia> matAprobadas = null;
 		Set<Curso> cursosDisponibles = null;
 		Universidad universidad = new Universidad();
-		try
-		{
-//			 generarAltas();
-		} catch (Exception e)
-		{
-			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
-			e.printStackTrace();
-		}
-		
 		licSistemas = universidad.getCarrerraFromAlumno(alumnoNombre);
 		
 		cursosDisponibles = universidad.getCursosFromCarrera(licSistemas);
@@ -71,11 +47,6 @@ private static void generarAltas() throws Exception
 		filtro = new FiltroCorrelativas(matAprobadas, planEstudio);
 		cursosDisponibles = filtro.filtrar(cursosDisponibles);
 
-//		for (Curso c : cursosDisponibles)
-//		{
-//			System.out.println("nombre: " + c.getNombreCurso());
-//		}
-		
 		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(1);
 		final CriterioOrden criterioOrdenPorPoscorrelativas = new CriterioOrdenPorPoscorrelativas(planEstudio);
 		final List<CriterioOrden> co = new ArrayList<CriterioOrden>();
@@ -90,14 +61,17 @@ private static void generarAltas() throws Exception
 
 		long timeOut = 10;
 		GRCModelo model = new GRCModelo(cursosDisponibles, criterioOrdenPorMaterias, timeOut);
-		GRCControlador controller = new GRCControlador(model, criterios);
+		EstadoFiltros estadoFiltros = new EstadoFiltros(true, true, true, true);
+		GRCControlador controller = new GRCControlador(model, criterios, estadoFiltros);
 		GRCVista vista = new GRCVista(controller, criterios.keySet());
-		GRCVistaConsola viewText = new GRCVistaConsola(controller, model);
+		GRCVistaTexto viewText = new GRCVistaTexto(controller, model, vista);
 		model.addObserver(vista);
-//		model.addObserver(viewText);
+		model.addObserver(viewText);
+		estadoFiltros.addObserver(vista);
+		estadoFiltros.addObserver(viewText);
 		vista.showVista();
-//		viewText.menuPrincipal();
-		model.actualizarRecomendaciones(cursosDisponibles, false);
+//		viewText.start();
+		model.actualizarRecomendaciones(cursosDisponibles, true);
 	}
 
 }
