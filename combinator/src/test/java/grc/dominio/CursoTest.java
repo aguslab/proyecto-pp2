@@ -62,4 +62,26 @@ public class CursoTest
     	cu.setMateria(m);
     	assertEquals("Algebra Lineal", cu.getMateria().getNombre());
     }
+    
+    public void testCursoNombreCurso(){
+    	Materia m = new Materia("ABC");
+    	Horario h = new Horario(Dia.MARTES, 18, 22);
+    	ArrayList<Horario> horarios = new ArrayList<Horario>();
+    	horarios.add(h);
+    	Curso cu = new Curso();
+    	
+    	cu.setHorario(horarios);
+    	cu.setMateria(m);
+    	cu.setComision("01");
+    	assertEquals("ABC com-01", cu.getNombreCurso());
+    }
+    
+    public void testCursoComision(){
+    	Materia m = new Materia("A");
+    	Curso cu = new Curso();
+    	
+    	cu.setMateria(m);
+    	cu.setComision("01");
+    	assertEquals("01", cu.getComision());
+    }
 }

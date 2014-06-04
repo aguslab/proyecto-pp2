@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import grc.controlador.GRCController;
+import grc.controlador.GRCControlador;
 import grc.dao.CriterioOrdenDAO;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
 import grc.dominio.PlanEstudio;
-import grc.modelo.GRCModel;
+import grc.modelo.GRCModelo;
 import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
 import grc.servicios.CriterioOrdenSecuenciales;
@@ -22,8 +22,8 @@ import grc.servicios.FiltroMateriasAprobadas;
 import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
 import grc.servicios.Universidad;
-import grc.vista.GRCView;
-import grc.vista.GRCViewText;
+import grc.vista.GRCVista;
+import grc.vista.GRCVistaConsola;
 
 public class Inicializador
 {
@@ -89,10 +89,10 @@ private static void generarAltas() throws Exception
 		criterios.put("Ambos", criterioOrdenSecuenciales);
 
 		long timeOut = 10;
-		GRCModel model = new GRCModel(cursosDisponibles, criterioOrdenPorMaterias, timeOut);
-		GRCController controller = new GRCController(model, criterios);
-		GRCView vista = new GRCView(controller, criterios.keySet());
-		GRCViewText viewText = new GRCViewText(controller, model);
+		GRCModelo model = new GRCModelo(cursosDisponibles, criterioOrdenPorMaterias, timeOut);
+		GRCControlador controller = new GRCControlador(model, criterios);
+		GRCVista vista = new GRCVista(controller, criterios.keySet());
+		GRCVistaConsola viewText = new GRCVistaConsola(controller, model);
 		model.addObserver(vista);
 //		model.addObserver(viewText);
 		vista.showVista();

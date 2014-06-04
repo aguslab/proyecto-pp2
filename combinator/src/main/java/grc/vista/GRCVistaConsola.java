@@ -1,9 +1,9 @@
 package grc.vista;
 
-import grc.controlador.GRCController;
+import grc.controlador.GRCControlador;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
-import grc.modelo.GRCModel;
+import grc.modelo.GRCModelo;
 import grc.servicios.Recomendacion;
 
 import java.util.List;
@@ -11,14 +11,14 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class GRCViewText implements Observer
+public class GRCVistaConsola implements Observer
 {
-	private GRCController controller;
-	private GRCModel model;
-	private GRCModel modelActualizado;
+	private GRCControlador controller;
+	private GRCModelo model;
+	private GRCModelo modelActualizado;
 	private boolean seActualizoElModelo;
 
-	public GRCViewText(GRCController controlador, GRCModel model)
+	public GRCVistaConsola(GRCControlador controlador, GRCModelo model)
 	{
 		this.controller = controlador;
 		this.model = model;
@@ -27,7 +27,7 @@ public class GRCViewText implements Observer
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		this.modelActualizado = (GRCModel) o;
+		this.modelActualizado = (GRCModelo) o;
 		seActualizoElModelo = true;
 		System.out.println("se actualizaron los datos, presione 'R' para actualizar");
 	}

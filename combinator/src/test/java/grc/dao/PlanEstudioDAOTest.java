@@ -48,9 +48,7 @@ public class PlanEstudioDAOTest extends TestCase
 		correl.put(M, c);
 		Carrera ca = new Carrera("A");
 		ca.setId(CarreraDAO.getInstancia().obtenerTodo().size() + 1);
-		PlanEstudio p = new PlanEstudio();
-		p.setCorrelativas(correl);
-		p.setCarrera(ca);
+		PlanEstudio p = new PlanEstudio(ca, correl);
 		int cantAntes = PlanEstudioDAO.getInstancia().obtenerTodo().size();
 		PlanEstudioDAO.getInstancia().alta(p);
 		int cantDespues = PlanEstudioDAO.getInstancia().obtenerTodo().size();
@@ -79,9 +77,7 @@ public class PlanEstudioDAOTest extends TestCase
 //		correl.put(M, c);
 		Carrera ca = new Carrera("B");
 		ca.setId(CarreraDAO.getInstancia().obtenerTodo().size() + 1);
-		PlanEstudio p = new PlanEstudio();
-		p.setCorrelativas(correl);
-		p.setCarrera(ca);
+		PlanEstudio p = new PlanEstudio(ca, correl);
 		int cantAntes = PlanEstudioDAO.getInstancia().obtenerTodo().size();
 		p.setId(cantAntes+1);
 		PlanEstudioDAO.getInstancia().alta(p);

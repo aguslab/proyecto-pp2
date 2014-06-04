@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
-public class GRCModel extends Observable
+public class GRCModelo extends Observable
 {
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
@@ -22,7 +22,7 @@ public class GRCModel extends Observable
 	private CriterioOrden criterioOrden;
 	private ArrayList<String> listaRecomendacionesSugeridas;
 
-	public GRCModel(Set<Curso> cursosDisponibles, CriterioOrden co,
+	public GRCModelo(Set<Curso> cursosDisponibles, CriterioOrden co,
 			long timeOut)
 	{
 		this.cursosDisponibles = new ArrayList<Curso>(cursosDisponibles);
@@ -131,10 +131,10 @@ public class GRCModel extends Observable
 		this.listaRecomendacionesSugeridas = recomendacionesParaLista;
 	}
 	
-	public GRCModel clone(){
+	public GRCModelo clone(){
 		Set<Curso> cursos = new HashSet<Curso>();
 		cursos.addAll(cursosDisponibles);
-		GRCModel m = new GRCModel(cursos, this.criterioOrden, timeOut);
+		GRCModelo m = new GRCModelo(cursos, this.criterioOrden, timeOut);
 		m.recomendaciones = this.recomendaciones;
 		m.listaRecomendacionesSugeridas = this.listaRecomendacionesSugeridas;
 		m.recomendacionActual = this.recomendacionActual;

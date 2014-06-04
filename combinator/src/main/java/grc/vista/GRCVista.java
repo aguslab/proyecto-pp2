@@ -1,7 +1,7 @@
 package grc.vista;
 
-import grc.controlador.GRCController;
-import grc.modelo.GRCModel;
+import grc.controlador.GRCControlador;
+import grc.modelo.GRCModelo;
 import grc.servicios.Recomendacion;
 
 import java.awt.*;
@@ -18,9 +18,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class GRCView extends JFrame implements Observer, ActionListener
+public class GRCVista extends JFrame implements Observer, ActionListener
 {
-	private final GRCController controller;
+	private final GRCControlador controller;
 	private JDesktopPane escritorio = new JDesktopPane();
 	private JMenuBar barra;
 	private JMenu mnuPrototipo;
@@ -43,7 +43,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
 
-	public GRCView(GRCController controlador, Set<String> ordenElegido) throws Exception
+	public GRCVista(GRCControlador controlador, Set<String> ordenElegido) throws Exception
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
@@ -353,7 +353,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 	public void mostrarRecomendaciones(Observable o) throws Exception
 	{
-		GRCModel model = ((GRCModel) o);
+		GRCModelo model = ((GRCModelo) o);
 		DefaultListModel modeloList = new DefaultListModel();
 		ArrayList<String> recomendaciones = model.getListaRecomendacionesSugeridas();
 		for (int i = 0; i < recomendaciones.size(); i++)

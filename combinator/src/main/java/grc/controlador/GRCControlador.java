@@ -3,7 +3,7 @@ package grc.controlador;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
 import grc.dominio.Horario;
-import grc.modelo.GRCModel;
+import grc.modelo.GRCModelo;
 import grc.servicios.CriterioOrden;
 import grc.servicios.FiltroHorarios;
 import grc.servicios.IFiltro;
@@ -17,9 +17,9 @@ import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
 
-public class GRCController
+public class GRCControlador
 {
-	private GRCModel modelo;
+	private GRCModelo modelo;
 	private boolean filtroManiana;
 	private boolean filtroTarde;
 	private boolean filtroNoche;
@@ -27,7 +27,7 @@ public class GRCController
 	private Map<String, CriterioOrden> criterios;
 
 	// TODO eliminar estados del controlador!!!
-	public GRCController(GRCModel model, Map<String, CriterioOrden> criterios)
+	public GRCControlador(GRCModelo model, Map<String, CriterioOrden> criterios)
 	{
 		filtroManiana = true;
 		filtroTarde = true;
@@ -164,7 +164,7 @@ public class GRCController
 //		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size());
 	}
 
-	private GRCModel getModelo()
+	private GRCModelo getModelo()
 	{
 		return this.modelo;
 	}

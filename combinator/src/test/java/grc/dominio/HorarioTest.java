@@ -37,7 +37,7 @@ public class HorarioTest
     	h.setHoraFin(22);
     	h.setHoraInicio(18);
     	
-    	assertEquals("LUNES", h.getDia());
+    	assertEquals("LUNES", h.getDia().name());
     }
     
     public void testHorarioHora(){
