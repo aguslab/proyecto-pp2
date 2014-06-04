@@ -14,43 +14,52 @@ import java.util.Scanner;
 public class GRCViewText implements Observer
 {
 	private GRCController controller;
+	private GRCModel model;
+	private GRCModel modelActualizado;
+	private boolean seActualizoElModelo;
 
-	public GRCViewText(GRCController controlador)
+	public GRCViewText(GRCController controlador, GRCModel model)
 	{
 		this.controller = controlador;
+		this.model = model;
 	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		GRCModel model = (GRCModel) o;
-		this.printRecomendaciones(model.getRecomendaciones());
-		try
-		{
-//			this.volverAMenuPrincipal();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		this.modelActualizado = (GRCModel) o;
+		seActualizoElModelo = true;
+		System.out.println("se actualizaron los datos, presione 'R' para actualizar");
 	}
-	
-//	public void main(String[] args)
-//	{
-//		try
-//		{
-//			menuPrincipal();
-//		} catch (Exception e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
+
+	private void mensajeInicial()
+	{
+		System.out.println(this.model.getListaRecomendacionesSugeridas().get(0));
+		System.out.println();
+		System.out.println("Hay " + this.model.getListaRecomendacionesSugeridas().size()
+				+ " recomendaciones disponibles");
+	}
+
 	public void menuPrincipal() throws Exception
 	{
-		boolean salir = false;
 		limpiarPantalla();
 		System.out.println("Bienvenido al Generador de Recomendaciones de Cursada");
+		System.out.println();
+		this.controller.filtrarTurnos();
+		System.out.println();
+		mensajeInicial();
+		mensajeAyuda();
+		seleccionarOpcion();
+	}
+
+	private void mensajeAyuda()
+	{
+		System.out.println("presione h para obtener ayuda con los comandos");
+
+	}
+
+	private void mostrarAyuda()
+	{
 		System.out.println();
 		System.out
 				.println("Indique qué turnos tiene disponibles. En caso de ser más de uno,\n separe las opciones con punto y coma.Ejemplo: si puede mañana y tarde, entonces ingrese \"1;2\":");
@@ -58,62 +67,114 @@ public class GRCViewText implements Observer
 		System.out.println("2 - Tarde");
 		System.out.println("3 - Noche");
 		System.out.println("4 - Quitar todos los filtros");
+		System.out.println("T - Mostrar Lista de Recomendaciones");
+		System.out.println("R - Actualizar");
+		System.out.println("H - Ayuda");
 		System.out.println("0 - Salir");
-		String entradaTeclado = getOpcionUsuario();
-//		List<String> opciones = Arrays.asList(entradaTeclado.split(";"));
-//		for (String opc : opciones)
-//		{
-//		}
-
-		switch (entradaTeclado) {
-			case "1" :
-				controller.filtrarManiana(true);
-				break;
-			case "2" :
-				controller.filtrarTarde(true);
-				break;
-			case "3" :
-				controller.filtrarNoche(true);
-				break;
-			case "4" :
-				controller.filtrarManiana(false);
-				controller.filtrarTarde(false);
-				controller.filtrarNoche(false);
-				break;
-			case "0" :
-				System.out.println("Felicitaciones por usar el mejor y único recomendador de cursadas");
-				break;
-			default :
-				System.out.println("Ingrese una opción correcta.");
-				salir = true;
-				break;
-		}
-		
-		if(!salir){
-			controller.filtrarTurnos();
-//			volverAMenuPrincipal();	
-		}else{
-			System.exit(0);
-		}
-		
 	}
 
-//	public void volverAMenuPrincipal() throws Exception
-//	{
-//		System.out.println();
-//		String entradaTeclado;
-//		do
-//		{
-//			System.out.println("Para volver al menu principal presiones 1");
-//			entradaTeclado = getOpcionUsuario();
-//		} while (!entradaTeclado.equals("1"));
-//		{
-//			menuPrincipal();
-//		}
-//	}
+	private void seleccionarOpcion()
+	{
+		boolean opcionSalir = false;
+		String opcionUsuario = "x";
+		while (!Opciones().contains(opcionUsuario))
+		{
+			opcionUsuario = getOpcionUsuario();
+			switch (opcionUsuario) {
+				case "1" :
+					controller.filtrarManiana(true);
+					break;
+				case "2" :
+					controller.filtrarTarde(true);
+					break;
+				case "3" :
+					controller.filtrarNoche(true);
+					break;
+				case "4" :
+					controller.cambiarEstadoFiltroManiana(false);
+					controller.cambiarEstadoFiltroTarde(false);
+					controller.cambiarEstadoFiltroNoche(false);
+					controller.filtrarTurnos();
+					actualizar();
+					break;
+				case "t" :
+					mostrarListaRecomendaciones();
+					break;
+				case "T" :
+					mostrarListaRecomendaciones();
+					break;
+				case "r" :
+					actualizar();
+					break;
+				case "R" :
+					actualizar();
+					break;
+				case "h" :
+					mostrarAyuda();
+					break;
+				case "H" :
+					mostrarAyuda();
+					break;
+				case "0" :
+					System.out
+							.println("Felicitaciones por usar el mejor y único recomendador de cursadas");
+					opcionSalir = true;
+					break;
+				default :
+					System.out.println("Ingrese una opción correcta.");
+					break;
+			}
+		}
+
+		if (opcionSalir)
+		{
+			System.exit(0);
+		} else
+		{
+			mensajeInicial();
+			seleccionarOpcion();
+		}
+	}
+
+	private void mostrarListaRecomendaciones()
+	{
+		for (String r : this.model.getListaRecomendacionesSugeridas())
+		{
+			System.out.println(r);
+		}
+	}
+
+	private void actualizar()
+	{
+		if (seActualizoElModelo)
+		{
+			this.model = this.modelActualizado.clone();
+		}
+		mensajeInicial();
+	}
+
+	private String Opciones()
+	{
+		return "1,2,3,4,r,R,h,H,0";
+	}
+
+	// public void volverAMenuPrincipal() throws Exception
+	// {
+	// System.out.println();
+	// String entradaTeclado;
+	// do
+	// {
+	// System.out.println("Para volver al menu principal presiones 1");
+	// entradaTeclado = getOpcionUsuario();
+	// } while (!entradaTeclado.equals("1"));
+	// {
+	// menuPrincipal();
+	// }
+	// }
 
 	private String getOpcionUsuario()
 	{
+		mensajeAyuda();
 		String entradaTeclado = new Scanner(System.in).nextLine();
 		return entradaTeclado;
 	}
@@ -151,7 +212,7 @@ public class GRCViewText implements Observer
 		System.out.println();
 	}
 
-	private void printRecomendaciones(List<Recomendacion> recos)
+	private void mostrarTodasLasRecomendaciones(List<Recomendacion> recos)
 	{
 		System.out.println();
 		int i = 1;
