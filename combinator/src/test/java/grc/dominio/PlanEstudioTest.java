@@ -1,6 +1,6 @@
 package grc.dominio;
 
-import grc.app.Alta_mat_cur_matApr;
+import grc.app.Persistor;
 import grc.dominio.PlanEstudio;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -47,7 +47,7 @@ public class PlanEstudioTest extends TestCase
 	
 	public void testPlanEstudioCantPoscorrelativasCero()
 	{
-		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+		Persistor a = new Persistor();
 		a.init();
 		PlanEstudio pe = a.getPlanEstudios();
 		Materia lecto = new Materia("Taller de Lectoescritura");
@@ -57,7 +57,7 @@ public class PlanEstudioTest extends TestCase
 	
 	public void testPlanEstudioCantPoscorrelativasPositivo()
 	{
-		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+		Persistor a = new Persistor();
 		a.init();
 		PlanEstudio pe = a.getPlanEstudios();
 		Materia ingles1 = new Materia("Ingles Lectocomprension I");
@@ -67,7 +67,7 @@ public class PlanEstudioTest extends TestCase
 	
 	public void testPlanEstudioCorrelativasOk()
 	{
-		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+		Persistor a = new Persistor();
 		a.init();
 		PlanEstudio pe = a.getPlanEstudios();
 		Materia ingles1 = new Materia("Ingles Lectocomprension I");
