@@ -52,7 +52,7 @@ private static void generarAltas() throws Exception
 		Universidad universidad = new Universidad();
 		try
 		{
-		 generarAltas();
+//			 generarAltas();
 		} catch (Exception e)
 		{
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
@@ -71,10 +71,10 @@ private static void generarAltas() throws Exception
 		filtro = new FiltroCorrelativas(matAprobadas, planEstudio);
 		cursosDisponibles = filtro.filtrar(cursosDisponibles);
 
-		for (Curso c : cursosDisponibles)
-		{
-			System.out.println("nombre: " + c.getNombreCurso());
-		}
+//		for (Curso c : cursosDisponibles)
+//		{
+//			System.out.println("nombre: " + c.getNombreCurso());
+//		}
 		
 		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(1);
 		final CriterioOrden criterioOrdenPorPoscorrelativas = new CriterioOrdenPorPoscorrelativas(planEstudio);
@@ -92,9 +92,9 @@ private static void generarAltas() throws Exception
 		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, criterioOrdenPorMaterias, timeOut);
 		GRCController controller = new GRCController(model, criterios);
 		GRCView vista = new GRCView(controller, criterios.keySet());
-		GRCViewText viewText = new GRCViewText(controller);
+		GRCViewText viewText = new GRCViewText(controller, model);
 		model.addObserver(vista);
-		model.addObserver(viewText);
+//		model.addObserver(viewText);
 		vista.showVista();
 //		viewText.menuPrincipal();
 //		model.actualizarRecomendaciones(cursos, false);
