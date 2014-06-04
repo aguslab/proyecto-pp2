@@ -42,8 +42,8 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
-	
-	public  GRCView(GRCController controlador, Set<String> ordenElegido ) throws Exception
+
+	public GRCView(GRCController controlador, Set<String> ordenElegido) throws Exception
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
@@ -112,80 +112,83 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 		getContentPane().add(escritorio);
 		getContentPane().add(barraDeEstado);
-		
+
 		// Tabla Recomendaciones
 		JPanel panelRecomendaciones = new JPanel();
 		panelRecomendaciones.setBounds(0, 0, 1317, 571);
 		getContentPane().add(panelRecomendaciones);
 		panelRecomendaciones.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelRecomendaciones.setLayout(null);
-				
+
 		JScrollPane spRecomendacion = new JScrollPane();
 		spRecomendacion.setEnabled(false);
 		spRecomendacion.setBounds(10, 241, 1297, 319);
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
-		
+
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
-		tablaDias.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-			}
-		));
+		tablaDias.setModel(new DefaultTableModel(new Object[][]{}, new String[]{}));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		
+
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
 		panelRecomendaciones.add(lblHorarios);
-		
+
 		JLabel lblManiana = new JLabel("Ma\u00F1ana");
 		lblManiana.setBounds(85, 11, 57, 14);
 		panelRecomendaciones.add(lblManiana);
 		cbManiana = new JCheckBox("");
-		cbManiana.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		cbManiana.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				controller.filtrarManiana(getCbManiana());
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
+		cbManiana.setSelected(true);
 		panelRecomendaciones.add(cbManiana);
-				
+
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
 		lblRecomendaciones.setBounds(10, 217, 112, 14);
 		panelRecomendaciones.add(lblRecomendaciones);
-							
+
 		JLabel lblTarde = new JLabel("Tarde");
 		lblTarde.setBounds(172, 11, 49, 14);
 		panelRecomendaciones.add(lblTarde);
-		
+
 		cbTarde = new JCheckBox("");
-		cbTarde.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("filtro tardeeeeee");
+		cbTarde.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				controller.filtrarTarde(getCbTarde());
 			}
 		});
 		cbTarde.setBounds(208, 7, 21, 23);
+		cbTarde.setSelected(true);
 		panelRecomendaciones.add(cbTarde);
-		
+
 		JLabel lblNoche = new JLabel("Noche");
 		lblNoche.setBounds(253, 11, 49, 14);
 		panelRecomendaciones.add(lblNoche);
-										
+
 		cbNoche = new JCheckBox("");
-		cbNoche.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		cbNoche.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 				controller.filtrarNoche(getCbNoche());
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
+		cbNoche.setSelected(true);
 		panelRecomendaciones.add(cbNoche);
-						
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 37, 1297, 169);
 		panelRecomendaciones.add(scrollPane);
@@ -204,32 +207,26 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		});
 		listaRecomendaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listaRecomendaciones);
-		
+
 		cbPuedeEsperar = new JCheckBox();
-		cbPuedeEsperar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		cbPuedeEsperar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				controller.puedeEsperar(puedeEsperar());
 			}
 		});
 		cbPuedeEsperar.setBounds(490, 7, 21, 23);
 		panelRecomendaciones.add(cbPuedeEsperar);
-		
+
 		JLabel label = new JLabel("Puedo Esperar :)");
 		label.setBounds(380, 11, 111, 14);
 		panelRecomendaciones.add(label);
-		
-		JButton btnVerRecomendaciones = new JButton("Ver Recomendaciones");
-		btnVerRecomendaciones.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.generarRecomendaciones();
-			}
-		});
-		btnVerRecomendaciones.setBounds(584, 7, 167, 23);
-		panelRecomendaciones.add(btnVerRecomendaciones);
-		
+
 		cbOrdenador = new JComboBox();
-		cbOrdenador.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
+		cbOrdenador.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
 			{
 				String recomendacionElegida = (String) listaRecomendaciones.getSelectedValue();
 				controller.setCriterioOrdenamiento((String)cbOrdenador.getSelectedItem());
@@ -237,10 +234,10 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbOrdenador.setModel(new DefaultComboBoxModel(ordenElegido.toArray()));
-		
+
 		cbOrdenador.setBounds(253, 214, 125, 20);
 		panelRecomendaciones.add(cbOrdenador);
-		
+
 		JLabel lblOrdenarPor = new JLabel("Ordenar por:");
 		lblOrdenarPor.setBounds(175, 217, 74, 14);
 		panelRecomendaciones.add(lblOrdenarPor);
@@ -257,7 +254,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			}
 		});
 	}
-	
+
 	public void showVista()
 	{
 		setVisible(true);
@@ -319,36 +316,34 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	{
 		return cbNoche.isSelected();
 	}
-	
+
 	public boolean puedeEsperar()
 	{
 		return cbPuedeEsperar.isSelected();
 	}
-	
+
 	private void setPuedeEsperar(boolean b)
 	{
 		this.cbPuedeEsperar.setSelected(true);
 	}
-	
+
 	public void update(Observable obs, Object arg)
 	{
-		if(arg instanceof ArrayList)
+		if (arg instanceof ArrayList<?>)
 		{
 			try
 			{
 				mostrarRecomendaciones(obs);
-			} 
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-		}
-		else if (arg instanceof Recomendacion)
+		} else if (arg instanceof Recomendacion)
 		{
 			try
 			{
-				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion)arg));
-				tablaDias.getColumnModel().getColumn(0).setPreferredWidth(5);
+				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion) arg));
+				// tablaDias.getColumnModel().getColumn(0).setPreferredWidth(5);
 			} catch (Exception e1)
 			{
 				e1.printStackTrace();
@@ -358,21 +353,23 @@ public class GRCView extends JFrame implements Observer, ActionListener
 
 	public void mostrarRecomendaciones(Observable o) throws Exception
 	{
+		GRCModel model = ((GRCModel) o);
 		DefaultListModel modeloList = new DefaultListModel();
-		ArrayList<String> recomendaciones = controller.getRecomendaciones();
+		ArrayList<String> recomendaciones = model.getListaRecomendacionesSugeridas();
 		for (int i = 0; i < recomendaciones.size(); i++)
 		{
 			modeloList.addElement(recomendaciones.get(i));
 		}
 		listaRecomendaciones.setModel(modeloList);
-		
-		boolean generoTodaslasRecomendaciones = ((GRCModel) o).seCompletoLaGeneracionDeRecomendaciones();
-		if(!generoTodaslasRecomendaciones)
+
+		if (!model.seCompletoLaGeneracionDeRecomendaciones())
 		{
 			mensajeNoCompletoReco();
 		}
+		//Para que seleccione la primera como "la más importante"
+		controller.seleccionActualRecomendacion(0);
 	}
-	
+
 	public DefaultTableModel getTablaDias()
 	{
 		return (DefaultTableModel) tablaDias.getModel();

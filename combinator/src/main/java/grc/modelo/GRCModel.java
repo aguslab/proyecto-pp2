@@ -6,9 +6,9 @@ import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
 import grc.servicios.Recomendacion;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Set;
@@ -21,15 +21,18 @@ public class GRCModel extends Observable
 	private PlanEstudio planEstudio;
 	private long timeOut;
 	private Recomendacion recomendacionActual;
-	private CriterioOrden co;
+	private CriterioOrden criterioOrden;
+	private ArrayList<String> listaRecomendacionesSugeridas;
 	// private List<Observer> vistaObserver;
 
-	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, CriterioOrden co, long timeOut)
+	public GRCModel(Set<Curso> cursosDisponibles, PlanEstudio planEstudio, CriterioOrden co,
+			long timeOut)
 	{
 		this.cursosDisponibles = new ArrayList<Curso>(cursosDisponibles);
+		listaRecomendacionesSugeridas = new ArrayList<String>();
 		this.planEstudio = planEstudio;
 		this.timeOut = timeOut;
-		this.co = co;
+		this.criterioOrden = co;
 		this.recomendaciones = new ArrayList<Recomendacion>();
 	}
 
@@ -37,53 +40,82 @@ public class GRCModel extends Observable
 	{
 		return cursosDisponibles;
 	}
-	
+
 	public PlanEstudio getPlanEstudio()
 	{
 		return this.planEstudio;
 	}
-	
+
 	public List<Recomendacion> getRecomendaciones()
 	{
 		return recomendaciones;
 	}
 
-	public void setRecomendaciones(List<Recomendacion> recomendaciones)
+	public void setRecomendaciones()
 	{
-		this.recomendaciones = recomendaciones;
+		// this.recomendaciones = recomendaciones;
 		this.setChanged();
 		this.notifyObservers(recomendaciones);
 	}
-	
+
 	public Recomendacion getRecomendacionActual()
 	{
 		return recomendacionActual;
 	}
 
-	public void setRecomendacionActual(Recomendacion recomendacionActual)
+	private void setRecomendacionActual()
 	{
-		this.recomendacionActual = recomendacionActual;
 		this.setChanged();
 		this.notifyObservers(recomendacionActual);
 	}
 
-	public void actualizarRecomendaciones(Set<Curso> cursos, boolean puedeEsperar) throws ClassNotFoundException,
-			IOException
+	public void actualizarRecomendaciones(Set<Curso> cursos, boolean puedeEsperar)
 	{
 		List<Curso> cursosFiltrados = new ArrayList<Curso>(cursos);
-		GeneradorRecomendaciones generadosRecom = new GeneradorRecomendaciones(timeOut, puedeEsperar);
-		List<Recomendacion> recomendaciones = generadosRecom.generarRecomendaciones(cursosFiltrados);
-		Collections.sort(recomendaciones, this.co);
-		this.seCompletoLaGeneracionDeRecomendaciones = generadosRecom.seCompletoLaGeneracionDeRecomendaciones();
-		this.setRecomendaciones(recomendaciones);
+		GeneradorRecomendaciones generadorRecom = new GeneradorRecomendaciones(timeOut,
+				puedeEsperar);
+		this.recomendaciones = generadorRecom.generarRecomendaciones(cursosFiltrados);
+		 Collections.sort(recomendaciones, this.criterioOrden);
+		this.seCompletoLaGeneracionDeRecomendaciones = generadorRecom
+				.seCompletoLaGeneracionDeRecomendaciones();
+		armarRecomendaciones();
+		this.setRecomendaciones();
 	}
-	
+
 	public void ordenarPorCriterio(CriterioOrden criterio)
 	{
 		Collections.sort(recomendaciones, criterio);
-		this.setRecomendaciones(recomendaciones);
+//		this.seCompletoLaGeneracionDeRecomendaciones = true;//TODO ver!!!
+		this.setRecomendaciones();
 	}
-	
+
+	public void armarRecomendaciones()
+	{
+		ArrayList<String> recomendacionesParaLista = new ArrayList<String>();
+		for (Recomendacion r : this.recomendaciones)
+		{
+			String recoParaLista = "";
+			for (Curso c : r.getRecomendacion())
+			{
+				recoParaLista += " " + c.getNombreCurso();
+				for (int j = 0; j < c.getHorario().size(); j++)
+				{
+					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
+					recoParaLista += " De: " + c.getHorario().get(j).getHoraInicio();
+					recoParaLista += "hs a " + c.getHorario().get(j).getHoraFin() + " hs";
+				}
+				recoParaLista += "; ";
+			}
+			recomendacionesParaLista.add(recoParaLista);
+		}
+		if (this.recomendaciones.isEmpty())
+		{
+			recomendacionesParaLista
+					.add("NO HAY CURSOS DISPONIBLES PARA CURSAR CON ESTOS CRITERIOS");
+		}
+		this.setListaRecomendacionesSugeridas(recomendacionesParaLista);
+	}
+
 	public boolean seCompletoLaGeneracionDeRecomendaciones()
 	{
 		return seCompletoLaGeneracionDeRecomendaciones;
@@ -91,7 +123,30 @@ public class GRCModel extends Observable
 
 	public void actualizarRecomendacionActual(int posElegida)
 	{
+		if (this.recomendaciones.isEmpty())
+			return;
 		this.recomendacionActual = this.recomendaciones.get(posElegida);
-		this.setRecomendacionActual(recomendacionActual);
+		this.setRecomendacionActual();
+	}
+
+	public ArrayList<String> getListaRecomendacionesSugeridas()
+	{
+		return listaRecomendacionesSugeridas;
+	}
+
+	private void setListaRecomendacionesSugeridas(ArrayList<String> recomendacionesParaLista)
+	{
+		this.listaRecomendacionesSugeridas = recomendacionesParaLista;
+	}
+	
+	public GRCModel clone(){
+		Set<Curso> cursos = new HashSet<Curso>();
+		cursos.addAll(cursosDisponibles);
+		GRCModel m = new GRCModel(cursos, planEstudio, this.criterioOrden, timeOut);
+		m.recomendaciones = this.recomendaciones;
+		m.listaRecomendacionesSugeridas = this.listaRecomendacionesSugeridas;
+		m.recomendacionActual = this.recomendacionActual;
+		System.out.println(m.equals(this));
+		return m;
 	}
 }
