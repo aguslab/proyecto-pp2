@@ -11,32 +11,42 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
-public class GRCVistaConsola implements Observer
+public class GRCVistaTexto extends Thread implements Observer
 {
 	private GRCControlador controller;
-	private GRCModelo model;
-	private GRCModelo modelActualizado;
-	private boolean seActualizoElModelo;
+	private GRCModelo modelo;
+	private GRCVista vista;
+	private boolean salirModoTxt;
 
-	public GRCVistaConsola(GRCControlador controlador, GRCModelo model)
+	public GRCVistaTexto(GRCControlador controlador, GRCModelo model, GRCVista vista)
 	{
 		this.controller = controlador;
-		this.model = model;
+		this.modelo = model;
+		this.vista = vista;
+		this.salirModoTxt = false;
 	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		this.modelActualizado = (GRCModelo) o;
-		seActualizoElModelo = true;
-		System.out.println("se actualizaron los datos, presione 'R' para actualizar");
+		if (o instanceof GRCModelo)
+		{
+			this.modelo = (GRCModelo) o;
+			System.out.println("se actualizaron los datos, presione 'R' para actualizar");
+		}
 	}
 
 	private void mensajeInicial()
 	{
-		System.out.println(this.model.getListaRecomendacionesSugeridas().get(0));
+		List<String> listaRecomendaciones = this.modelo.getListaRecomendacionesSugeridas();
+		if(listaRecomendaciones.isEmpty()){
+			System.out.println("No hay recomendaciones con estos filtros");
+			return;
+		}
+			
+		System.out.println(listaRecomendaciones);
 		System.out.println();
-		System.out.println("Hay " + this.model.getListaRecomendacionesSugeridas().size()
+		System.out.println("Hay " + listaRecomendaciones.size()
 				+ " recomendaciones disponibles");
 	}
 
@@ -69,26 +79,30 @@ public class GRCVistaConsola implements Observer
 		System.out.println("4 - Quitar todos los filtros");
 		System.out.println("T - Mostrar Lista de Recomendaciones");
 		System.out.println("R - Actualizar");
+		System.out.println("V - GUI");
 		System.out.println("H - Ayuda");
 		System.out.println("0 - Salir");
 	}
 
 	private void seleccionarOpcion()
 	{
-		boolean opcionSalir = false;
 		String opcionUsuario = "x";
-		while (!Opciones().contains(opcionUsuario))
+		boolean cerrarApp = false;
+		while (!Opciones().contains(opcionUsuario) && !salirModoTxt)
 		{
 			opcionUsuario = getOpcionUsuario();
 			switch (opcionUsuario) {
 				case "1" :
 					controller.filtrarManiana(true);
+					actualizar();
 					break;
 				case "2" :
 					controller.filtrarTarde(true);
+					actualizar();
 					break;
 				case "3" :
 					controller.filtrarNoche(true);
+					actualizar();
 					break;
 				case "4" :
 					controller.cambiarEstadoFiltroManiana(false);
@@ -109,6 +123,14 @@ public class GRCVistaConsola implements Observer
 				case "R" :
 					actualizar();
 					break;
+				case "v" :
+					ejecutarVista();
+//					salirModoTxt = true;
+					break;
+				case "V" :
+					ejecutarVista();
+//					salirModoTxt = true;
+					break;
 				case "h" :
 					mostrarAyuda();
 					break;
@@ -118,38 +140,44 @@ public class GRCVistaConsola implements Observer
 				case "0" :
 					System.out
 							.println("Felicitaciones por usar el mejor y único recomendador de cursadas");
-					opcionSalir = true;
+					cerrarApp = true;
 					break;
 				default :
 					System.out.println("Ingrese una opción correcta.");
 					break;
 			}
 		}
-
-		if (opcionSalir)
+		
+		if (cerrarApp)
 		{
 			System.exit(0);
-		} else
+		} else if(!salirModoTxt)
 		{
-			mensajeInicial();
+//			mensajeInicial();
 			seleccionarOpcion();
 		}
 	}
 
+	private void ejecutarVista()
+	{
+		this.vista.showVista();
+	}
+
 	private void mostrarListaRecomendaciones()
 	{
-		for (String r : this.model.getListaRecomendacionesSugeridas())
+		int i = 1;
+		for (String r : this.modelo.getListaRecomendacionesSugeridas())
 		{
-			System.out.println(r);
+			System.out.println(i +" - " + r);
+			i++;
+		}
+		if(i == 1){
+			System.out.println("No hay recomendaciones Disponibles");
 		}
 	}
 
 	private void actualizar()
 	{
-		if (seActualizoElModelo)
-		{
-			this.model = this.modelActualizado.clone();
-		}
 		mensajeInicial();
 	}
 
@@ -212,24 +240,37 @@ public class GRCVistaConsola implements Observer
 		System.out.println();
 	}
 
-	private void mostrarTodasLasRecomendaciones(List<Recomendacion> recos)
+//	private void mostrarTodasLasRecomendaciones(List<Recomendacion> recos)
+//	{
+//		System.out.println();
+//		int i = 1;
+//		for (Recomendacion r : recos)
+//		{
+//			System.out.println();
+//			System.out.println("Recomendacion :" + i);
+//			i++;
+//			for (Curso c : r.getRecomendacion())
+//			{
+//				System.out.println("Curso: " + c.getMateria().getNombre());
+//				for (Horario h : c.getHorario())
+//				{
+//					System.out.println(h.getDia() + ": de " + h.getHoraInicio() + " a "
+//							+ h.getHoraFin() + "hs");
+//				}
+//			}
+//		}
+//	}
+
+	@Override
+	public void run()
 	{
-		System.out.println();
-		int i = 1;
-		for (Recomendacion r : recos)
+		try
 		{
-			System.out.println();
-			System.out.println("Recomendacion :" + i);
-			i++;
-			for (Curso c : r.getRecomendacion())
-			{
-				System.out.println("Curso: " + c.getMateria().getNombre());
-				for (Horario h : c.getHorario())
-				{
-					System.out.println(h.getDia() + ": de " + h.getHoraInicio() + " a "
-							+ h.getHoraFin() + "hs");
-				}
-			}
+			menuPrincipal();
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
