@@ -68,7 +68,7 @@ public class GRCModelo extends Observable
 		this.recomendaciones = generadorRecom.generarRecomendaciones(cursosFiltrados);
 		 Collections.sort(recomendaciones, this.criterioOrden);
 		this.seCompletoLaGeneracionDeRecomendaciones = generadorRecom
-				.seCompletoLaGeneracionDeRecomendaciones();
+				.generacionRecomendacionesCompletada();
 		armarRecomendaciones();
 		this.setRecomendaciones();
 	}
