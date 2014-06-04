@@ -78,7 +78,7 @@ public class GRCModel extends Observable
 		this.setRecomendaciones(recomendaciones);
 	}
 	
-	public void actualizarOrdenamiento(CriterioOrden criterio)
+	public void ordenarPorCriterio(CriterioOrden criterio)
 	{
 		Collections.sort(recomendaciones, criterio);
 		this.setRecomendaciones(recomendaciones);

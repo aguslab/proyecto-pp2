@@ -213,10 +213,10 @@ public class GRCController
 		this.modelo.actualizarRecomendacionActual(posElegida);
 	}
 
-	public void ordenarRecomendaciones(String criterioElegido)
+	public void setCriterioOrdenamiento(String criterioElegido)
 	{
 		assert this.criterios.containsKey(criterioElegido);
-		this.getModelo().actualizarOrdenamiento(this.criterios.get(criterioElegido));
+		this.getModelo().ordenarPorCriterio(this.criterios.get(criterioElegido));
 	}
 	
 	public void filtrarManiana(boolean fm)

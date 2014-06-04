@@ -232,7 +232,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String recomendacionElegida = (String) listaRecomendaciones.getSelectedValue();
-				controller.ordenarRecomendaciones((String)cbOrdenador.getSelectedItem());
+				controller.setCriterioOrdenamiento((String)cbOrdenador.getSelectedItem());
 				listaRecomendaciones.setSelectedValue(recomendacionElegida, true);
 			}
 		});
