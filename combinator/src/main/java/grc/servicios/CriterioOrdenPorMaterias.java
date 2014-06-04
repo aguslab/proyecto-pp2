@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class CriterioOrdenPorMaterias extends CriterioOrden
 {
-	Boolean ordenAscendente;
+	boolean ordenAscendente;
 
 	public CriterioOrdenPorMaterias()
 	{
