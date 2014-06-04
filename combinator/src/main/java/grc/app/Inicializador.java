@@ -97,7 +97,7 @@ private static void generarAltas() throws Exception
 //		model.addObserver(viewText);
 		vista.showVista();
 //		viewText.menuPrincipal();
-//		model.actualizarRecomendaciones(cursos, false);
+		model.actualizarRecomendaciones(cursosDisponibles, false);
 	}
 
 }
