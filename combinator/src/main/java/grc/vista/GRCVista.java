@@ -1,6 +1,7 @@
 package grc.vista;
 
 import grc.controlador.GRCControlador;
+import grc.modelo.EstadoFiltros;
 import grc.modelo.GRCModelo;
 import grc.servicios.Recomendacion;
 
@@ -42,11 +43,14 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
+	private boolean ocultarme;
+	
 
 	public GRCVista(GRCControlador controlador, Set<String> ordenElegido) throws Exception
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
+		this.ocultarme = true;
 		escritorio.setBounds(0, 0, 1317, 1);
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener(new UISwitchListener((JComponent) getRootPane()));
@@ -217,6 +221,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbPuedeEsperar.setBounds(490, 7, 21, 23);
+		cbPuedeEsperar.setSelected(true);
 		panelRecomendaciones.add(cbPuedeEsperar);
 
 		JLabel label = new JLabel("Puedo Esperar :)");
@@ -257,6 +262,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 
 	public void showVista()
 	{
+		this.ocultarme = false;
 		setVisible(true);
 	}
 
@@ -322,14 +328,23 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		return cbPuedeEsperar.isSelected();
 	}
 
-	private void setPuedeEsperar(boolean b)
+	private void setPuedeEsperar(boolean pe)
 	{
-		this.cbPuedeEsperar.setSelected(true);
+		this.cbPuedeEsperar.setSelected(pe);
 	}
 
 	public void update(Observable obs, Object arg)
 	{
-		if (arg instanceof ArrayList<?>)
+		if (ocultarme)
+			return;
+		if (obs instanceof EstadoFiltros)
+		{
+			EstadoFiltros estadoFiltros = (EstadoFiltros) obs;
+			this.cbManiana.setSelected(estadoFiltros.isFiltroMañana());
+			this.cbTarde.setSelected(estadoFiltros.isFiltroTarde());
+			this.cbNoche.setSelected(estadoFiltros.isFiltroNoche());
+			this.cbPuedeEsperar.setSelected(estadoFiltros.isFiltroPuedeEsperar());
+		} else if (arg instanceof ArrayList<?>)
 		{
 			try
 			{
@@ -356,6 +371,8 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		GRCModelo model = ((GRCModelo) o);
 		DefaultListModel modeloList = new DefaultListModel();
 		ArrayList<String> recomendaciones = model.getListaRecomendacionesSugeridas();
+		if(recomendaciones.isEmpty())
+			recomendaciones.add("No hay recomendaciones disponibles para usted");
 		for (int i = 0; i < recomendaciones.size(); i++)
 		{
 			modeloList.addElement(recomendaciones.get(i));
