@@ -6,16 +6,16 @@ import java.util.Set;
 
 public class Recomendacion
 {
-	Set<Curso> recomendacion;
+	Set<Curso> cursosRecomendados;
 	
 	public Recomendacion(Set<Curso> cursos)
 	{
-		this.recomendacion = cursos;
+		this.cursosRecomendados = cursos;
 	}
 	
 	public Set<Curso> getRecomendacion()
 	{
-		return recomendacion;
+		return cursosRecomendados;
 	}
 
 }
