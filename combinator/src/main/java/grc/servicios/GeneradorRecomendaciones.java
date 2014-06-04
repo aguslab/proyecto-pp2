@@ -14,7 +14,7 @@ public class GeneradorRecomendaciones
 	Set<Curso> cursosRecomendables;
 	private long timeOut;
 	private long timeInit;
-	private boolean seCompletoLaGeneracionDeRecomendaciones;
+	private boolean generacionRecomendacionesCompletada;
 	private boolean puedeEsperar;
 
 	public GeneradorRecomendaciones(long timeOut, boolean puedeEsperar)
@@ -22,7 +22,7 @@ public class GeneradorRecomendaciones
 		this.timeOut = timeOut;
 		this.cursosRecomendables = new HashSet<Curso>();
 		this.puedeEsperar = puedeEsperar;
-		this.seCompletoLaGeneracionDeRecomendaciones = false;
+		this.generacionRecomendacionesCompletada = false;
 	}
 
 	public List<Recomendacion> generarRecomendaciones(List<Curso> cursos)
@@ -40,12 +40,12 @@ public class GeneradorRecomendaciones
 		long timeNow = new Date().getTime();
 		if (!this.puedeEsperar && timeNow - this.timeInit > timeOut)
 		{
-			seCompletoLaGeneracionDeRecomendaciones = false;
+			generacionRecomendacionesCompletada = false;
 			return;
 		}
 
 		if (desde == cursos.size()){
-			this.seCompletoLaGeneracionDeRecomendaciones = true;
+			this.generacionRecomendacionesCompletada = true;
 			return;
 		}
 		armarSubconjuntos(resultado, cursos, recomendacionParcial, desde + 1);
@@ -60,9 +60,9 @@ public class GeneradorRecomendaciones
 
 	}
 
-	public boolean seCompletoLaGeneracionDeRecomendaciones()
+	public boolean generacionRecomendacionesCompletada()
 	{
-		return seCompletoLaGeneracionDeRecomendaciones;
+		return generacionRecomendacionesCompletada;
 	}
 
 }
