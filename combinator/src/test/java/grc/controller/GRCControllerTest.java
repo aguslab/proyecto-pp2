@@ -9,7 +9,7 @@ import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
 
-import grc.app.Alta_mat_cur_matApr;
+import grc.app.Persistor;
 import grc.controlador.GRCControlador;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
@@ -70,7 +70,7 @@ public class GRCControllerTest extends TestCase
 
 	private PlanEstudio getPlanEstudio()
 	{
-		Alta_mat_cur_matApr a = new Alta_mat_cur_matApr();
+		Persistor a = new Persistor();
 		a.init();
 		return a.getPlanEstudios();
 	}
