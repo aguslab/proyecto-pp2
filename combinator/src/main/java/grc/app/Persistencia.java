@@ -25,7 +25,7 @@ import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorMaterias;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
 
-public class Alta_mat_cur_matApr
+public class Persistencia
 {
 
 	private PlanEstudio planEstudio;
@@ -112,7 +112,6 @@ public class Alta_mat_cur_matApr
 	Curso curOrga1_c2;
 	Curso curOrga2;
 	Curso curAlgebraLineal;
-	
 	CriterioOrden criterioOrden;
 
 	public PlanEstudio getPlanEstudios()
@@ -519,7 +518,6 @@ public class Alta_mat_cur_matApr
 	public void altaCriterioOrden() throws Exception
 	{
 		CriterioOrdenDAO.getInstancia().alta(criterioOrden);
-		
 	}
 
 }
