@@ -16,7 +16,7 @@ public class GRCModelo extends Observable
 {
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
-	private boolean seCompletoLaGeneracionDeRecomendaciones;
+	private boolean generacionRecomendacionesCompletada;
 	private long timeOut;
 	private Recomendacion recomendacionActual;
 	private CriterioOrden criterioOrden;
@@ -67,8 +67,8 @@ public class GRCModelo extends Observable
 				puedeEsperar);
 		this.recomendaciones = generadorRecom.generarRecomendaciones(cursosFiltrados);
 		 Collections.sort(recomendaciones, this.criterioOrden);
-		this.seCompletoLaGeneracionDeRecomendaciones = generadorRecom
-				.seCompletoLaGeneracionDeRecomendaciones();
+		this.generacionRecomendacionesCompletada = generadorRecom
+				.generacionRecomendacionesCompletada();
 		armarRecomendaciones();
 		this.setRecomendaciones();
 	}
@@ -77,7 +77,7 @@ public class GRCModelo extends Observable
 	{
 		Collections.sort(recomendaciones, criterio);
 		armarRecomendaciones();
-		this.seCompletoLaGeneracionDeRecomendaciones = true;//TODO ver!!!
+		this.generacionRecomendacionesCompletada = true;//TODO ver!!!
 		this.setRecomendaciones();
 	}
 
@@ -110,7 +110,7 @@ public class GRCModelo extends Observable
 
 	public boolean seCompletoLaGeneracionDeRecomendaciones()
 	{
-		return seCompletoLaGeneracionDeRecomendaciones;
+		return generacionRecomendacionesCompletada;
 	}
 
 	public void actualizarRecomendacionActual(int posElegida)
