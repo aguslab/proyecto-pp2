@@ -48,11 +48,6 @@ public class PlanEstudio
 		return carrera;
 	}
 
-	public void setCarrera(Carrera carrera)
-	{
-		this.carrera = carrera;
-	}
-
 	public Set<Materia> getCorrelativas(Materia materia)
 	{
 		assert perteneceAPlanEstudio(materia);
