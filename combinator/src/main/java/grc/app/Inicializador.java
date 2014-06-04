@@ -89,7 +89,7 @@ private static void generarAltas() throws Exception
 		criterios.put("Ambos", criterioOrdenSecuenciales);
 
 		long timeOut = 10;
-		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, criterioOrdenPorMaterias, timeOut);
+		GRCModel model = new GRCModel(cursosDisponibles, criterioOrdenPorMaterias, timeOut);
 		GRCController controller = new GRCController(model, criterios);
 		GRCView vista = new GRCView(controller, criterios.keySet());
 		GRCViewText viewText = new GRCViewText(controller, model);
