@@ -27,10 +27,8 @@ public class CriterioOrdenPorMaterias extends CriterioOrden
 		Integer cantidadRecomendacion1 = contarCantidadMaterias(o1);
 		Integer cantidadRecomendacion2 = contarCantidadMaterias(o2);
 		if (ordenAscendente)
-			return cantidadRecomendacion2 - cantidadRecomendacion1; // Mayor a
-																	// menor
+			return cantidadRecomendacion2 - cantidadRecomendacion1; // Mayor a menor															// menor
 		else
-			return cantidadRecomendacion1 - cantidadRecomendacion2; // Menor a
-																	// mayor
+			return cantidadRecomendacion1 - cantidadRecomendacion2; // Menor a mayor
 	}
 }
