@@ -14,13 +14,11 @@ import java.util.Set;
 
 public class RecomendacionParcial
 {
-
 	Set<Curso> cursos;
 	private Map<Dia, List<Horario>> horariosOcupados;
 
 	public RecomendacionParcial()
 	{
-		
 //		this.cursos = new HashSet<Curso>();
 //		this.horariosOcupados = new EnumMap<Dia, List<Horario>>(Dia.class);
 //		Set<Curso> cursos = new HashSet<Curso>();
