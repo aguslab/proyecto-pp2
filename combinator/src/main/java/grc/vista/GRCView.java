@@ -250,7 +250,6 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			{
 				if (e.getValueIsAdjusting() == false)
 				{
-					DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
 					controller.seleccionActualRecomendacion(posElegida);
