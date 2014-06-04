@@ -194,15 +194,9 @@ public class GRCController
 	{
 		return this.modelo;
 	}
-
-	// public void setVista(GRCView vista)
-	// {
-	// this.vista = vista;
-	// }
-
+	
 	public void generarRecomendaciones()
 	{
-		// cambioPreferencias();
 		try
 		{
 			filtrarTurnos();
