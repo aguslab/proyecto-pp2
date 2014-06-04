@@ -3,6 +3,7 @@ package grc.controlador;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
 import grc.dominio.Horario;
+import grc.modelo.EstadoFiltros;
 import grc.modelo.GRCModelo;
 import grc.servicios.CriterioOrden;
 import grc.servicios.FiltroHorarios;
@@ -20,20 +21,14 @@ import javax.swing.table.DefaultTableModel;
 public class GRCControlador
 {
 	private GRCModelo modelo;
-	private boolean filtroManiana;
-	private boolean filtroTarde;
-	private boolean filtroNoche;
-	private boolean filtroPuedeEsperar;
+	private EstadoFiltros estadoFiltros;
 	private Map<String, CriterioOrden> criterios;
 
 	// TODO eliminar estados del controlador!!!
-	public GRCControlador(GRCModelo model, Map<String, CriterioOrden> criterios)
+	public GRCControlador(GRCModelo model, Map<String, CriterioOrden> criterios, EstadoFiltros estadoFiltros)
 	{
-		filtroManiana = true;
-		filtroTarde = true;
-		filtroNoche = true;
-		filtroPuedeEsperar = false;
 		this.modelo = model;
+		this.estadoFiltros = estadoFiltros;
 		this.criterios = criterios;
 	}
 
@@ -142,15 +137,15 @@ public class GRCControlador
 	{
 		List<Horario> horarios = new ArrayList<Horario>();
 
-		if (filtroManiana)
+		if (estadoFiltros.isFiltroMañana())
 		{
 			horarios.add(Horario.MAÑANA);
 		}
-		if (filtroTarde)
+		if (estadoFiltros.isFiltroTarde())
 		{
 			horarios.add(Horario.TARDE);
 		}
-		if (filtroNoche)
+		if (estadoFiltros.isFiltroNoche())
 		{
 			horarios.add(Horario.NOCHE);
 		}
@@ -160,7 +155,7 @@ public class GRCControlador
 				.getCursosDisponibles()));
 //		System.out.println("cantidad cursos: " + cursosFiltradosPorHorario.size());
 //		System.out.println("CANT RECOS ANTES: " + this.modelo.getRecomendaciones().size());
-		this.modelo.actualizarRecomendaciones(cursosFiltradosPorHorario, this.filtroPuedeEsperar);
+		this.modelo.actualizarRecomendaciones(cursosFiltradosPorHorario, this.estadoFiltros.isFiltroPuedeEsperar());
 //		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size());
 	}
 
@@ -182,33 +177,33 @@ public class GRCControlador
 
 	public void filtrarManiana(boolean fm)
 	{
-		this.filtroManiana = fm;
+		cambiarEstadoFiltroManiana(fm);
 		this.filtrarTurnos();
 	}
 
 	public void filtrarTarde(boolean ft)
 	{
-		this.filtroTarde = ft;
+		cambiarEstadoFiltroTarde(ft);
 		this.filtrarTurnos();
 	}
 
 	public void filtrarNoche(boolean fn)
 	{
-		this.filtroNoche = fn;
+		cambiarEstadoFiltroNoche(fn);
 		this.filtrarTurnos();
 	}
 
 	public void puedeEsperar(boolean puedeEsperarAhora)
 	{
 		boolean filtrar = false;
-		if (!this.filtroPuedeEsperar && puedeEsperarAhora)
+		if (!this.estadoFiltros.isFiltroPuedeEsperar() && puedeEsperarAhora)
 		{
 			filtrar = true;
-		} else if (this.filtroPuedeEsperar && !puedeEsperarAhora)
+		} else if (this.estadoFiltros.isFiltroPuedeEsperar() && !puedeEsperarAhora)
 		{
 			filtrar = false;
 		}
-		this.filtroPuedeEsperar = puedeEsperarAhora;
+		this.estadoFiltros.setFiltroPuedeEsperar(puedeEsperarAhora);
 		if (filtrar)
 		{
 			filtrarTurnos();
@@ -218,17 +213,17 @@ public class GRCControlador
 
 	public void cambiarEstadoFiltroManiana(boolean fm)
 	{
-		this.filtroManiana = fm;
+		this.estadoFiltros.setFiltroMañana(fm);
 	}
 
 	public void cambiarEstadoFiltroTarde(boolean ft)
 	{
-		this.filtroManiana = ft;
+		this.estadoFiltros.setFiltroTarde(ft);
 	}
 
 	public void cambiarEstadoFiltroNoche(boolean fn)
 	{
-		this.filtroNoche = fn;
+		this.estadoFiltros.setFiltroNoche(fn);
 	}
 
 }
