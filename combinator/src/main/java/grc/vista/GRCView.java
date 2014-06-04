@@ -16,7 +16,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 @SuppressWarnings("serial")
 public class GRCView extends JFrame implements Observer, ActionListener
@@ -134,10 +133,8 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			new Object[][] {
 			},
 			new String[] {
-				"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
 			}
 		));
-		tablaDias.getColumnModel().getColumn(0).setPreferredWidth(15);
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -234,13 +231,19 @@ public class GRCView extends JFrame implements Observer, ActionListener
 		cbOrdenador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				String recomendacionElegida = (String) listaRecomendaciones.getSelectedValue();
 				controller.ordenarRecomendaciones((String)cbOrdenador.getSelectedItem());
+				listaRecomendaciones.setSelectedValue(recomendacionElegida, true);
 			}
 		});
 		cbOrdenador.setModel(new DefaultComboBoxModel(ordenElegido.toArray()));
 		
-		cbOrdenador.setBounds(124, 214, 125, 20);
+		cbOrdenador.setBounds(253, 214, 125, 20);
 		panelRecomendaciones.add(cbOrdenador);
+		
+		JLabel lblOrdenarPor = new JLabel("Ordenar por:");
+		lblOrdenarPor.setBounds(175, 217, 74, 14);
+		panelRecomendaciones.add(lblOrdenarPor);
 		listaRecomendaciones.addListSelectionListener(new ListSelectionListener()
 		{
 			public void valueChanged(ListSelectionEvent e)
@@ -250,10 +253,10 @@ public class GRCView extends JFrame implements Observer, ActionListener
 					DefaultTableModel tablaTempDias = (DefaultTableModel) tablaDias.getModel();
 					int posElegida = listaRecomendaciones.getSelectedIndex();
 					posElegida = posElegida != -1 ? posElegida : 0;
-//					iniciarValores(tablaTempDias);
 					controller.seleccionActualRecomendacion(posElegida);
 				}
-			}																										});
+			}
+		});
 	}
 	
 	public void showVista()
@@ -346,6 +349,7 @@ public class GRCView extends JFrame implements Observer, ActionListener
 			try
 			{
 				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion)arg));
+				tablaDias.getColumnModel().getColumn(0).setPreferredWidth(5);
 			} catch (Exception e1)
 			{
 				e1.printStackTrace();
@@ -378,22 +382,4 @@ public class GRCView extends JFrame implements Observer, ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 	}
-	
-//	public void iniciarValores(DefaultTableModel tablaDias)
-//	{
-//		tablaDias.setRowCount(14);
-//		int hora1 = 8;
-//		int hora2 = 9;
-//		System.out.println("VIEWW" + tablaDias.getRowCount());
-//		for (int i = 0; i < tablaDias.getRowCount(); i++)
-//		{
-//			tablaDias.setValueAt(hora1 + " a " + hora2,i,0);
-//		      for(int j = 1; j < tablaDias.getColumnCount(); j++) 
-//		      {
-//		    	  tablaDias.setValueAt("", i, j);
-//		      }
-//		      hora1++;
-//		      hora2++;
-//		}
-//	}
 }
