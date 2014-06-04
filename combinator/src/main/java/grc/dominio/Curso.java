@@ -19,7 +19,6 @@ public class Curso implements Serializable
 	@Id
 	private int id;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	// TODO: cambiar a manyToOne cuando hayas mas carreras?
 	private Materia materia;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Horario> horarios;
