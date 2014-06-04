@@ -42,32 +42,8 @@ private static void generarAltas() throws Exception
 		a.altaCriterioOrden();
 	}
 
-
-
-
-public static void printRecomendaciones(List<Recomendacion> recos)
-	{
-	System.out.println();
-		int i = 1;
-		for (Recomendacion r : recos)
-		{
-			System.out.println("Recomendacion :"+i);
-			i++;
-			for (Curso c : r.getRecomendacion())
-			{
-				System.out.println("Curso: " + c.getMateria().getNombre());
-				for (Horario h : c.getHorario())
-				{
-					System.out.println(h.getDia() + ": de " + h.getHoraInicio() + " a "
-							+ h.getHoraFin() + "hs");
-				}
-			}
-		}
-	}
-
 	public static void main(String[] args) throws Exception
 	{
-
 		String alumnoNombre = "cualquierCosa";
 		Carrera licSistemas = null;
 		PlanEstudio planEstudio = null;
@@ -76,7 +52,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 		Universidad universidad = new Universidad();
 		try
 		{
-//			 generarAltas();
+		 generarAltas();
 		} catch (Exception e)
 		{
 			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
@@ -100,7 +76,7 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 			System.out.println("nombre: " + c.getNombreCurso());
 		}
 		
-		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(0);
+		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(1);
 		final CriterioOrden criterioOrdenPorPoscorrelativas = new CriterioOrdenPorPoscorrelativas(planEstudio);
 		final List<CriterioOrden> co = new ArrayList<CriterioOrden>();
 		co.add(criterioOrdenPorPoscorrelativas);
@@ -114,7 +90,6 @@ public static void printRecomendaciones(List<Recomendacion> recos)
 
 		long timeOut = 10;
 		GRCModel model = new GRCModel(cursosDisponibles, planEstudio, criterioOrdenPorMaterias, timeOut);
-		
 		GRCController controller = new GRCController(model, criterios);
 		GRCView vista = new GRCView(controller, criterios.keySet());
 		GRCViewText viewText = new GRCViewText(controller);
