@@ -8,6 +8,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import grc.dao.CriterioOrdenDAO;
+import grc.dao.CursoDAO;
+import grc.dao.HorarioDAO;
+import grc.dao.MateriaAprobadaDAO;
+import grc.dao.MateriaDAO;
+import grc.dao.PlanEstudioDAO;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
@@ -429,6 +435,90 @@ public class Persistor
 		maIntroALaMate = new MateriaAprobada(introALaMatematica, 9, fecha);
 		
 		criterioOrden = new CriterioOrdenPorMaterias(true);
+	}
+
+	public void altaMaterias() throws Exception
+	{
+		// MATERIAS
+		MateriaDAO.getInstancia().alta(prog1);
+		MateriaDAO.getInstancia().alta(prog2);
+		MateriaDAO.getInstancia().alta(prog3);
+		MateriaDAO.getInstancia().alta(ingles1);
+		MateriaDAO.getInstancia().alta(ingles2);
+		MateriaDAO.getInstancia().alta(ingles3);
+		MateriaDAO.getInstancia().alta(ip);
+		MateriaDAO.getInstancia().alta(introALaMatematica);
+		MateriaDAO.getInstancia().alta(lecto);
+		MateriaDAO.getInstancia().alta(calculo1);
+		MateriaDAO.getInstancia().alta(psec);
+		MateriaDAO.getInstancia().alta(tallerUtilitarios);
+		MateriaDAO.getInstancia().alta(logica);
+		MateriaDAO.getInstancia().alta(orga1);
+		MateriaDAO.getInstancia().alta(orga2);
+		MateriaDAO.getInstancia().alta(algebraLineal);
+	}
+
+	public void altaHorarios() throws Exception
+	{
+		HorarioDAO.getInstancia().alta(lun18a22);
+		HorarioDAO.getInstancia().alta(mar18a22);
+		HorarioDAO.getInstancia().alta(jue18a20);
+		HorarioDAO.getInstancia().alta(vier18a22);
+		HorarioDAO.getInstancia().alta(lun18a20);
+		HorarioDAO.getInstancia().alta(mar18a20);
+		HorarioDAO.getInstancia().alta(mier18a20);
+		HorarioDAO.getInstancia().alta(mier20a22);
+		HorarioDAO.getInstancia().alta(vier20a22);
+		HorarioDAO.getInstancia().alta(sab08a12);
+		HorarioDAO.getInstancia().alta(lun08a12);
+		HorarioDAO.getInstancia().alta(mier08a12);
+		HorarioDAO.getInstancia().alta(mar15a17);
+		HorarioDAO.getInstancia().alta(mier15a17);
+		HorarioDAO.getInstancia().alta(lun15a17);
+		HorarioDAO.getInstancia().alta(jue15a17);
+		HorarioDAO.getInstancia().alta(sab10a12);
+	}
+
+	public void altaCursos() throws Exception
+	{
+		// CURSOS
+		CursoDAO.getInstancia().alta(curIngles1);
+		CursoDAO.getInstancia().alta(curIngles2);
+		CursoDAO.getInstancia().alta(curIngles2_c2);
+		CursoDAO.getInstancia().alta(curIngles3);
+		CursoDAO.getInstancia().alta(curProg1);
+		CursoDAO.getInstancia().alta(curProg2);
+		CursoDAO.getInstancia().alta(curProg3);
+		CursoDAO.getInstancia().alta(curTallerLecto);
+		CursoDAO.getInstancia().alta(curIntroALaMat);
+		CursoDAO.getInstancia().alta(curCalculo1);
+		CursoDAO.getInstancia().alta(curPsec);
+		CursoDAO.getInstancia().alta(curTallerUtilitarios);
+		CursoDAO.getInstancia().alta(curLogYTeoDeNum);
+		CursoDAO.getInstancia().alta(curOrga1);
+		CursoDAO.getInstancia().alta(curOrga1_c2);
+		CursoDAO.getInstancia().alta(curOrga2);
+	}
+
+	public void altaMateriasAprobadas() throws Exception
+	{
+		// MATERIAS APROBADAS
+		MateriaAprobadaDAO.getInstancia().alta(maIngles1);
+		MateriaAprobadaDAO.getInstancia().alta(maIP);
+		MateriaAprobadaDAO.getInstancia().alta(maProg1);
+		MateriaAprobadaDAO.getInstancia().alta(maIntroALaMate);
+	}
+
+	public void altaPlanEstudio() throws Exception
+	{
+		// PLAN ESTUDIOS
+		PlanEstudioDAO.getInstancia().alta(planEstudio);
+	}
+
+	public void altaCriterioOrden() throws Exception
+	{
+		CriterioOrdenDAO.getInstancia().alta(criterioOrden);
+		
 	}
 
 }

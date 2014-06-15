@@ -27,6 +27,20 @@ import grc.vista.GRCVistaTexto;
 public class Inicializador
 {
 
+private static void generarAltas() throws Exception
+	{
+
+		Persistor a = new Persistor();
+		a.init();
+		// ALTAAAAAAAAAAAAAA
+		a.altaMaterias();
+		//a.altaHorarios(); // NO alta!!!
+		a.altaCursos();
+		a.altaMateriasAprobadas();
+		a.altaPlanEstudio();
+		a.altaCriterioOrden();
+	}
+
 	public static void main(String[] args) throws Exception
 	{
 		String alumnoNombre = "cualquierCosa";
@@ -35,6 +49,15 @@ public class Inicializador
 		Set<Materia> matAprobadas = null;
 		Set<Curso> cursosDisponibles = null;
 		Universidad universidad = new Universidad();
+		try
+		{
+//			 generarAltas();
+		} catch (Exception e)
+		{
+			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
+			e.printStackTrace();
+		}
+		
 		licSistemas = universidad.getCarrerraFromAlumno(alumnoNombre);
 		
 		cursosDisponibles = universidad.getCursosFromCarrera(licSistemas);
@@ -47,6 +70,11 @@ public class Inicializador
 		filtro = new FiltroCorrelativas(matAprobadas, planEstudio);
 		cursosDisponibles = filtro.filtrar(cursosDisponibles);
 
+//		for (Curso c : cursosDisponibles)
+//		{
+//			System.out.println("nombre: " + c.getNombreCurso());
+//		}
+		
 		final CriterioOrden criterioOrdenPorMaterias = CriterioOrdenDAO.getInstancia().getCriterioOrden(1);
 		final CriterioOrden criterioOrdenPorPoscorrelativas = new CriterioOrdenPorPoscorrelativas(planEstudio);
 		final List<CriterioOrden> co = new ArrayList<CriterioOrden>();
