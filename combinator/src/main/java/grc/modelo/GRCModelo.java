@@ -4,6 +4,7 @@ import grc.dominio.Curso;
 import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
 import grc.servicios.Recomendacion;
+import grc.servicios.TruncadorNombres;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,7 +90,8 @@ public class GRCModelo extends Observable
 			String recoParaLista = "";
 			for (Curso c : r.getRecomendacion())
 			{
-				recoParaLista += " " + c.getNombreCurso();
+				TruncadorNombres truncador = new TruncadorNombres(c.getNombreCurso());
+				recoParaLista += " " + truncador.getNombreTruncado();
 				for (int j = 0; j < c.getHorario().size(); j++)
 				{
 					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
