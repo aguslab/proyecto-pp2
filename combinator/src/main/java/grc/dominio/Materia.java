@@ -16,7 +16,8 @@ public class Materia implements Serializable
 	private int id;
 	@Column(nullable = false)
 	private String nombre;
-
+	@Column(nullable = true)
+	private String apodo;
 	public Materia() 
 	{
 
@@ -40,6 +41,14 @@ public class Materia implements Serializable
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public String getApodo() {
+		return apodo;
+	}
+
+	public void setApodo(String nombre) {
+		this.apodo = nombre;
 	}
 
 	@Override
