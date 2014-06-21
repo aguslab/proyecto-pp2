@@ -22,8 +22,9 @@ public class Materia implements Serializable
 
 	}
 
-	public Materia(String nombre) {
+	public Materia(String nombre, String apodo) {
 		this.nombre = nombre;
+		this.apodo = apodo;
 	}
 
 	public int getId() {
