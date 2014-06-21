@@ -130,14 +130,14 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
 
-		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
 		tablaDias.setModel(new DefaultTableModel(new Object[][]{}, new String[]{}));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
+		tablaDias.setDefaultRenderer (Object.class, new celdaPersonalizada());
+		
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
 		panelRecomendaciones.add(lblHorarios);
@@ -358,7 +358,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			try
 			{
 				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion) arg));
-				// tablaDias.getColumnModel().getColumn(0).setPreferredWidth(5);
 			} catch (Exception e1)
 			{
 				e1.printStackTrace();
