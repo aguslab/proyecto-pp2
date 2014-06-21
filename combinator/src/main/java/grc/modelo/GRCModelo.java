@@ -91,7 +91,7 @@ public class GRCModelo extends Observable
 			{
 				String nombreMateria = c.getNombreCurso();
 				String apodoMateria = c.getApodoCurso();
-				if(!apodoMateria.contains("null"))
+				if(!c.getMateria().getApodo().equals(""))
 					recoParaLista += apodoMateria;
 				else
 					recoParaLista += nombreMateria;
