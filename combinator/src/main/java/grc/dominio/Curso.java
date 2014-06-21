@@ -88,11 +88,5 @@ public class Curso implements Serializable
 	{
 		this.comision = comision;
 	}
-	
-//	public List<Carrera> getCarreras()
-//	{
-//		return carreras;
-//	}
-//
 
 }
