@@ -9,7 +9,6 @@ import grc.servicios.CriterioOrden;
 import grc.servicios.FiltroHorarios;
 import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
-import grc.servicios.TruncadorNombres;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,8 +45,11 @@ public class GRCControlador
 		Recomendacion r = recomendacion;
 		for (Curso c : r.getRecomendacion())
 		{
-			TruncadorNombres truncador = new TruncadorNombres(c.getNombreCurso());
-			nombreMateria = truncador.getNombreTruncado();
+			if(!c.getApodoCurso().contains("null"))
+				nombreMateria = c.getApodoCurso();
+			else
+				nombreMateria = c.getNombreCurso();
+			
 			for (Horario horario : c.getHorario())
 			{
 				Dia dia = horario.getDia();
