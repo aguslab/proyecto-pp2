@@ -74,6 +74,11 @@ public class Curso implements Serializable
 		return this.materia.getNombre() + " com-" + this.comision;
 	}
 
+	public String getApodoCurso()
+	{
+		return this.materia.getApodo() + " com-" + this.comision;
+	}
+	
 	public String getComision()
 	{
 		return comision;
