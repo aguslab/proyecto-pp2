@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,8 +21,8 @@ public class Curso implements Serializable
 	private Materia materia;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Horario> horarios;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Carrera> carreras;
+//	@ManyToOne(cascade = CascadeType.ALL)
+	private Carrera carrera;
 	private String comision;
 
 	public Curso()
@@ -31,9 +30,9 @@ public class Curso implements Serializable
 
 	}
 
-	public Curso(List<Carrera> carreras, Materia materia, List<Horario> horario, String comision)
+	public Curso(Carrera carreras, Materia materia, List<Horario> horario, String comision)
 	{
-		this.carreras = carreras;
+		this.carrera = carreras;
 		this.materia = materia;
 		this.horarios = horario;
 		this.comision = comision;
@@ -87,6 +86,10 @@ public class Curso implements Serializable
 	public void setComision(String comision)
 	{
 		this.comision = comision;
+	}
+	
+	public Carrera getCarrera(){
+		return this.carrera;
 	}
 
 }
