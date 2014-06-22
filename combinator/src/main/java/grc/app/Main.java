@@ -28,12 +28,10 @@ public class Main
 		logger.info("Corremos la aplicación.");
 		try
 		{
-			generarAltas();
+//			generarAltas();
 		} catch (Exception e)
 		{
-			//System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
 			logger.error("Error al generar las altas.",e);
-			//e.printStackTrace();
 		}
 		String alumnoNombre = "Gokú";
 
@@ -48,7 +46,6 @@ public class Main
 			materiasAprobadas = getMateriasAprobadasFromAlumno(alumnoNombre);
 		} catch (Exception e)
 		{
-			//e.printStackTrace();
 			logger.error("Error al obtener materias aprobadas del alumno.",e);
 		}
 
@@ -59,7 +56,6 @@ public class Main
 		} catch (Exception e)
 		{
 			logger.error("Error al obtener los criterios de ordenamiento.",e);
-			//e.printStackTrace();
 		}
 		
 		long timeOut = 5;
@@ -114,7 +110,6 @@ public class Main
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Programación I"));
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Introducción a la Matemática"));
 
-		logger.info("Obtenemos las materias aprobadas del alumno.");
 		return materiasAprobadas;
 	}
 
@@ -126,6 +121,5 @@ public class Main
 		a.altaCursos();
 		a.altaPlanEstudio();
 		a.altaCriterioOrden();
-		logger.info("Damos de alta las instancias.");
 	}
 }
