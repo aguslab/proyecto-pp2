@@ -18,9 +18,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 @SuppressWarnings("serial")
 public class GRCVista extends JFrame implements Observer, ActionListener
 {
+	static Logger logger = Logger.getLogger(GRCVista.class);
 	private final GRCControlador controller;
 	private JDesktopPane escritorio = new JDesktopPane();
 	private JMenuBar barra;
@@ -276,6 +279,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 
 			if (reply == JOptionPane.YES_OPTION)
 			{
+				logger.info("Salimos de GRC :(" );
 				setVisible(false);
 				dispose();
 				System.exit(0);
