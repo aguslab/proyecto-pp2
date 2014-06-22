@@ -57,12 +57,10 @@ public class GRCModeloTest
 		h3.add(new Horario(Dia.MARTES, 20, 22));
 		h3.add(new Horario(Dia.MIERCOLES, 20, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
-		List<Carrera> ca = new ArrayList<Carrera>();
-		ca.add(c);
 		c.setId(0);
-		Curso c1 = new Curso(ca, mn, h, "01");
-		Curso c2 = new Curso(ca, m, h2, "01");
-		Curso c3 = new Curso(ca, mt, h3, "01");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		Curso c3 = new Curso(c, mt, h3, "01");
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		cursosDisp.add(c3);
@@ -94,10 +92,8 @@ public class GRCModeloTest
 		h2.add(new Horario(Dia.JUEVES, 18, 20));
 		h2.add(new Horario(Dia.MIERCOLES, 20, 22));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
-		List<Carrera> ca = new ArrayList<Carrera>();
-		ca.add(c);
-		Curso c1 = new Curso(ca, mn, h, "01");
-		Curso c2 = new Curso(ca, m, h2, "01");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		

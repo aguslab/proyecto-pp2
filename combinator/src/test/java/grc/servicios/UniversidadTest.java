@@ -31,39 +31,27 @@ public class UniversidadTest
 
 	public void testUniversidadGetCarrera()
 	{
-		Universidad uni = new Universidad();
-		assertNotNull(uni.getCarrerraFromAlumno("goku"));
+		UNGS uni = new UNGS();
+		assertNotNull(uni.getCarreraFromAlumno("goku"));
 	}
 	
 	public void testUniversidadGetCursos()
 	{
-		Universidad uni = new Universidad();
-		Carrera c = new Carrera("ABC");
-		assertNotNull(uni.getCursosFromCarrera(c));
-	}
-	
-	public void testUniversidadGetCursosFail()
-	{
-		Universidad uni = new Universidad();
-		assertNull(uni.getCursosFromCarrera(null));
+		UNGS uni = new UNGS();
+		assertNotNull(uni.getCursos());
 	}
 	
 	public void testUniversidadGetPlanEstudio() throws Exception
 	{
-		Universidad uni = new Universidad();
+		UNGS uni = new UNGS();
 		Carrera c = new Carrera("A1");
 		assertNotNull(uni.getPlanEstudioFromCarrera(c));
 	}
 	
 	public void testUniversidadGetPlanEstudioFail() throws Exception
 	{
-		Universidad uni = new Universidad();
+		UNGS uni = new UNGS();
 		assertNull(uni.getPlanEstudioFromCarrera(null));
 	}
 	
-	public void testUniversidadGetMateriasAprobadas() throws Exception
-	{
-		Universidad uni = new Universidad();
-		assertNotNull(uni.getMateriasAprobadasFromAlumno("Gohan"));
-	}
 }

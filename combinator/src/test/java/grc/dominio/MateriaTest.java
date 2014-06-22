@@ -1,10 +1,6 @@
 package grc.dominio;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import grc.dominio.Materia;
-import grc.dominio.MateriaAprobada;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -77,9 +73,8 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
-		Timestamp f = new Timestamp(new Date().getTime());
-		MateriaAprobada M = new MateriaAprobada(m, 8, f);
-		assertFalse(m.equals(M));
+		Curso C = new Curso();
+		assertFalse(m.equals(C));
 	}
 
 	public void testMateriaEqualDistintoId()
