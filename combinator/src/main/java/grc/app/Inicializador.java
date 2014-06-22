@@ -3,6 +3,8 @@ package grc.app;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import grc.controlador.GRCControlador;
 import grc.dominio.Curso;
 import grc.dominio.Materia;
@@ -17,7 +19,7 @@ import grc.vista.GRCVista;
 
 public class Inicializador
 {
-
+	static Logger logger = Logger.getLogger(Inicializador.class);
 	public void IniciarApp(Set<Materia> materiasAprobadas, Set<Curso> cursosDisponibles, PlanEstudio planEstudio, Map<String, CriterioOrden> criteriosOrdenamiento, long timeOut)
 	{
 		IFiltro filtro = new FiltroMateriasAprobadas(materiasAprobadas);
@@ -37,6 +39,7 @@ public class Inicializador
 		vista.showVista();
 //		viewText.start();
 		model.actualizarRecomendaciones(cursosDisponibles, true);
+		logger.info("Terminamos de cargar datos limpios(?).");
 	}
 
 }
