@@ -16,6 +16,7 @@ import grc.servicios.FiltroCorrelativas;
 import grc.servicios.FiltroMateriasAprobadas;
 import grc.servicios.IFiltro;
 import grc.vista.GRCVista;
+import grc.vista.GRCVistaTexto;
 
 public class Inicializador
 {
@@ -31,13 +32,13 @@ public class Inicializador
 		EstadoFiltros estadoFiltros = new EstadoFiltros(true, true, true, true);
 		GRCControlador controlador = new GRCControlador(model, criteriosOrdenamiento, estadoFiltros);
 		GRCVista vista = new GRCVista(controlador, criteriosOrdenamiento.keySet());
-//		GRCVistaTexto viewText = new GRCVistaTexto(controller, model, vista);
+		GRCVistaTexto viewTexto = new GRCVistaTexto(controlador, model, vista);
 		model.addObserver(vista);
-//		model.addObserver(viewText);
+		model.addObserver(viewTexto);
 		estadoFiltros.addObserver(vista);
-//		estadoFiltros.addObserver(viewText);
+		estadoFiltros.addObserver(viewTexto);
 		vista.showVista();
-//		viewText.start();
+		viewTexto.start();
 		model.actualizarRecomendaciones(cursosDisponibles, true);
 		logger.info("Terminamos de cargar datos limpios(?).");
 	}
