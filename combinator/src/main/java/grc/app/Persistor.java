@@ -1,8 +1,6 @@
 package grc.app;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Set;
 import grc.dao.CriterioOrdenDAO;
 import grc.dao.CursoDAO;
 import grc.dao.HorarioDAO;
-import grc.dao.MateriaAprobadaDAO;
 import grc.dao.MateriaDAO;
 import grc.dao.PlanEstudioDAO;
 import grc.dominio.Carrera;
@@ -19,7 +16,6 @@ import grc.dominio.Curso;
 import grc.dominio.Dia;
 import grc.dominio.Horario;
 import grc.dominio.Materia;
-import grc.dominio.MateriaAprobada;
 import grc.dominio.PlanEstudio;
 import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorMaterias;
@@ -65,12 +61,6 @@ public class Persistor
 	Materia ingles1;
 	Materia ingles2;
 	Materia ingles3;
-
-	// MATERIAS APROBADAS
-	MateriaAprobada maIngles1;
-	MateriaAprobada maIP;
-	MateriaAprobada maProg1;
-	MateriaAprobada maIntroALaMate;
 
 	// //////////Horarios
 	Horario lun18a22;
@@ -225,69 +215,67 @@ public class Persistor
 
 		// /////////CARRERA
 		licenSistemas = new Carrera("Licenciatura en Sistemas");
-		List<Carrera> carreras = new ArrayList<Carrera>();
-		carreras.add(licenSistemas);
 
 		// ///////////CURSOS
 		List<Horario> listHor = new ArrayList<Horario>();
 		listHor.add(lun18a22);
 		listHor.add(mar18a22);
-		curIngles1 = new Curso(carreras, ingles1, listHor, "01");
-		curIngles3 = new Curso(carreras, ingles3, listHor, "01");
+		curIngles1 = new Curso(licenSistemas, ingles1, listHor, "01");
+		curIngles3 = new Curso(licenSistemas, ingles3, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(sab08a12);
-		curIngles2 = new Curso(carreras, ingles2, listHor, "01");
+		curIngles2 = new Curso(licenSistemas, ingles2, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(sab08a12);
-		curIngles2_c2 = new Curso(carreras, ingles2, listHor, "02");
+		curIngles2_c2 = new Curso(licenSistemas, ingles2, listHor, "02");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun18a20);
 		listHor.add(mar18a20);
 		listHor.add(mier18a20);
-		curProg1 = new Curso(carreras, prog1, listHor, "01");
+		curProg1 = new Curso(licenSistemas, prog1, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar18a22);
 		listHor.add(vier18a22);
-		curProg2 = new Curso(carreras, prog2, listHor, "01");
-		curProg3 = new Curso(carreras, prog3, listHor, "01");
+		curProg2 = new Curso(licenSistemas, prog2, listHor, "01");
+		curProg3 = new Curso(licenSistemas, prog3, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
-		curTallerLecto = new Curso(carreras, lecto, listHor, "01");
+		curTallerLecto = new Curso(licenSistemas, lecto, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier18a20);
 		listHor.add(vier18a22);
-		curIntroALaMat = new Curso(carreras, introALaMatematica, listHor, "01");
+		curIntroALaMat = new Curso(licenSistemas, introALaMatematica, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mier20a22);
 		listHor.add(vier20a22);
-		curCalculo1 = new Curso(carreras, calculo1, listHor, "01");
+		curCalculo1 = new Curso(licenSistemas, calculo1, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun08a12);
 		listHor.add(mier08a12);
-		curPsec = new Curso(carreras, psec, listHor, "01");
+		curPsec = new Curso(licenSistemas, psec, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(mar15a17);
-		curTallerUtilitarios= new Curso(carreras, tallerUtilitarios, listHor, "01");
+		curTallerUtilitarios= new Curso(licenSistemas, tallerUtilitarios, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun15a17);
 		listHor.add(mier15a17);
-		curLogYTeoDeNum= new Curso(carreras, logica, listHor, "01");
+		curLogYTeoDeNum= new Curso(licenSistemas, logica, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue15a17);
 		listHor.add(sab10a12);
-		curOrga1= new Curso(carreras, orga1, listHor, "01");
+		curOrga1= new Curso(licenSistemas, orga1, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(lun18a20);
 		listHor.add(jue18a22);
-		curOrga1_c2= new Curso(carreras, orga1, listHor, "02");
+		curOrga1_c2= new Curso(licenSistemas, orga1, listHor, "02");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue18a20);
 		listHor.add(vier18a22);
-		curOrga2 = new Curso(carreras, orga2, listHor, "01");
+		curOrga2 = new Curso(licenSistemas, orga2, listHor, "01");
 		listHor = new ArrayList<Horario>();
 		listHor.add(jue18a20);
 		listHor.add(lun18a20);
-		curAlgebraLineal = new Curso(carreras, algebraLineal, listHor, "01");
+		curAlgebraLineal = new Curso(licenSistemas, algebraLineal, listHor, "01");
 		
 		
 		
@@ -428,13 +416,6 @@ public class Persistor
 
 		planEstudio = new PlanEstudio(licenSistemas, correlativas);
 
-		// MATERIAS APROBADAS
-		Timestamp fecha = new Timestamp(new Date().getTime());
-		maIngles1 = new MateriaAprobada(ingles1, 7, fecha);
-		maIP = new MateriaAprobada(ip, 10, fecha);
-		maProg1 = new MateriaAprobada(prog1, 9, fecha);
-		maIntroALaMate = new MateriaAprobada(introALaMatematica, 9, fecha);
-		
 		criterioOrden = new CriterioOrdenPorMaterias(true);
 	}
 
@@ -499,15 +480,6 @@ public class Persistor
 		CursoDAO.getInstancia().alta(curOrga1);
 		CursoDAO.getInstancia().alta(curOrga1_c2);
 		CursoDAO.getInstancia().alta(curOrga2);
-	}
-
-	public void altaMateriasAprobadas() throws Exception
-	{
-		// MATERIAS APROBADAS
-		MateriaAprobadaDAO.getInstancia().alta(maIngles1);
-		MateriaAprobadaDAO.getInstancia().alta(maIP);
-		MateriaAprobadaDAO.getInstancia().alta(maProg1);
-		MateriaAprobadaDAO.getInstancia().alta(maIntroALaMate);
 	}
 
 	public void altaPlanEstudio() throws Exception
