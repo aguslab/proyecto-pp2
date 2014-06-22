@@ -58,12 +58,12 @@ public class Main
 			criterios = getCriteriosOrdenamiento(planEstudio);
 		} catch (Exception e)
 		{
-			logger.error("Error al obtener materias aprobadas del alumno.",e);
+			logger.error("Error al obtener los criterios de ordenamiento.",e);
 			//e.printStackTrace();
 		}
 		
 		long timeOut = 5;
-		logger.info("Terminamos de cargar datos dirty.");
+		logger.info("Terminamos de cargar los datos dirty.");
 		Inicializador initApp = new Inicializador();
 		initApp.IniciarApp(materiasAprobadas, cursosDisponibles, planEstudio, criterios, timeOut);
 	}
@@ -128,5 +128,4 @@ public class Main
 		a.altaCriterioOrden();
 		logger.info("Damos de alta las instancias.");
 	}
-
 }
