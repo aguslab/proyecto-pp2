@@ -37,7 +37,6 @@ public class GRCControlador
 		String[] nombreColumnas = {"","Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 		DefaultTableModel tablaDias = new DefaultTableModel(null, nombreColumnas);
 		iniciarValores(tablaDias);
-		int contadorPosicion = 0;
 		String nombreMateria = "";
 		List<Recomendacion> recomendaciones = this.getModelo().getRecomendaciones();
 		if (recomendaciones.isEmpty())
@@ -45,13 +44,14 @@ public class GRCControlador
 		Recomendacion r = recomendacion;
 		for (Curso c : r.getRecomendacion())
 		{
-			if(!c.getMateria().getApodo().equals(""))
-				nombreMateria = c.getApodoCurso();
-			else
+			if(c.getMateria().getApodo().equals(""))
 				nombreMateria = c.getNombreCurso();
+			else
+				nombreMateria = c.getApodoCurso();
 			
 			for (Horario horario : c.getHorario())
 			{
+				int contadorPosicion = 0;
 				Dia dia = horario.getDia();
 				int horaInicio = horario.getHoraInicio();
 				int horaFin = horario.getHoraFin();
@@ -65,7 +65,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 1);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				} 
 				else if (dia.name().equalsIgnoreCase("Martes"))
 				{
@@ -77,7 +76,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 2);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				} 
 				else if (dia.name().equalsIgnoreCase("Miercoles"))
 				{
@@ -89,7 +87,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 3);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				} 
 				else if (dia.name().equalsIgnoreCase("Jueves"))
 				{
@@ -101,7 +98,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 4);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				} 
 				else if (dia.name().equalsIgnoreCase("Viernes"))
 				{
@@ -113,7 +109,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 5);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				} 
 				else if (dia.name().equalsIgnoreCase("Sabado"))
 				{
@@ -125,7 +120,6 @@ public class GRCControlador
 							tablaDias.setValueAt(" ", i - 8, 6);
 						contadorPosicion++;
 					}
-					contadorPosicion = 0;
 				}
 			}
 		}
