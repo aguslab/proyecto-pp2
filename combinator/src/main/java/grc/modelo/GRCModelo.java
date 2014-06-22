@@ -60,9 +60,9 @@ public class GRCModelo extends Observable
 		this.notifyObservers(recomendacionActual);
 	}
 
-	public void actualizarRecomendaciones(Set<Curso> cursos, boolean puedeEsperar)
+	public void actualizarRecomendaciones(Set<Curso> cursosDisponibles, boolean puedeEsperar)
 	{
-		List<Curso> cursosFiltrados = new ArrayList<Curso>(cursos);
+		List<Curso> cursosFiltrados = new ArrayList<Curso>(cursosDisponibles);
 		GeneradorRecomendaciones generadorRecom = new GeneradorRecomendaciones(timeOut,
 				puedeEsperar);
 		this.recomendaciones = generadorRecom.generarRecomendaciones(cursosFiltrados);
