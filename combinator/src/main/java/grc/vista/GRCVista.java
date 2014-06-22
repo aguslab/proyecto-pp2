@@ -46,7 +46,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 	private boolean ocultarme;
 	
 
-	public GRCVista(GRCControlador controlador, Set<String> ordenElegido) throws Exception
+	public GRCVista(GRCControlador controlador, Set<String> ordenElegido)
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
