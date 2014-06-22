@@ -19,9 +19,6 @@ public class RecomendacionParcial
 
 	public RecomendacionParcial()
 	{
-//		this.cursos = new HashSet<Curso>();
-//		this.horariosOcupados = new EnumMap<Dia, List<Horario>>(Dia.class);
-//		Set<Curso> cursos = new HashSet<Curso>();
 		this (new HashSet<Curso>());
 	}
 
