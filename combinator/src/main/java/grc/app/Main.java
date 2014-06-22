@@ -18,18 +18,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class Main
 {
-
+	static Logger logger = Logger.getLogger(Main.class);
 	public static void main(String[] args)
 	{
+		logger.info("Corremos la aplicación.");
 		try
 		{
 			generarAltas();
 		} catch (Exception e)
 		{
-			System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
-			e.printStackTrace();
+			//System.out.println("¡¡¡PROBLEMA AL GENERAR ALTAS!!!");
+			logger.error("Error al generar las altas.",e);
+			//e.printStackTrace();
 		}
 		String alumnoNombre = "Gokú";
 
@@ -44,7 +48,8 @@ public class Main
 			materiasAprobadas = getMateriasAprobadasFromAlumno(alumnoNombre);
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error("Error al obtener materias aprobadas del alumno.",e);
 		}
 
 		Map<String, CriterioOrden> criterios = null;
@@ -53,14 +58,14 @@ public class Main
 			criterios = getCriteriosOrdenamiento(planEstudio);
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.error("Error al obtener materias aprobadas del alumno.",e);
+			//e.printStackTrace();
 		}
 		
-		long timeOut = 10;
-		
+		long timeOut = 5;
+		logger.info("Terminamos de cargar datos dirty.");
 		Inicializador initApp = new Inicializador();
 		initApp.IniciarApp(materiasAprobadas, cursosDisponibles, planEstudio, criterios, timeOut);
-		
 	}
 
 	private static Map<String, CriterioOrden> getCriteriosOrdenamiento(PlanEstudio planEstudio) throws Exception
@@ -79,7 +84,8 @@ public class Main
 		criterios.put("Materias", criterioOrdenPorMaterias);
 		criterios.put("Poscorrelativas", criterioOrdenPorPoscorrelativas);
 		criterios.put("Ambos", criterioOrdenSecuenciales);
-		
+
+		logger.info("Obtenemos criterio de ordenamiento.");
 		return criterios;
 	}
 
@@ -93,7 +99,7 @@ public class Main
 				cursosDeCarrera.add(c);
 			}
 		}
-
+		logger.info("Obtenemos los cursos disponibles de esa carrera.");
 		return cursosDeCarrera;
 	}
 
@@ -108,6 +114,7 @@ public class Main
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Programación I"));
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Introducción a la Matemática"));
 
+		logger.info("Obtenemos las materias aprobadas del alumno.");
 		return materiasAprobadas;
 	}
 
@@ -119,6 +126,7 @@ public class Main
 		a.altaCursos();
 		a.altaPlanEstudio();
 		a.altaCriterioOrden();
+		logger.info("Damos de alta las instancias.");
 	}
 
 }
