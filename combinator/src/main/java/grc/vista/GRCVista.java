@@ -371,7 +371,11 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		DefaultListModel modeloList = new DefaultListModel();
 		ArrayList<String> recomendaciones = model.getListaRecomendacionesSugeridas();
 		if(recomendaciones.isEmpty())
+		{
 			recomendaciones.add("No hay recomendaciones disponibles para usted");
+			Recomendacion recoVacia = new Recomendacion(null);
+			tablaDias.setModel(controller.cambiarTablaDias(recoVacia));
+		}
 		for (int i = 0; i < recomendaciones.size(); i++)
 		{
 			modeloList.addElement(recomendaciones.get(i));
