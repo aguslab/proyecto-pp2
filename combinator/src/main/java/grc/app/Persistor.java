@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import grc.dao.CriterioOrdenDAO;
 import grc.dao.CursoDAO;
 import grc.dao.HorarioDAO;
@@ -22,7 +24,7 @@ import grc.servicios.CriterioOrdenPorMaterias;
 
 public class Persistor
 {
-
+	static Logger logger = Logger.getLogger(Persistor.class);
 	private PlanEstudio planEstudio;
 	private Carrera licenSistemas;
 	// /////////MATERIAS
@@ -438,6 +440,7 @@ public class Persistor
 		MateriaDAO.getInstancia().alta(orga1);
 		MateriaDAO.getInstancia().alta(orga2);
 		MateriaDAO.getInstancia().alta(algebraLineal);
+		logger.info("Se dieron de alta las materias.");
 	}
 
 	public void altaHorarios() throws Exception
@@ -459,6 +462,7 @@ public class Persistor
 		HorarioDAO.getInstancia().alta(lun15a17);
 		HorarioDAO.getInstancia().alta(jue15a17);
 		HorarioDAO.getInstancia().alta(sab10a12);
+		logger.info("Se dieron de alta los horarios.");
 	}
 
 	public void altaCursos() throws Exception
@@ -480,18 +484,20 @@ public class Persistor
 		CursoDAO.getInstancia().alta(curOrga1);
 		CursoDAO.getInstancia().alta(curOrga1_c2);
 		CursoDAO.getInstancia().alta(curOrga2);
+		logger.info("Se dieron de alta los cursos.");
 	}
 
 	public void altaPlanEstudio() throws Exception
 	{
 		// PLAN ESTUDIOS
 		PlanEstudioDAO.getInstancia().alta(planEstudio);
+		logger.info("Se dieron de alta los planes de estudios.");
 	}
 
 	public void altaCriterioOrden() throws Exception
 	{
 		CriterioOrdenDAO.getInstancia().alta(criterioOrden);
-		
+		logger.info("Se dieron de los criterios de ordenamiento.");
 	}
 
 }

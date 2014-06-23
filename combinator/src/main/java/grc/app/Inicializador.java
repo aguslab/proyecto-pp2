@@ -27,12 +27,14 @@ public class Inicializador
 		cursosDisponibles = filtro.filtrar(cursosDisponibles);
 		filtro = new FiltroCorrelativas(materiasAprobadas, planEstudio);
 		cursosDisponibles = filtro.filtrar(cursosDisponibles);
-
+		logger.info("Filtramos los cursos disponibles de materias aprobadas y poscorrelativas.");
 		GRCModelo model = new GRCModelo(cursosDisponibles, criteriosOrdenamiento.get("Materias"), timeOut);
 		EstadoFiltros estadoFiltros = new EstadoFiltros(true, true, true, true);
 		GRCControlador controlador = new GRCControlador(model, criteriosOrdenamiento, estadoFiltros);
 		GRCVista vista = new GRCVista(controlador, criteriosOrdenamiento.keySet());
+		logger.info("Armamos el MVC.");
 		GRCVistaTexto viewTexto = new GRCVistaTexto(controlador, model, vista);
+
 		model.addObserver(vista);
 		model.addObserver(viewTexto);
 		estadoFiltros.addObserver(vista);
@@ -40,7 +42,7 @@ public class Inicializador
 		vista.showVista();
 		viewTexto.start();
 		model.actualizarRecomendaciones(cursosDisponibles, true);
-		logger.info("Terminamos de cargar datos limpios(?).");
+		logger.info("Terminamos de cargar datos limpios.");
 	}
 
 }
