@@ -1,5 +1,6 @@
 package grc.controlador;
 
+import grc.app.Inicializador;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
 import grc.dominio.Horario;
@@ -18,8 +19,11 @@ import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 public class GRCControlador
 {
+	static Logger logger = Logger.getLogger(GRCControlador.class);
 	private GRCModelo modelo;
 	private EstadoFiltros estadoFiltros;
 	private Map<String, CriterioOrden> criterios;
@@ -190,7 +194,8 @@ public class GRCControlador
 //		System.out.println("cantidad cursos: " + cursosFiltradosPorHorario.size());
 //		System.out.println("CANT RECOS ANTES: " + this.modelo.getRecomendaciones().size());
 		this.modelo.actualizarRecomendaciones(cursosFiltradosPorHorario, this.estadoFiltros.isFiltroPuedeEsperar());
-//		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size());
+//		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size())
+		logger.info("Se filtraron las recomendaciones.");
 	}
 
 	private GRCModelo getModelo()
@@ -213,18 +218,21 @@ public class GRCControlador
 	{
 		cambiarEstadoFiltroManiana(fm);
 		this.filtrarTurnos();
+		logger.info("Se eligió el filtro Mañana.");
 	}
 
 	public void filtrarTarde(boolean ft)
 	{
 		cambiarEstadoFiltroTarde(ft);
 		this.filtrarTurnos();
+		logger.info("Se eligió el filtro Tarde.");
 	}
 
 	public void filtrarNoche(boolean fn)
 	{
 		cambiarEstadoFiltroNoche(fn);
 		this.filtrarTurnos();
+		logger.info("Se eligió el filtro Noche.");
 	}
 
 	public void puedeEsperar(boolean puedeEsperarAhora)
@@ -242,7 +250,6 @@ public class GRCControlador
 		{
 			filtrarTurnos();
 		}
-
 	}
 
 	public void cambiarEstadoFiltroManiana(boolean fm)
@@ -259,5 +266,4 @@ public class GRCControlador
 	{
 		this.estadoFiltros.setFiltroNoche(fn);
 	}
-
 }
