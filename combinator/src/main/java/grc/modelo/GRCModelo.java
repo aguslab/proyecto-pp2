@@ -1,5 +1,6 @@
 package grc.modelo;
 
+import grc.app.Inicializador;
 import grc.dominio.Curso;
 import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
@@ -12,8 +13,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class GRCModelo extends Observable
 {
+	static Logger logger = Logger.getLogger(GRCModelo.class);
 	private List<Curso> cursosDisponibles;
 	private List<Recomendacion> recomendaciones;
 	private boolean seCompletoLaGeneracionDeRecomendaciones;
@@ -71,6 +75,7 @@ public class GRCModelo extends Observable
 				.generacionRecomendacionesCompletada();
 		armarRecomendaciones();
 		this.setRecomendaciones();
+		logger.info("Actualizamos las recomendaciones.");
 	}
 
 	public void ordenarPorCriterio(CriterioOrden criterio)
@@ -79,6 +84,7 @@ public class GRCModelo extends Observable
 		armarRecomendaciones();
 		this.seCompletoLaGeneracionDeRecomendaciones = true;//TODO ver!!!
 		this.setRecomendaciones();
+		logger.info("Ordenamos las recomendaciones según criterio elegido por alumno.");
 	}
 
 	public void armarRecomendaciones()
@@ -108,6 +114,7 @@ public class GRCModelo extends Observable
 		}
 		
 		this.setListaRecomendacionesSugeridas(recomendacionesParaLista);
+		logger.info("Armamos las recomendaciones para la lista.");
 	}
 
 	public boolean seCompletoLaGeneracionDeRecomendaciones()
