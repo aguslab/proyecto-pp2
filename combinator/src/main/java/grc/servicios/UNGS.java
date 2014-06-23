@@ -38,9 +38,9 @@ public class UNGS implements IUniversidad
 			return PlanEstudioDAO.getInstancia().getPlanEstudioDeCarrera(carrera);
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.error("Hubo un error al obtener el plan de estudio!.",e);
+			//e.printStackTrace();
 		}
-
 		logger.warn("No hay plan de estudio para esa carrera!.");
 		return null;
 	}
@@ -50,10 +50,12 @@ public class UNGS implements IUniversidad
 	{
 		try
 		{
+			logger.info("Se obtuvieron los cursos que existen en la UNGS.");
 			return new HashSet<Curso>(CursoDAO.getInstancia().obtenerTodo());
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.error("Hubo un error al obtener los cursos de la UNGS.",e);
+			//e.printStackTrace();
 		}
 		return null;
 	}

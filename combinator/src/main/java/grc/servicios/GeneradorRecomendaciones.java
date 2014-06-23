@@ -1,5 +1,6 @@
 package grc.servicios;
 
+import grc.app.Inicializador;
 import grc.dominio.Curso;
 
 import java.util.ArrayList;
@@ -8,9 +9,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class GeneradorRecomendaciones
 {
-
+	static Logger logger = Logger.getLogger(GeneradorRecomendaciones.class);
 	Set<Curso> cursosRecomendables;
 	private long timeOut;
 	private long timeInit;
@@ -31,6 +34,7 @@ public class GeneradorRecomendaciones
 		RecomendacionParcial recomendacionParcial = new RecomendacionParcial();
 		this.timeInit = new Date().getTime();
 		armarSubconjuntos(resultado, cursos, recomendacionParcial, 0);
+		logger.info("Generamos las recomendaciones.");
 		return resultado;
 	}
 
@@ -57,7 +61,6 @@ public class GeneradorRecomendaciones
 			armarSubconjuntos(resultado, cursos, recomendacionParcial, desde + 1);
 			recomendacionParcial.eliminarCurso(cursos.get(desde));
 		}
-
 	}
 
 	public boolean generacionRecomendacionesCompletada()
