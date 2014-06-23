@@ -289,11 +289,12 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		} catch (Exception e)
 		{
-
+			logger.error("Hubo un error al salir de GRC",e);
 		}
 	}
 	
-	public void mensajeNoCompletoReco() throws Exception{
+	public void mensajeNoCompletoReco() throws Exception
+	{
 		int reply = JOptionPane.showConfirmDialog(this,
 				"Al parecer son muchas recomendaciones! Puede que aún no se hayan generado todas ¿Desea seguir esperando para verlas todas?", "Ha pasado demasiado tiempo",
 				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -348,7 +349,8 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			this.cbTarde.setSelected(estadoFiltros.isFiltroTarde());
 			this.cbNoche.setSelected(estadoFiltros.isFiltroNoche());
 			this.cbPuedeEsperar.setSelected(estadoFiltros.isFiltroPuedeEsperar());
-		} else if (arg instanceof ArrayList<?>)
+		} 
+		else if (arg instanceof ArrayList<?>)
 		{
 			try
 			{
@@ -357,12 +359,14 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			{
 				e.printStackTrace();
 			}
-		} else if (arg instanceof Recomendacion)
+		} 
+		else if (arg instanceof Recomendacion)
 		{
 			try
 			{
 				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion) arg));
-			} catch (Exception e1)
+			} 
+			catch (Exception e1)
 			{
 				e1.printStackTrace();
 			}
@@ -393,6 +397,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		}
 		//Para que seleccione la primera como "la más importante"
 		controller.seleccionActualRecomendacion(0);
+		logger.info("Listamos las recomendaciones.");
 	}
 
 	public DefaultTableModel getTablaDias()
