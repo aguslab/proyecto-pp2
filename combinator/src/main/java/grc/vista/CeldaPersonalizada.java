@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 
-public class celdaPersonalizada extends DefaultTableCellRenderer
+public class CeldaPersonalizada extends DefaultTableCellRenderer
 {
 	private static final long serialVersionUID = 1L;
 
@@ -18,22 +20,6 @@ public Component getTableCellRendererComponent(JTable table, Object value, boole
       if ( !value.toString().equals("")) //Si hay texto en alguna celda, pongo un color
       {
           this.setOpaque(true);
-          /*//COLORES INTERCALADOS
-          if (column == 1)
- 	         this.setBackground(Color.PINK);
-		  else if (column == 2)
-			  this.setBackground(Color.ORANGE);
-		  else if (column == 3)
-			  this.setBackground(Color.PINK);
-		  else if (column == 4)
-			  this.setBackground(Color.ORANGE);
-		  else if (column == 5)
-			  this.setBackground(Color.PINK);
-		  else if (column == 6)
-			  this.setBackground(Color.LIGHT_GRAY);
-		  else
-			  this.setBackground(Color.WHITE);*/
-          
           //TODAS LAS COLUMNAS CON COLORES DISTINTOS
            if (column == 1)
     	         this.setBackground(Color.ORANGE);
@@ -54,7 +40,18 @@ public Component getTableCellRendererComponent(JTable table, Object value, boole
       } 
       else 
     	  this.setBackground(table.getBackground()); //Si no hay texto en las celdas dejo el fondo original.
-
+      
+      javax.swing.JLabel celdas = (javax.swing.JLabel)this;
+      celdas.setHorizontalAlignment(SwingConstants.CENTER);
       return this;
    }
+
+/*	private void centrarColumnas(JTable tabla)
+	{
+		this.setHorizontalAlignment(SwingConstants.CENTER);
+		int cantidadColumnas = tabla.getColumnCount();
+		for(int i = 0; i < cantidadColumnas; i++)
+			tabla.getColumnModel().getColumn(i).setCellRenderer(this);
+	}
+*/
 }
