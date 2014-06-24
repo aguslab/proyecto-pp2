@@ -16,7 +16,7 @@ public class Materia implements Serializable
 	private int id;
 	@Column(nullable = false)
 	private String nombre;
-	private String apodo;
+	private String nombreCorto;
 	public Materia() 
 	{
 
@@ -24,12 +24,12 @@ public class Materia implements Serializable
 
 	public Materia(String nombre, String apodo) {
 		this.nombre = nombre;
-		this.apodo = apodo;
+		this.nombreCorto = apodo;
 	}
 	
 	public Materia(String nombre) {
 		this.nombre = nombre;
-		this.apodo = "";
+		this.nombreCorto = "";
 	}
 
 	public int getId() {
@@ -44,20 +44,24 @@ public class Materia implements Serializable
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(String nombre) 
+	{
 		this.nombre = nombre;
 	}
 	
-	public String getApodo() {
-		return apodo;
+	public String getNombreCorto() 
+	{
+		return nombreCorto;
 	}
 
-	public void setApodo(String nombre) {
-		this.apodo = nombre;
+	public void setNombreCorto(String nombre) 
+	{
+		this.nombreCorto = nombre;
 	}
 	
 	@Override
-	public int hashCode() {
+	public int hashCode() 
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
