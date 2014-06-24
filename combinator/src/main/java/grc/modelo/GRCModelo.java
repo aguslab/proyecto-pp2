@@ -95,13 +95,7 @@ public class GRCModelo extends Observable
 			String recoParaLista = "";
 			for (Curso c : r.getRecomendacion())
 			{
-				String nombreMateria = c.getNombreCurso();
-				String apodoMateria = c.getApodoCurso();
-				if(c.getMateria().getApodo().equals(""))
-					recoParaLista += nombreMateria;
-				else
-					recoParaLista += apodoMateria;
-				
+				recoParaLista += c.getNombreCortoCurso();
 				for (int j = 0; j < c.getHorario().size(); j++)
 				{
 					recoParaLista += " Dia: " + c.getHorario().get(j).getDia();
