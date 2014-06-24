@@ -47,11 +47,7 @@ public class GRCControlador
 		Recomendacion r = recomendacion;
 		for (Curso c : r.getRecomendacion())
 		{
-			if(c.getMateria().getApodo().equals(""))
-				nombreMateria = c.getNombreCurso();
-			else
-				nombreMateria = c.getApodoCurso();
-			
+			nombreMateria = c.getNombreCortoCurso();
 			for (Horario horario : c.getHorario())
 			{
 				int contadorPosicion = 0;
