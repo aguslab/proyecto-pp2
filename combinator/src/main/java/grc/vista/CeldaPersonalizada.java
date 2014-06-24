@@ -40,18 +40,6 @@ public Component getTableCellRendererComponent(JTable table, Object value, boole
       } 
       else 
     	  this.setBackground(table.getBackground()); //Si no hay texto en las celdas dejo el fondo original.
-      
-      javax.swing.JLabel celdas = (javax.swing.JLabel)this;
-      celdas.setHorizontalAlignment(SwingConstants.CENTER);
       return this;
    }
-
-/*	private void centrarColumnas(JTable tabla)
-	{
-		this.setHorizontalAlignment(SwingConstants.CENTER);
-		int cantidadColumnas = tabla.getColumnCount();
-		for(int i = 0; i < cantidadColumnas; i++)
-			tabla.getColumnModel().getColumn(i).setCellRenderer(this);
-	}
-*/
 }
