@@ -34,7 +34,7 @@ public Component getTableCellRendererComponent(JTable table, Object value, boole
     	  else
     		  this.setBackground(table.getBackground()); //Columna con horas queda con fondo original
           
-           this.setForeground(Color.BLACK); //para evitar que, al hacer click, la fuente se vuelva blanca
+          this.setForeground(Color.BLACK); //para evitar que, al hacer click, la fuente se vuelva blanca
       } 
       else 
     	  this.setBackground(table.getBackground()); //Si no hay texto en las celdas dejo el fondo original.
