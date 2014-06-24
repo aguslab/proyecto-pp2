@@ -16,7 +16,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
 
@@ -42,6 +44,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 	private JComboBox cbOrdenador;
 	private JLabel firma;
 	private JLabel materia;
+	CeldaPersonalizada celdaPersonalizada;
 	DefaultListModel modelListaRecomendaciones;
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
@@ -132,14 +135,25 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		spRecomendacion.setBounds(10, 241, 1297, 319);
 		panelRecomendaciones.add(spRecomendacion);
 		tablaDias = new JTable(modeloTablaDias);
-
 		tablaDias.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spRecomendacion.setViewportView(tablaDias);
 		tablaDias.setModel(new DefaultTableModel(new Object[][]{}, new String[]{}));
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		tablaDias.setDefaultRenderer (Object.class, new celdaPersonalizada());
+		JTableHeader header = tablaDias.getTableHeader();
+		
+		//Centrar encabezado
+		DefaultTableCellRenderer  renderer = (DefaultTableCellRenderer)
+		tablaDias.getTableHeader().getDefaultRenderer();
+		renderer.setHorizontalAlignment(JLabel.CENTER);
+		header.setDefaultRenderer(renderer);
+		
+		//Centrar y colorear celdas
+		celdaPersonalizada = new CeldaPersonalizada();
+	    javax.swing.JLabel celdas = (JLabel)celdaPersonalizada;
+	    celdas.setHorizontalAlignment(SwingConstants.CENTER);
+		tablaDias.setDefaultRenderer(Object.class, celdaPersonalizada);
 		
 		JLabel lblHorarios = new JLabel("Horarios:");
 		lblHorarios.setBounds(10, 11, 74, 14);
