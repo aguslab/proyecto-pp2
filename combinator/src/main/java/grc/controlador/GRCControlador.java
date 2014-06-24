@@ -1,6 +1,5 @@
 package grc.controlador;
 
-import grc.app.Inicializador;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
 import grc.dominio.Horario;
@@ -57,71 +56,71 @@ public class GRCControlador
 			{
 				int contadorPosicion = 0;
 				Dia dia = horario.getDia();
-				int horaInicio = horario.getHoraInicio();
-				int horaFin = horario.getHoraFin();
+				Double horaInicio = horario.getHoraInicio();
+				Double horaFin = horario.getHoraFin();
 				if (dia.name().equalsIgnoreCase("Lunes"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 1);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 1);
 						else
-							tablaDias.setValueAt(" ", i - 8, 1);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 1);
 						contadorPosicion++;
 					}
 				} 
 				else if (dia.name().equalsIgnoreCase("Martes"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 2);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 2);
 						else
-							tablaDias.setValueAt(" ", i - 8, 2);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 2);
 						contadorPosicion++;
 					}
 				} 
 				else if (dia.name().equalsIgnoreCase("Miercoles"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 3);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 3);
 						else
-							tablaDias.setValueAt(" ", i - 8, 3);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 3);
 						contadorPosicion++;
 					}
 				} 
 				else if (dia.name().equalsIgnoreCase("Jueves"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 4);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 4);
 						else
-							tablaDias.setValueAt(" ", i - 8, 4);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 4);
 						contadorPosicion++;
 					}
 				} 
 				else if (dia.name().equalsIgnoreCase("Viernes"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 5);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 5);
 						else
-							tablaDias.setValueAt(" ", i - 8, 5);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 5);
 						contadorPosicion++;
 					}
 				} 
 				else if (dia.name().equalsIgnoreCase("Sabado"))
 				{
-					for (int i = horaInicio; i < horaFin; i++)
+					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i - 8, 6);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 6);
 						else
-							tablaDias.setValueAt(" ", i - 8, 6);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 6);
 						contadorPosicion++;
 					}
 				}
@@ -129,29 +128,6 @@ public class GRCControlador
 		}
 		return tablaDias;
 	}
-
-	// public void organizarListaRecomendaciones() throws Exception
-	// {
-	// this.getModelo().armarRecomendaciones();
-	// }
-
-	// public DefaultTableModel getMateriasAprobadas(DefaultTableModel
-	// tablaDias) throws Exception
-	// {
-	// List<MateriaAprobada> matAprobadas =
-	// MateriaAprobadaDAO.getInstancia().obtenerTodo();
-	// String nombreMateria;
-	// double nota;
-	// for (int i = 0; i < matAprobadas.size(); i++)
-	// {
-	// nombreMateria = matAprobadas.get(i).getMateriaAprobada().getNombre();
-	// nota = matAprobadas.get(i).getNota();
-	//
-	// Object nuevaFilaDatos[] = {nombreMateria, nota};
-	// tablaDias.addRow(nuevaFilaDatos);
-	// }
-	// return tablaDias;
-	// }
 
 	private DefaultTableModel iniciarValores(DefaultTableModel tablaDias)
 	{

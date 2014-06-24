@@ -265,27 +265,6 @@ public class GRCVistaTexto extends Thread implements Observer
 		System.out.println();
 	}
 
-	// private void mostrarTodasLasRecomendaciones(List<Recomendacion> recos)
-	// {
-	// System.out.println();
-	// int i = 1;
-	// for (Recomendacion r : recos)
-	// {
-	// System.out.println();
-	// System.out.println("Recomendacion :" + i);
-	// i++;
-	// for (Curso c : r.getRecomendacion())
-	// {
-	// System.out.println("Curso: " + c.getMateria().getNombre());
-	// for (Horario h : c.getHorario())
-	// {
-	// System.out.println(h.getDia() + ": de " + h.getHoraInicio() + " a "
-	// + h.getHoraFin() + "hs");
-	// }
-	// }
-	// }
-	// }
-
 	@Override
 	public void run()
 	{
@@ -312,7 +291,7 @@ public class GRCVistaTexto extends Thread implements Observer
 		System.out.println(msg);
 	}
 
-	public void cambiarIdioma()
+	private void cambiarIdioma()
 	{
 		this.labels.cambiarIdiomaMsjs();
 	}

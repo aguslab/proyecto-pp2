@@ -48,14 +48,14 @@ public class GRCModeloTest
 		Materia mn = new Materia("N");
 		Materia mt = new Materia("T");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario(Dia.LUNES, 18, 22));
-		h.add(new Horario(Dia.MARTES, 18, 20));
+		h.add(new Horario(Dia.LUNES, 18., 22.));
+		h.add(new Horario(Dia.MARTES, 18., 20.));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario(Dia.LUNES, 18, 20));
-		h2.add(new Horario(Dia.MIERCOLES, 20, 22));
+		h2.add(new Horario(Dia.LUNES, 18., 20.));
+		h2.add(new Horario(Dia.MIERCOLES, 20., 22.));
 		List<Horario> h3 = new ArrayList<Horario>();
-		h3.add(new Horario(Dia.MARTES, 20, 22));
-		h3.add(new Horario(Dia.MIERCOLES, 20, 22));
+		h3.add(new Horario(Dia.MARTES, 20., 22.));
+		h3.add(new Horario(Dia.MIERCOLES, 20., 22.));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		c.setId(0);
 		Curso c1 = new Curso(c, mn, h, "01");
@@ -69,8 +69,8 @@ public class GRCModeloTest
     	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
     	
     	List<Horario> lhor = new ArrayList<Horario>();
-    	Horario lh1 = new Horario(8, 12);
-    	Horario lh2 = new Horario(18, 22);
+    	Horario lh1 = new Horario(8., 12.);
+    	Horario lh2 = new Horario(18., 22.);
     	lhor.add(lh1);
     	lhor.add(lh2);
     	IFiltro f = new FiltroHorarios(lhor);
@@ -86,11 +86,11 @@ public class GRCModeloTest
     	Materia m = new Materia("M");
 		Materia mn = new Materia("N");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario(Dia.LUNES, 18, 22));
-		h.add(new Horario(Dia.MARTES, 18, 20));
+		h.add(new Horario(Dia.LUNES, 18., 22.));
+		h.add(new Horario(Dia.MARTES, 18., 20.));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario(Dia.JUEVES, 18, 20));
-		h2.add(new Horario(Dia.MIERCOLES, 20, 22));
+		h2.add(new Horario(Dia.JUEVES, 18., 20.));
+		h2.add(new Horario(Dia.MIERCOLES, 20., 22.));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		Curso c1 = new Curso(c, mn, h, "01");
 		Curso c2 = new Curso(c, m, h2, "01");
@@ -101,8 +101,8 @@ public class GRCModeloTest
     	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
     	
     	List<Horario> lhor = new ArrayList<Horario>();
-    	Horario lh1 = new Horario(8, 12);
-    	Horario lh2 = new Horario(18, 22);
+    	Horario lh1 = new Horario(8., 12.);
+    	Horario lh2 = new Horario(18., 22.);
     	lhor.add(lh1);
     	lhor.add(lh2);
     	model.actualizarRecomendaciones(cursosDisp, true);

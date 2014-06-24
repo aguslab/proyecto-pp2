@@ -41,7 +41,7 @@ public class HorarioDAOTest extends TestCase {
 
 	public void testAltaHorarioOk() {
 
-		Horario h = new Horario(Dia.LUNES, 18, 22);
+		Horario h = new Horario(Dia.LUNES, 18., 22.);
 		try
 		{
 			HorarioDAO.getInstancia().alta(h);

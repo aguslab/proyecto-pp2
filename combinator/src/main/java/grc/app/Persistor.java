@@ -114,34 +114,34 @@ public class Persistor
 	public void init()
 	{
 		// //////////Horarios
-		lun18a22 = new Horario(Dia.LUNES, 18, 22);
+		lun18a22 = new Horario(Dia.LUNES, 18.0, 22.0);
 		// lun18a22.setId(1);
-		mar18a22 = new Horario(Dia.MARTES, 18, 22);
+		mar18a22 = new Horario(Dia.MARTES, 18., 22.);
 		// mar18a22.setId(2);
-		jue18a20 = new Horario(Dia.JUEVES, 18, 20);
-		jue18a22 = new Horario(Dia.JUEVES, 18, 22);
+		jue18a20 = new Horario(Dia.JUEVES, 18., 20.);
+		jue18a22 = new Horario(Dia.JUEVES, 18., 22.);
 		// jue18a20.setId(3);
-		vier18a22 = new Horario(Dia.VIERNES, 18, 22);
+		vier18a22 = new Horario(Dia.VIERNES, 18., 22.);
 		// vier18a22.setId(4);
-		lun18a20 = new Horario(Dia.LUNES, 18, 20);
+		lun18a20 = new Horario(Dia.LUNES, 18., 20.);
 		// lun18a20.setId(5);
-		mar18a20 = new Horario(Dia.MARTES, 18, 20);
+		mar18a20 = new Horario(Dia.MARTES, 18., 20.);
 		// mar18a20.setId(6);
-		mier18a20 = new Horario(Dia.MIERCOLES, 18, 20);
+		mier18a20 = new Horario(Dia.MIERCOLES, 18., 20.);
 		// mier18a20.setId(7);
-		mier20a22 = new Horario(Dia.MIERCOLES, 20, 22);
+		mier20a22 = new Horario(Dia.MIERCOLES, 20., 22.);
 		// mier20a22.setId(8);
-		vier20a22 = new Horario(Dia.VIERNES, 20, 22);
+		vier20a22 = new Horario(Dia.VIERNES, 20., 22.);
 		// vier20a22.setId(9);
-		sab08a12 = new Horario(Dia.SABADO, 8, 12);
+		sab08a12 = new Horario(Dia.SABADO, 8., 12.);
 		// sab08a12.setId(10);
-		lun08a12 = new Horario(Dia.LUNES, 8, 12);
-		mier08a12 = new Horario(Dia.MIERCOLES, 8, 12);
-		mar15a17 = new Horario(Dia.MARTES, 15, 17);
-		lun15a17 = new Horario(Dia.LUNES, 15, 17);
-		mier15a17 = new Horario(Dia.MIERCOLES, 15, 17);
-		jue15a17 = new Horario(Dia.JUEVES, 15, 17);
-		sab10a12 = new Horario(Dia.SABADO, 10, 12);
+		lun08a12 = new Horario(Dia.LUNES, 8., 12.);
+		mier08a12 = new Horario(Dia.MIERCOLES, 8., 12.);
+		mar15a17 = new Horario(Dia.MARTES, 15., 17.);
+		lun15a17 = new Horario(Dia.LUNES, 15., 17.);
+		mier15a17 = new Horario(Dia.MIERCOLES, 15., 17.);
+		jue15a17 = new Horario(Dia.JUEVES, 15., 17.);
+		sab10a12 = new Horario(Dia.SABADO, 10., 12.);
 
 		// /////////MATERIAS
 		// CREO MATERIAS NUEVAS

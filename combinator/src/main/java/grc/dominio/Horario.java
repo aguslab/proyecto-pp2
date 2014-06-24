@@ -18,26 +18,26 @@ public class Horario implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_horario;
 	@Column(nullable = false)
-	private int horaInicio;
+	private Double horaInicio;
 	@Column(nullable = false)
-	private int horaFin;
+	private Double horaFin;
 	@Column(nullable = false)
 	private Dia dia;
-	public static final Horario MAÑANA = new Horario(8, 12);
-	public static final Horario TARDE = new Horario(13, 17);
-	public static final Horario NOCHE = new Horario(18, 22);
+	public static final Horario MAÑANA = new Horario(8.0, 12.0);
+	public static final Horario TARDE = new Horario(13.0, 17.0);
+	public static final Horario NOCHE = new Horario(18.0, 22.0);
 	
 	public Horario()
 	{
 	}
-	public Horario(Dia dia, int horaInicio, int horaFin)
+	public Horario(Dia dia, Double horaInicio, Double horaFin)
 	{
 		this.dia = dia;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 	}
 	
-	public Horario(int horaInicio, int horaFin)
+	public Horario(Double horaInicio, Double horaFin)
 	{
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
@@ -53,22 +53,22 @@ public class Horario implements Serializable
 		this.id_horario = id;
 	}
 	
-	public int getHoraInicio() 
+	public Double getHoraInicio() 
 	{
 		return horaInicio;
 	}
 
-	public void setHoraInicio(int horaInicio) 
+	public void setHoraInicio(Double horaInicio) 
 	{
 		this.horaInicio = horaInicio;
 	}
 
-	public int getHoraFin() 
+	public Double getHoraFin() 
 	{
 		return horaFin;
 	}
 
-	public void setHoraFin(int horaFin) 
+	public void setHoraFin(Double horaFin) 
 	{
 		this.horaFin = horaFin;
 	}
@@ -84,7 +84,7 @@ public class Horario implements Serializable
 	}
 	
 	public boolean seSolapaCon(Horario h){
-		return (this.horaInicio >= h.getHoraInicio() && this.horaFin <= h.horaFin) || (h.horaInicio >= this.getHoraInicio() && h.horaFin <= this.horaFin);
+		return (this.horaInicio.compareTo(h.getHoraInicio()) >= 0 && this.horaFin.compareTo(h.getHoraFin()) <= 0 || (h.getHoraInicio().compareTo(this.getHoraInicio()) >= 0 && h.getHoraFin().compareTo(this.horaFin) <= 0));
 	}
 	
 	
