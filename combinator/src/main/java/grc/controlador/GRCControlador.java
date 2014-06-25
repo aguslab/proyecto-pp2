@@ -10,6 +10,7 @@ import grc.servicios.FiltroHorarios;
 import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -54,14 +55,16 @@ public class GRCControlador
 				Dia dia = horario.getDia();
 				Double horaInicio = horario.getHoraInicio();
 				Double horaFin = horario.getHoraFin();
+				if(horaFin < 13)
+					horaInicio-=4;
 				if (dia.name().equalsIgnoreCase("Lunes"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 1);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4 , 1);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 1);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 1);
 						contadorPosicion++;
 					}
 				} 
@@ -70,9 +73,9 @@ public class GRCControlador
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 2);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 2);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 2);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 2);
 						contadorPosicion++;
 					}
 				} 
@@ -81,9 +84,9 @@ public class GRCControlador
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 3);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 3);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 3);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 3);
 						contadorPosicion++;
 					}
 				} 
@@ -92,9 +95,9 @@ public class GRCControlador
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 4);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 4);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 4);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 4);
 						contadorPosicion++;
 					}
 				} 
@@ -103,9 +106,9 @@ public class GRCControlador
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 5);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 5);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 5);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 5);
 						contadorPosicion++;
 					}
 				} 
@@ -114,9 +117,9 @@ public class GRCControlador
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 6);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 6);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 8, 6);
+							tablaDias.setValueAt(" ", i.intValue() - 4, 6);
 						contadorPosicion++;
 					}
 				}
@@ -125,20 +128,42 @@ public class GRCControlador
 		return tablaDias;
 	}
 
-	private DefaultTableModel iniciarValores(DefaultTableModel tablaDias)
+	private DefaultTableModel iniciarValoresHasta12(DefaultTableModel tablaDias)
 	{
-		tablaDias.setRowCount(14);
-		int hora1 = 8;
-		int hora2 = 9;
-		for (int i = 0; i < tablaDias.getRowCount(); i++)
+		double hora1 = 8;
+		double hora2 = 8.5;
+		for (int i = 0; i < tablaDias.getRowCount()-8; i++)
 		{
-			tablaDias.setValueAt(hora1 + " a " + hora2, i, 0);
+			if (hora1 == Math.floor(hora1)) //Si es un entero
+				tablaDias.setValueAt((long) hora1 + ":00" + " a " + (long) hora2 + ":30", i, 0);
+			else
+				tablaDias.setValueAt((long) hora1 + ":30" + " a " + (long) hora2 + ":00", i, 0);
 			for (int j = 1; j < tablaDias.getColumnCount(); j++)
 			{
 				tablaDias.setValueAt("", i, j);
 			}
-			hora1++;
-			hora2++;
+			hora1 += 0.5;
+			hora2 += 0.5;
+		}
+		
+		return tablaDias;
+	}
+	
+	private DefaultTableModel iniciarValores(DefaultTableModel tablaDias)
+	{
+		tablaDias.setRowCount(18);
+		iniciarValoresHasta12(tablaDias);
+		int hora1 = 12;
+		int hora2 = 13;
+		for (int i = 8; i < tablaDias.getRowCount(); i++)
+		{
+				tablaDias.setValueAt(hora1 + ":00" + " a " + hora2 + ":00", i, 0);
+			for (int j = 1; j < tablaDias.getColumnCount(); j++)
+			{
+				tablaDias.setValueAt("", i, j);
+			}
+			hora1 ++;
+			hora2 ++;
 		}
 		return tablaDias;
 	}
