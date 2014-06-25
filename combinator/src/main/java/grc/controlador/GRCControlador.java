@@ -56,7 +56,10 @@ public class GRCControlador
 				Double horaInicio = horario.getHoraInicio();
 				Double horaFin = horario.getHoraFin();
 				if(horaFin < 13)
-					horaInicio-=4;
+					if(horaInicio == Math.floor(horaInicio))
+						horaInicio-=4;
+					else
+						horaInicio-=3;
 				if (dia.name().equalsIgnoreCase("Lunes"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
