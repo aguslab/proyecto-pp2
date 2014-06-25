@@ -1,6 +1,5 @@
 package grc.modelo;
 
-import grc.app.Inicializador;
 import grc.dominio.Curso;
 import grc.servicios.CriterioOrden;
 import grc.servicios.GeneradorRecomendaciones;
