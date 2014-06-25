@@ -41,17 +41,19 @@ public class UniversidadTest
 		assertNotNull(uni.getCursos());
 	}
 	
-	public void testUniversidadGetPlanEstudio() throws Exception
+	public void testUniversidadGetPlanEstudioOk() throws Exception
 	{
 		UNGS uni = new UNGS();
-		Carrera c = new Carrera("A1");
+		Carrera c = uni.getCarreraFromAlumno("Gohan");
 		assertNotNull(uni.getPlanEstudioFromCarrera(c));
 	}
 	
 	public void testUniversidadGetPlanEstudioFail() throws Exception
 	{
 		UNGS uni = new UNGS();
-		assertNull(uni.getPlanEstudioFromCarrera(null));
+		Carrera CA = new Carrera("A1");
+		CA.setId(100);
+		assertNull(uni.getPlanEstudioFromCarrera(CA));
 	}
 	
 }
