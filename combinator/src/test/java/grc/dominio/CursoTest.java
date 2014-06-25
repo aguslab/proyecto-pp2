@@ -90,7 +90,7 @@ public class CursoTest
     	cu.setHorario(horarios);
     	cu.setMateria(m);
     	cu.setComision("01");
-    	assertEquals("Mate com-01", cu.getNombreCurso());
+    	assertEquals("Mate com-01", cu.getNombreCortoCurso());
     }
     
     public void testCursoComision()
