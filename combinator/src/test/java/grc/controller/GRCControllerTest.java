@@ -216,30 +216,7 @@ public class GRCControllerTest extends TestCase
 		assertEquals(0, model.getRecomendaciones().size());
 	}
 	
-	public void testPuedeEsperar() throws Exception
-	{
-		Set<Curso> cursosDisp = new HashSet<Curso>();
-		Materia m = new Materia("M");
-		Materia mn = new Materia("PP2");
-		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario(Dia.MIERCOLES, 18.3, 20.3));
-		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario(Dia.SABADO, 18.3, 20.3));
-		Carrera c = new Carrera("Licenciatura en Sistemas");
-		Curso c1 = new Curso(c, mn, h, "01");
-		Curso c2 = new Curso(c, m, h2, "01");
-		cursosDisp.add(c1);
-		cursosDisp.add(c2);
-		CriterioOrden co = new CriterioOrdenPorMaterias(true);
-
-		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
-		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
-		controller.cambiarEstadoFiltroNoche(true);
-		controller.filtrarTurnos();
-		assertNotNull(model.getRecomendaciones());
-	}
-	
-	public void testCambiarFiltro() throws Exception
+	public void testCambiarFiltroTarde() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
 		Materia m = new Materia("M");
@@ -267,7 +244,7 @@ public class GRCControllerTest extends TestCase
 		assertEquals(7,model.getRecomendaciones().size());
 	}
 	
-	public void testCambiarFiltroTarde() throws Exception
+	public void testCambiarFiltroManiana() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
 		Materia m = new Materia("M");
