@@ -31,7 +31,7 @@ public class Main
 		String alumnoNombre = "Gokú";
 try
 {
-	generarAltas();
+//	generarAltas();
 } catch (Exception e1)
 {
 	// TODO Auto-generated catch block
