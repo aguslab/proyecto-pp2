@@ -11,7 +11,7 @@ public class CriterioOrdenSecuenciales extends CriterioOrden
 	@OneToMany
 	List<CriterioOrden> criterios;
 
-	public CriterioOrdenSecuenciales()
+	public CriterioOrdenSecuenciales()//NOSONAR
 	{
 	}
 
