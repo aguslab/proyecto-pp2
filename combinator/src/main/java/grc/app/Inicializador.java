@@ -33,7 +33,7 @@ public class Inicializador
 		GRCControlador controlador = new GRCControlador(model, criteriosOrdenamiento, estadoFiltros);
 		GRCVista vista = new GRCVista(controlador, criteriosOrdenamiento.keySet());
 		logger.info("Armamos el MVC.");
-		GRCVistaTexto viewTexto = new GRCVistaTexto(controlador, model, vista);
+		GRCVistaTexto viewTexto = new GRCVistaTexto(controlador, model, criteriosOrdenamiento.keySet());
 
 		model.addObserver(vista);
 		model.addObserver(viewTexto);
