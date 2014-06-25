@@ -222,7 +222,6 @@ public class GRCVistaTexto extends Thread implements Observer
 				int opcion = Integer.parseInt(opcionUsuario)-1;
 				voyAActualizarModelo();
 				controller.setCriterioOrdenamiento(this.criterios.get(opcion));
-				System.out.println("Opiocn elegida sort es : "+ this.criterios.get(opcion));
 				mostrarListaRecomendaciones();
 			}else{
 				opcionUsuario = null;
