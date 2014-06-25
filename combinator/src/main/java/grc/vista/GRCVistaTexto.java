@@ -4,46 +4,49 @@ import grc.controlador.GRCControlador;
 import grc.modelo.GRCModelo;
 import grc.servicios.IdiomaElegido;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.Set;
 
 public class GRCVistaTexto extends Thread implements Observer
 {
 	private GRCControlador controller;
 	private GRCModelo modelo;
-	private GRCVista vista;
 	private boolean salirModoTxt;
 	private static final String KEY_DATOS_ACTUALIZADOS = "MSJ_DATOS_ACTUALIZADOS";
 	private static final String KEY_SIN_RECOMENDACIONES = "MSJ_SIN_RECOMENDACIONES_CON_FILTROS_SELECC";
 	private static final String KEY_BIENVENIDA = "MSJ_BIENVENIDA";
 	private static final String KEY_RECOS_DISPONIBLES = "MSJ_RECOS_DISPONIBLES";
 	private static final String KEY_AYUDA = "MSJ_AYUDA";
-	private static final String KEY_INDICAR_TURNOS = "MSJ_INDICAR_TURNOS";
+	private static final String KEY_INDICAR_OPCION = "MSJ_INDICAR_OPCION";
 	private static final String KEY_OPCION_FILTRO_MAÑANA = "MSJ_OPCION_FILTRO_MAÑANA";
 	private static final String KEY_OPCION_FILTRO_TARDE = "MSJ_OPCION_FILTRO_TARDE";
 	private static final String KEY_OPCION_FILTRO_NOCHE = "MSJ_OPCION_FILTRO_NOCHE";
 	private static final String KEY_OPCION_QUITAR_FILTROS = "MSJ_OPCION_QUITAR_FILTROS";
 	private static final String KEY_OPCION_MOSTRAR_LISTA_RECOS = "MSJ_OPCION_MOSTRAR_LISTA_RECOS";
 	private static final String KEY_OPCION_ACTUALIZAR = "MSJ_OPCION_ACTUALIZAR";
-	private static final String KEY_OPCION_GUI = "MSJ_OPCION_GUI";
 	private static final String KEY_OPCION_AYUDA = "MSJ_OPCION_AYUDA";
 	private static final String KEY_OPCION_SALIR = "MSJ_OPCION_SALIR";
 	private static final String KEY_SALUDO_MODO_TEXTO = "MSJ_SALUDO_MODO_TEXTO";
 	private static final String KEY_INGRESE_OPCION_CORRECTA = "MSJ_INGRESE_OPCION_CORRECTA";
 	private static final String KEY_NO_HAY_RECOS_DISPONIBLES = "MSJ_NO_HAY_RECOS_DISPONIBLES";
 	private static final String KEY_CAMBIAR_IDIOMA = "MSJ_CAMBIAR_IDIOMA";
+	private static final String KEY_OPCION_ORDENAR = "MSJ_OPCION_ORDENAR";
+	private static final String KEY_OPCION_CRITERIO_ORDEN = "MSJ_OPCION_CRITERIO_ORDEN";
 
 	private IdiomaElegido labels;
 	private boolean actualizeYo;
 	private String ultimoMsg;
+	private List<String> criterios;
 
-	public GRCVistaTexto(GRCControlador controlador, GRCModelo model, GRCVista vista)
+	public GRCVistaTexto(GRCControlador controlador, GRCModelo model, Set<String> ordenElegido)
 	{
 		this.controller = controlador;
 		this.modelo = model;
-		this.vista = vista;
+		this.criterios = new ArrayList<>(ordenElegido);
 		this.salirModoTxt = false;
 		this.ultimoMsg = "";
 		this.actualizeYo = true;
@@ -102,7 +105,7 @@ public class GRCVistaTexto extends Thread implements Observer
 	private void mostrarAyuda()
 	{
 		System.out.println();
-		System.out.println(labels.getIdiomaMsjs().getString(KEY_INDICAR_TURNOS));
+		System.out.println(labels.getIdiomaMsjs().getString(KEY_INDICAR_OPCION));
 		System.out.println("1 - " + labels.getIdiomaMsjs().getString(KEY_OPCION_FILTRO_MAÑANA));
 		System.out.println("2 - " + labels.getIdiomaMsjs().getString(KEY_OPCION_FILTRO_TARDE));
 		System.out.println("3 - " + labels.getIdiomaMsjs().getString(KEY_OPCION_FILTRO_NOCHE));
@@ -110,7 +113,7 @@ public class GRCVistaTexto extends Thread implements Observer
 		System.out.println("T - "
 				+ labels.getIdiomaMsjs().getString(KEY_OPCION_MOSTRAR_LISTA_RECOS));
 		System.out.println("R - " + labels.getIdiomaMsjs().getString(KEY_OPCION_ACTUALIZAR));
-		System.out.println("V - " + labels.getIdiomaMsjs().getString(KEY_OPCION_GUI));
+		System.out.println("S - " + labels.getIdiomaMsjs().getString(KEY_OPCION_CRITERIO_ORDEN));
 		System.out.println("H - " + labels.getIdiomaMsjs().getString(KEY_OPCION_AYUDA));
 		System.out.println("I - " + labels.getIdiomaMsjs().getString(KEY_CAMBIAR_IDIOMA));
 		System.out.println("0 - " + labels.getIdiomaMsjs().getString(KEY_OPCION_SALIR));
@@ -162,11 +165,11 @@ public class GRCVistaTexto extends Thread implements Observer
 				case "R" :
 					actualizar();
 					break;
-				case "v" :
-					ejecutarVista();
+				case "S" :
+					menuOrdenarRecomendaciones();
 					break;
-				case "V" :
-					ejecutarVista();
+				case "s" :
+					menuOrdenarRecomendaciones();
 					break;
 				case "h" :
 					mostrarAyuda();
@@ -195,14 +198,37 @@ public class GRCVistaTexto extends Thread implements Observer
 			System.exit(0);
 		} else if (!salirModoTxt)
 		{
-			// mensajeInicial();
 			seleccionarOpcion();
 		}
 	}
 
-	private void ejecutarVista()
+	private void menuOrdenarRecomendaciones()
 	{
-		this.vista.showVista();
+		System.out.println();
+		System.out.println(labels.getIdiomaMsjs().getString(KEY_OPCION_ORDENAR));
+		System.out.println("1 - " + this.criterios.get(0));
+		System.out.println("2 - " + this.criterios.get(1));
+		System.out.println("3 - " + this.criterios.get(2));
+		
+		seleccionarOpcionOrdenamiento();
+	}
+	
+	private void seleccionarOpcionOrdenamiento(){
+		String opcionUsuario = "";
+		do
+		{
+			opcionUsuario = getOpcionUsuario();
+			if(opcionUsuario.equals("1") || opcionUsuario.equals("2") || opcionUsuario.equals("3")) {
+				int opcion = Integer.parseInt(opcionUsuario)-1;
+				voyAActualizarModelo();
+				controller.setCriterioOrdenamiento(this.criterios.get(opcion));
+				System.out.println("Opiocn elegida sort es : "+ this.criterios.get(opcion));
+				mostrarListaRecomendaciones();
+			}else{
+				opcionUsuario = null;
+				mostrarMensaje(this.labels.getIdiomaMsjs().getString(KEY_INGRESE_OPCION_CORRECTA));
+			}
+		} while (opcionUsuario == null);
 	}
 
 	private void mostrarListaRecomendaciones()
@@ -226,7 +252,7 @@ public class GRCVistaTexto extends Thread implements Observer
 
 	private String getOpcionUsuario()
 	{
-		mensajeAyuda();
+//		mensajeAyuda();
 		@SuppressWarnings("resource")
 		String entradaTeclado = new Scanner(System.in).nextLine();
 		return entradaTeclado;
