@@ -69,4 +69,9 @@ public class MateriaDAOTest
     	assertNotNull(materias);
     }
     
+    public void testgetMateria() throws Exception{
+    	Materia materia = MateriaDAO.getInstancia().getMateria("Ingles Lectocomprension I");
+    	assertNotNull(materia);
+    }
+    
 }
