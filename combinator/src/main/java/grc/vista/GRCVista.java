@@ -141,10 +141,9 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		tablaDias.setRowHeight(25);
 		tablaDias.getTableHeader().setReorderingAllowed(false);
 		tablaDias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		JTableHeader header = tablaDias.getTableHeader();
-		
 		//Centrar encabezado
-		DefaultTableCellRenderer  renderer = (DefaultTableCellRenderer)
+		JTableHeader header = tablaDias.getTableHeader();
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)
 		tablaDias.getTableHeader().getDefaultRenderer();
 		renderer.setHorizontalAlignment(JLabel.CENTER);
 		header.setDefaultRenderer(renderer);
@@ -379,6 +378,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			try
 			{
 				tablaDias.setModel(controller.cambiarTablaDias((Recomendacion) arg));
+				tablaDias.getColumnModel().getColumn(0).setPreferredWidth(10);
 			} 
 			catch (Exception e1)
 			{
