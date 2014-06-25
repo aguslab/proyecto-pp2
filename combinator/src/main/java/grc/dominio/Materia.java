@@ -22,25 +22,30 @@ public class Materia implements Serializable
 
 	}
 
-	public Materia(String nombre, String apodo) {
+	public Materia(String nombre, String apodo)
+	{
 		this.nombre = nombre;
 		this.nombreCorto = apodo;
 	}
 	
-	public Materia(String nombre) {
+	public Materia(String nombre) 
+	{
 		this.nombre = nombre;
 		this.nombreCorto = "";
 	}
 
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 
-	public String getNombre() {
+	public String getNombre() 
+	{
 		return nombre;
 	}
 
@@ -70,7 +75,8 @@ public class Materia implements Serializable
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) 
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)

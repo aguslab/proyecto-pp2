@@ -83,7 +83,8 @@ public class Horario implements Serializable
 		this.dia = dia;
 	}
 	
-	public boolean seSolapaCon(Horario h){
+	public boolean seSolapaCon(Horario h)
+	{
 		return (this.horaInicio.compareTo(h.getHoraInicio()) >= 0 && this.horaFin.compareTo(h.getHoraFin()) <= 0 || (h.getHoraInicio().compareTo(this.getHoraInicio()) >= 0 && h.getHoraFin().compareTo(this.horaFin) <= 0));
 	}
 	
