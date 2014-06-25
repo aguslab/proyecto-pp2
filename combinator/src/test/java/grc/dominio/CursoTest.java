@@ -34,7 +34,8 @@ public class CursoTest
         return new TestSuite( CursoTest.class );
     }
 
-    public void testCursoId(){
+    public void testCursoId()
+    {
     	Materia m = new Materia("Algebra Lineal");
     	Horario h = new Horario(Dia.MARTES, 18., 22.);
     	Horario h2 = new Horario(Dia.JUEVES, 18., 22.);
@@ -49,7 +50,8 @@ public class CursoTest
     	assertEquals(cu.getId(), 0);
     }
     
-    public void testCursoMateria(){
+    public void testCursoMateria()
+    {
     	Materia m = new Materia("Algebra Lineal");
     	Horario h = new Horario(Dia.MARTES, 18., 22.);
     	Horario h2 = new Horario(Dia.JUEVES, 18., 22.);
@@ -63,8 +65,9 @@ public class CursoTest
     	assertEquals("Algebra Lineal", cu.getMateria().getNombre());
     }
     
-    public void testCursoNombreCurso(){
-    	Materia m = new Materia("ABC");
+    public void testCursoNombreCurso()
+    {
+    	Materia m = new Materia("ABC","A");
     	Horario h = new Horario(Dia.MARTES, 18., 22.);
     	ArrayList<Horario> horarios = new ArrayList<Horario>();
     	horarios.add(h);
@@ -76,8 +79,23 @@ public class CursoTest
     	assertEquals("ABC com-01", cu.getNombreCurso());
     }
     
-    public void testCursoComision(){
-    	Materia m = new Materia("A");
+    public void testCursoNombreCortoCurso()
+    {
+    	Materia m = new Materia("Materia","Mate");
+    	Horario h = new Horario(Dia.LUNES, 18., 22.);
+    	ArrayList<Horario> horarios = new ArrayList<Horario>();
+    	horarios.add(h);
+    	Curso cu = new Curso();
+    	
+    	cu.setHorario(horarios);
+    	cu.setMateria(m);
+    	cu.setComision("01");
+    	assertEquals("Mate com-01", cu.getNombreCurso());
+    }
+    
+    public void testCursoComision()
+    {
+    	Materia m = new Materia("A","A");
     	Curso cu = new Curso();
     	
     	cu.setMateria(m);
