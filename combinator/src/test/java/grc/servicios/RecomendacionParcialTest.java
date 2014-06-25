@@ -55,35 +55,55 @@ public class RecomendacionParcialTest extends TestCase
 		
 		public void testPuedeAgregarCurso()
 		{
-			Materia psec = new Materia("PSEC");
-			Materia mate = new Materia("Matemática Discreta");
+			Set<Curso> cursosDisp = new HashSet<Curso>();
+			Materia calculo1 = new Materia("Calculo I");
+			Materia ingles1 = new Materia("Ingles Lectocomprension I");
 			List<Horario> h = new ArrayList<Horario>();
-			h.add(new Horario(Dia.LUNES, 18., 20.));
-			h.add(new Horario(Dia.JUEVES, 18., 22.));
+			h.add(new Horario(Dia.LUNES, 18., 22.));
 			List<Horario> h2 = new ArrayList<Horario>();
-			h2.add(new Horario(Dia.MARTES, 18., 20.));
 			h2.add(new Horario(Dia.VIERNES, 18., 22.));
 			Carrera c = new Carrera("Licenciatura en Sistemas");
-			Curso c1 = new Curso(c, psec, h, "01");
-			Curso c2 = new Curso(c, mate, h2, "01");
+			Curso c1 = new Curso(c, calculo1, h, "01");
+			Curso c2 = new Curso(c, ingles1, h2, "01");
+			cursosDisp.add(c1);
+			cursosDisp.add(c2);
 			RecomendacionParcial rp = new RecomendacionParcial();
 			rp.agregarCurso(c1);
 			assertTrue(rp.puedeAgregarCurso(c2));
 		}
 		
-		public void testCopiarCursos()
+		public void testNoPuedeAgregarCurso()
 		{
-			Materia psec = new Materia("PSEC");
-			Materia mate = new Materia("Matemática Discreta");
+			Set<Curso> cursosDisp = new HashSet<Curso>();
+			Materia calculo1 = new Materia("Calculo I");
 			List<Horario> h = new ArrayList<Horario>();
-			h.add(new Horario(Dia.LUNES, 18., 20.));
-			h.add(new Horario(Dia.JUEVES, 18., 22.));
+			h.add(new Horario(Dia.LUNES, 18., 22.));
 			List<Horario> h2 = new ArrayList<Horario>();
-			h2.add(new Horario(Dia.MARTES, 18., 20.));
 			h2.add(new Horario(Dia.VIERNES, 18., 22.));
 			Carrera c = new Carrera("Licenciatura en Sistemas");
-			Curso c1 = new Curso(c, psec, h, "01");
-			Curso c2 = new Curso(c, mate, h2, "01");
+			Curso c1 = new Curso(c, calculo1, h, "01");
+			Curso c2 = new Curso(c, calculo1, h2, "01");
+			cursosDisp.add(c1);
+			cursosDisp.add(c2);
+			RecomendacionParcial rp = new RecomendacionParcial();
+			rp.agregarCurso(c1);
+			assertFalse(rp.puedeAgregarCurso(c2));
+		}
+		
+		public void testCopiarCursos()
+		{
+			Set<Curso> cursosDisp = new HashSet<Curso>();
+			Materia calculo1 = new Materia("Calculo I");
+			Materia ingles1 = new Materia("Ingles Lectocomprension I");
+			List<Horario> h = new ArrayList<Horario>();
+			h.add(new Horario(Dia.LUNES, 18., 22.));
+			List<Horario> h2 = new ArrayList<Horario>();
+			h2.add(new Horario(Dia.VIERNES, 18., 22.));
+			Carrera c = new Carrera("Licenciatura en Sistemas");
+			Curso c1 = new Curso(c, calculo1, h, "01");
+			Curso c2 = new Curso(c, ingles1, h2, "01");
+			cursosDisp.add(c1);
+			cursosDisp.add(c2);
 			RecomendacionParcial rp = new RecomendacionParcial();
 			rp.agregarCurso(c1);
 			rp.agregarCurso(c2);

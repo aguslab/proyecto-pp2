@@ -74,13 +74,12 @@ public class FiltroMateriasAprobadasTest extends TestCase
 	public void testFiltroMaterias() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
-		Materia pp2 = new Materia("PP2");
-		Materia p1 = new Materia("P1");
-		Materia p2 = new Materia("P2");
-		Materia introProg = new Materia("Intro. Prog.");
+		Materia prog1 = new Materia("Programación I", "P1");
+		Materia prog2 = new Materia("Programación II", "P2");
+		Materia ip = new Materia("Introducción a la Programación", "Intro. Programación");
 
 		Set<Materia> materiasAprobadas = new HashSet<Materia>();
-		materiasAprobadas.add(introProg);
+		materiasAprobadas.add(ip);
 		
 		List<Horario> h = new ArrayList<Horario>();
 		h.add(new Horario(Dia.LUNES, 18., 22.));
@@ -89,15 +88,13 @@ public class FiltroMateriasAprobadasTest extends TestCase
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		c.setId(0);
 		
-		Curso c1 = new Curso(c, pp2, h, "01");
-		Curso c2 = new Curso(c, p1, h2, "01");
-		Curso c3 = new Curso(c, p2, h2, "01");
-		Curso c4 = new Curso(c, introProg, h, "01");
+		Curso c1 = new Curso(c, prog1, h2, "01");
+		Curso c2 = new Curso(c, prog2, h2, "01");
+		Curso c3 = new Curso(c, ip, h, "01");
 		
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		cursosDisp.add(c3);
-		cursosDisp.add(c4);
 		
 		CriterioOrden co = new CriterioOrdenPorMaterias(true);
 
@@ -107,15 +104,15 @@ public class FiltroMateriasAprobadasTest extends TestCase
 		
 		IFiltro filtro = new FiltroMateriasAprobadas(materiasAprobadas);
 		cursosDisp = filtro.filtrar(cursosDisp);
-		assertEquals(3, cursosDisp.size());
+		assertEquals(2, cursosDisp.size());
 	}
 	
 	public void testFiltroMateriasSinCursos() throws Exception
 	{
 		Set<Curso> c = new HashSet<Curso>();
-		Materia introProg = new Materia("Intro. Prog.");
+		Materia ip = new Materia("Introducción a la Programación", "Intro. Programación");
 		Set<Materia> materiasAprobadas = new HashSet<Materia>();
-		materiasAprobadas.add(introProg);
+		materiasAprobadas.add(ip);
 		IFiltro filtro = new FiltroMateriasAprobadas(materiasAprobadas);
 		c = filtro.filtrar(c);
 		assertEquals(0, filtro.filtrar(c).size());
