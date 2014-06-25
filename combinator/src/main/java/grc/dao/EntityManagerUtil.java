@@ -56,7 +56,7 @@ public class EntityManagerUtil
 		// SonarQube
 		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
 		// FOR testing
-		configOverrides.put("hibernate.hbm2ddl.auto", "create");
+//		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
 		return Persistence.createEntityManagerFactory("PU", configOverrides);
 	}
