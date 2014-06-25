@@ -130,7 +130,7 @@ public class GRCControllerTest extends TestCase
 		assertNotNull(model.getRecomendaciones());
 	}
 	
-	public void testCambiarTablaDias() throws Exception
+	public void testCambiarTablaDiasHorarioPartidoMañana() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
 		Materia m = new Materia("M");
@@ -139,6 +139,54 @@ public class GRCControllerTest extends TestCase
 		h.add(new Horario(Dia.LUNES, 18., 22.));
 		List<Horario> h2 = new ArrayList<Horario>();
 		h2.add(new Horario(Dia.VIERNES, 18., 22.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.filtrarNoche(true);
+		controller.seleccionActualRecomendacion(0);
+		DefaultTableModel grilla = controller.cambiarTablaDias(model.getRecomendacionActual());
+		assertNotNull(grilla);
+	}
+	
+	public void testCambiarTablaDiasHorarioPartidoNoche() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 18.3, 20.3));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.VIERNES, 18.3, 20.3));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.filtrarNoche(true);
+		controller.seleccionActualRecomendacion(0);
+		DefaultTableModel grilla = controller.cambiarTablaDias(model.getRecomendacionActual());
+		assertNotNull(grilla);
+	}
+	
+	public void testCambiarTablaDias() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 8.3, 10.3));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.VIERNES, 8.3, 10.3));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		Curso c1 = new Curso(c, mn, h, "01");
 		Curso c2 = new Curso(c, m, h2, "01");
