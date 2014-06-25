@@ -9,6 +9,8 @@ import grc.dominio.PlanEstudio;
 import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
 import grc.servicios.CriterioOrdenSecuenciales;
+import grc.servicios.FiltroCursosPorCarrera;
+import grc.servicios.IFiltro;
 import grc.servicios.UNGS;
 
 import java.util.ArrayList;
@@ -32,7 +34,8 @@ public class Main
 		Carrera licSistemas = universidad.getCarreraFromAlumno(alumnoNombre);
 		PlanEstudio planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
 		Set<Curso> cursosDisponibles = universidad.getCursos();
-		cursosDisponibles = getCursosDeCarrera(cursosDisponibles, licSistemas);
+		IFiltro cursosPorCarrera = new FiltroCursosPorCarrera(licSistemas);
+		cursosDisponibles = cursosPorCarrera.filtrar(cursosDisponibles);
 		Set<Materia> materiasAprobadas = null;
 		try
 		{
@@ -78,19 +81,19 @@ public class Main
 		return criterios;
 	}
 
-	private static Set<Curso> getCursosDeCarrera(Set<Curso> cursosDisponibles, Carrera carrera)
-	{
-		Set<Curso> cursosDeCarrera = new HashSet<Curso>();
-		for (Curso c : cursosDisponibles)
-		{
-			if (c.getCarrera().getId() == carrera.getId())
-			{
-				cursosDeCarrera.add(c);
-			}
-		}
-		logger.info("Obtenemos los cursos disponibles de esa carrera.");
-		return cursosDeCarrera;
-	}
+//	private static Set<Curso> getCursosDeCarrera(Set<Curso> cursosDisponibles, Carrera carrera)
+//	{
+//		Set<Curso> cursosDeCarrera = new HashSet<Curso>();
+//		for (Curso c : cursosDisponibles)
+//		{
+//			if (c.getCarrera().getId() == carrera.getId())
+//			{
+//				cursosDeCarrera.add(c);
+//			}
+//		}
+//		logger.info("Obtenemos los cursos disponibles de esa carrera.");
+//		return cursosDeCarrera;
+//	}
 
 	public static Set<Materia> getMateriasAprobadasFromAlumno(String alumno) throws Exception
 	{
