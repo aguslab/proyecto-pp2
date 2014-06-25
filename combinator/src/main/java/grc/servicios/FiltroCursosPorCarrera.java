@@ -19,6 +19,8 @@ public class FiltroCursosPorCarrera implements IFiltro
 		Set<Curso> cursosDeCarrera = new HashSet<Curso>();
 		for (Curso c : cursos)
 		{
+			if(c == null || c.getCarrera()==null)
+				continue;
 			if (c.getCarrera().getId() == carrera.getId())
 			{
 				cursosDeCarrera.add(c);
