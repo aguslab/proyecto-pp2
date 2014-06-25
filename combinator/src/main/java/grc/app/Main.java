@@ -28,7 +28,7 @@ public class Main
 		logger.info("Corremos la aplicación.");
 		try
 		{
-//			generarAltas();
+			generarAltas();
 		} catch (Exception e)
 		{
 			logger.error("Error al generar las altas.",e);
