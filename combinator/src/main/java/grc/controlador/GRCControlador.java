@@ -10,7 +10,6 @@ import grc.servicios.FiltroHorarios;
 import grc.servicios.IFiltro;
 import grc.servicios.Recomendacion;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -55,74 +54,80 @@ public class GRCControlador
 				Dia dia = horario.getDia();
 				Double horaInicio = horario.getHoraInicio();
 				Double horaFin = horario.getHoraFin();
-				if(horaFin < 13)
-					if(horaInicio == Math.floor(horaInicio))
-						horaInicio-=4;
-					else
-						horaInicio-=3;
+				if (horaFin < 13)
+				{
+					if (horaInicio != Math.ceil(horaInicio))
+					{
+						horaInicio = Math.ceil(horaInicio);
+						horaFin = Math.ceil(horaFin) + 3;
+					} else
+					{
+						horaFin += 4;
+					}
+				}else{
+					horaInicio += 4;
+					horaFin += 4;
+				}
+				
+
 				if (dia.name().equalsIgnoreCase("Lunes"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4 , 1);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 1);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 1);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 1);
 						contadorPosicion++;
 					}
-				} 
-				else if (dia.name().equalsIgnoreCase("Martes"))
+				} else if (dia.name().equalsIgnoreCase("Martes"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 2);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 2);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 2);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 2);
 						contadorPosicion++;
 					}
-				} 
-				else if (dia.name().equalsIgnoreCase("Miercoles"))
+				} else if (dia.name().equalsIgnoreCase("Miercoles"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 3);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 3);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 3);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 3);
 						contadorPosicion++;
 					}
-				} 
-				else if (dia.name().equalsIgnoreCase("Jueves"))
+				} else if (dia.name().equalsIgnoreCase("Jueves"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 4);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 4);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 4);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 4);
 						contadorPosicion++;
 					}
-				} 
-				else if (dia.name().equalsIgnoreCase("Viernes"))
+				} else if (dia.name().equalsIgnoreCase("Viernes"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 5);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 5);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 5);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 5);
 						contadorPosicion++;
 					}
-				} 
-				else if (dia.name().equalsIgnoreCase("Sabado"))
+				} else if (dia.name().equalsIgnoreCase("Sabado"))
 				{
 					for (Double i = horaInicio; i < horaFin; i++)
 					{
 						if (contadorPosicion == 1)
-							tablaDias.setValueAt(nombreMateria, i.intValue() - 4, 6);
+							tablaDias.setValueAt(nombreMateria, i.intValue() - 8, 6);
 						else
-							tablaDias.setValueAt(" ", i.intValue() - 4, 6);
+							tablaDias.setValueAt(" ", i.intValue() - 8, 6);
 						contadorPosicion++;
 					}
 				}
