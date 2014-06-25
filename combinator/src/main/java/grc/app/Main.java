@@ -29,6 +29,7 @@ public class Main
 	{
 		logger.info("Corremos la aplicación.");
 		String alumnoNombre = "Gokú";
+
 		UNGS universidad = new UNGS();
 		Carrera licSistemas = universidad.getCarreraFromAlumno(alumnoNombre);
 		PlanEstudio planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
