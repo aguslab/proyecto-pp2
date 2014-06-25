@@ -196,10 +196,7 @@ public class GRCControlador
 		IFiltro f = new FiltroHorarios(horarios);
 		Set<Curso> cursosFiltradosPorHorario = f.filtrar(new HashSet<Curso>(this.getModelo()
 				.getCursosDisponibles()));
-//		System.out.println("cantidad cursos: " + cursosFiltradosPorHorario.size());
-//		System.out.println("CANT RECOS ANTES: " + this.modelo.getRecomendaciones().size());
 		this.modelo.actualizarRecomendaciones(cursosFiltradosPorHorario, this.estadoFiltros.isFiltroPuedeEsperar());
-//		System.out.println("CANT RECOS DESPUES: " + this.modelo.getRecomendaciones().size())
 		logger.info("Se filtraron las recomendaciones.");
 	}
 
