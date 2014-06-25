@@ -9,7 +9,6 @@ import java.util.Set;
 
 import grc.app.Persistor;
 import grc.controlador.GRCControlador;
-import grc.controller.GRCControllerTest;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
@@ -95,7 +94,7 @@ public class CriterioOrdenPorPoscorrelativasTest  extends TestCase
 		
 		Recomendacion r = model.getRecomendaciones().get(0);
 		Recomendacion r2 = model.getRecomendaciones().get(1);
-		assertEquals(-1,co.compare(r, r2));
+		assertEquals(0,co.compare(r, r2));
 	}
 
 }

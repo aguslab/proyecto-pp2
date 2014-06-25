@@ -1,7 +1,6 @@
 package grc.servicios;
 
 import grc.app.Persistor;
-import grc.controlador.GRCControlador;
 import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Dia;
@@ -101,7 +100,7 @@ public class FiltroCorrelativasTest extends TestCase
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
 
-		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+//		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
 		
 		IFiltro filtro = new FiltroMateriasAprobadas(materiasAprobadas);
 		cursosDisp = filtro.filtrar(cursosDisp);
