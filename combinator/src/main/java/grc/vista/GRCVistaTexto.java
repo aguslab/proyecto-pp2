@@ -38,7 +38,7 @@ public class GRCVistaTexto extends Thread implements Observer
 	private static final String KEY_OPCION_CRITERIO_ORDEN = "MSJ_OPCION_CRITERIO_ORDEN";
 
 	private IdiomaElegido labels;
-	private boolean actualizeYo;
+	private boolean actualiceYo;
 	private String ultimoMsg;
 	private List<String> criterios;
 
@@ -49,7 +49,7 @@ public class GRCVistaTexto extends Thread implements Observer
 		this.criterios = new ArrayList<>(ordenElegido);
 		this.salirModoTxt = false;
 		this.ultimoMsg = "";
-		this.actualizeYo = true;
+		this.actualiceYo = true;
 		this.labels = new IdiomaElegido();
 	}
 
@@ -60,9 +60,9 @@ public class GRCVistaTexto extends Thread implements Observer
 		{
 			this.modelo = (GRCModelo) o;
 		}
-		if (this.actualizeYo)
+		if (this.actualiceYo)
 		{
-			this.actualizeYo = false;
+			this.actualiceYo = false;
 			return;
 		}
 		mostrarMensaje(labels.getIdiomaMsjs().getString(KEY_DATOS_ACTUALIZADOS));
@@ -88,8 +88,8 @@ public class GRCVistaTexto extends Thread implements Observer
 		limpiarPantalla();
 		mostrarMensaje(labels.getIdiomaMsjs().getString(KEY_BIENVENIDA).toUpperCase());
 		System.out.println();
-		voyAActualizarModelo();
-		this.controller.filtrarTurnos();
+//		voyAActualizarModelo();
+//		this.controller.filtrarTurnos();
 		System.out.println();
 		mensajeInicial();
 		mensajeAyuda();
@@ -306,7 +306,7 @@ public class GRCVistaTexto extends Thread implements Observer
 
 	private void voyAActualizarModelo()
 	{
-		this.actualizeYo = true;
+		this.actualiceYo = true;
 	}
 
 	public void mostrarMensaje(String msg)
