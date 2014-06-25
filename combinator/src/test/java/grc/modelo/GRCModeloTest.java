@@ -14,6 +14,7 @@ import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorMaterias;
 import grc.servicios.FiltroHorarios;
 import grc.servicios.IFiltro;
+import grc.servicios.Recomendacion;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -110,15 +111,17 @@ public class GRCModeloTest
     	assertEquals(2, model.getRecomendaciones().get(0).getRecomendacion().size());
     }
     
-//    public void testGRCModelArmarRecomendacionesVacio() throws Exception{
-//    	Set<Curso> cursosDisp = new HashSet<Curso>();
-//		CriterioOrden com = new CriterioOrdenPorMaterias(true);
-//    	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
-//    	model.actualizarRecomendaciones(cursosDisp, true);
-//    	assertEquals(1, model.getListaRecomendacionesSugeridas().size());
-//    }
+    public void testGRCModelArmarRecomendacionesVacio() throws Exception
+    {
+    	Set<Curso> cursosDisp = new HashSet<Curso>();
+		CriterioOrden com = new CriterioOrdenPorMaterias(true);
+    	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
+    	model.actualizarRecomendaciones(cursosDisp, true);
+    	assertEquals(0, model.getListaRecomendacionesSugeridas().size());
+    }
     
-    public void testGRCModelActualizarRecoActual() throws Exception{
+    public void testGRCModelActualizarRecoActual() throws Exception
+    {
     	Set<Curso> cursosDisp = new HashSet<Curso>();
 		CriterioOrden com = new CriterioOrdenPorMaterias(true);
     	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
@@ -127,10 +130,44 @@ public class GRCModeloTest
     	assertNull(model.getRecomendacionActual());
     }
     
-    public void testGRCModelClone() throws Exception{
+    public void testGRCModelClone() throws Exception
+    {
     	Set<Curso> cursosDisp = new HashSet<Curso>();
 		CriterioOrden com = new CriterioOrdenPorMaterias(true);
     	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
     	assertNotSame(model, model.clone());
     }    
+    
+    public void testGRCModeloActualizarRecomendacionActualVacia()
+    {
+    	Set<Curso> cursosDisp = new HashSet<Curso>();
+    	Materia m = new Materia("M");
+		Materia mn = new Materia("N");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 18., 22.));
+		h.add(new Horario(Dia.MARTES, 18., 20.));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.JUEVES, 18., 20.));
+		h2.add(new Horario(Dia.MIERCOLES, 20., 22.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		
+		CriterioOrden com = new CriterioOrdenPorMaterias(true);
+    	GRCModelo model = new GRCModelo(cursosDisp, com, 1000);
+    	
+    	List<Horario> lhor = new ArrayList<Horario>();
+    	Horario lh1 = new Horario(8., 12.);
+    	Horario lh2 = new Horario(18., 22.);
+    	lhor.add(lh1);
+    	lhor.add(lh2);
+    	model.actualizarRecomendaciones(cursosDisp, true);
+    	model.actualizarRecomendacionActual(0);
+    	assertNotNull(model.getRecomendacionActual());
+    }
+    
+    
+    
 }
