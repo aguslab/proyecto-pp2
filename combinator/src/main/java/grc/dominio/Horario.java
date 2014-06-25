@@ -85,7 +85,10 @@ public class Horario implements Serializable
 	
 	public boolean seSolapaCon(Horario h)
 	{
-		return (this.horaInicio.compareTo(h.getHoraInicio()) >= 0 && this.horaFin.compareTo(h.getHoraFin()) <= 0 || (h.getHoraInicio().compareTo(this.getHoraInicio()) >= 0 && h.getHoraFin().compareTo(this.horaFin) <= 0));
+		return this.horaInicio.compareTo(h.getHoraInicio()) >= 0 && this.horaFin.compareTo(h.getHoraFin()) <= 0 
+		|| (h.getHoraInicio().compareTo(this.getHoraInicio()) >= 0 && h.getHoraFin().compareTo(this.horaFin) <= 0)
+		|| (this.horaInicio.compareTo(h.getHoraInicio()) <= 0 && this.horaFin.compareTo(h.getHoraFin()) <= 0 && h.getHoraInicio().compareTo(this.horaFin) < 0)
+		|| (this.horaInicio.compareTo(h.getHoraInicio()) >= 0 && this.horaInicio.compareTo(h.getHoraFin()) < 0 && this.horaFin.compareTo(h.getHoraFin()) >= 0);
 	}
 	
 	
