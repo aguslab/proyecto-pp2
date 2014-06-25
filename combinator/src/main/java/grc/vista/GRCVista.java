@@ -49,11 +49,13 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
+	private GRCModelo modelo;
 
-	public GRCVista(GRCControlador controlador, Set<String> ordenElegido)
+	public GRCVista(GRCControlador controlador, Set<String> ordenElegido, GRCModelo modelo, EstadoFiltros estadoFiltros)
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
+		this.modelo = modelo;
 		escritorio.setBounds(0, 0, 1317, 1);
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener(new UISwitchListener((JComponent) getRootPane()));
@@ -159,6 +161,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		lblManiana.setBounds(85, 11, 57, 14);
 		panelRecomendaciones.add(lblManiana);
 		cbManiana = new JCheckBox("");
+		cbManiana.setSelected(estadoFiltros.isFiltroMañana());
 		cbManiana.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -167,7 +170,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbManiana.setBounds(131, 7, 21, 23);
-		cbManiana.setSelected(true);
 		panelRecomendaciones.add(cbManiana);
 
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones:");
@@ -179,6 +181,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		panelRecomendaciones.add(lblTarde);
 
 		cbTarde = new JCheckBox("");
+		cbTarde.setSelected(estadoFiltros.isFiltroTarde());
 		cbTarde.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -187,7 +190,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbTarde.setBounds(208, 7, 21, 23);
-		cbTarde.setSelected(true);
 		panelRecomendaciones.add(cbTarde);
 
 		JLabel lblNoche = new JLabel("Noche");
@@ -195,6 +197,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		panelRecomendaciones.add(lblNoche);
 
 		cbNoche = new JCheckBox("");
+		cbNoche.setSelected(estadoFiltros.isFiltroNoche());
 		cbNoche.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -203,7 +206,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbNoche.setBounds(293, 7, 21, 23);
-		cbNoche.setSelected(true);
 		panelRecomendaciones.add(cbNoche);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -226,6 +228,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		scrollPane.setViewportView(listaRecomendaciones);
 
 		cbPuedeEsperar = new JCheckBox();
+		cbPuedeEsperar.setSelected(estadoFiltros.isFiltroPuedeEsperar());
 		cbPuedeEsperar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -234,7 +237,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 			}
 		});
 		cbPuedeEsperar.setBounds(490, 7, 21, 23);
-		cbPuedeEsperar.setSelected(true);
 		panelRecomendaciones.add(cbPuedeEsperar);
 
 		JLabel label = new JLabel("Puedo Esperar :)");
@@ -271,10 +273,12 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 				}
 			}
 		});
+//		mostrarRecomendaciones(this.modelo);
 	}
 
 	public void showVista()
 	{
+		mostrarRecomendaciones(this.modelo);
 		setVisible(true);
 	}
 
@@ -302,7 +306,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		}
 	}
 	
-	public void mensajeNoCompletoReco() throws Exception
+	public void mensajeNoCompletoReco()
 	{
 		int reply = JOptionPane.showConfirmDialog(this,
 				"Al parecer son muchas recomendaciones! Puede que aún no se hayan generado todas ¿Desea seguir esperando para verlas todas?", "Ha pasado demasiado tiempo",
@@ -381,7 +385,7 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		}
 	}
 
-	public void mostrarRecomendaciones(Observable o) throws Exception
+	public void mostrarRecomendaciones(Observable o)
 	{
 		GRCModelo model = ((GRCModelo) o);
 		DefaultListModel modeloList = new DefaultListModel();
@@ -390,7 +394,14 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 		{
 			modeloList.addElement("No hay recomendaciones disponibles para usted");
 			Recomendacion recoVacia = new Recomendacion(null);
-			tablaDias.setModel(controller.cambiarTablaDias(recoVacia));
+			try
+			{
+				tablaDias.setModel(controller.cambiarTablaDias(recoVacia));
+			} catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(this, "Ocurrió un problema al completar la tabla, intentelo de nuevo", "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+				e.printStackTrace();
+			}
 		}else{
 			for (int i = 0; i < recomendaciones.size(); i++)
 			{
