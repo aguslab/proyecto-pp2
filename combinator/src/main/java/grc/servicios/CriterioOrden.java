@@ -16,11 +16,13 @@ public abstract class CriterioOrden implements Comparator<Recomendacion>
 
 	public CriterioOrden() {}
 	
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 }
