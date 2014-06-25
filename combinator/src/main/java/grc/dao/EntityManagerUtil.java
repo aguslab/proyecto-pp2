@@ -50,12 +50,11 @@ public class EntityManagerUtil
 		configOverrides.put("hibernate.connection.username", "pp2");
 		configOverrides.put("hibernate.connection.password", "labo");
 //		 configOverrides.put("hibernate.show_sql","true");
-
-		configOverrides.put("hibernate.connection.url",
-				"jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
+//		 configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/GRC?createDatabaseIfNotExist=true");
+		
 
 		// SonarQube
-		// configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/pruebas?createDatabaseIfNotExist=true");
+		configOverrides.put("hibernate.connection.url","jdbc:mysql://localhost:3306/myhibernate?createDatabaseIfNotExist=true");
 		// FOR testing
 //		configOverrides.put("hibernate.hbm2ddl.auto", "create");
 
