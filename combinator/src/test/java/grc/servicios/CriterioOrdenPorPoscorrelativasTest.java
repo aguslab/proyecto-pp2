@@ -74,15 +74,15 @@ public class CriterioOrdenPorPoscorrelativasTest  extends TestCase
 	public void testCriterioPoscorrelativasCompare() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
-		Materia m = new Materia("M");
-		Materia mn = new Materia("PP2");
+		Materia calculo1 = new Materia("Calculo I");
+		Materia ingles1 = new Materia("Ingles Lectocomprension I");
 		List<Horario> h = new ArrayList<Horario>();
 		h.add(new Horario(Dia.LUNES, 18., 22.));
 		List<Horario> h2 = new ArrayList<Horario>();
 		h2.add(new Horario(Dia.VIERNES, 18., 22.));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
-		Curso c1 = new Curso(c, mn, h, "01");
-		Curso c2 = new Curso(c, m, h2, "01");
+		Curso c1 = new Curso(c, calculo1, h, "01");
+		Curso c2 = new Curso(c, ingles1, h2, "01");
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		CriterioOrden co = new CriterioOrdenPorPoscorrelativas(getPlanEstudio());
@@ -94,7 +94,7 @@ public class CriterioOrdenPorPoscorrelativasTest  extends TestCase
 		
 		Recomendacion r = model.getRecomendaciones().get(0);
 		Recomendacion r2 = model.getRecomendaciones().get(1);
-		assertEquals(0,co.compare(r, r2));
+		assertEquals(-1,co.compare(r, r2));
 	}
 
 }

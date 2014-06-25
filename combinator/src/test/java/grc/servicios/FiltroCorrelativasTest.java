@@ -72,13 +72,12 @@ public class FiltroCorrelativasTest extends TestCase
 	public void testFiltroCorrelativas() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
-		Materia pp2 = new Materia("PP2");
-		Materia p1 = new Materia("P1");
-		Materia p2 = new Materia("P2");
-		Materia introProg = new Materia("Intro. Prog.");
+		Materia prog1 = new Materia("Programación I", "P1");
+		Materia prog2 = new Materia("Programación II", "P2");
+		Materia ip = new Materia("Introducción a la Programación", "Intro. Programación");
 
 		Set<Materia> materiasAprobadas = new HashSet<Materia>();
-		materiasAprobadas.add(introProg);
+		materiasAprobadas.add(ip);
 		
 		List<Horario> h = new ArrayList<Horario>();
 		h.add(new Horario(Dia.LUNES, 18., 22.));
@@ -87,15 +86,13 @@ public class FiltroCorrelativasTest extends TestCase
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		c.setId(0);
 		
-		Curso c1 = new Curso(c, pp2, h, "01");
-		Curso c2 = new Curso(c, p1, h2, "01");
-		Curso c3 = new Curso(c, p2, h2, "01");
-		Curso c4 = new Curso(c, introProg, h, "01");
+		Curso c1 = new Curso(c, prog1, h, "01");
+		Curso c2 = new Curso(c, prog2, h2, "01");
+		Curso c3 = new Curso(c, ip, h2, "01");
 		
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		cursosDisp.add(c3);
-		cursosDisp.add(c4);
 		CriterioOrden co = new CriterioOrdenPorMaterias(true);
 
 		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
@@ -106,7 +103,7 @@ public class FiltroCorrelativasTest extends TestCase
 		cursosDisp = filtro.filtrar(cursosDisp);
 		filtro = new FiltroCorrelativas(materiasAprobadas, getPlanEstudio());
 		cursosDisp = filtro.filtrar(cursosDisp);
-    	assertEquals(2,cursosDisp.size());
+    	assertEquals(1,cursosDisp.size());
 	}
     
 	public void testFiltroCorrelativasSinCursos() throws Exception
@@ -116,6 +113,39 @@ public class FiltroCorrelativasTest extends TestCase
 		Set<Materia> materiasAprobadas = new HashSet<Materia>();
 		materiasAprobadas.add(introProg);
 		IFiltro f = new FiltroCorrelativas(materiasAprobadas, getPlanEstudio());
-		assertEquals(0, f.filtrar(c).size());
+		assertTrue(f.filtrar(c).isEmpty());
+	}
+	
+	public void testFiltroCorrelativasSinCorrelativas() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia ingles1 = new Materia("Ingles Lectocomprension I", "Inglés 1");
+		Materia psec = new Materia("Problemas Socioeconómicos contemporáneos", "PSEC");
+		Materia ip = new Materia("Introducción a la Programación", "Intro. Programación");
+
+		Set<Materia> materiasAprobadas = new HashSet<Materia>();
+		materiasAprobadas.add(ip);
+		
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 18., 22.));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.VIERNES, 18., 22.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		c.setId(0);
+		
+		Curso c1 = new Curso(c, ingles1, h, "01");
+		Curso c2 = new Curso(c, psec, h2, "01");
+		Curso c3 = new Curso(c, ip, h2, "01");
+		
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		cursosDisp.add(c3);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+		
+		IFiltro filtro = new FiltroMateriasAprobadas(materiasAprobadas);
+		cursosDisp = filtro.filtrar(cursosDisp);
+		filtro = new FiltroCorrelativas(materiasAprobadas, getPlanEstudio());
+		cursosDisp = filtro.filtrar(cursosDisp);
+    	assertEquals(2,cursosDisp.size());
 	}
 }

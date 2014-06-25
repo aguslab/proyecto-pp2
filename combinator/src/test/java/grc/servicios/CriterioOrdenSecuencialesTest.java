@@ -63,7 +63,7 @@ public class CriterioOrdenSecuencialesTest extends TestCase
 		return new EstadoFiltros(true, true, true, true);
 	}
 	
-	public void testCriterioSecuencilCompare() throws Exception
+	public void testCriterioSecuencialCompare() throws Exception
 	{
 		Set<Curso> cursosDisp = new HashSet<Curso>();
 		Materia calculo1 = new Materia("Calculo I");
@@ -82,6 +82,33 @@ public class CriterioOrdenSecuencialesTest extends TestCase
 		cursosDisp.add(c1);
 		cursosDisp.add(c2);
 		cursosDisp.add(c3);
+		CriterioOrden co1 = new CriterioOrdenPorPoscorrelativas(getPlanEstudio());
+
+		GRCModelo model = new GRCModelo(cursosDisp, co1, 0);
+
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.filtrarNoche(true);
+		controller.setCriterioOrdenamiento("Ambos");
+		
+		Recomendacion r = model.getRecomendaciones().get(0);
+		Recomendacion r2 = model.getRecomendaciones().get(1);
+		assertEquals(0,co1.compare(r, r2));
+	}
+	
+	public void testCriterioSecuencialCompare2() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia ingles1 = new Materia("Ingles Lectocomprension I");
+		Materia lecto = new Materia("Taller de Lectoescritura");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.LUNES, 18., 20.));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h.add(new Horario(Dia.MARTES, 18., 20.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, ingles1, h, "01");
+		Curso c2 = new Curso(c, lecto, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
 		CriterioOrden co1 = new CriterioOrdenPorPoscorrelativas(getPlanEstudio());
 
 		GRCModelo model = new GRCModelo(cursosDisp, co1, 0);
