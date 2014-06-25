@@ -26,13 +26,6 @@ public class Main
 	public static void main(String[] args)
 	{
 		logger.info("Corremos la aplicación.");
-		try
-		{
-			generarAltas();
-		} catch (Exception e)
-		{
-			logger.error("Error al generar las altas.",e);
-		}
 		String alumnoNombre = "Gokú";
 
 		UNGS universidad = new UNGS();
@@ -111,15 +104,5 @@ public class Main
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Introducción a la Matemática"));
 
 		return materiasAprobadas;
-	}
-
-	private static void generarAltas() throws Exception
-	{
-		Persistor a = new Persistor();
-		a.init();
-		a.altaMaterias();
-		a.altaCursos();
-		a.altaPlanEstudio();
-		a.altaCriterioOrden();
 	}
 }
