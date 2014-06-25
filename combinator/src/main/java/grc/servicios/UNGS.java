@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import grc.app.Main;
 import grc.dao.CarreraDAO;
 import grc.dao.CursoDAO;
 import grc.dao.PlanEstudioDAO;
@@ -34,7 +33,6 @@ public class UNGS implements IUniversidad
 	{
 		try
 		{
-			logger.info("Obtenemos el plan de estudios del alumno.");
 			return PlanEstudioDAO.getInstancia().getPlanEstudioDeCarrera(carrera);
 		} catch (Exception e)
 		{
@@ -50,7 +48,6 @@ public class UNGS implements IUniversidad
 	{
 		try
 		{
-			logger.info("Se obtuvieron los cursos que existen en la UNGS.");
 			return new HashSet<Curso>(CursoDAO.getInstancia().obtenerTodo());
 		} catch (Exception e)
 		{
