@@ -1,6 +1,5 @@
 package grc.dao;
 
-import grc.dominio.Carrera;
 import grc.dominio.Curso;
 import grc.dominio.Horario;
 
@@ -90,27 +89,26 @@ public class CursoDAO
 		return curs;
 	}
 
-	public Set<Curso> getCursosPorCarrera(Carrera carrera)
-	{
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
-		Root<Curso> cur = cq.from(Curso.class);
-		cq.select(cur);
-		// TODO: agregar metaclases!
-		Join<Curso, Carrera> joCarr = cur.join("carreras");
-		Integer idCarrera = carrera.getId();
-		Predicate conjuncion = builder.conjunction();
-
-		conjuncion.getExpressions().add(
-				builder.equal(joCarr.get("id").as(Integer.class), idCarrera));
-
-		cq.where(conjuncion);
-		TypedQuery<Curso> q = em.createQuery(cq);
-
-		List<Curso> cursos = (List<Curso>) q.getResultList();
-		Set<Curso> curs = new HashSet<Curso>(cursos);
-
-		return curs;
-	}
-
+//	public Set<Curso> getCursosPorCarrera(Carrera carrera)
+//	{
+//		CriteriaBuilder builder = em.getCriteriaBuilder();
+//		CriteriaQuery<Curso> cq = builder.createQuery(Curso.class);
+//		Root<Curso> cur = cq.from(Curso.class);
+//		cq.select(cur);
+//		// TODO: agregar metaclases!
+//		Join<Curso, Carrera> joCarr = cur.join("carrera");
+//		Integer idCarrera = carrera.getId();
+//		Predicate conjuncion = builder.conjunction();
+//
+//		conjuncion.getExpressions().add(
+//				builder.equal(joCarr.get("id").as(Integer.class), idCarrera));
+//
+//		cq.where(conjuncion);
+//		TypedQuery<Curso> q = em.createQuery(cq);
+//
+//		List<Curso> cursos = (List<Curso>) q.getResultList();
+//		Set<Curso> curs = new HashSet<Curso>(cursos);
+//
+//		return curs;
+//	}
 }
