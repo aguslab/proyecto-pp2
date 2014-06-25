@@ -133,7 +133,7 @@ public class Persistor
 		// mier20a22.setId(8);
 		vier20a22 = new Horario(Dia.VIERNES, 20., 22.);
 		// vier20a22.setId(9);
-		sab08a12 = new Horario(Dia.SABADO, 8., 12.);
+		sab08a12 = new Horario(Dia.SABADO, 8.3, 11.3);
 		// sab08a12.setId(10);
 		lun08a12 = new Horario(Dia.LUNES, 8., 12.);
 		mier08a12 = new Horario(Dia.MIERCOLES, 8., 12.);
