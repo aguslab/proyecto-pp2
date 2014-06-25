@@ -40,9 +40,4 @@ public class CriterioOrdenPorPoscorrelativas extends CriterioOrden
 		}
 		return cantidadPoscorrelativas;
 	}
-
-	public void setPlanEstudio(PlanEstudio planEstudio)
-	{
-		this.planEstudio = planEstudio;
-	}
 }
