@@ -136,9 +136,9 @@ public class GRCControllerTest extends TestCase
 		Materia m = new Materia("M");
 		Materia mn = new Materia("PP2");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario(Dia.LUNES, 18., 22.));
+		h.add(new Horario(Dia.MARTES, 18., 22.));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario(Dia.VIERNES, 18., 22.));
+		h2.add(new Horario(Dia.JUEVES, 18., 22.));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		Curso c1 = new Curso(c, mn, h, "01");
 		Curso c2 = new Curso(c, m, h2, "01");
@@ -160,9 +160,9 @@ public class GRCControllerTest extends TestCase
 		Materia m = new Materia("M");
 		Materia mn = new Materia("PP2");
 		List<Horario> h = new ArrayList<Horario>();
-		h.add(new Horario(Dia.LUNES, 18.3, 20.3));
+		h.add(new Horario(Dia.MIERCOLES, 18.3, 20.3));
 		List<Horario> h2 = new ArrayList<Horario>();
-		h2.add(new Horario(Dia.VIERNES, 18.3, 20.3));
+		h2.add(new Horario(Dia.SABADO, 18.3, 20.3));
 		Carrera c = new Carrera("Licenciatura en Sistemas");
 		Curso c1 = new Curso(c, mn, h, "01");
 		Curso c2 = new Curso(c, m, h2, "01");
