@@ -29,14 +29,6 @@ public class Main
 	{
 		logger.info("Corremos la aplicación.");
 		String alumnoNombre = "Gokú";
-try
-{
-//	generarAltas();
-} catch (Exception e1)
-{
-	// TODO Auto-generated catch block
-	e1.printStackTrace();
-}
 		UNGS universidad = new UNGS();
 		Carrera licSistemas = universidad.getCarreraFromAlumno(alumnoNombre);
 		PlanEstudio planEstudio = universidad.getPlanEstudioFromCarrera(licSistemas);
@@ -114,15 +106,5 @@ try
 		materiasAprobadas.add(MateriaDAO.getInstancia().getMateria("Introducción a la Matemática"));
 
 		return materiasAprobadas;
-	}
-	
-	private static void generarAltas() throws Exception
-	{
-		Persistor a = new Persistor();
-		a.init();
-		a.altaMaterias();
-		a.altaCursos();
-		a.altaPlanEstudio();
-		a.altaCriterioOrden();
 	}
 }
