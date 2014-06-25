@@ -49,14 +49,11 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 	JList listaRecomendaciones;
 	DefaultTableModel modeloTablaDias;
 	JTable tablaDias;
-	private boolean ocultarme;
-	
 
 	public GRCVista(GRCControlador controlador, Set<String> ordenElegido)
 	{
 		super("Generador de Recomendaciones de Cursadas");
 		this.controller = controlador;
-		this.ocultarme = true;
 		escritorio.setBounds(0, 0, 1317, 1);
 		escritorio.setBackground(new Color(83, 130, 161));
 		UIManager.addPropertyChangeListener(new UISwitchListener((JComponent) getRootPane()));
@@ -278,7 +275,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 
 	public void showVista()
 	{
-		this.ocultarme = false;
 		setVisible(true);
 	}
 
@@ -353,8 +349,6 @@ public class GRCVista extends JFrame implements Observer, ActionListener
 
 	public void update(Observable obs, Object arg)
 	{
-		if (ocultarme)
-			return;
 		if (obs instanceof EstadoFiltros)
 		{
 			EstadoFiltros estadoFiltros = (EstadoFiltros) obs;
