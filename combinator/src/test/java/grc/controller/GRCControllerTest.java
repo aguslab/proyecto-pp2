@@ -23,6 +23,7 @@ import grc.servicios.CriterioOrden;
 import grc.servicios.CriterioOrdenPorMaterias;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
 import grc.servicios.CriterioOrdenSecuenciales;
+import grc.vista.GRCVista;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -213,6 +214,86 @@ public class GRCControllerTest extends TestCase
 		controller.seleccionActualRecomendacion(0);
 		controller.cambiarTablaDias(model.getRecomendacionActual());
 		assertEquals(0, model.getRecomendaciones().size());
+	}
+	
+	public void testPuedeEsperar() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.MIERCOLES, 18.3, 20.3));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.SABADO, 18.3, 20.3));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.cambiarEstadoFiltroNoche(true);
+		controller.filtrarTurnos();
+		assertNotNull(model.getRecomendaciones());
+	}
+	
+	public void testCambiarFiltro() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		Materia ltn = new Materia("LTN");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.MIERCOLES, 8.3, 10.3));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.SABADO, 8.3, 10.3));
+		List<Horario> h3 = new ArrayList<Horario>();
+		h3.add(new Horario(Dia.MARTES, 15.3, 17.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		Curso c3 = new Curso(c, ltn, h3, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		cursosDisp.add(c3);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.cambiarEstadoFiltroTarde(true);
+		controller.filtrarManiana(true);
+		assertEquals(7,model.getRecomendaciones().size());
+	}
+	
+	public void testCambiarFiltroTarde() throws Exception
+	{
+		Set<Curso> cursosDisp = new HashSet<Curso>();
+		Materia m = new Materia("M");
+		Materia mn = new Materia("PP2");
+		Materia ltn = new Materia("LTN");
+		List<Horario> h = new ArrayList<Horario>();
+		h.add(new Horario(Dia.MIERCOLES, 8.3, 10.3));
+		List<Horario> h2 = new ArrayList<Horario>();
+		h2.add(new Horario(Dia.SABADO, 8.3, 10.3));
+		List<Horario> h3 = new ArrayList<Horario>();
+		h3.add(new Horario(Dia.MARTES, 15.3, 17.));
+		Carrera c = new Carrera("Licenciatura en Sistemas");
+		Curso c1 = new Curso(c, mn, h, "01");
+		Curso c2 = new Curso(c, m, h2, "01");
+		Curso c3 = new Curso(c, ltn, h3, "01");
+		cursosDisp.add(c1);
+		cursosDisp.add(c2);
+		cursosDisp.add(c3);
+		CriterioOrden co = new CriterioOrdenPorMaterias(true);
+
+		GRCModelo model = new GRCModelo(cursosDisp, co, 0);
+		GRCControlador controller = new GRCControlador(model, getCriterioMap(), getEstadoFiltro());
+		controller.cambiarEstadoFiltroManiana(false);
+		controller.filtrarTarde(true);
+		System.out.println(model.getRecomendaciones().size());
+		assertEquals(1,model.getRecomendaciones().size());
 	}
 	
 	public void testfiltrarTurnosOrdenandoPorPoscorrelativas() throws Exception
