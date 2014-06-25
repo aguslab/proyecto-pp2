@@ -6,6 +6,7 @@ import grc.servicios.CriterioOrdenPorMaterias;
 import grc.servicios.CriterioOrdenPorPoscorrelativas;
 
 import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -60,5 +61,14 @@ public class CriterioOrdenDAOTest extends TestCase {
 		List<CriterioOrden> c = CriterioOrdenDAO.getInstancia().obtenerTodo();
 		assertNotNull(c);
 	}
+	
+	public void testAltaCriterioFail() {
+		CriterioOrden CO = new CriterioOrdenPorMaterias();
+    	try {
+			CriterioOrdenDAO.getInstancia().alta(CO);
+		} catch (Exception e) {
+			assertTrue(true);
+		}
+    }
 
 }
