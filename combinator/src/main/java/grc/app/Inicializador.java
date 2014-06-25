@@ -42,7 +42,6 @@ public class Inicializador
 		estadoFiltros.addObserver(viewTexto);
 		viewTexto.start();
 		vista.showVista();
-//		model.actualizarRecomendaciones(cursosDisponibles, true);
 		logger.info("Terminamos de cargar datos limpios.");
 	}
 
