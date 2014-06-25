@@ -30,7 +30,8 @@ public class HorarioTest
         return new TestSuite( HorarioTest.class );
     }
 
-    public void testHorario(){
+    public void testHorario()
+    {
     	Horario h = new Horario();
     	Dia lun = Dia.LUNES;
     	h.setDia(lun);
@@ -40,7 +41,8 @@ public class HorarioTest
     	assertEquals("LUNES", h.getDia().name());
     }
     
-    public void testHorarioHora(){
+    public void testHorarioHora()
+    {
     	Horario h = new Horario();
     	h.setHoraFin(20.);
     	h.setHoraInicio(18.);
@@ -48,18 +50,35 @@ public class HorarioTest
     	assertEquals(2, h.getHoraFin()-h.getHoraInicio());
     }
     
-    public void testHorarioHoraIniFin(){
+    public void testHorarioHoraIniFin()
+    {
     	Horario h = new Horario(18., 22.);
     	
     	assertEquals(4, h.getHoraFin()-h.getHoraInicio());
     }
     
-    public void testHorarioId(){
+    public void testHorarioId()
+    {
     	Horario h = new Horario();
     	h.setHoraFin(20.);
     	h.setHoraInicio(18.);
     	h.setId(10);
     	assertEquals(10, h.getId());
     }
+
+    public void testHorarioSeSolapaCon()
+    {
+    	Horario h = new Horario(18., 22.);
+    	Horario h2 = new Horario(18., 20.);
+    	
+    	assertEquals(true,h.seSolapaCon(h2));
+    }
     
+    public void testHorarioNoSeSolapaCon()
+    {
+    	Horario h = new Horario(18.30, 20.30);
+    	Horario h2 = new Horario(20.35, 22.);
+    	
+    	assertFalse(h.seSolapaCon(h2));
+    }
 }

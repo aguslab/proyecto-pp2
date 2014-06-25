@@ -34,17 +34,28 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
 		assertEquals("M", m.getNombre());
 	}
+	
+	public void testMateriaNombreCorto()
+	{
+		Materia m = new Materia();
+		m.setId(1);
+		m.setNombre("M");
+		m.setNombreCorto("m");
 
+		assertEquals("m", m.getNombreCorto());
+	}
 	public void testMateriaEqual()
 	{
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
-		Materia M = new Materia("N");
+		Materia M = new Materia("N","m");
 		M.setId(1);
 		assertFalse(m.equals(M));
 	}
@@ -54,6 +65,7 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
 		assertTrue(m.equals(m));
 	}
@@ -63,6 +75,7 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
 		Materia M = null;
 		assertFalse(m.equals(M));
@@ -73,6 +86,7 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 		Curso C = new Curso();
 		assertFalse(m.equals(C));
 	}
@@ -82,10 +96,12 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
 		Materia M = new Materia();
 		M.setId(2);
 		M.setNombre("M");
+		m.setNombreCorto("m");
 		assertFalse(m.equals(M));
 	}
 
@@ -94,6 +110,7 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
 		Materia M = new Materia();
 		M.setId(1);
@@ -108,6 +125,7 @@ public class MateriaTest extends TestCase
 		Materia M = new Materia();
 		M.setId(1);
 		M.setNombre("N");
+		M.setNombreCorto("n");
 		assertFalse(m.equals(M));
 	}
 	
@@ -126,8 +144,9 @@ public class MateriaTest extends TestCase
 		Materia m = new Materia();
 		m.setId(1);
 		m.setNombre("M");
+		m.setNombreCorto("m");
 
-		Materia M = new Materia("M");
+		Materia M = new Materia("M","m");
 		M.setId(1);
 		assertEquals(m.hashCode(), M.hashCode());
 	}
